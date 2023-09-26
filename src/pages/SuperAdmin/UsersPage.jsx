@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SuperAdminPage.module.scss";
 import Managers from "../../components/Managers/Managers";
 import MobileManagers from "../../components/MobileManagers/MobileManagers";
@@ -56,7 +56,7 @@ export default function UsersPage() {
           const key = uuidv4();
           console.log(key)
           return (
-            <>
+            <React.Fragment key={key}>
               {screenWidth > 1160 ? (
                 <Managers
                   key={key}
@@ -72,7 +72,7 @@ export default function UsersPage() {
                   data={data}
                 />
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
