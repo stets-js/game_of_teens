@@ -31,10 +31,11 @@ export default function UsersPage() {
       res.users.filter((item) => item.role_id > 2)
     );
     const resManagers = await getUsers().then((res) =>
-      res.filter((item) => (item.role_id = 2))
+      res.users.filter((item) => (item.role_id === 2))
     );
     res.push(...resUsers);
     res.push(...resManagers);
+    console.log("res-->>>", res)
     return setData(res);
   };
 
@@ -52,18 +53,20 @@ export default function UsersPage() {
       <h3 className={styles.main_title}>Manage users.</h3>
       <div className={styles.main_wrapper2}>
         {usersArray.map((item, index) => {
+          const key = uuidv4();
+          console.log(key)
           return (
             <>
               {screenWidth > 1160 ? (
                 <Managers
-                  key={uuidv4()}
+                  key={key}
                   isOpenModal={isOpen}
                   isAdmin={item.isAdmin}
                   data={data}
                 />
               ) : (
                 <MobileManagers
-                  key={uuidv4()}
+                  key={key}
                   isOpenModal={isOpen}
                   isAdmin={item.isAdmin}
                   data={data}

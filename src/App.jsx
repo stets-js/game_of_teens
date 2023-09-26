@@ -51,18 +51,14 @@ const App = () => {
         <Route path={path.admin} element={<Navigate to={path.users} />} />
         <Route path={path.admin} element={<AdminPage />}>
           <Route path={path.users} element={<AdminUsersPage />} />
-
           <Route path={path.groups} element={<AdminGroupsPage />} />
           <Route path={path.courses} element={<AdminCoursesPage />} />
           <Route path={path.actions} element={<AdminActionsPage />} />
-          
           <Route path={path.crm} element={<CrmPage />} />
         </Route>
 
         <Route path={path.superAdmin} element={<Navigate to={path.users} />} />
         <Route path={path.superAdmin} element={<SuperAdministratorPage />}>
-
-      
           <Route path={path.users} element={<UsersPage />} />
           <Route path={path.groups} element={<GroupsPage />} />
           <Route path={path.courses} element={<CoursesPage />} />
@@ -71,11 +67,11 @@ const App = () => {
         </Route>
 
         <Route path={path.manager} element={<Navigate to={path.planning} />} />
+
         <Route path={path.manager} element={<ManagerPage />}>
           <Route path={path.consultations} element={<ConsultationsPage />} />
           <Route path={path.planning} element={<PlanningPage />} />
           <Route path={path.crm} element={<CrmPage />} />
-
         </Route>
 
         <Route path={path.confirmator} element={<ConfirmatorPage />} />
