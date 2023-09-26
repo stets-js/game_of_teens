@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from "react";
+import Button from "../../Buttons/Buttons";
+import styles from "./ChangeAppointentManager.module.scss";
+import {
+  getDateByWeekId,
+  getManagersByCourse,
+} from "../../../helpers/manager/manager";
+import { putAppointment } from "../../../helpers/appointment/appointment";
+import Modal from "../../Modal/Modal";
+import { info, success, error } from "@pnotify/core";
+
+const ChangeAppointentManager = ({
+  isOpen,
+  handleClose,
+  courseId,
+  day,
+  weekId,
+  hour,
+  age,
+  phone,
+  link,
+  appointmentId,
+  message,
+  isCreateAppointment,
+  isChangeAppointment,
+  setManagerId,
+  setManager,
+  isPostponed,
+  closePostpone,
+}) => {
+  const [date, setDate] = useState("");
+  const [managersList, setManagers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getDateByWeekId(weekId, day);
+        setDate(result.date);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [day, weekId]);
+
+  console.log(day, weekId);
+  console.log(date);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getManagersByCourse(courseId, date, hour);
+        setManagers(result.managers);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [courseId, date, hour]);
+
+  console.log(managersList);
+
+  return (
+    <>
+      <Modal
+        style={{ zIndex: "999999999 !important" }}
+        open={isOpen}
+        onClose={() => {
+          handleClose(!isOpen);
+        }}
+      >
+        <h1>Select new manager</h1>
+
+        {managersList.length === 0 ? (
+          <h2 className={styles.noManagersButton}>No managers available</h2>
+        ) : (
+          <div className={styles.managersListBox}>
+            {managersList.map((manager) => (
+              <div key={manager.id}>
+                <button
+                  onClick={
+                    isCreateAppointment || isChangeAppointment
+                      ? (e) => {
+                          setManagerId(manager.id);
+                          setManager(manager.name);
+                          handleClose(!isOpen);
+                        }
+                      : (e) => {
+                          console.log(`clicked`);
+                          const data = new FormData();
+                          data.append("appointment_id", appointmentId);
+                          data.append("date", date);
+                          data.append("day", day);
+                          data.append("hour", hour);
+                          data.append("course_id", courseId);
+                          data.append(
+                            "crm_link",
+                            JSON.stringify(link).slice(1, -1)
+                          );
+                          data.append("phone", phone);
+                          data.append("age", age);
+                          data.append("manager_id", manager.id);
+                          data.append("message", JSON.stringify(message));
+                          putAppointment(data).then(() => {
+                            // if (isPostponed) {
+                            //   closePostpone();
+                            // }
+                            handleClose(!isOpen);
+                            success("Manager changed successfully");
+                          });
+                        }
+                  }
+                  className={styles.managerButton}
+                >
+                  {manager.name}
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </Modal>
+    </>
+  );
+};
+
+export default ChangeAppointentManager;
