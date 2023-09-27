@@ -25,6 +25,7 @@ export default function CallerPage() {
   const weekId = useSelector(getWeekId);
   const { callerId } = useParams();
   const [callerName, setCallerName] = useState("");
+  console.log("tableDate",tableDate)
   useEffect(() => {
     dispatch(getCallerCurrentWeek(+callerId));
     getUserById(+callerId)
@@ -62,7 +63,7 @@ export default function CallerPage() {
         <Table table={table} weekId={weekId}  caller/>
       ) : (
         <DayTable
-weekId={weekId} 
+          weekId={weekId} 
           table={table[currentDayIndex]}
           dayIndex={currentDayIndex}
           caller

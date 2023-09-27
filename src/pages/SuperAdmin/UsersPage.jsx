@@ -45,8 +45,8 @@ export default function UsersPage() {
 
   const screenWidth = window.innerWidth;
 
-  console.log(`usersArray: ${JSON.stringify(usersArray)}`);
-  console.log(`data UserPage: ${data}`);
+  // console.log(`usersArray: ${JSON.stringify(usersArray)}`);
+  // console.log(`data UserPage: ${data}`);
 
   return (
     <>

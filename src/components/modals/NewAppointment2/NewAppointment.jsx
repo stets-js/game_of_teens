@@ -6,6 +6,7 @@ import {
   getAvailableManagers,
   getCurrentAppointments,
   getManagerById,
+  getDateByWeekId,
 } from "../../../helpers/manager/manager";
 import {
   createAppointment,
@@ -28,7 +29,7 @@ const NewAppointment = ({
   dayIndex,
   slotId,
   hourIndex,
-  date,
+  
 }) => {
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
@@ -42,31 +43,33 @@ const NewAppointment = ({
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [appointmentData, setAppointmentData] = useState([]);
   const [appointmentId, setAppointmentId] = useState(0);
-
+  const [currentDate, setCurrentDate] = useState("");
+console.log("first appointment", appointment)
   console.log(`hourIndex ${hourIndex}`);
   console.log(`time ${time}`);
-  console.log(appointment);
+  console.log("appointment-->>>",appointment);
+  console.log("slotId......", slotId)
   useEffect(() => {
     !isOpen && dispatch(getCallerWeek({ weekId }));
   }, [isOpen, dispatch]);
 
-  useEffect(() => {
-    const get = async () => await getAppointment({ id: slotId });
-    get().then((data) => setAppointment(data.data));
-  }, []);
+  // useEffect(() => {
+  //   const get = async () => await getAppointment({ id: slotId });
+  //   get().then((data) => setAppointment(data.data));
+  // }, []);
 
-  console.log(date);
+  
   useEffect(() => {
-    if (typeof date === "string") {
-      console.log(date.split(".")[0], date.split(".")[1], date.split(".")[2]);
-      const get = async () =>
-        await getCurrentAppointments(
-          date.split(".")[0],
-          date.split(".")[1],
-          date.split(".")[2]
-        );
-      get().then((data) => setAppointmentData(data.data));
-    }
+    const date = async () => await getDateByWeekId(weekId, dayIndex);
+    date()
+      .then((data) => {
+        const currentDate = data.date;
+        console.log("currentDate", currentDate);
+  
+        const get = async () => await getCurrentAppointments(currentDate);
+        return get();
+      })
+      .then((data) => { setAppointmentData(data.data) });
   }, [isOpen]);
 
   useEffect(() => {
@@ -81,11 +84,12 @@ const NewAppointment = ({
       setManagerId(result.managerId);
     }
 
-    console.log(result);
+    console.log("result-->>>",result);
   }, [appointmentData]);
 
-  console.log(appointment.id);
-  console.log(appointmentData);
+  console.log("appointment.id-->>>", appointment.id);
+  console.log("appointmentData---->>>>", appointmentData);
+  
   return (
     <>
       {isOpen && (

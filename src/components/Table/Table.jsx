@@ -7,7 +7,7 @@ import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
 import { TailSpin } from "react-loader-spinner";
 
-console.log("Table");
+//console.log("Table");
 const Table = ({
   postponed,
   weekId,
@@ -30,6 +30,8 @@ const Table = ({
       )}
       <ul className={styles.table}>
         {table.map((day, dayIndex) => {
+          console.log("day, dayIndex", day, dayIndex)
+          
           return day.map((item, hourIndex) => {
             return (
               <Fragment key={hourIndex}>
@@ -43,7 +45,7 @@ const Table = ({
                     colorId={item.amount}
                     caller={caller}
                     hourIndex={table[dayIndex][hourIndex].time}
-                    slotId={item.slot_id}
+                    slotId={item.slots && item.slots[0].id}
                     dayIndex={dayIndex}
                     slots={item?.slots}
                     onPostpone={onPostpone}
@@ -55,7 +57,7 @@ const Table = ({
                     dayIndex={dayIndex}
                     hourIndex={hourIndex}
                     consultation
-                    slotId={item.slot_id}
+                    slotId={item.slots && item.slots[0].id}
                     onClickBtnStart={() => onClickSlotFn(dayIndex, hourIndex)}
                   />
                 ) : (

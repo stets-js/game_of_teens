@@ -55,9 +55,9 @@ const getCurrentMeetings = (date) => {
     });
 };
 
-const getCurrentAppointments = (day, month, year) => {
+const getCurrentAppointments = (date) => {
   return axios
-    .get(`/get-current-appointments/${day}.${month}.${year}`)
+    .get(`/get-current-appointments/${date}`)
     .then((res) => res.data)
     .catch((error) => {
       throw error;
