@@ -43,11 +43,11 @@ export default function AvaliableDatePicker() {
     dispatch(decreaseDay());
   };
   const onFirstHalfHandler = () => {
-    console.log("first")
+    
     dispatch(firstHalf());
   };
   const onSecondHalfHandler = () => {
-    console.log("seconf")
+    
     dispatch(secondHalf());
   };
 

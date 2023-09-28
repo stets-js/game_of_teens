@@ -18,7 +18,7 @@ function CurrentMeetingsPageList() {
   const [selectedManagerIds, setSelectedManagerIds] = useState([]);
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
     useState(false);
-  console.log(`currentSelectedSortStatus is ${currentSelectedSortStatus}`);
+  //console.log(`currentSelectedSortStatus is ${currentSelectedSortStatus}`);
   const styles = {
     marginRight: "auto",
     marginLeft: "auto",

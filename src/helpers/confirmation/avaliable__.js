@@ -10,12 +10,12 @@ const getCurrentConfirmatorData = () => {
 };
 
 const getConfirmatorWeekData = (weekId, dayId, halfId) => {
-  console.log("getConfirmatorWeekData");
-  console.log(weekId);
+  // console.log("getConfirmatorWeekData");
+  // console.log(weekId);
   return axios
     .get(`/get_confirmation/${weekId}/${dayId}/${halfId}`)
     .then((res) => {
-      console.log("getConfirmatorWeekData_res");
+      //console.log("getConfirmatorWeekData_res");
       return res.data;
     })
     .catch((error) => {

@@ -34,15 +34,13 @@ export default function ConfirmedDatePicker() {
   const dateDay = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
 
   const onClickArrowRight = () => {
-    console.log(date);
-    console.log("right");
+    
     setDate(moment(date).add(1, "days")._d);
     dispatch(increaseDay());
   };
 
   const onClickArrowLeft = () => {
-    console.log(date);
-    console.log("left");
+    
     setDate(moment(date).subtract(1, "days")._d);
     dispatch(decreaseDay());
   };

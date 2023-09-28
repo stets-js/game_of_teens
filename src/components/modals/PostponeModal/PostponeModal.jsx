@@ -26,7 +26,7 @@ import { createPortal } from "react-dom";
 import { getWeekIdByTableDate } from "../../../helpers/week/week";
 const modalRef = document.querySelector("#postpone-modal");
 
-console.log("postpone-modal");
+//console.log("postpone-modal");
 
 export default function PostponeModal({
   isOpen,
@@ -72,7 +72,7 @@ export default function PostponeModal({
 
   useEffect(() => {
     getWeekIdByTableDate(tableDate).then((data) => {
-      console.log(`setting ${data.id} as CurrentWeekId`);
+      //console.log(`setting ${data.id} as CurrentWeekId`);
       setCurrentWeekId(data.id);
     });
   }, [tableDate]);

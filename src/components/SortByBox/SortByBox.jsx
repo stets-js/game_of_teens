@@ -25,7 +25,7 @@ export default function SortByBox({
   };
   const changeSelectedStatus = () => {
     const curSelectStatus = selectedStatus;
-    console.log(`selectedStatus is ${selectedStatus}`);
+    //console.log(`selectedStatus is ${selectedStatus}`);
     if (curSelectStatus) {
       setSelectedStatus(false);
       sortMangFunc(selectedStatus);

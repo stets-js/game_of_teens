@@ -115,7 +115,7 @@ const ChangeAppointment = ({
               Manager:
               <span
                 onClick={() => {
-                  console.log(`should be rendered`);
+                  //console.log(`should be rendered`);
                   setIsChangeOpen(!isChangeOpen);
                 }}
               >

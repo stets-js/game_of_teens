@@ -44,11 +44,15 @@ const NewAppointment = ({
   const [appointmentData, setAppointmentData] = useState([]);
   const [appointmentId, setAppointmentId] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
-console.log("first appointment", appointment)
-  console.log(`hourIndex ${hourIndex}`);
-  console.log(`time ${time}`);
-  console.log("appointment-->>>",appointment);
-  console.log("slotId......", slotId)
+
+
+// console.log("first appointment", appointment)
+//   console.log(`hourIndex ${hourIndex}`);
+//   console.log(`time ${time}`);
+//   console.log("appointment-->>>",appointment);
+//   console.log("slotId......", slotId)
+
+
   useEffect(() => {
     !isOpen && dispatch(getCallerWeek({ weekId }));
   }, [isOpen, dispatch]);
@@ -64,7 +68,7 @@ console.log("first appointment", appointment)
     date()
       .then((data) => {
         const currentDate = data.date;
-        console.log("currentDate", currentDate);
+        //console.log("currentDate", currentDate);
   
         const get = async () => await getCurrentAppointments(currentDate);
         return get();
@@ -72,24 +76,22 @@ console.log("first appointment", appointment)
       .then((data) => { setAppointmentData(data.data) });
   }, [isOpen]);
 
-  useEffect(() => {
-    const result = appointmentData.find((appointment) => {
-      const found = appointment.manager_appointments.some((item) => {
-        setAppointmentId(item.id);
-      });
-      return found;
-    });
+  // useEffect(() => {
+  //   const result = appointmentData.find((appointment) => {
+  //     const found = appointment.manager_appointments.some((item) => {
+  //       setAppointmentId(item.id);
+  //     });
+  //     return found;
+  //   });
 
-    if (result?.managerId !== undefined) {
-      setManagerId(result.managerId);
-    }
+  //   if (result?.managerId !== undefined) {
+  //     setManagerId(result.managerId);
+  //   }
 
-    console.log("result-->>>",result);
-  }, [appointmentData]);
+  //   console.log("result-->>>",result);
+  // }, [appointmentData]);
 
-  console.log("appointment.id-->>>", appointment.id);
-  console.log("appointmentData---->>>>", appointmentData);
-  
+   
   return (
     <>
       {isOpen && (
@@ -98,7 +100,8 @@ console.log("first appointment", appointment)
             onSubmit={() => {
               const data = new FormData();
               data.append("crm_link", link);
-              return createAppointment(
+              
+              createAppointment(
                 data,
                 managerId,
                 weekId,
@@ -109,24 +112,22 @@ console.log("first appointment", appointment)
                 age,
                 message
               )
-                .then(
-                  success({
-                    text: "Appointment successfully created",
-                  })
-                )
-                .catch(
-                  error({
-                    text: "This time appears to be already reserved, please change the appointment time",
-                  })
-                )
-                .finally(() => {
-                  setLink("");
-                  setCourses("");
-                  setMessage("");
-                  setAge(0);
-                  setPhone("");
-                  handleClose();
+              .then(() => {
+                success({
+                  text: "Appointment successfully created",
                 });
+                setLink("");
+                setCourses("");
+                setMessage("");
+                setAge(0);
+                setPhone("");
+                handleClose();
+              })
+              .catch(() => {
+                error({
+                  text: "This time appears to be already reserved, please change the appointment time",
+                });
+              });
             }}
             status={{
               successMessage: "Successfully created appointment",
@@ -137,7 +138,7 @@ console.log("first appointment", appointment)
           >
             <span
               onClick={() => {
-                console.log(`should be rendered`);
+                //console.log(`should be rendered`);
                 setIsChangeOpen(!isChangeOpen);
               }}
             >

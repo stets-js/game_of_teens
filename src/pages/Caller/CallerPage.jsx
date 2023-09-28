@@ -38,7 +38,7 @@ export default function CallerPage() {
   }, [dispatch, callerId]);
 
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
-  console.log(`currentDayIndex in the call-center pager is ${currentDayIndex}`);
+  //console.log(`currentDayIndex in the call-center pager is ${currentDayIndex}`);
   function setDayIndex(num) {
     setCurrentDayIndex(num);
   }

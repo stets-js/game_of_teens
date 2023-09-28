@@ -35,7 +35,6 @@ export default function UsersPage() {
     );
     res.push(...resUsers);
     res.push(...resManagers);
-    console.log("res-->>>", res)
     return setData(res);
   };
 
@@ -54,7 +53,7 @@ export default function UsersPage() {
       <div className={styles.main_wrapper2}>
         {usersArray.map((item, index) => {
           const key = uuidv4();
-          console.log(key)
+          //console.log(key)
           return (
             <React.Fragment key={key}>
               {screenWidth > 1160 ? (

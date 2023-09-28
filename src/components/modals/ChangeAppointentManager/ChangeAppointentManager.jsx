@@ -43,8 +43,8 @@ const ChangeAppointentManager = ({
     fetchData();
   }, [day, weekId]);
 
-  console.log(day, weekId);
-  console.log(date);
+  // console.log(day, weekId);
+  // console.log(date);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +58,7 @@ const ChangeAppointentManager = ({
     fetchData();
   }, [courseId, date, hour]);
 
-  console.log(managersList);
+  //console.log(managersList);
 
   return (
     <>
@@ -86,7 +86,7 @@ const ChangeAppointentManager = ({
                           handleClose(!isOpen);
                         }
                       : (e) => {
-                          console.log(`clicked`);
+                          //console.log(`clicked`);
                           const data = new FormData();
                           data.append("appointment_id", appointmentId);
                           data.append("date", date);

@@ -58,7 +58,7 @@ const ChangeManagerCourses = ({ isOpen, handleClose, managerId }) => {
     postManagerCourses(managerId, data)
       .then((response) => {
         // Handle the successful response here
-        console.log(response);
+        //console.log(response);
         success("Courses successfully updated");
         handleClose();
       })

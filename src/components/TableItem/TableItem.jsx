@@ -20,6 +20,9 @@ const TableItem = ({
   postponed,
   slots,
 }) => {
+
+
+
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState("");
   const activeClassnames = (colorId) => {
@@ -115,10 +118,10 @@ const TableItem = ({
               <ConsultationInfo
                 dayIndex={dayIndex}
                 hourIndex={hourIndex}
+                slotId={slotId}
                 isOpen={isOpen}
                 weekId={weekId}
                 handleClose={() => setIsOpen(!isOpen)}
-                slotId={+slotId}
               />
             )}
           </>
@@ -145,7 +148,7 @@ const TableItem = ({
               <ConsultationInfo
                 dayIndex={dayIndex}
                 hourIndex={hourIndex}
-                slotId={+slotId}
+                slotId={slotId}
                 isOpen={isOpen}
                 weekId={weekId}
                 handleClose={() => setIsOpen(!isOpen)}

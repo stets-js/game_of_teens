@@ -59,7 +59,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
     resManagers.map((item) => (item.role_id = 2));
     arr.push(...res);
     arr.push(...resManagers);
-    console.log("managers->>>>", arr)
+  
     return setManagers(arr);
   };
 

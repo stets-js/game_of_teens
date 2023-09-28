@@ -36,6 +36,11 @@ const ConsultationPage = () => {
   const weekId = useSelector(getWeekId);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   console.log(`currentDayIndex in the consult pager is ${currentDayIndex}`);
+
+
+//console.log("weekId  Consult-->>>",weekId,"managerId-", +managerId)
+
+
   function setDayIndex(num) {
     setCurrentDayIndex(num);
   }
@@ -45,14 +50,14 @@ const ConsultationPage = () => {
     dispatch(setManagerLoading(true));
     console.log("Point2");
     return postStartConsultation(
-      +weekId,
+      weekId,
       dayIndex,
       table[dayIndex][hourIndex].time,
       +managerId
     )
       .then(() => {
         return updateSlot(
-          managerId,
+          +managerId,
           weekId,
           dayIndex,
           table[dayIndex][hourIndex].time,
@@ -93,7 +98,7 @@ const ConsultationPage = () => {
         <DaysPicker setDayIndex={setDayIndex} />
       )}
       {window.innerWidth > 1160 ? (
-        <Table table={table} consultation onClickSlotFn={onClickSlotButton} />
+        <Table table={table} weekId={weekId} consultation onClickSlotFn={onClickSlotButton} />
       ) : (
         <DayTable
           table={table[currentDayIndex]}

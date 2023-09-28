@@ -41,7 +41,7 @@ const MeetingsTable = ({
         return "Free";
     }
   };
-  console.log(date);
+  // console.log(date);
   let isTableLengthD = false;
   let isMarkUpAdded = false;
 
@@ -90,7 +90,7 @@ const MeetingsTable = ({
               tiemedSlot.status ? tiemedSlot.status : tiemedSlot.status_id
             );
           }
-          console.log(tiemedSlot);
+          // console.log(tiemedSlot);
 
           return (
             <>

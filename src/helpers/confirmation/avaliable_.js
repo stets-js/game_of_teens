@@ -15,7 +15,7 @@ const getConfirmedWeekData = (weekId, dayId) => {
   return axios
     .get(`/avaliable_managers_list/${weekId}/${dayId}`)
     .then((res) => {
-      console.log("getConfirmedWeekData");
+      //console.log("getConfirmedWeekData");
       return res.data;
     })
     .catch((error) => {
@@ -27,7 +27,7 @@ const getAvaliableManagersData = () => {
   return axios
     .get(`/current_avaliable_managers_list`)
     .then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       return res.data;
     })
     .catch((error) => {
@@ -39,7 +39,7 @@ const getAvaliableManagersWeekData = (weekId, dayId) => {
   return axios
     .get(`/avaliable_managers_list/${weekId}/${dayId}`)
     .then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       return res.data;
     })
     .catch((error) => {

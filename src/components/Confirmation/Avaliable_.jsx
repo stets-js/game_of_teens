@@ -31,7 +31,7 @@ class Avaliable extends Component {
         {console.log("/avaliable_managers_list/14/6");}
         const response = await axios.get("/avaliable_managers_list/14/6");
         this.setState({ articles: response.data.data });
-        console.log(response.data.data);
+        // console.log(response.data.data);
         
      }
   

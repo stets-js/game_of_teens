@@ -22,7 +22,7 @@ import {
 import Select from "../../Select/Select";
 import Form from "../../Form/Form";
 
-console.log("ConsultationInfo");
+//console.log("ConsultationInfo");
 
 const ConsultationInfo = ({
   isOpen,
@@ -45,18 +45,19 @@ const ConsultationInfo = ({
   const [currentWeekId, setCurrentWeekId] = useState(weekId);
   const managerTable = useSelector(getTable);
 
+ 
   useEffect(() => {
     const get = async () => await getAppointment({ id: slotId });
     get().then((data) => setAppointment(data.data));
   }, [isOpen]);
 
-  useEffect(() => {
-    const get = async () => await getWeekIdByTableDate();
-    get().then((data) => setAppointment(data.data));
-  }, []);
+  // useEffect(() => {
+  //   const get = async () => await getWeekIdByTableDate();
+  //   get().then((data) => setAppointment(data.data));
+  // }, []);
 
   const cancelConfConsultOnClickFn = () => {
-    delteConfirmation(managerId, weekId, dayIndex, hourIndex, 0)
+    delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
       .then(() => {
         success({
           text: "Succesfully deleted.",
