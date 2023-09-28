@@ -190,7 +190,7 @@ const PlanningPage = () => {
         <DaysPicker setDayIndex={setDayIndex} />
       )}
       {window.innerWidth > 1160 ? (
-        <Table table={table} onClickSlotFn={onClickSlot} />
+        <Table table={table} weekId={weekId} onClickSlotFn={onClickSlot} />
       ) : (
         <DayTable
           table={table[currentDayIndex]}

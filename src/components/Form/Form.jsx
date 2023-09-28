@@ -53,12 +53,12 @@ const Form = ({
     if (type.type === "no-request") {
       if (onSubmit) {
         return onSubmit()
-          .catch((e) => {
-            error(`${status.failMessage}, ${e.message}`);
-          })
-          .then(() => {
-            // success(status.successMessage);
-          });
+          // .catch((e) => {
+          //   error(`${status.failMessage}, ${e.message}`);
+          // })
+          // .then(() => {
+          //   // success(status.successMessage);
+          // });
       }
       return;
     }

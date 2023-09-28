@@ -41,20 +41,22 @@ const ConsultationInfo = ({
   const [message, setMessage] = useState("");
   const { managerId } = useParams();
   const [appointment, setAppointment] = useState([]);
-  // const weekId = useSelector(getWeekId);
+  //const weekId = useSelector(getWeekId);
   const [currentWeekId, setCurrentWeekId] = useState(weekId);
   const managerTable = useSelector(getTable);
-
- 
-  useEffect(() => {
-    const get = async () => await getAppointment({ id: slotId });
-    get().then((data) => setAppointment(data.data));
-  }, [isOpen]);
 
   // useEffect(() => {
   //   const get = async () => await getWeekIdByTableDate();
   //   get().then((data) => setAppointment(data.data));
   // }, []);
+ 
+  useEffect(() => {
+    if (isOpen) {
+      const get = async () => await getAppointment({ id: slotId });
+      get().then((data) => setAppointment(data.data));
+    }
+  }, [isOpen]);
+
 
   const cancelConfConsultOnClickFn = () => {
     delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
