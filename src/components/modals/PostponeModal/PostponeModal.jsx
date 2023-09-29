@@ -70,12 +70,12 @@ export default function PostponeModal({
       .catch(() => setError("Caller not found"));
   }, [dispatch]);
 
-  useEffect(() => {
-    getWeekIdByTableDate(tableDate).then((data) => {
-      //console.log(`setting ${data.id} as CurrentWeekId`);
-      setCurrentWeekId(data.id);
-    });
-  }, [tableDate]);
+  // useEffect(() => {
+  //   getWeekIdByTableDate(tableDate).then((data) => {
+  //     console.log(`setting ${data.id} as CurrentWeekId`, data.id);
+  //     setCurrentWeekId(data.id);
+  //   });
+  // }, [tableDate]);
 
   return createPortal(
     isOpen ? (
