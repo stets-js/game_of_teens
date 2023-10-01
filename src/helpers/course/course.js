@@ -8,6 +8,14 @@ const getCourses = () => {
       throw error;
     });
 };
+const getCourseIdByName = (name) => {
+  return axios
+    .get(`/get_course_id/${name}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const postCourse = (credentials) => {
   return axios
@@ -62,4 +70,5 @@ export {
   putCourse,
   deleteCourse,
   getManagerCourses,
+  getCourseIdByName,
 };
