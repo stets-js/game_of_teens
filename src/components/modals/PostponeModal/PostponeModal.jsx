@@ -53,7 +53,9 @@ export default function PostponeModal({
   const [currentWeekId, setCurrentWeekId] = useState(weekId);
   const dispatch = useDispatch();
   const tableDate = useSelector(getCallerDate);
+  const wid = useSelector(getWeekId);
   const table = useSelector(getTable);
+  
 
   const onClickSlotFn = (weekIdNew, dayIndexNew, hourIndexNew) => {
     setCurrentDay(dayIndexNew);
@@ -70,12 +72,18 @@ export default function PostponeModal({
       .catch(() => setError("Caller not found"));
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   getWeekIdByTableDate(tableDate).then((data) => {
-  //     console.log(`setting ${data.id} as CurrentWeekId`, data.id);
-  //     setCurrentWeekId(data.id);
-  //   });
-  // }, [tableDate]);
+  useEffect(() => {
+    console.log("tableDate", tableDate)
+    getWeekIdByTableDate(tableDate).then((data) => {
+      console.log(`setting ${data.id} as CurrentWeekId`, data.id);
+      setCurrentWeekId(data.id+1);
+    });
+  }, [tableDate]);
+  useEffect(() => {
+   
+      setCurrentWeekId(wid+1);
+  
+  }, []);
 
   return createPortal(
     isOpen ? (

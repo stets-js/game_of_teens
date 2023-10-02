@@ -7,9 +7,13 @@ import {
 import "./ConfirmationButton.scss";
 import PostponeModal from "../../components/modals/PostponeModal/PostponeModal";
 import { Fade } from "react-awesome-reveal";
+import { getCourseIdByName } from "../../helpers/course/course";
 
 const ConfirmatorButtons = ({ value, setValue }) => {
   const [isOpen, setIsOpen] = useState(null);
+  const [course, setCourse] = useState(null);
+  const [crm, setCrm] = useState(null);
+  const [phone, setPhone] = useState(null);
 
   const appointments = useSelector(getConfirmatorAppointments);
   const error = useSelector(getConfirmatorError);
@@ -37,9 +41,14 @@ const ConfirmatorButtons = ({ value, setValue }) => {
             {confirmationTable.map((i) => {
               return (
                 <button
-                  onClick={() => {
+                  onClick={async() => {
                     
                     if (i.btn === "postponed") setIsOpen(item.appointment_id);
+                    const res = await getCourseIdByName(item.course).then(data=> setCourse(data.data.id)) 
+                     console.log("item", item)
+                     setCrm(item.crm_link)
+                     setPhone(item.phone)
+                    //setCourse(item.course_id)
                     return setValue({ ...value, [item.appointment_id]: i.btn });
                   }}
                   key={i.btn}
@@ -54,7 +63,7 @@ const ConfirmatorButtons = ({ value, setValue }) => {
           </div>
         ))}
       </Fade>
-      <PostponeModal appointmentId={isOpen} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <PostponeModal appointmentId={isOpen} link={crm} age={0} phone={phone} courseId={course} isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };

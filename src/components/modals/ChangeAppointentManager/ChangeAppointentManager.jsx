@@ -35,6 +35,7 @@ const ChangeAppointentManager = ({
     const fetchData = async () => {
       try {
         const result = await getDateByWeekId(weekId, day);
+        console.log("result.date",result.date);
         setDate(result.date);
       } catch (error) {
         console.error(error);
@@ -43,8 +44,8 @@ const ChangeAppointentManager = ({
     fetchData();
   }, [day, weekId]);
 
-  // console.log(day, weekId);
-  // console.log(date);
+  console.log("day and weekid",day, weekId);
+   console.log("date",date);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +59,7 @@ const ChangeAppointentManager = ({
     fetchData();
   }, [courseId, date, hour]);
 
-  //console.log(managersList);
+  console.log("managerList",managersList);
 
   return (
     <>
@@ -93,10 +94,7 @@ const ChangeAppointentManager = ({
                           data.append("day", day);
                           data.append("hour", hour);
                           data.append("course_id", courseId);
-                          data.append(
-                            "crm_link",
-                            JSON.stringify(link).slice(1, -1)
-                          );
+                          data.append("crm_link", link);
                           data.append("phone", phone);
                           data.append("age", age);
                           data.append("manager_id", manager.id);

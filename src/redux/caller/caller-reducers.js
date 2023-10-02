@@ -155,7 +155,7 @@ const weekId = createReducer("", {
   [getCallerWeek.fulfilled]: (_, action) => action.payload.current_week_id,
 });
 
-const weekDate = createReducer("Sun Sep 1 1939 04:09:08 GMT+0300", {
+const weekDate = createReducer("Mon, 21 Aug 2023 04:09:08 GMT", {
   [getCallerCurrentWeek.fulfilled]: (_, action) =>
     action.payload.current_week_date_start,
   [getCallerWeek.fulfilled]: (_, action) =>
