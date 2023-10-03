@@ -25,15 +25,17 @@ const ChangeAppointment = ({
   weekId,
   slotId,
   messageInit,
+  age,
 }) => {
+  console.log("message", messageInit)
   const [isOpenPostpone, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
-  const [courseId, setCourses] = useState("");
-  const [message, setMessage] = useState("");
+  const [courseId, setCourses] = useState(course);
+  const [message, setMessage] = useState(messageInit);
   const [managerId, setManagerId] = useState(managerIdInit);
   const [managerName, setManagerName] = useState(manager);
-  const [age, setAge] = useState(0);
+  const [ageNew, setAge] = useState(age);
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [phone, setPhone] = useState("");
 
@@ -67,7 +69,7 @@ const ChangeAppointment = ({
         day={day}
         hour={hour}
         phone={phone}
-        age={age}
+        age={ageNew}
         slotId={slotId}
         weekId={weekId}
         message={message}
@@ -86,7 +88,7 @@ const ChangeAppointment = ({
               data.append("hour", hour);
               data.append("course_id", courseId);
               data.append("phone", phone);
-              data.append("age", age);
+              data.append("age", ageNew);
               data.append("manager_id", managerId);
               data.append("week_id", weekId);
               data.append("slot_id", slotId);
@@ -136,7 +138,7 @@ const ChangeAppointment = ({
                 courseId={courseId}
                 appointmentId={id}
                 link={link}
-                age={age}
+                age={ageNew}
                 phone={phone}
                 message={message}
               />
@@ -166,7 +168,7 @@ const ChangeAppointment = ({
                 title="Age:"
                 type="number"
                 name="age"
-                value={age}
+                value={ageNew}
                 placeholder="Age"
                 isRequired={true}
                 handler={setAge}

@@ -283,6 +283,8 @@ console.log("onSubmit()", onSubmit())
       data[0] !== 0 &&
       data[0] !== undefined
         ? data.map((item, i) => {
+          console.log("item.message", item)
+          console.log("comments", item.comments)
             return (
               <React.Fragment key={i}>
                 <Fade cascade triggerOnce duration={300} direction="up">
@@ -300,7 +302,8 @@ console.log("onSubmit()", onSubmit())
                     hour={item.hour}
                     slotId={item.slot_id}
                     number={item.phone}
-                    messageInit={item.message}
+                    messageInit={item.comments}
+                    age={item.age}
                   />
                   <div
                     className={styles.appointment}
