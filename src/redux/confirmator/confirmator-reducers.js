@@ -18,9 +18,7 @@ const INITIAL_WEEK = {
 
 const appointments = createReducer([], {
   [getCurrentConfirmator.fulfilled]: (_, { payload }) => payload.appointments,
-  [getConfirmatorWeek.fulfilled]: (_, { payload }) => {
-    console.log(payload.appointments);
-    return payload.appointments},
+  [getConfirmatorWeek.fulfilled]: (_, { payload }) => payload.appointments,
 });
 
 const date = createReducer(INITIAL_WEEK, {
