@@ -30,7 +30,7 @@ export default function AvaliableDatePicker() {
 
   const [date, setDate] = useState(new Date(tableDate));
 
-  const month = date.getMonth() < 10 + 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+  const month = date.getMonth() + 1 < 10  ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
   const dateDay = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
 
   const onClickArrowRight = () => {
