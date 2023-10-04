@@ -17,7 +17,7 @@ const path = {
   planning: "planning/",
   crm: "searchcrm/",
   statistics: "/statistics/",
-  postpone: "/confirmator/34/",
+  postpone: "/confirmator/23/",
   currentManagers: "/currentManagers/",
   currentManagersList: "/currentManagersList/",
   currentManagersTable: "/currentManagersTable/",
