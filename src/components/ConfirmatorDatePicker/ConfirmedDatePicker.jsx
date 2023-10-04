@@ -26,9 +26,10 @@ export default function ConfirmedDatePicker() {
   const tableDate = useSelector(getConfirmatorDate);
   const currentWeekId = useSelector(getConfirmatorWeekId);
   const currentDayId = useSelector(getConfirmatorDay);
-  const half = useSelector(getConfirmatorHalf);
+  //const half = useSelector(getConfirmatorHalf);
 
   const [date, setDate] = useState(new Date(tableDate));
+  const [half, setHalf] = useState(1);
 
   const month = date.getMonth() + 1 < 10  ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
   const dateDay = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -43,10 +44,14 @@ export default function ConfirmedDatePicker() {
     dispatch(decreaseDay());
   };
   const onFirstHalfHandler = () => {
+    setHalf(1);
     dispatch(firstHalf());
+    dispatch(getConfirmedWeek({ currentWeekId, currentDayId, half: 1 }));
   };
   const onSecondHalfHandler = () => {
+    setHalf(2);
     dispatch(secondHalf());
+    dispatch(getConfirmedWeek({ currentWeekId, currentDayId, half: 2 }));
   };
 
   useEffect(() => setDate(new Date(tableDate)), [tableDate]);
