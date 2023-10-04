@@ -54,11 +54,7 @@ export default function ConfirmedDatePicker() {
   useEffect(() => {
     if (!currentWeekId || !half || !tableDate || !date) return;
     dispatch(getConfirmedWeek({ currentWeekId, currentDayId, half }));
-  }, [date]);
-  useEffect(() => {
-    if (!currentWeekId || !half || !tableDate || !date) return;
-    dispatch(getConfirmedWeek({ currentWeekId, currentDayId, half }));
-  }, [half]);
+  }, [half, date]);
 
   return (
     <div className={styles.calendar_wrapper}>
