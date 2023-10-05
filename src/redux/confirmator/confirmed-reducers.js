@@ -7,6 +7,7 @@ import {
   getCurrentConfirmator,
   increaseDay,
   secondHalf,
+  resetDay,
 } from "./confirmator-operations";
 
 const INITIAL_WEEK = {
@@ -37,6 +38,7 @@ const date = createReducer(INITIAL_WEEK, {
     }
     return { ...state, day: state.day - 1 };
   },
+  [resetDay.type]: (state, _) => INITIAL_WEEK,
   [getCurrentConfirmator.fulfilled]: (_, { payload }) => ({
     date: payload.date,
     day: payload.day,

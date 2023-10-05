@@ -15,6 +15,7 @@ import {
   getConfirmatorWeek,
   increaseDay,
   secondHalf,
+  resetDay,
 } from "../../redux/confirmator/confirmator-operations";
 
 import { Fade } from "react-awesome-reveal";
@@ -52,6 +53,8 @@ export default function ConfirmatorDatePicker() {
     dispatch(secondHalf());
     dispatch(getConfirmatorWeek({ currentWeekId, currentDayId, half: 2 }));
   };
+
+  useEffect(() => {dispatch(resetDay());}, []);
 
   useEffect(() => setDate(new Date(tableDate)), [tableDate]);
 

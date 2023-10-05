@@ -7,6 +7,7 @@ import { error } from "@pnotify/core";
 import {
   DECREASE_DAY,
   FIRST_HALF,
+  RESET_DAY,
   GET_CURRENT_CONFIRMED,
   GET_WEEK_CONFIRMED,
   INCREASE_DAY,
@@ -17,7 +18,8 @@ defaults.delay = 1000;
 
 const getCurrentConfirmed = createAsyncThunk(
   GET_CURRENT_CONFIRMED,
-  (managerId, { rejectWithValue }) => {
+  (managerId, { rejectWithValue, dispatch }) => {
+    dispatch(resetDay())
     return getCurrentConfirmedData(managerId)
       .then(({ data }) => data)
       .catch((data) => {
@@ -41,6 +43,7 @@ const increaseDay = createAction(INCREASE_DAY);
 const decreaseDay = createAction(DECREASE_DAY);
 const firstHalf = createAction(FIRST_HALF);
 const secondHalf = createAction(SECOND_HALF);
+const resetDay = createAction(RESET_DAY);
 
 export {
   firstHalf,
@@ -49,4 +52,5 @@ export {
   increaseDay,
   getCurrentConfirmed,
   getConfirmedWeek,
+  resetDay,
 };

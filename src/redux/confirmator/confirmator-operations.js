@@ -6,6 +6,7 @@ import {
 import { error } from "@pnotify/core";
 import {
   DECREASE_DAY,
+  RESET_DAY,
   FIRST_HALF,
   GET_CURRENT_CONFIRMATOR,
   GET_WEEK_CONFIRMATOR,
@@ -17,7 +18,8 @@ defaults.delay = 1000;
 
 const getCurrentConfirmator = createAsyncThunk(
   GET_CURRENT_CONFIRMATOR,
-  (managerId, { rejectWithValue }) => {
+  (managerId, { rejectWithValue, dispatch }) => {
+    dispatch(resetDay())
     return getCurrentConfirmatorData(managerId)
       .then(({ data }) => data)
       .catch((data) => {
@@ -54,6 +56,7 @@ const increaseDay = createAction(INCREASE_DAY);
 const decreaseDay = createAction(DECREASE_DAY);
 const firstHalf = createAction(FIRST_HALF);
 const secondHalf = createAction(SECOND_HALF);
+const resetDay = createAction(RESET_DAY);
 
 export {
   firstHalf,
@@ -62,4 +65,5 @@ export {
   increaseDay,
   getCurrentConfirmator,
   getConfirmatorWeek,
+  resetDay,
 };
