@@ -183,7 +183,7 @@ const NewAppointment = ({
               setValue={setCourses}
               request={getCourses}
               label="course"
-              defaultValue="Select course"
+              defaultValue={courseId}
               title="Course:"
             />
             <FormInput
