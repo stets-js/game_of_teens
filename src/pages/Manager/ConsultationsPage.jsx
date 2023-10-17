@@ -26,6 +26,9 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import Days from "../../components/Days/Days";
 import DaysPicker from "../../components/DaysPicker/DaysPicker";
 
+import { isManagerLoading } from "../../redux/manager/manager-selectors";
+import { getCallerLoading } from "../../redux/caller/caller-selectors";
+
 console.log("start");
 const ConsultationPage = () => {
   console.log("Point0");
@@ -36,6 +39,9 @@ const ConsultationPage = () => {
   const weekId = useSelector(getWeekId);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   console.log(`currentDayIndex in the consult pager is ${currentDayIndex}`);
+
+  const managerLoading = useSelector(isManagerLoading);
+  const callerLoading = useSelector(getCallerLoading);
 
 
 //console.log("weekId  Consult-->>>",weekId,"managerId-", +managerId)
@@ -91,6 +97,7 @@ const ConsultationPage = () => {
   return (
     <section className={styles.tableSection}>
       <StatusDefinition />
+      {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
       <DatePicker tableDate={tableDate} changeDateFn={getManagerWorkWeek} />
       {window.innerWidth > 1160 ? (
         <Days />

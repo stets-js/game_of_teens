@@ -31,6 +31,9 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import Days from "../../components/Days/Days";
 import DaysPicker from "../../components/DaysPicker/DaysPicker";
 
+import { isManagerLoading } from "../../redux/manager/manager-selectors";
+import { getCallerLoading } from "../../redux/caller/caller-selectors";
+
 const PlanningPage = () => {
   const { managerId } = useParams();
   const managerTable = new FormData();
@@ -41,6 +44,10 @@ const PlanningPage = () => {
   const table = useSelector(getTable);
   const typeSelection = useSelector(getTypeSelection);
   const weekId = useSelector(getWeekId);
+
+  const managerLoading = useSelector(isManagerLoading);
+  const callerLoading = useSelector(getCallerLoading);
+
   const onSavedTemplate = () => {
     managerTable.append("template", JSON.stringify(table));
     managerTable.append(
@@ -183,6 +190,7 @@ const PlanningPage = () => {
   return (
     <section className={styles.tableSection}>
       <ControlButtons />
+      {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
       <DatePicker tableDate={tableDate} changeDateFn={getManagerWeek} />
       {window.innerWidth > 1160 ? (
         <Days />
