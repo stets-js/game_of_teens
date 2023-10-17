@@ -33,7 +33,7 @@ const NewAppointment = ({
 }) => {
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
-  const [courseId, setCourses] = useState("");
+  const [courseId, setCourses] = useState(3);
   const [manager, setManager] = useState("");
   const [appointment, setAppointment] = useState({});
   const [managerId, setManagerId] = useState("");
@@ -183,7 +183,7 @@ const NewAppointment = ({
               setValue={setCourses}
               request={getCourses}
               label="course"
-              defaultValue={courseId}
+              defaultValue="Select course"
               title="Course:"
             />
             <FormInput
