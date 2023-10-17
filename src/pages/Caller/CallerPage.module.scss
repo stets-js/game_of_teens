@@ -21,6 +21,8 @@
   margin: 0 auto;
   text-align: center;
   margin-bottom: 72px;
+
+  position: relative;
 }
 
 .verticalLine {
@@ -122,4 +124,14 @@
   font-size: 26px;
   font-family: $poppins;
   margin-bottom: 8px;
+}
+
+.loadingBackdrop {
+width: 100%;
+height: 100%;
+background-color:rgba(255, 255, 255, 0.7);
+transition: backdrop-filter 0.2s;
+backdrop-filter: blur(50px) grayscale(100%) opacity(50%);
+position: absolute;
+z-index: 11000;
 }

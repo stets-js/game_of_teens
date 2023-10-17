@@ -17,6 +17,10 @@ import {
   getWeekId,
 } from "../../redux/caller/caller-selectors";
 import { getCallerCurrentWeek, getCallerWeek } from "../../redux/caller/caller-operations";
+
+import { isManagerLoading } from "../../redux/manager/manager-selectors";
+import { getCallerLoading } from "../../redux/caller/caller-selectors";
+
 export default function CallerPage() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
@@ -26,6 +30,10 @@ export default function CallerPage() {
   const { callerId } = useParams();
   const [callerName, setCallerName] = useState("");
   console.log("tableDate",tableDate)
+
+  const managerLoading = useSelector(isManagerLoading);
+  const callerLoading = useSelector(getCallerLoading);
+
   useEffect(() => {
     dispatch(getCallerCurrentWeek(+callerId));
     getUserById(+callerId)
@@ -53,6 +61,7 @@ export default function CallerPage() {
           <span className={styles.free__span}>--</span> - number of free places
         </p>
         <section className={styles.tableSection}>
+          {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
           <DatePicker changeDateFn={getCallerWeek} tableDate={tableDate} caller />
          {window.innerWidth > 1160 ? (
         <Days caller />

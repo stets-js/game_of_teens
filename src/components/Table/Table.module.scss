@@ -13,11 +13,14 @@
 }
 
 .spinner {
-    width: 57px;
-    top: 5px;
-    left: 5px;
+    height:130px;
+    width: 130px;
+    color: #999DFF;
+    top: 20vh;
+    left: 50%;
     position: absolute;
-    z-index: 999;
+    z-index: 110001;
+    transform: translateX(-50%)
 }
 
 .wrapperTable {

@@ -27,7 +27,7 @@ const Table = ({
     <div className={styles.wrapperTable}>
       {(managerLoading || callerLoading) && (
         <div className={styles.spinner}>
-          <TailSpin height="57" width="57" color="#999DFF" />
+          <TailSpin height="130px" width="130px" color="#999DFF" />
         </div>
       )}
       <ul className={styles.table}>
