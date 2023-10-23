@@ -25,21 +25,34 @@ export default function UsersPage() {
   const handleClose = () => {
     setIsOpen(!isOpen);
   };
-  const getUsersData = async () => {
-    const res = [];
-    const resUsers = await getUsers().then((res) =>
-      res.users.filter((item) => item.role_id > 2)
-    );
-    const resManagers = await getUsers().then((res) =>
-      res.users.filter((item) => (item.role_id === 2))
-    );
-    res.push(...resUsers);
-    res.push(...resManagers);
-    return setData(res);
-  };
 
+  // const getUsersData = async () => {
+  //   const res = [];
+  //   const resUsers = await getUsers().then((res) =>
+  //     res.users.filter((item) => item.role_id > 2)
+  //   );
+  //   const resManagers = await getUsers().then((res) =>
+  //     res.users.filter((item) => (item.role_id === 2))
+  //   );
+  //   res.push(...resUsers);
+  //   res.push(...resManagers);
+  //   return setData(res);
+  // };
+
+  // useEffect(() => {
+  //   getUsersData();
+  // }, [isOpen]);
   useEffect(() => {
-    getUsersData();
+    const fetchData = async () => {
+      const res = await getUsers();
+      const users = res.users.filter((item) => item.role_id > 2);
+      const managers = res.users.filter((item) => item.role_id === 2);
+      setData([...users, ...managers]);
+    };
+
+    if (isOpen) {
+      fetchData();
+    }
   }, [isOpen]);
 
   const screenWidth = window.innerWidth;

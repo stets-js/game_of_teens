@@ -31,35 +31,49 @@ const ChangeAppointentManager = ({
   const [date, setDate] = useState("");
   const [managersList, setManagers] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getDateByWeekId(weekId, day);
+  //       console.log("result.date",result.date);
+  //       setDate(result.date);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [day, weekId]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getManagersByCourse(courseId, date, hour);
+  //       setManagers(result.managers);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [courseId, date, hour]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getDateByWeekId(weekId, day);
-        console.log("result.date",result.date);
-        setDate(result.date);
+        console.log("result.date", result.date);
+        const date = result.date;
+
+        
+        const managers = await getManagersByCourse(courseId, date, hour);
+        setManagers(managers.managers);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, [day, weekId]);
+  }, [day, weekId, courseId, hour]);
 
-  console.log("day and weekid",day, weekId);
-   console.log("date",date);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getManagersByCourse(courseId, date, hour);
-        setManagers(result.managers);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [courseId, date, hour]);
-
-  console.log("managerList",managersList);
 
   return (
     <>
