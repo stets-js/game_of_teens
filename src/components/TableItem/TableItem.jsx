@@ -19,6 +19,7 @@ const TableItem = ({
   onPostpone,
   postponed,
   slots,
+  handleReload,
 }) => {
 
 
@@ -122,6 +123,7 @@ const TableItem = ({
                 isOpen={isOpen}
                 weekId={weekId}
                 handleClose={() => setIsOpen(!isOpen)}
+                handleReload={handleReload}
               />
             )}
           </>
@@ -152,6 +154,7 @@ const TableItem = ({
                 isOpen={isOpen}
                 weekId={weekId}
                 handleClose={() => setIsOpen(!isOpen)}
+                handleReload={handleReload}
               />
             )}
           </>

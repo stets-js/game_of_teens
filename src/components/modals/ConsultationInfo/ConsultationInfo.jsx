@@ -31,6 +31,7 @@ const ConsultationInfo = ({
   slotId,
   dayIndex,
   hourIndex,
+  handleReload,
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -50,13 +51,13 @@ const ConsultationInfo = ({
   //   get().then((data) => setAppointment(data.data));
   // }, []);
  
+
   useEffect(() => {
     if (isOpen) {
       const get = async () => await getAppointment({ id: slotId });
       get().then((data) => setAppointment(data.data));
     }
   }, [isOpen]);
-
 
   const cancelConfConsultOnClickFn = () => {
     delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
@@ -65,6 +66,7 @@ const ConsultationInfo = ({
           text: "Succesfully deleted.",
         });
         handleClose();
+        handleReload();
       })
       .catch(() => {
         // Handle error
@@ -72,6 +74,7 @@ const ConsultationInfo = ({
           text: "Something went wrong",
         });
         handleClose();
+        handleReload();
       });
   };
 

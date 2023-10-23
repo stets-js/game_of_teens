@@ -17,10 +17,11 @@ const Table = ({
   caller,
   onPostpone,
   isAppointment,
+  handleReload,
 }) => {
   
 
-  useEffect(() => {});
+  // useEffect(() => {});
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
   return (
@@ -63,6 +64,7 @@ const Table = ({
                     consultation
                     slotId={item.slot_id}
                     onClickBtnStart={() => onClickSlotFn(dayIndex, hourIndex)}
+                    handleReload={handleReload}
                   />
                 ) : (
                   <TableItem

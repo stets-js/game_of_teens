@@ -29,16 +29,15 @@ import DaysPicker from "../../components/DaysPicker/DaysPicker";
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
 
-console.log("start");
+
 const ConsultationPage = () => {
-  console.log("Point0");
+  const [reload, setReload] = useState(false);
   const { managerId } = useParams();
   const dispatch = useDispatch();
   const tableDate = useSelector(getDate);
   const table = useSelector(getTable);
   const weekId = useSelector(getWeekId);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
-  console.log(`currentDayIndex in the consult pager is ${currentDayIndex}`);
 
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
@@ -52,9 +51,9 @@ const ConsultationPage = () => {
   }
 
   const onClickSlotButton = (dayIndex, hourIndex) => {
-    console.log("Point1");
+    
     dispatch(setManagerLoading(true));
-    console.log("Point2");
+    
     return postStartConsultation(
       weekId,
       dayIndex,
@@ -77,23 +76,18 @@ const ConsultationPage = () => {
                 colorId: 6,
               })
             );
-            console.log("Point3");
           })
           .catch((error) => dispatch(setManagerError(error.message)));
       })
       .catch((error) => dispatch(setManagerError(error.message)))
       .finally(() => dispatch(setManagerLoading(false)));
   };
-  console.log("Point01");
+  
   useEffect(() => {
-    console.log("use Effect");
     dispatch(getManagerCurrentWorkWeek(+managerId));
-  }, [dispatch, managerId]);
-  {
-    window.innerWidth > 1160
-      ? console.log(table)
-      : console.log(table[currentDayIndex]);
-  }
+  }, [dispatch, managerId, reload]);
+
+  
   return (
     <section className={styles.tableSection}>
       <StatusDefinition />
@@ -105,7 +99,7 @@ const ConsultationPage = () => {
         <DaysPicker setDayIndex={setDayIndex} />
       )}
       {window.innerWidth > 1160 ? (
-        <Table table={table} weekId={weekId} consultation onClickSlotFn={onClickSlotButton} />
+        <Table table={table} weekId={weekId} consultation handleReload={()=> setReload(!reload)} onClickSlotFn={onClickSlotButton} />
       ) : (
         <DayTable
           table={table[currentDayIndex]}
@@ -117,5 +111,6 @@ const ConsultationPage = () => {
     </section>
   );
 };
-console.log("start02");
+
+
 export default ConsultationPage;

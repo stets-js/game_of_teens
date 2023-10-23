@@ -164,6 +164,7 @@ const PlanningPage = () => {
         break;
     }
   };
+
   useEffect(() => {
     dispatch(getManagerCurrentWeek(+managerId));
     getWeekTable(+managerId)
@@ -182,11 +183,13 @@ const PlanningPage = () => {
         return dispatch(setManagerError(error.message));
       });
   }, [dispatch, managerId]);
+
   const activeClassnames = (templateText) => {
     return classNames(styles.tableButton, {
       [styles.tableButtonDisabled]: templateText === "No template",
     });
   };
+  
   return (
     <section className={styles.tableSection}>
       <ControlButtons />

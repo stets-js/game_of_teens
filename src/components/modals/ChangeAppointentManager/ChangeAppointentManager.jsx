@@ -8,6 +8,7 @@ import {
 import { putAppointment } from "../../../helpers/appointment/appointment";
 import Modal from "../../Modal/Modal";
 import { info, success, error } from "@pnotify/core";
+import { TailSpin } from "react-loader-spinner";
 
 const ChangeAppointentManager = ({
   isOpen,
@@ -87,7 +88,10 @@ const ChangeAppointentManager = ({
         <h1>Select new manager</h1>
 
         {managersList.length === 0 ? (
-          <h2 className={styles.noManagersButton}>No managers available</h2>
+          <div className={styles.noManagersLoadingWrapper}>
+          <h2 className={styles.noManagersButton}>Loading managers...</h2>
+          <TailSpin height="50px" width="50px" color="#999DFF" />
+          </div>
         ) : (
           <div className={styles.managersListBox}>
             {managersList.map((manager) => (

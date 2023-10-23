@@ -11,11 +11,19 @@
 }
 
 .noManagersButton{
-    margin-top: 25px;
     font-weight: 400;
 }
 
 .managersListBox{
     overflow-y: auto;
     max-height: 560px;
+}
+
+.noManagersLoadingWrapper{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
 }

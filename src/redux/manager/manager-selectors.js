@@ -3,7 +3,6 @@ const getTable = (state) => state.manager.week.slots;
 const getTypeSelection = (state) => state.manager.typeActionSelection;
 const getManagerId = (state) => state.manager.managerId;
 const getWeekId = (state) => {
-  console.log(state)
   return(state.manager.week.weekId)
 };
 const getSavedTemplateText = (state) => state.manager.savedTemplate.text;
