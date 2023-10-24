@@ -11,7 +11,7 @@ const getCurrentConfirmedData = () => {
 
 const getConfirmedWeekData = (weekId, dayId, halfId) => {
   return axios
-    .get(`/get_confirmed/${weekId}/${dayId}/${halfId}`)
+    .get(`/get_confirmed/${weekId}/${dayId}/${halfId}/`)
     .then((res) => res.data)
     .catch((error) => {
       throw error;
