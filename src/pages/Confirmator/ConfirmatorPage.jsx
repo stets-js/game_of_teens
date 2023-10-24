@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TailSpin } from "react-loader-spinner";
 import styles from "./ConfirmatorPage.module.scss";
 import BgWrapper from "../../components/BgWrapper/BgWrapper";
 import Confirmator from "../../components/Confirmation/Confirmation";
@@ -10,13 +11,16 @@ import { getCurrentConfirmator } from "../../redux/confirmator/confirmator-opera
 import ConfirmatorComments from "../../components/ConfirmatorComments/ConfirmatorComments";
 import ConfirmatorDatePicker from "../../components/ConfirmatorDatePicker/ConfirmatorDatePicker";
 import { getUserById } from "../../helpers/user/user";
-import { getConfirmatorAppointments } from "../../redux/confirmator/confirmator-selectors";
+import { getConfirmatorLoadings } from "../../redux/confirmator/confirmator-selectors";
+
 
 const ConfirmatorPage = () => {
   const [value, setValue] = useState("");
   const { confirmatorId } = useParams();
   const [confirmatorName, setConfirmatorName] = useState("");
-  const appointments = useSelector(getConfirmatorAppointments);
+  
+
+  const loading = useSelector(getConfirmatorLoadings);
 
   const dispatch = useDispatch();
 
@@ -29,7 +33,7 @@ const ConfirmatorPage = () => {
       .catch((err) => {
         throw err;
       });
-  }, []);
+  }, [confirmatorId, dispatch]);
 
   return (
     <>
@@ -42,12 +46,12 @@ const ConfirmatorPage = () => {
       />
 
       <BgWrapper top={-200} title="Confirmator" />
-      <ConfirmatorDatePicker />
       <section className={styles.tableSection}>
+      {loading && <div className={styles.spinnerWrapper}><div className={styles.spinner}><TailSpin height="130px" width="130px" color="#999DFF" /></div></div>}
+      <ConfirmatorDatePicker />
+      
         <h2 className={styles.title}>Confirmation</h2>
-        {appointments.length === 0 ? (
-          <h2 className={styles.errorTitle}>Nothing to confirm yet</h2>
-        ) : (
+        
           <div className={styles.table__wrapper}>
             <Confirmator />
 
@@ -58,7 +62,7 @@ const ConfirmatorPage = () => {
               <ConfirmatorComments value={value} />
             </div>
           </div>
-        )}
+        
       </section>
     </>
   );

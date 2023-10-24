@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TailSpin } from "react-loader-spinner";
 import styles from "./ConfirmatorPage.module.scss"; //Оформлення
 import BgWrapper from "../../components/BgWrapper/BgWrapper"; //Елемент сторінки
 import Confirmator from "../../components/Confirmation/Confirmed";  // структурвання виводу
@@ -10,14 +11,15 @@ import { getCurrentConfirmed } from "../../redux/confirmator/confirmed-operation
 import ConfirmatorComments from "../../components/ConfirmatorComments/ConfirmatorComments";  // коментарі 
 import ConfirmedDatePicker from "../../components/ConfirmatorDatePicker/ConfirmedDatePicker"; // дата пікер
 import { getUserById } from "../../helpers/user/user";  // отримаємо менеджерів
-import { getConfirmedAppointments } from "../../redux/confirmator/confirmed-selectors"; // загальна проброска типів
+import { getConfirmatorLoadings } from "../../redux/confirmator/confirmed-selectors"; // загальна проброска типів
 
 const ConfirmedPage = () => {
   const [value, setValue] = useState("");
   const { confirmatorId } = useParams();
   const [confirmatorName, setConfirmatorName] = useState("");
-  const appointments = useSelector(getConfirmedAppointments);
-  //console.log(appointments);
+  
+  const loading = useSelector(getConfirmatorLoadings);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const ConfirmedPage = () => {
       .catch((err) => {
         throw err;
       });
-  }, []);
+  }, [confirmatorId, dispatch]);
 
   return (
     <>
@@ -42,12 +44,12 @@ const ConfirmedPage = () => {
       user={{ name: confirmatorName, role: "Confirmator" }} />
 
       <BgWrapper top={-200} title="Confirmed" />
-      <ConfirmedDatePicker />
       <section className={styles.tableSection}>
+      {loading && <div className={styles.spinnerWrapper}><div className={styles.spinner}><TailSpin height="130px" width="130px" color="#999DFF" /></div></div>}
+      <ConfirmedDatePicker />
+      
         <h2 className={styles.title}>Confirmation</h2>
-        {appointments.length === 0 ? (
-          <h2 className={styles.errorTitle}>Nothing to confirm yet</h2>
-        ) : (
+       
           <div className={styles.table__wrapper}>
             <Confirmator />
 
@@ -58,7 +60,8 @@ const ConfirmedPage = () => {
               <ConfirmatorComments value={value} />
             </div>
           </div>
-        )}
+        
+      
       </section>
     </>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { TailSpin } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import {
   setCancelConfirmation,
@@ -8,12 +7,10 @@ import {
 import styles from "../../pages/Confirmator/ConfirmatorPage.module.scss";
 import {
   getConfirmatorAppointments,
-  getConfirmatorLoadings,
 } from "../../redux/confirmator/confirmator-selectors";
 
 const ConfirmatorComments = ({ value }) => {
   const appointments = useSelector(getConfirmatorAppointments);
-  const loading = useSelector(getConfirmatorLoadings);
   const [reject, setReject] = useState({});
   const [confirm, setConfirm] = useState("");
 
@@ -36,7 +33,6 @@ const ConfirmatorComments = ({ value }) => {
   }, [reject]);
   return (
     <>
-      {loading && <TailSpin height="57" width="57" color="#999DFF" />}
       {appointments.map((item) => (
         <div key={item.appointment_id} className={styles.comment__wrapper}>
           {value[item.appointment_id] === "confirmed" && (

@@ -12,6 +12,10 @@ const Confirmator = () => {
     `${i.hour}:00, ${i.course}, ${i.manager_name}, ${i.phone}`;
 
   return (
+    <>
+    {appointments.length === 0 ? (
+      <h2 className={styles.errorTitle}>Nothing to confirm yet</h2>
+    ) : (
     <ul className={styles.wrapper}>
     <Fade cascade duration={200}>
         {appointments.map((i) => {
@@ -28,6 +32,8 @@ const Confirmator = () => {
         })}
     </Fade>
     </ul>
+  )}
+  </>
   );
 };
 
