@@ -62,6 +62,7 @@ const ChangeAppointentManager = ({
       try {
         const result = await getDateByWeekId(weekId, day);
         console.log("result.date", result.date);
+        setDate(result.date)
         const date = result.date;
 
         
