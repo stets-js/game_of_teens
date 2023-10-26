@@ -59,6 +59,8 @@ const ConsultationInfo = ({
     }
   }, [isOpen]);
 
+  console.log("appointment for form--->", appointment)
+
   const cancelConfConsultOnClickFn = () => {
     delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
       .then(() => {
@@ -145,9 +147,9 @@ const ConsultationInfo = ({
             </label>
             <Select
               title="Course:"
-              value={course}
               request={getCourses}
               setValue={setCourse}
+              value={course || appointment.course_id}
               defaultValue="Select course"
             />
 
@@ -173,7 +175,7 @@ const ConsultationInfo = ({
               <p className={styles.input__label}>Message</p>
               <textarea
                 className={styles.textarea}
-                value={message}
+                value={message || appointment.comments}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </label>
