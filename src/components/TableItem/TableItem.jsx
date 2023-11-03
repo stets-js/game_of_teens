@@ -20,6 +20,7 @@ const TableItem = ({
   postponed,
   slots,
   handleReload,
+  courseId,
 }) => {
 
 
@@ -92,6 +93,7 @@ const TableItem = ({
               hourIndex={hourIndex}
               slotId={slotId}
               handleClose={() => setIsOpen(!isOpen)}
+              courseIdx={courseId}
             />
           )}
         </>

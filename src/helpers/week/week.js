@@ -25,6 +25,19 @@ const getCallerCurrentWeek2 = () => {
       throw err;
     });
 };
+/////////
+const getCallerCurrentWeek3 = (courseId) => {
+  return axios
+    .get(`/caller_current_week/${courseId}`)
+    .then((res) => res.data)
+    .catch((err) => {
+      error(
+        `${err.response.data.message ? err.response.data.message : err.message}`
+      );
+      throw err;
+    });
+};
+/////////
 const getCallerWorkWeek = (weekId) => {
   return axios
     .get(`/get_caller_week/${weekId}`)
@@ -33,6 +46,17 @@ const getCallerWorkWeek = (weekId) => {
       throw error;
     });
 };
+
+///////////////////////
+const getCallerWorkWeekByCourse = (weekId, courseId) => {
+  return axios
+    .get(`/get_caller_week/${weekId}/${courseId}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+//////////////////////
 
 const getWeek = (managerId, weekId) => {
   return axios
@@ -116,4 +140,6 @@ export {
   getWorkWeek,
   getCallerWorkWeek,
   getWeekIdByTableDate,
+  getCallerWorkWeekByCourse,
+  getCallerCurrentWeek3,
 };

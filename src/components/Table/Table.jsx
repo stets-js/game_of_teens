@@ -18,6 +18,7 @@ const Table = ({
   onPostpone,
   isAppointment,
   handleReload,
+  courseId,
 }) => {
   
 
@@ -53,6 +54,7 @@ const Table = ({
                     dayIndex={dayIndex}
                     slots={item?.slots}
                     onPostpone={onPostpone}
+                    courseId={courseId}
                   />
                 ) : consultation ? (
                   <TableItem

@@ -15,6 +15,8 @@ import {
   updateSlot,
   getCallerWorkWeek,
   getCurrentWorkWeek,
+  getCallerWorkWeekByCourse,
+  getCallerCurrentWeek3,
 } from "../../helpers/week/week";
 import { defaults } from "@pnotify/core";
 defaults.delay = 1000;
@@ -42,6 +44,26 @@ const getCallerCurrentWeek = createAsyncThunk(
   }
 );
 
+/////////
+const getCallerCurrentWeekByCourse = createAsyncThunk(
+  GET_WEEK,
+  (courseId, { rejectWithValue }) => {
+    return getCallerCurrentWeek3(courseId)
+      .then((data) => data)
+      .catch((data) => {
+        error(
+          `${
+            data.response.data.message
+              ? data.response.data.message
+              : data.message
+          }`
+        );
+        return rejectWithValue(data.message);
+      });
+  }
+);
+/////////
+
 const getCallerWeek = createAsyncThunk(
   GET_WEEK,
   ({ weekId }, { rejectWithValue }) => {
@@ -59,6 +81,24 @@ const getCallerWeek = createAsyncThunk(
       });
   }
 );
+
+// //////////////////
+const getCallerWeekByCourse = createAsyncThunk(
+  GET_WEEK,
+  ({ weekId, courseId }, { rejectWithValue }) => {
+    try {
+      const response = getCallerWorkWeekByCourse(weekId, courseId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  }
+);
+/////////////////////
 
 const getCallerTable = createAsyncThunk(
   GET_TABLE,
@@ -121,4 +161,6 @@ export {
   setCallerLoading,
   getCallerWeek,
   getCallerTable,
+  getCallerWeekByCourse,
+  getCallerCurrentWeekByCourse,
 };

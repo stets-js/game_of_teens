@@ -18,7 +18,7 @@ import Form from "../../Form/Form";
 import FormInput from "../../FormInput/FormInput";
 import DropList from "../../DropList/DropList";
 import { useDispatch } from "react-redux";
-import { getCallerWeek } from "../../../redux/caller/caller-operations";
+import { getCallerWeek, getCallerWeekByCourse } from "../../../redux/caller/caller-operations";
 import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointentManager";
 
 const NewAppointment = ({
@@ -29,11 +29,11 @@ const NewAppointment = ({
   dayIndex,
   slotId,
   hourIndex,
-  
+  courseIdx,
 }) => {
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
-  const [courseId, setCourses] = useState(3);
+  const [courseId, setCourses] = useState(courseIdx);
   const [manager, setManager] = useState("");
   const [appointment, setAppointment] = useState({});
   const [managerId, setManagerId] = useState("");
@@ -54,7 +54,7 @@ const NewAppointment = ({
 
 
   useEffect(() => {
-    !isOpen && dispatch(getCallerWeek({ weekId }));
+    !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseIdx }));
   }, [isOpen, dispatch]);
 
   // useEffect(() => {

@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
   const [name, setName] = useState("");
-  const [telegram, setTelegram] = useState("");
+  const [rating, setRating] = useState("");
   const [managers, setManagers] = useState(data);
   const [id, setId] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -155,7 +155,7 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
                                 setIsOpen(!isOpen);
                                 setId(item.id);
                                 setName(item.name);
-                                setTelegram(item.telegram);
+                                setRating(item.rating);
                                 if (!item.role_id) setRole(2);
                                 else {
                                   setRole(item.role_id);
@@ -178,7 +178,7 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
         handleClose={() => setIsOpen(!isOpen)}
         id={id}
         dataName={name}
-        dataDesc={telegram}
+        dataDesc={rating}
         administrator={isAdmin}
         dataRole={newRole}
         dataLogin={newLogin}

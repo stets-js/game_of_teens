@@ -9,7 +9,7 @@ import Form from "../../Form/Form";
 
 const NewUser = ({ isOpen, handleClose, isAdmin }) => {
   const [name, setName] = useState("");
-  const [telegram, setTelegram] = useState("");
+  const [rating, setRating] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(2);
@@ -25,12 +25,12 @@ const NewUser = ({ isOpen, handleClose, isAdmin }) => {
             onSubmit={() => {
               handleClose();
               setRole(2);
-              setTelegram("");
+              setRating("");
               setPassword("");
               setLogin("");
               setName("");
             }}
-            telegram={telegram}
+            rating={rating}
             login={login}
             password={password}
             role_id={role}
@@ -51,14 +51,14 @@ const NewUser = ({ isOpen, handleClose, isAdmin }) => {
               handler={setName}
             />
             <FormInput
-              title="Telegram username:"
+              title="Rating:"
               type="text"
-              name="telegram"
+              name="rating"
               max={50}
-              value={telegram}
-              placeholder="Telegram username"
+              value={rating}
+              placeholder="Rating"
               isRequired={true}
-              handler={setTelegram}
+              handler={setRating}
             />
 
             <div className={styles.input__block}>

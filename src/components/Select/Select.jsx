@@ -16,6 +16,7 @@ const Select = ({
   manager,
 }) => {
   const [data, setData] = useState([]);
+
   const getData = async () => {
     const res = await request()
       .then((res) => res.data)
@@ -28,6 +29,7 @@ const Select = ({
     setData(res);
     return res;
   };
+
   useEffect(() => {
     if (type === "no-request") {
       return;
@@ -35,6 +37,7 @@ const Select = ({
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
   return (
     <label className={styles.input__label}>
       <p className={classnames(styles.input__title, classname)}>{title}</p>

@@ -65,7 +65,7 @@ const ChangeUser = ({
               setLogin("");
               setName("");
             }}
-            telegram={desc}
+            rating={desc}
             login={login}
             status={{
               successMessage: "Successfully changed user",
@@ -88,12 +88,12 @@ const ChangeUser = ({
               handler={setName}
             />
             <FormInput
-              title="Telegram username:"
+              title="Rating:"
               type="text"
               max={50}
               name="username"
               value={desc}
-              placeholder="Telegram username"
+              placeholder="Rating"
               isRequired={true}
               handler={setDesc}
             />

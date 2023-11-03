@@ -9,7 +9,7 @@ import { Fade } from "react-awesome-reveal";
 
 import { getWeekId } from "../../redux/manager/manager-selectors";
 
-const DatePicker = ({ tableDate, changeDateFn, caller }) => {
+const DatePicker = ({ tableDate, changeDateFn, caller, courseId }) => {
   const { managerId } = useParams();
   const dispatch = useDispatch();
   const currentWeekId = useSelector(getWeekId);
@@ -27,7 +27,7 @@ const DatePicker = ({ tableDate, changeDateFn, caller }) => {
     setDate(moment(date).add(7, "days")._d);
     weekId += 1;
     caller
-      ? dispatch(changeDateFn({ weekId }))
+      ? dispatch(changeDateFn({ weekId, courseId }))
       : dispatch(changeDateFn({ managerId, weekId }));
   };
 
@@ -35,7 +35,7 @@ const DatePicker = ({ tableDate, changeDateFn, caller }) => {
     setDate(moment(date).subtract(7, "days")._d);
     weekId -= 1;
     caller
-      ? dispatch(changeDateFn({ weekId }))
+      ? dispatch(changeDateFn({ weekId, courseId }))
       : dispatch(changeDateFn({ managerId, weekId }));
   };
   useEffect(() => {
