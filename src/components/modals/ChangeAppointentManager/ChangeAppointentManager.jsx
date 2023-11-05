@@ -64,10 +64,8 @@ const ChangeAppointentManager = ({
         console.log("result.date", result.date);
         setDate(result.date)
         const date = result.date;
-
-        
         const managers = await getManagersByCourse(courseId, date, hour);
-        setManagers(managers.managers);
+        setManagers(managers.managers.sort((a, b) => b.rating - a.rating));
       } catch (error) {
         console.error(error);
       }
