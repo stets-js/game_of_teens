@@ -32,19 +32,16 @@ export default function CallerPage() {
   const weekId = useSelector(getWeekId);
   const { callerId } = useParams();
   const [callerName, setCallerName] = useState("");
-  console.log("tableDate",tableDate)
-
+  
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
 
   const [courseId, setCourses] = useState(3);
 
     useEffect(() => {
-    console.log("weekid-->", weekId)
     //dispatch(getCallerCurrentWeek(+callerId));
     dispatch(getCallerCurrentWeekByCourse(courseId));
     //dispatch(getCallerWeekByCourse({ weekId, courseId }));
-    console.log("weekid after-->", weekId)
 
     getUserById(+callerId)
       .then((data) => {

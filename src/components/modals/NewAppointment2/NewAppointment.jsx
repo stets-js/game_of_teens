@@ -54,7 +54,8 @@ const NewAppointment = ({
 
 
   useEffect(() => {
-    !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId }));
+    console.log("courseIdx-->>>",+courseIdx)
+    !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
   }, [isOpen, dispatch]);
 
   // useEffect(() => {
@@ -107,7 +108,7 @@ const NewAppointment = ({
                 weekId,
                 dayIndex,
                 hourIndex,
-                courseId,
+                courseIdx,
                 phone,
                 age,
                 message
@@ -168,7 +169,7 @@ const NewAppointment = ({
                 weekId={weekId}
                 day={dayIndex}
                 hour={hourIndex}
-                courseId={courseId}
+                courseId={courseIdx}
                 appointmentId={appointment.id}
                 link={link}
                 age={age}
@@ -179,7 +180,7 @@ const NewAppointment = ({
 
             <Select
               classname={styles.select__label}
-              value={courseId}
+              value={courseIdx}
               setValue={setCourses}
               request={getCourses}
               label="course"
