@@ -54,7 +54,6 @@ const NewAppointment = ({
 
 
   useEffect(() => {
-    console.log("courseIdx-->>>",+courseIdx)
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
   }, [isOpen, dispatch]);
 
