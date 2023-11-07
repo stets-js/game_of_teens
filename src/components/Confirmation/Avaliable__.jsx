@@ -6,7 +6,7 @@ import styles from "./Confirmation.module.scss";
 
 import { Fade } from "react-awesome-reveal";
 
-let path = "https://sunny-praline-88d512.netlify.app/manager/"
+let path = "https://booking-goiteens.netlify.app//manager/"
 let endpath = "/consultations/"
 
 const Avaliable = () => {

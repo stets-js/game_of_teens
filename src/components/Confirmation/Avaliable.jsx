@@ -27,7 +27,7 @@ const Avaliable = () => {
                 <div className={styles.hour_line}>
                   {i.map((j, ind, { length }) => {
                     const link_str =
-                      "https://sunny-praline-88d512.netlify.app/manager/" +
+                      "https://booking-goiteens.netlify.app/manager/" +
                       j.appointment_id +
                       "/planning/";
 

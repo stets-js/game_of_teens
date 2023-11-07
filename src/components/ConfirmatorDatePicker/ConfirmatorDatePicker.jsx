@@ -28,6 +28,8 @@ export default function ConfirmatorDatePicker() {
   const currentDayId = useSelector(getConfirmatorDay);
   //const half = useSelector(getConfirmatorHalf);
 
+  console.log("tableDate: ", tableDate)
+
   const [date, setDate] = useState(new Date(tableDate));
   const [half, setHalf] = useState(1);
   
