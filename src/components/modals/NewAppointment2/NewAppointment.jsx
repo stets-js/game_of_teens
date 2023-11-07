@@ -216,7 +216,7 @@ const NewAppointment = ({
                 max={13}
                 value={phone}
                 placeholder="Phone number"
-                isRequired={true}
+                isRequired={false}
                 handler={setPhone}
               />
             </div>
