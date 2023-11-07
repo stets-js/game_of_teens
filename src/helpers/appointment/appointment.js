@@ -53,7 +53,7 @@ const createAppointment = (
 ) => {
   return axios
     .post(
-      `/create_appointment/${weekId}/${dayIndex}/${time}/${courseId}/${phone}/${age}/${managerId}/${
+      `/create_appointment/${weekId}/${dayIndex}/${time}/${courseId}/${phone ? phone : "0"}/${age}/${managerId}/${
         message ? message : "0"
       }`,
       link

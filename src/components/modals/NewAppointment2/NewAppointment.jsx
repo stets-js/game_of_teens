@@ -211,12 +211,12 @@ const NewAppointment = ({
                 width="70%"
                 classname="input__bottom__phone"
                 title="Phone Number:"
-                type="Phone"
+                type="text"
                 name="Phone"
                 max={13}
                 value={phone}
                 placeholder="Phone number"
-                isRequired={false}
+                // isRequired={true}
                 handler={setPhone}
               />
             </div>
