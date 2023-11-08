@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://goiteens-booking-system.herokuapp.com/";
+//axios.defaults.baseURL = "https://goiteens-booking-system.herokuapp.com/";
+axios.defaults.baseURL = "https://booking-goiteens.netlify.app";
 let path = "https://booking-goiteens.netlify.app/manager/"
 let endpath = "/consultations/"
 
