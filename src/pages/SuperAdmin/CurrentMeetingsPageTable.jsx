@@ -35,7 +35,7 @@ function CurrentMeetingsPageTable() {
   const [date, setDate] = useState("");
 
   async function getTableData(day, month, year) {
-    const resManagers = await getCurrentAppointments(day, month, year).then(
+    const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
       (res) => res.data
     );
     setDate(`${day}.${month}.${year}`);
