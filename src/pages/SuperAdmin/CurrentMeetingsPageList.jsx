@@ -10,7 +10,7 @@ import SortByBox from "../../components/SortByBox/SortByBox";
 
 import {
   getCurrentAppointments,
-  getWeekId,
+  getWeekId2,
 } from "../../helpers/manager/manager";
 
 function CurrentMeetingsPageList() {
@@ -59,7 +59,7 @@ function CurrentMeetingsPageList() {
       (res) => res.data
     );
     setDate(`${day}.${month}.${year}`);
-    const resWeekId = await getWeekId(day, month, year).then((res) => res);
+    const resWeekId = await getWeekId2(day, month, year).then((res) => res);
     setCurrentTableData(resManagers);
     setIsRenderTableAvailable(true);
     setCureentTableDataWeekId(resWeekId);

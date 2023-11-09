@@ -72,6 +72,14 @@ const getWeekId = (day, month, year) => {
       throw error;
     });
 };
+const getWeekId2 = (day, month, year) => {
+  return axios
+    .get(`/get_weekId/${day}.${month}.${year}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const postManager = (credentials) => {
   return axios
@@ -128,6 +136,7 @@ export {
   getManagerById,
   getCurrentMeetings,
   getWeekId,
+  getWeekId2,
   getCurrentAppointments,
   getManagersByCourse,
   getDateByWeekId,

@@ -123,12 +123,14 @@ const MeetingsTable = ({
                   {isTableLengthD ? (
                     <MeetingsTableItem key={uuidv4()} text={"no data"} />
                   ) : isListView && !isTableLengthD ? (
+                    <>
+                    {console.log("tiemedSlot -->", tiemedSlot)}
                     <MeetingsTableItem
+                      key={uuidv4()}
                       managerId={item.manager_id}
                       selectedManagerIds={selectedManagerIds}
                       setSelectedManagerIds={setSelectedManagerIds}
                       currentSelectedSortStatus={currentSelectedSortStatus}
-                      key={uuidv4()}
                       text={timedSlotText}
                       isManagerSelectedFr={selectedManagerIds.includes(
                         item.manager_id
@@ -138,9 +140,12 @@ const MeetingsTable = ({
                       date={date}
                       hourIndex={tiemedSlot.time}
                       colorId={tiemedSlot.status_id || tiemedSlot.status}
-                    />
+                      //slotId={tiemedSlot.appointment_id}
+                    /></>
                   ) : (
                     item.manager_appointments.map((item) => (
+                      <>
+                      {console.log("item", item)}
                       <MeetingsTableItem
                         key={uuidv4()}
                         managerId={item.manager_id}
@@ -158,6 +163,7 @@ const MeetingsTable = ({
                         hourIndex={item.time}
                         colorId={item.status_id || item.status}
                       />
+                      </>
                     ))
                   )}
                 </ul>

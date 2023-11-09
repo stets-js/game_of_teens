@@ -53,6 +53,7 @@ const ConsultationInfo = ({
  
 
   useEffect(() => {
+    console.log("slotId", slotId)
     if (isOpen) {
       const get = async () => await getAppointment({ id: slotId });
       get().then((data) => setAppointment(data.data));
