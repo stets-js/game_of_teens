@@ -16,8 +16,7 @@ import {
 function CurrentMeetingsPageList() {
   const [currentSortStatus, setcurrentSortStatus] = useState(false);
   const [selectedManagerIds, setSelectedManagerIds] = useState([]);
-  const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
-    useState(false);
+  const [currentSelectedSortStatus, setcurrentSelectedSortStatus] = useState(false);
   //console.log(`currentSelectedSortStatus is ${currentSelectedSortStatus}`);
   const styles = {
     marginRight: "auto",
@@ -55,8 +54,8 @@ function CurrentMeetingsPageList() {
   const [cureentTableDataWeekId, setCureentTableDataWeekId] = useState(0);
   const [date, setDate] = useState("");
 
-  async function getTableData(day, month, year) {
-    const resManagers = await getCurrentAppointments(day, month, year).then(
+    async function getTableData(day, month, year) {
+    const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
       (res) => res.data
     );
     setDate(`${day}.${month}.${year}`);
