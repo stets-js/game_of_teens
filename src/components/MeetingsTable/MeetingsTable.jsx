@@ -140,7 +140,7 @@ const MeetingsTable = ({
                       date={date}
                       hourIndex={tiemedSlot.time}
                       colorId={tiemedSlot.status_id || tiemedSlot.status}
-                      //slotId={tiemedSlot.appointment_id}
+                      slotId={tiemedSlot.slot_id}
                     /></>
                   ) : (
                     item.manager_appointments.map((item) => (
