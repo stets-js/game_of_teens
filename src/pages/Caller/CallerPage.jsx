@@ -23,6 +23,7 @@ import { getCourses } from "../../helpers/course/course";
 
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
+import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 export default function CallerPage() {
   const [error, setError] = useState("");
@@ -100,6 +101,12 @@ export default function CallerPage() {
       )}
           {error && <p className={styles.free__places}>{error.message}</p>}
         </section>
+        <div className={styles.main_wrapper}>
+          <h3 className={styles.main_title}>Search by CRM link</h3>
+            <div className={styles.main_wrapper2}>
+              <CrmLinks />
+            </div>
+        </div>
       </div>
     </>
   );

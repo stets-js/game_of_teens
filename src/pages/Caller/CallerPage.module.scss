@@ -140,3 +140,47 @@ z-index: 11000;
   max-width: 408px;
   margin: 20px auto 20px;
 }
+
+// SEARCH SETTINGS
+.main_wrapper {
+  margin-bottom: 60px;
+  margin-top: 34px;
+}
+.main_title::after {
+  width: 536px;
+  height: 2px;
+  background-color: #000000;
+  display: block;
+  content: "";
+  margin: 0 auto;
+  margin-top: 17px;
+
+  @media screen and (max-width: 600px) {
+    width: 400px;
+    height: 2px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 420px) {
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.main_title {
+  font-family: $poppins;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  color: $font-black;
+  margin-bottom: 40px;
+  @media screen and (max-width: 600px) {
+    font-size: 26px;
+  }
+}
+.main_wrapper2 {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}

@@ -21,6 +21,10 @@ import { useDispatch } from "react-redux";
 import { getCallerWeek, getCallerWeekByCourse } from "../../../redux/caller/caller-operations";
 import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointentManager";
 
+import { useSelector } from "react-redux";
+import { getCallerDate } from "../../../redux/caller/caller-selectors";
+import moment from "moment";
+
 const NewAppointment = ({
   isOpen,
   handleClose,
@@ -47,8 +51,10 @@ const NewAppointment = ({
 
 
 // console.log("first appointment", appointment)
-//   console.log(`hourIndex ${hourIndex}`);
-//   console.log(`time ${time}`);
+  console.log(`hourIndex ${hourIndex}`);
+  console.log(`time ${time}`);
+  console.log(`dayIndex ${dayIndex}`);
+  console.log(`hourIndex ${hourIndex}`);
 //   console.log("appointment-->>>",appointment);
 //   console.log("slotId......", slotId)
 
@@ -90,7 +96,13 @@ const NewAppointment = ({
 
   //   console.log("result-->>>",result);
   // }, [appointmentData]);
-
+  const callerDate = new Date(useSelector(getCallerDate));
+  const day = moment(callerDate).add(dayIndex, "days").date() < 10
+              ? `0${moment(callerDate).add(dayIndex, "days").date()}`
+              : moment(callerDate).add(dayIndex, "days").date();
+  const month = moment(callerDate).add(dayIndex, "days").month() + 1 < 10
+      ? `0${moment(callerDate).add(dayIndex, "days").month() + 1}`
+      : moment(callerDate).add(dayIndex, "days").month() + 1;
    
   return (
     <>
@@ -157,7 +169,9 @@ const NewAppointment = ({
                 requestAdditional={(managerId) => getManagerById(managerId)}
               />
             </span>
-
+            <span className={styles.date_label}>
+              Date: {day}.{month}.2023 Time: {time}:00
+            </span>
             {isChangeOpen ? (
               <ChangeAppointentManager
                 isCreateAppointment={true}
