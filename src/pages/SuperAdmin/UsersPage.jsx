@@ -57,16 +57,12 @@ export default function UsersPage() {
 
   const screenWidth = window.innerWidth;
 
-  // console.log(`usersArray: ${JSON.stringify(usersArray)}`);
-  // console.log(`data UserPage: ${data}`);
-
   return (
     <>
       <h3 className={styles.main_title}>Manage users.</h3>
       <div className={styles.main_wrapper2}>
         {usersArray.map((item, index) => {
           const key = uuidv4();
-          //console.log(key)
           return (
             <React.Fragment key={key}>
               {screenWidth > 1160 ? (

@@ -40,7 +40,6 @@ const Form = ({
   isCancelConfConsult,
   ...formData
 }) => {
-  console.log("startName--->>>>",startName)
   const [isOpen, setIsOpen] = useState(false);
   const [isChangeManagerCoursesOpen, setIsChangeManagerCoursesOpen] =
     useState(false);
@@ -75,7 +74,6 @@ const Form = ({
 
       if (+role === 2 && type.type === "put" && startRole !== 2) {
         const res = await getUserByName(startName);
-        console.log("res",res)
         await requests.delete(res.data.id);
         return await postUser(data)
           .then(() => {
@@ -88,7 +86,6 @@ const Form = ({
       }
       if (+role !== 2 && type.type === "put" && startRole === 2) {
         const manager = await requests.getByName(startName.trim());
-        console.log("manager--->>>" , manager)
         await requests.managerDelete(manager.data.id);
 
         return await requests
@@ -104,7 +101,6 @@ const Form = ({
 
       if (+role === 2 && type.type === "put") {
         const res = await requests.getByName(startName.trim());
-        console.log("res2", res)
         if (data.get("role_id")) data.delete("role_id");
         return await requests
           .user(data, res.data.id)
@@ -123,7 +119,6 @@ const Form = ({
       }
       if (manager) {
         const res = await requests.getByName(startName.trim());
-        console.log("res3", res)
         onSubmit();
         return await requests.user(data, res.data.id).catch(() => {
           return error(status.failMessage);
@@ -163,7 +158,6 @@ const Form = ({
   const handleDelete = async () => {
     if (role === 2) {
       const res = await requests.getByName(startName.trim());
-      console.log("manager res--->>>" , res)
       onSubmit();
       return await requests
         .managerDelete(res.data.id)
@@ -185,14 +179,10 @@ const Form = ({
       });
     if (+role === 2 && type.additionalType === "delete") {
       const res = await requests.getByName(startName.trim());
-      console.log("manager res2--->>>" , res)
       await requests.userDelete(res.data.id).catch((e) => {
         return error(`${status.failMessageDelete}, ${e.message}`);
       });
     }
-console.log("!errorsuccessMessage",!errorsuccessMessage)
-console.log("onSubmit", onSubmit)
-console.log("onSubmit()", onSubmit())
     !errorsuccessMessage && onSubmit && onSubmit();
   };
 
@@ -283,8 +273,6 @@ console.log("onSubmit()", onSubmit())
       data[0] !== 0 &&
       data[0] !== undefined
         ? data.map((item, i) => {
-          console.log("item.message", item)
-          console.log("comments", item.comments)
             return (
               <React.Fragment key={i}>
                 <Fade cascade triggerOnce duration={300} direction="up">

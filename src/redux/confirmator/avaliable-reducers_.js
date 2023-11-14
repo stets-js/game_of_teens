@@ -27,11 +27,8 @@ const INITIAL_WEEK = {
 
 const managers_list = createReducer([], {
   [getCurrentConfirmed.fulfilled]: (_, { payload }) => {
-    console.log("getCurrentConfirmed");
     return payload.managers_list},
   [getConfirmedWeek.fulfilled]: (_, { payload }) => {
-    console.log("getConfirmedWeek");
-    console.log(payload);
     return payload.managers_list},
 });
 

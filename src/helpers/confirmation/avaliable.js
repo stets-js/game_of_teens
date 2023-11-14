@@ -10,17 +10,12 @@ const getCurrentConfirmatorData = () => {
 };
 
 const getConfirmatorWeekData = (weekId, dayId, halfId) => {
-  //console.log(weekId);
-  //console.log(dayId);
-  //console.log(halfId);
   return (
     axios
       .get(`/get_avaliable_manager/${weekId}/${dayId}/${halfId}`)
       // .get(`/get_confirmation_manager/${weekId}/${dayId}/${halfId}`)
       // .get(`/avaliable_managers_list/${weekId}/${dayId}`)
       .then((res) => {
-        //console.log("get_confirmation_manager");
-        //console.log(res.data);
         return res.data;
       })
       .catch((error) => {

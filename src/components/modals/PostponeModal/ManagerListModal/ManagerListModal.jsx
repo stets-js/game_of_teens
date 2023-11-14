@@ -41,8 +41,6 @@ export default function ManagerListModal({
                 <Button
                   onclick={(e) => {
                     if (isAppointment) {
-                      // console.log("crm_link", link);
-                      // console.log("appointment_id", appointmentId); 
                       const data = new FormData();
                       data.append("crm_link", link);
                       data.append("appointment_id", appointmentId);

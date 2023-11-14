@@ -57,8 +57,6 @@ const ChangeManagerCourses = ({ isOpen, handleClose, managerId }) => {
     data.append("courses", coursesList);
     postManagerCourses(managerId, data)
       .then((response) => {
-        // Handle the successful response here
-        //console.log(response);
         success("Courses successfully updated");
         handleClose();
       })

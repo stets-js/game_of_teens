@@ -49,7 +49,6 @@ const ConfirmatorButtons = ({ value, setValue }) => {
                   onClick={async() => {
                     if (i.btn === "postponed") setIsOpen(item.appointment_id);
                     const res = await getCourseIdByName(item.course).then(data=> setCourse(data.data.id)) 
-                     console.log("item", item)
                      setCrm(item.crm_link)
                      setPhone(item.phone)
                      setMess(item.comments)

@@ -41,7 +41,7 @@ const MeetingsTable = ({
         return "Free";
     }
   };
-  // console.log(date);
+
   let isTableLengthD = false;
   let isMarkUpAdded = false;
 
@@ -90,7 +90,6 @@ const MeetingsTable = ({
               tiemedSlot.status ? tiemedSlot.status : tiemedSlot.status_id
             );
           }
-          // console.log(tiemedSlot);
 
           return (
             <>
@@ -123,8 +122,6 @@ const MeetingsTable = ({
                   {isTableLengthD ? (
                     <MeetingsTableItem key={uuidv4()} text={"no data"} />
                   ) : isListView && !isTableLengthD ? (
-                    <>
-                    {console.log("tiemedSlot -->", tiemedSlot)}
                     <MeetingsTableItem
                       key={uuidv4()}
                       managerId={item.manager_id}
@@ -141,11 +138,9 @@ const MeetingsTable = ({
                       hourIndex={tiemedSlot.time}
                       colorId={tiemedSlot.status_id || tiemedSlot.status}
                       slotId={tiemedSlot.slot_id}
-                    /></>
+                    />
                   ) : (
                     item.manager_appointments.map((item) => (
-                      <>
-                      {console.log("item", item)}
                       <MeetingsTableItem
                         key={uuidv4()}
                         managerId={item.manager_id}
@@ -163,7 +158,6 @@ const MeetingsTable = ({
                         hourIndex={item.time}
                         colorId={item.status_id || item.status}
                       />
-                      </>
                     ))
                   )}
                 </ul>

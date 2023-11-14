@@ -54,7 +54,6 @@ const getAvaliableManagers = createAsyncThunk(
       });
   }
 );
-console.log("getAvaliableManagersWeek");
 const getAvaliableManagersWeek = createAsyncThunk(
   GET_WEEK_AVALIABLE,
   ({ currentDayId, currentWeekId}, { rejectWithValue }) => {

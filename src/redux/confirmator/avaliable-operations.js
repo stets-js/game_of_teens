@@ -29,10 +29,8 @@ const getCurrentConfirmator = createAsyncThunk(
 const getConfirmatorWeek = createAsyncThunk(
   GET_WEEK_CONFIRMATOR,
   ({ currentDayId, currentWeekId, half }, { rejectWithValue }) => {
-    console.log("getConfirmatorWeekData");
     return getConfirmatorWeekData(currentWeekId, currentDayId, half)
       .then(({ data }) => {
-        console.log("getConfirmatorWeekData");
         return data})
       .catch((data) => {
         error(`${data.response.data.message ? data.response.data.message : data.message}`);

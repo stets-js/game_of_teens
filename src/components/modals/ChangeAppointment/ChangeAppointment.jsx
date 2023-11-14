@@ -27,7 +27,6 @@ const ChangeAppointment = ({
   messageInit,
   age,
 }) => {
-  console.log("message", messageInit)
   const [isOpenPostpone, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
@@ -117,11 +116,10 @@ const ChangeAppointment = ({
               Manager:
               <span
                 onClick={() => {
-                  //console.log(`should be rendered`);
                   setIsChangeOpen(!isChangeOpen);
                 }}
               >
-                {console.log(`${managerName} is ${managerId}`)}
+                
                 {managerName}
               </span>
             </p>

@@ -22,7 +22,6 @@ import {
 import Select from "../../Select/Select";
 import Form from "../../Form/Form";
 
-//console.log("ConsultationInfo");
 
 const ConsultationInfo = ({
   isOpen,
@@ -53,14 +52,12 @@ const ConsultationInfo = ({
  
 
   useEffect(() => {
-    console.log("slotId", slotId)
     if (isOpen) {
       const get = async () => await getAppointment({ id: slotId });
       get().then((data) => setAppointment(data.data));
     }
   }, [isOpen]);
 
-  console.log("appointment for form--->", appointment)
 
   const cancelConfConsultOnClickFn = () => {
     delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)

@@ -40,13 +40,10 @@ function CurrentMeetingsPageTable() {
     );
     setDate(`${day}.${month}.${year}`);
     const resWeekId = await getWeekId2(day, month, year).then((res) => res);
-    //console.log(`doing for ${day} to ${month} and ${year}`);
     setCurrentTableData(resManagers);
     setCureentTableDataWeekId(resWeekId);
-    //console.log(`resWeekId has been changed`);
     setIsRenderTableAvailable(true);
   }
-  //console.log(`resWeekId is ${JSON.stringify(cureentTableDataWeekId)}`);
   return (
     <>
       <Header

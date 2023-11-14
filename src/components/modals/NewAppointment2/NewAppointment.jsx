@@ -50,15 +50,6 @@ const NewAppointment = ({
   const [currentDate, setCurrentDate] = useState("");
 
 
-// console.log("first appointment", appointment)
-  console.log(`hourIndex ${hourIndex}`);
-  console.log(`time ${time}`);
-  console.log(`dayIndex ${dayIndex}`);
-  console.log(`hourIndex ${hourIndex}`);
-//   console.log("appointment-->>>",appointment);
-//   console.log("slotId......", slotId)
-
-
   useEffect(() => {
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
   }, [isOpen, dispatch]);
@@ -73,9 +64,7 @@ const NewAppointment = ({
     const date = async () => await getDateByWeekId(weekId, dayIndex);
     date()
       .then((data) => {
-        const currentDate = data.date;
-        //console.log("currentDate", currentDate);
-  
+        const currentDate = data.date;  
         const get = async () => await getCurrentAppointments(currentDate);
         return get();
       })
@@ -150,12 +139,9 @@ const NewAppointment = ({
           >
             <span
               onClick={() => {
-                //console.log(`should be rendered`);
                 setIsChangeOpen(!isChangeOpen);
               }}
             >
-              {console.log(`managerId on 140 is ${managerId}`)}
-              {console.log(`manager on 140 is ${manager}`)}
               <DropList
                 title="Manager"
                 value={manager}

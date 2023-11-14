@@ -18,8 +18,6 @@ const Avaliable = () => {
   return (
     <ul className={styles.wrapper}>
     <Fade cascade duration={200}>
-        {/*managers_list*/}
-        {/*console.log(managers_list)*/}
         {managers_list.map((i) => {
           return (
             <li key={i.appointment_id} className={styles.ul_items}>

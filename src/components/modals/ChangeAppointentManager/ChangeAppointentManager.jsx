@@ -61,7 +61,6 @@ const ChangeAppointentManager = ({
     const fetchData = async () => {
       try {
         const result = await getDateByWeekId(weekId, day);
-        console.log("result.date", result.date);
         setDate(result.date)
         const date = result.date;
         const managers = await getManagersByCourse(courseId, date, hour);
@@ -104,7 +103,6 @@ const ChangeAppointentManager = ({
                           handleClose(!isOpen);
                         }
                       : (e) => {
-                          //console.log(`clicked`);
                           const data = new FormData();
                           data.append("appointment_id", appointmentId);
                           data.append("date", date);

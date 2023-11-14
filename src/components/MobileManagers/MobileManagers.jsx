@@ -23,23 +23,15 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
     switch (type) {
       case "Administrators":
         setcurrentUserTypeIndex(0);
-        //console.log("its Administrators");
-        //console.log(`index is ${currentUserTypeIndex}`);
         break;
       case "Managers":
         setcurrentUserTypeIndex(1);
-        //console.log("its Managers");
-        //console.log(`index is ${currentUserTypeIndex}`);
         break;
       case "Confirmators":
         setcurrentUserTypeIndex(2);
-        //console.log("its Confirmators");
-        //console.log(`index is ${currentUserTypeIndex}`);
         break;
       case "Call center":
         setcurrentUserTypeIndex(3);
-        //console.log("its Call center");
-        //console.log(`index is ${currentUserTypeIndex}`);
         break;
       default:
         //console.log(`Sorry, u got no bitches`);
@@ -97,9 +89,7 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
     getUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, isOpenModal]);
-  //console.log(`currentUserTypeIndex is ${currentUserTypeIndex}`);
   const currentUserArray = managers.sort((item) => item.role_id=currentUserTypeIndex);
-  //console.log(`currentUserArray is ${currentUserArray}`);
   return (
     <>
     {/* {console.table(managers.sort((item) => item.role_id=2))} */}
@@ -111,7 +101,7 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
                 <p
                   className={styles.mini_title}
                   onClick={() => {
-                    //console.log(i.text);
+                    
                     setcurrentUserType(i.text);
                     currentUserTypeCalc(i.text)
                   }}

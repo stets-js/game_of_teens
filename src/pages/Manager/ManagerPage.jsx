@@ -9,7 +9,6 @@ export default function ManagerPage() {
   const [managerName, setManagerName] = useState("");
   useEffect(() => {
     getManagerById(+managerId).then((data) => {
-      //console.log(data);
       setManagerName(data.name);
     });
   }, [managerId]);

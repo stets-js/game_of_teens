@@ -80,9 +80,7 @@ const MeetingsTableItem = ({
 
   const dispatch = useDispatch();
   const onClickSlotButton = (dayIndex, hourIndex, managerFuncId) => {
-    // console.log("Point1");
     dispatch(setManagerLoading(true));
-    // console.log("Point2");
     return postStartConsultation(weekId, dayIndex, hourIndex, managerFuncId)
       .then(() => {
         return updateSlot(managerFuncId, weekId, dayIndex, hourIndex, 6)
@@ -94,7 +92,7 @@ const MeetingsTableItem = ({
                 colorId: 6,
               })
             );
-            //console.log("Point3");
+            
           })
           .catch((error) => dispatch(setManagerError(error.message)));
       })
@@ -131,7 +129,6 @@ const MeetingsTableItem = ({
     setSelectedManagerIds(arr);
   }
 
-  // console.log(`isManagerSelected is ${isManagerSelected}`);
   return (
     <>
       {managerName && text === "Managers" ? (
@@ -160,8 +157,7 @@ const MeetingsTableItem = ({
                   managerId,
                   setSelectedManagerIds
                 );
-                // console.log(selectedManagerIds);
-                // console.log(`isManagerSelected is ${isManagerSelected}`);
+
               }}
             />
             <span className={styles.itemCheckboxCheckmark}></span>

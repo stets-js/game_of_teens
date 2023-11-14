@@ -23,7 +23,6 @@ const AvaliablePage = () => {
   const { confirmatorId } = useParams();
   const [confirmatorName, setConfirmatorName] = useState("");
   const appointments = useSelector(getConfirmedAppointments);
-//  console.log(appointments);
 //  const managers_list = useSelector(getConfirmedManagersList);
 
 
@@ -42,7 +41,6 @@ const AvaliablePage = () => {
 
   return (
     <>
-  {/* {console.log(managers_list)} */}
       <Header 
       endpoints={[
         { text: "Users", path: '..superadmin/users' },

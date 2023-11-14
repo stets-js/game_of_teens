@@ -17,7 +17,6 @@ function CurrentMeetingsPageList() {
   const [currentSortStatus, setcurrentSortStatus] = useState(false);
   const [selectedManagerIds, setSelectedManagerIds] = useState([]);
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] = useState(false);
-  //console.log(`currentSelectedSortStatus is ${currentSelectedSortStatus}`);
   const styles = {
     marginRight: "auto",
     marginLeft: "auto",
@@ -64,8 +63,6 @@ function CurrentMeetingsPageList() {
     setIsRenderTableAvailable(true);
     setCureentTableDataWeekId(resWeekId);
   }
-  // console.log(`now time for sort is ${tableTime}`);
-  // console.log(`now currentSortStatus is ${currentSortStatus}`);
 
   return (
     <>

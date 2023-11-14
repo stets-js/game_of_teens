@@ -1,16 +1,11 @@
 const getConfirmatorError = (state) => state.confirmator.error;
 const getConfirmatorLoadings = (state) => state.confirmator.loading;
 const getConfirmedAppointments = (state) => { 
-// console.log(state);
-// console.log(state.confirmator.appointments);
+
 return state.confirmator.appointments;
 }
-// const getConfirmedManagersList = (state) => {
-//   // console.log(state.confirmator.managers_list);
-//   return state.confirmator.managers_list;
-// }
+
 const getConfirmedManagersList = (state) => {
-  console.log(state.avaliable.managers_list);
   return state.avaliable.managers_list;
 }
 const getConfirmatorDate = (state) => state.confirmator.date.date;

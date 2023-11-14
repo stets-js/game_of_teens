@@ -43,9 +43,6 @@ const ConsultationPage = () => {
   const callerLoading = useSelector(getCallerLoading);
 
 
-//console.log("weekId  Consult-->>>",weekId,"managerId-", +managerId)
-
-
   function setDayIndex(num) {
     setCurrentDayIndex(num);
   }
