@@ -18,6 +18,15 @@
   max-height: 840px;
   position: relative;
   z-index: 1;
+
+  .managerUl {
+    &:first-child {
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+  }
 }
 .table_list {
   padding-right: 15px;
