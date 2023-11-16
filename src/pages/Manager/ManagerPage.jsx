@@ -16,8 +16,8 @@ export default function ManagerPage() {
     <>
       <Header
         endpoints={[
-          { text: "planning", path: path.planning },
           { text: "consultations", path: path.consultations },
+          { text: "planning", path: path.planning },
           { text: "CRM", path: path.crm },
           { text: "Postpone", path: path.postpone },
         ]}

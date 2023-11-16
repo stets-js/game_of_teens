@@ -11,7 +11,6 @@ const HomePage = () => {
         <Fade triggerOnce duration={250} direction="down">
           <div className="divider">
             <p className={styles.error}>Welcome</p>
-            {/* <p className={styles.devmessage}>Підвищить ЗП, будь ласка </p> */}
           </div>
         </Fade>
       </section>

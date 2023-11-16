@@ -92,7 +92,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
                               target="_blank"
                               to={
                                 i.role === "Manager"
-                                  ? `/manager/${item.id}/planning/`
+                                  ? `/manager/${item.id}/consultations/`
                                   : i.role === "Administrator"
                                   ? `/admin/${item.id}`
                                   : i.role === "Caller"

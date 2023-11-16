@@ -115,9 +115,9 @@ const ChangeAppointentManager = ({
                           data.append("manager_id", manager.id);
                           data.append("message", JSON.stringify(message));
                           putAppointment(data).then(() => {
-                            // if (isPostponed) {
-                            //   closePostpone();
-                            // }
+                            if (isPostponed) {
+                              closePostpone();
+                            }
                             handleClose(!isOpen);
                             success("Manager changed successfully");
                           });
