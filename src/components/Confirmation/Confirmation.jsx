@@ -10,7 +10,7 @@ const Confirmator = () => {
   const appointments = useSelector(getConfirmatorAppointments);
   
   const transformAppointmentData = (i) => {
-    return `${i.hour}:00, ${i.course}, ${i.manager_name}, ${i.phone}, Message: ${i.comments ? i.comments : "none"},`};
+    return `${i.hour}:00, ${i.course}, ${i.manager_name}, ${i.phone},`};
 
   return (
     <>
