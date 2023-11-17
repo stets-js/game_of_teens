@@ -9,8 +9,7 @@ import { Fade } from "react-awesome-reveal";
 const Confirmator = () => {
   const appointments = useSelector(getConfirmatorAppointments);
   
-  const transformAppointmentData = (i) =>
-    `${i.hour}:00, ${i.course}, ${i.manager_name}, ${i.phone}`;
+  const transformAppointmentData = (i) => {
 
   return (
     <>

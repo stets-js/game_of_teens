@@ -12,6 +12,7 @@ import ConfirmatorComments from "../../components/ConfirmatorComments/Confirmato
 import ConfirmatorDatePicker from "../../components/ConfirmatorDatePicker/ConfirmatorDatePicker";
 import { getUserById } from "../../helpers/user/user";
 import { getConfirmatorLoadings } from "../../redux/confirmator/confirmator-selectors";
+import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 
 const ConfirmatorPage = () => {
@@ -64,6 +65,12 @@ const ConfirmatorPage = () => {
           </div>
         
       </section>
+      <div className={styles.main_wrapper}>
+          <h3 className={styles.main_title}>Search by CRM link</h3>
+            <div className={styles.main_wrapper2}>
+              <CrmLinks />
+            </div>
+        </div>
     </>
   );
 };
