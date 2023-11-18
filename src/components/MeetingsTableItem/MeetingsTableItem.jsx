@@ -194,14 +194,21 @@ const MeetingsTableItem = ({
             </div>
           </li>
           {modal === "appointment" && (
-            <NewAppointment
-              isOpen={isOpen}
-              time={data}
-              weekId={weekId}
-              slotId={slotId}
+            // <NewAppointment
+            //   isOpen={isOpen}
+            //   time={data}
+            //   weekId={weekId}
+            //   slotId={slotId}
+            //   dayIndex={dayIndex}
+            //   date={date}
+            //   hourIndex={hourIndex}
+            //   handleClose={() => setIsOpen(!isOpen)}
+            // />
+            <ConsultationInfo
+            isOpen={isOpen}
               dayIndex={dayIndex}
-              date={date}
               hourIndex={hourIndex}
+              slotId={+slotId}
               handleClose={() => setIsOpen(!isOpen)}
             />
           )}

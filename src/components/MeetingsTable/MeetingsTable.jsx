@@ -67,11 +67,11 @@ const MeetingsTable = ({
 
   return (
     <div key={uuidv4()} className={styles.wrapperTable}>
-      {(managerLoading || callerLoading) && (
+      {/* {(managerLoading || callerLoading) && (
         <div key={uuidv4()} className={styles.spinner}>
           <TailSpin key={uuidv4()} height="57" width="57" color="#999DFF" />
         </div>
-      )}
+      )} */}
       <ul
         key={uuidv4()}
         className={!isListView ? styles.table : styles.table_list}
