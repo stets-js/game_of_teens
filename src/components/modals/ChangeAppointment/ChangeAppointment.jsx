@@ -32,17 +32,21 @@ const ChangeAppointment = ({
   const [link, setLink] = useState("");
   const [courseId, setCourses] = useState(course);
   const [message, setMessage] = useState(messageInit);
-  const [managerId, setManagerId] = useState(managerIdInit);
-  const [managerName, setManagerName] = useState(manager);
+  const [managerId, setManagerId] = useState("");
+  const [managerName, setManagerName] = useState("");
   const [ageNew, setAge] = useState(age);
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [phone, setPhone] = useState("");
+  const [slot, setSlot] = useState("");
 
   useEffect(() => {
     setCourses(course);
     setPhone(number);
     setMessage(messageInit);
     setLink(crm);
+    setSlot(slotId);
+    setManagerName(manager)
+    setManagerId(managerIdInit)
   }, [isOpen]);
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const ChangeAppointment = ({
         hour={hour}
         phone={phone}
         age={ageNew}
-        slotId={slotId}
+        slotId={slot}
         weekId={weekId}
         message={message}
         date={date}
@@ -78,7 +82,7 @@ const ChangeAppointment = ({
         <Modal open={isOpen} onClose={handleClose}>
           <Form
             isCancel={true}
-            slotId={slotId}
+            slotId={slot}
             onSubmit={() => {
               const data = new FormData();
               data.append("crm_link", link);
@@ -90,7 +94,7 @@ const ChangeAppointment = ({
               data.append("age", ageNew);
               data.append("manager_id", managerId);
               data.append("week_id", weekId);
-              data.append("slot_id", slotId);
+              data.append("slot_id", slot);
               data.append("message", message);
               data.append("date", date);
               return putAppointment(data).finally(() => {
@@ -99,6 +103,8 @@ const ChangeAppointment = ({
                 setMessage("");
                 setAge(0);
                 setPhone("");
+                setSlot("");
+                setManagerId("");
                 handleClose();
               });
             }}
