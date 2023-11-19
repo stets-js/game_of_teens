@@ -113,7 +113,7 @@ const ChangeAppointentManager = ({
                           data.append("phone", phone);
                           data.append("age", age);
                           data.append("manager_id", manager.id);
-                          data.append("message", JSON.stringify(message));
+                          data.append("message", message);
                           putAppointment(data).then(() => {
                             if (isPostponed) {
                               closePostpone();

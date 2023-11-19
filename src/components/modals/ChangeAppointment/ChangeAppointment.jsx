@@ -34,7 +34,7 @@ const ChangeAppointment = ({
   const [message, setMessage] = useState(messageInit);
   const [managerId, setManagerId] = useState("");
   const [managerName, setManagerName] = useState("");
-  const [ageNew, setAge] = useState(age);
+  const [ageNew, setAge] = useState("");
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
@@ -47,6 +47,7 @@ const ChangeAppointment = ({
     setSlot(slotId);
     setManagerName(manager)
     setManagerId(managerIdInit)
+    setAge(age)
   }, [isOpen]);
 
   useEffect(() => {
@@ -101,7 +102,7 @@ const ChangeAppointment = ({
                 setLink("");
                 setCourses("");
                 setMessage("");
-                setAge(0);
+                setAge("");
                 setPhone("");
                 setSlot("");
                 setManagerId("");
