@@ -92,7 +92,7 @@ const MeetingsTable = ({
           }
 
           return (
-            <>
+            <React.Fragment key={uuidv4()}>
               {isTableView && !isMarkUpAdded && (
                 <>
                   {(isMarkUpAdded = true)}
@@ -162,7 +162,7 @@ const MeetingsTable = ({
                   )}
                 </ul>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </ul>

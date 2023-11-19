@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "../MeetingsTable/MeetingsTable.module.scss";
 import MeetingsTableItem from "../MeetingsTableItem/MeetingsTableItem";
+import { v4 as uuidv4 } from "uuid";
+
 export default function TableMarkup() {
   const markUp = {
     manager_name: "Managers",
@@ -26,9 +28,10 @@ export default function TableMarkup() {
   return (
     <>
       <ul className={styles.managerUl}>
-        <MeetingsTableItem text={markUp.manager_name} managerName={true} />
+        <MeetingsTableItem key={uuidv4()} text={markUp.manager_name} managerName={true} />
         {markUp.manager_appointments.map((item) => (
           <MeetingsTableItem
+          key={uuidv4()}
             text={item.text}
             colorId={item.status_id || item.status}
           />
