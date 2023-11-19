@@ -77,6 +77,7 @@ const MeetingsTable = ({
         className={!isListView ? styles.table : styles.table_list}
       >
         {table.map((item) => {
+          console.log("item main:", item)
           let tiemedSlot = undefined;
 
           if (isListView) {
@@ -140,7 +141,7 @@ const MeetingsTable = ({
                       slotId={tiemedSlot.slot_id}
                     />
                   ) : (
-                    item.manager_appointments.map((item) => (
+                    item.manager_appointments.map((i) => (
                       <MeetingsTableItem
                         key={uuidv4()}
                         managerId={item.manager_id}
@@ -150,13 +151,13 @@ const MeetingsTable = ({
                           item.manager_id
                         )}
                         currentSelectedSortStatus={currentSelectedSortStatus}
-                        text={item.text}
+                        text={i.text}
                         weekId={weekId}
-                        slotId={item.slot_id}
+                        slotId={i.slot_id}
                         dayIndex={dayIndex}
                         date={date}
-                        hourIndex={item.time}
-                        colorId={item.status_id || item.status}
+                        hourIndex={i.time}
+                        colorId={i.status_id || i.status}
                       />
                     ))
                   )}
