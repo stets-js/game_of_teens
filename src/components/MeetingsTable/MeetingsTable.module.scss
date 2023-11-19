@@ -72,12 +72,24 @@
 //   z-index: -100;
 // }
 
+// .spinner {
+//   width: 57px;
+//   top: 5px;
+//   left: 5px;
+//   z-index: 999;
+//   position: absolute;
+//   
+// }
 .spinner {
-  width: 57px;
-  top: 5px;
-  left: 5px;
+  height:130px;
+  width: 130px;
+  color: #999DFF;
+  top: 20vh;
+  left: 50%;
   position: absolute;
+  z-index: 110001;
   z-index: 999;
+  transform: translateX(-50%)
 }
 
 .wrapperTable {

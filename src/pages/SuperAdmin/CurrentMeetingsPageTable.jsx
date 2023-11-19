@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import styles from "../SuperAdmin/SuperAdminPage.module.scss";
 import path from "../../helpers/routerPath";
 import Header from "../../components/Header/Header";
 import CurrentMeetingsStatusDefinition from "../../components/CurrentMeetingsStatusDefinition/CurrentMeetingsStatusDefinition";
@@ -11,6 +12,7 @@ import {
   getCurrentAppointments,
   getWeekId2,
 } from "../../helpers/manager/manager";
+import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 function CurrentMeetingsPageTable() {
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
@@ -19,14 +21,7 @@ function CurrentMeetingsPageTable() {
   const isThatPhone = {
     isPhone: window.innerWidth <= 1160,
   };
-  const styles = {
-    marginRight: "auto",
-    marginLeft: "auto",
-    marginTop: "50px",
-    marginBottom: "300px",
-    fontSize: "30px",
-  };
-
+  
   const tableDate = new Date().toString();
 
   const [currentTableData, setCurrentTableData] = useState(null);
@@ -60,6 +55,7 @@ function CurrentMeetingsPageTable() {
       />
       {!isThatPhone.isPhone ? (
         isRenderTableAvailable ? (
+          <>
           <MeetingsTable
             isTableView={true}
             isListView={false}
@@ -71,11 +67,17 @@ function CurrentMeetingsPageTable() {
             currentSelectedSortStatus={currentSelectedSortStatus}
             date={date}
           />
+          <div className={styles.main_wrapper}>
+            <div className={styles.main_wrapper2}>
+              <CrmLinks />
+            </div>
+          </div>
+          </>
         ) : (
-          <div style={styles}>loading</div>
+          <div className={styles.blank}>loading</div>
         )
       ) : (
-        <div style={styles}>this table is for PC use only</div>
+        <div className={styles.blank}>this table is for PC use only</div>
       )}
     </>
   );
