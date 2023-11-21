@@ -104,6 +104,7 @@ const ConsultationPage = () => {
           weekId={weekId}
           consultation
           onClickSlotFn={onClickSlotButton}
+          handleReload={()=> setReload(!reload)}
         />
       )}
     </section>

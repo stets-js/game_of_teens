@@ -17,6 +17,7 @@ const DayTable = ({
   caller,
   isAppointment,
   dayIndex,
+  handleReload,
 }) => {
   useEffect(() => {});
   const managerLoading = useSelector(isManagerLoading);
@@ -56,6 +57,7 @@ const DayTable = ({
                   consultation
                   slotId={item.slot_id}
                   onClickBtnStart={() => onClickSlotFn(dayIndex, hourIndex)}
+                  handleReload={handleReload}
                 />
               ) : (
                 <TableItem
