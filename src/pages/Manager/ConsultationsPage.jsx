@@ -101,6 +101,7 @@ const ConsultationPage = () => {
         <DayTable
           table={table[currentDayIndex]}
           dayIndex={currentDayIndex}
+          weekId={weekId}
           consultation
           onClickSlotFn={onClickSlotButton}
         />

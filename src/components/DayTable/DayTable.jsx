@@ -52,6 +52,7 @@ const DayTable = ({
                   colorId={item.color}
                   dayIndex={dayIndex}
                   hourIndex={hourIndex}
+                  weekId={weekId}
                   consultation
                   slotId={item.slot_id}
                   onClickBtnStart={() => onClickSlotFn(dayIndex, hourIndex)}
