@@ -111,7 +111,7 @@ export default function PostponeModal({
             phone={phone}
             link={link}
             appointmentId={appointmentId}
-            message={message}
+            message={""}
             isPostponed={true}
             closePostpone={onClose}
           />
