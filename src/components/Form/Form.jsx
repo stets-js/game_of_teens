@@ -273,6 +273,7 @@ const Form = ({
       data[0] !== 0 &&
       data[0] !== undefined
         ? data.map((item, i) => {
+          console.log("item->>>", item)
             return (
               <React.Fragment key={i}>
                 <Fade cascade triggerOnce duration={300} direction="up">
@@ -292,6 +293,7 @@ const Form = ({
                     number={item.phone}
                     messageInit={item.comments}
                     age={item.age}
+                    isFollowUp={item.follow_up}
                   />
                   <div
                     className={styles.appointment}

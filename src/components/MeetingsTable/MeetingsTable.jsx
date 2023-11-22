@@ -157,6 +157,7 @@ const MeetingsTable = ({
                         date={date}
                         hourIndex={i.time}
                         colorId={i.status_id || i.status}
+                        isFollowUp={i.follow_up}
                       />
                     ))
                   )}

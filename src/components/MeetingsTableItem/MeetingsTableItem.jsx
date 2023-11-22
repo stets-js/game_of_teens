@@ -42,13 +42,13 @@ const MeetingsTableItem = ({
   date,
   selectedManagerIds,
   setSelectedManagerIds,
+  isFollowUp
 }) => {
   const [isManagerSelected, setisManagerSelected]=useState(isManagerSelectedFr)
   const table = useSelector(getTable);
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState("");
   
-  const [followUp, setFollowUp] = useState(true);
 
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
@@ -196,7 +196,7 @@ const MeetingsTableItem = ({
                 info
               </button>
             </div>
-            {followUp ? <div className={styles.asterix}><Star /></div> : null}
+            {isFollowUp ? <div className={styles.asterix}><Star /></div> : null}
           </li>
           {modal === "appointment" && (
             // <NewAppointment
@@ -246,7 +246,7 @@ const MeetingsTableItem = ({
                 info
               </button>
             </div>
-            {followUp ? <div className={styles.asterix}><Star /></div> : null}
+            {isFollowUp ? <div className={styles.asterix}><Star /></div> : null}
           </li>
           {modal === "consultation" && (
             <ConsultationInfo

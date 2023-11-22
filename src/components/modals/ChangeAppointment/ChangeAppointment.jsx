@@ -26,7 +26,9 @@ const ChangeAppointment = ({
   slotId,
   messageInit,
   age,
+  isFollowUp
 }) => {
+  console.log("isFollowUp", isFollowUp)
   const [isOpenPostpone, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
@@ -39,7 +41,7 @@ const ChangeAppointment = ({
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
   const [followUp, setFollowUp] = useState(false);
-
+console.log('followUp inside', followUp)
   useEffect(() => {
     setCourses(course);
     setPhone(number);
@@ -49,6 +51,7 @@ const ChangeAppointment = ({
     setManagerName(manager)
     setManagerId(managerIdInit)
     setAge(age)
+    setFollowUp(isFollowUp)
   }, [isOpen]);
 
   useEffect(() => {
@@ -99,6 +102,7 @@ const ChangeAppointment = ({
               data.append("slot_id", slot);
               data.append("message", message);
               data.append("date", date);
+              data.append("follow_up", followUp);
               return putAppointment(data).finally(() => {
                 setLink("");
                 setCourses("");
@@ -107,6 +111,7 @@ const ChangeAppointment = ({
                 setPhone("");
                 setSlot("");
                 setManagerId("");
+                setFollowUp(false);
                 handleClose();
               });
             }}
