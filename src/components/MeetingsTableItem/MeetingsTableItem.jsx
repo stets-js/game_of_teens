@@ -246,6 +246,7 @@ const MeetingsTableItem = ({
                 info
               </button>
             </div>
+            {followUp ? <div className={styles.asterix}><Star /></div> : null}
           </li>
           {modal === "consultation" && (
             <ConsultationInfo
