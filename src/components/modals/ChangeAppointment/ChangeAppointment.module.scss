@@ -88,3 +88,28 @@
   color: #797979;
 }
 
+.input__checkbox{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  
+  margin-top: 20px;
+}
+.input__checkboxInput{
+  color: #fff;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 3px;
+  transform: translateY(-0.075px);
+}
+.input__checkboxLabel{
+  font-family: $poppins;
+  font-size: 20px;
+  width: 25%;
+  z-index: 2000;
+  transition: ease-in-out 0.5s;
+  position: relative;
+  
+}

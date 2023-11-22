@@ -38,6 +38,7 @@ const ChangeAppointment = ({
   const [isChangeOpen, setIsChangeOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
+  const [followUp, setFollowUp] = useState(false);
 
   useEffect(() => {
     setCourses(course);
@@ -198,6 +199,15 @@ const ChangeAppointment = ({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
+            </label>
+            <label className={styles.input__checkbox}>
+              <input
+                className={styles.input__checkboxInput}
+                type="checkbox"
+                checked={followUp}
+                onChange={() => setFollowUp(!followUp)}
+              />
+              <p className={styles.input__checkboxLabel}>Follow up</p>
             </label>
           </Form>
         </Modal>
