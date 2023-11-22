@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from "./MeetingsTableItem.module.scss";
 import ConsultationInfo from "../modals/ConsultationInfo/ConsultationInfo";
 import NewAppointment from "../modals/NewAppointment2/NewAppointment";
+import Star from "./Star"
 
 import {
   changeStatusSlot,
@@ -46,6 +47,9 @@ const MeetingsTableItem = ({
   const table = useSelector(getTable);
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState("");
+  
+  const [followUp, setFollowUp] = useState(true);
+
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
       [styles.grayColor]: +colorId === 0,
@@ -192,6 +196,7 @@ const MeetingsTableItem = ({
                 info
               </button>
             </div>
+            {followUp ? <div className={styles.asterix}><Star /></div> : null}
           </li>
           {modal === "appointment" && (
             // <NewAppointment
