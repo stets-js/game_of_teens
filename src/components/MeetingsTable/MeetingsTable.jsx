@@ -44,8 +44,8 @@ const MeetingsTable = ({
 
   let isTableLengthD = false;
   let isMarkUpAdded = false;
-
-  useEffect(() => {});
+  const [reload, setReload] = useState(false);
+  useEffect(() => {}, [reload]);
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
   table = table.sort((a, b) => a.manager_name.localeCompare(b.manager_name));
@@ -158,6 +158,7 @@ const MeetingsTable = ({
                         hourIndex={i.time}
                         colorId={i.status_id || i.status}
                         isFollowUp={i.follow_up}
+                        handleReload={()=> setReload(!reload)}
                       />
                     ))
                   )}

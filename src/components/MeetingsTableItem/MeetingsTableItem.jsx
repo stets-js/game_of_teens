@@ -42,7 +42,8 @@ const MeetingsTableItem = ({
   date,
   selectedManagerIds,
   setSelectedManagerIds,
-  isFollowUp
+  isFollowUp,
+  handleReload
 }) => {
   const [isManagerSelected, setisManagerSelected]=useState(isManagerSelectedFr)
   const table = useSelector(getTable);
@@ -210,11 +211,14 @@ const MeetingsTableItem = ({
             //   handleClose={() => setIsOpen(!isOpen)}
             // />
             <ConsultationInfo
-            isOpen={isOpen}
+              isOpen={isOpen}
               dayIndex={dayIndex}
               hourIndex={hourIndex}
               slotId={+slotId}
               handleClose={() => setIsOpen(!isOpen)}
+              weekId={weekId}
+              manId={managerId}
+              handleReload={handleReload}
             />
           )}
         </>
@@ -255,6 +259,9 @@ const MeetingsTableItem = ({
               isOpen={isOpen}
               handleClose={() => setIsOpen(!isOpen)}
               slotId={+slotId}
+              weekId={weekId}
+              manId={managerId}
+              handleReload={handleReload}
             />
           )}
         </>

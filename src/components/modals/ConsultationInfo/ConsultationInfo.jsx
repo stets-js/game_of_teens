@@ -31,6 +31,7 @@ const ConsultationInfo = ({
   dayIndex,
   hourIndex,
   handleReload,
+  manId
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -60,7 +61,7 @@ const ConsultationInfo = ({
 
 
   const cancelConfConsultOnClickFn = () => {
-    delteConfirmation(managerId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
+    delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
       .then(() => {
         success({
           text: "Succesfully deleted.",
@@ -92,7 +93,7 @@ const ConsultationInfo = ({
               return postConsultationResult(+slotId, result, group, message)
                 .then((data) => {
                   return updateSlot(
-                    managerId,
+                    managerId ? managerId : manId,
                     weekId,
                     dayIndex,
                     managerTable[dayIndex][hourIndex].time,
