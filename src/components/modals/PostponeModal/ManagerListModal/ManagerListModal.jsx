@@ -37,8 +37,9 @@ export default function ManagerListModal({
           <div className={styles.buttonsWrapper}>
             <p className={styles.availableManager}>Select available manager</p>
             <div className={styles.selectManagerList}>
-              {isOpenDropdown.map((item) => (
-                <Button
+              {isOpenDropdown.map((item) => {
+                console.log("item for postpone", item)
+                return <Button
                   onclick={(e) => {
                     if (isAppointment) {
                       const data = new FormData();
@@ -52,6 +53,7 @@ export default function ManagerListModal({
                       data.append("date", formatDate(item.date));
                       data.append("manager_id", item.manager_id);
                       data.append("message", message);
+                      data.append("follow_up", item.follow_up);
                       return putAppointment(data).then(() => {
                         setIsOpenDropdown("");
                         closePostponed();
@@ -76,7 +78,7 @@ export default function ManagerListModal({
                 >
                   {item.name}
                 </Button>
-              ))}
+})}
             </div>
           </div>
         </Modal>

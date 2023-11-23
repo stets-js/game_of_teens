@@ -42,6 +42,7 @@ export default function PostponeModal({
   weekId,
   day,
   hour,
+  isFollowUp
 }) {
   const [callerId, setCallerId] = useState(null);
   const [error, setError] = useState("");
@@ -114,6 +115,7 @@ export default function PostponeModal({
             message={""}
             isPostponed={true}
             closePostpone={onClose}
+            isFollowUp={isFollowUp}
           />
         )}
 

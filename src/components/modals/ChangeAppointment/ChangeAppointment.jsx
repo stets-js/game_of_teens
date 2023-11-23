@@ -152,6 +152,7 @@ console.log('followUp inside', followUp)
                 age={ageNew}
                 phone={phone}
                 message={message}
+                isFollowUp={followUp}
               />
             ) : null}
             <Select
