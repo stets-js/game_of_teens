@@ -21,6 +21,7 @@ import {
 } from "../../../redux/manager/manager-operations";
 import Select from "../../Select/Select";
 import Form from "../../Form/Form";
+import { TailSpin } from "react-loader-spinner";
 
 
 const ConsultationInfo = ({
@@ -51,6 +52,7 @@ console.log("managerTable", managerTable)
   //   get().then((data) => setAppointment(data.data));
   // }, []);
   const [followUp, setFollowUp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -80,23 +82,35 @@ console.log("managerTable", managerTable)
       });
   };
   const updateFollowUp = () => {
-    console.log("follow Updated", followUp)
-    console.log(dayIndex, "dayIndex")
-     console.log(managerTable[dayIndex], "managerTable[dayIndex]")
-    // console.log("managerTable[dayIndex][hourIndex]", managerTable[dayIndex][hourIndex])
-    if(followUp !== "" && managerTable[dayIndex] && managerTable[dayIndex][hourIndex]){updateSlotFollowUp(managerId ? managerId : manId,
+    if(followUp !== "" && managerTable[dayIndex] && managerTable[dayIndex][hourIndex]){
+      setIsLoading(true)
+      updateSlotFollowUp(managerId ? managerId : manId,
       weekId,
       dayIndex,
       managerTable[dayIndex][hourIndex].time,
       +result,
-      followUp)}
+      followUp).then(() => {
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error updating follow-up:", error);
+      });
+    }
       else if(followUp !== ""){
+        setIsLoading(true)
         updateSlotFollowUp(managerId ? managerId : manId,
           weekId,
           dayIndex,
           hourIndex,
           +result,
-          followUp)
+          followUp).then(() => {
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            setIsLoading(false);
+            console.error("Error updating follow-up:", error);
+          });
       }
   }
 
@@ -209,6 +223,7 @@ console.log("managerTable", managerTable)
                 onChange={() => setFollowUp(!followUp)}
               />
               <p className={styles.input__checkboxLabel}>Follow up</p>
+              {isLoading ? <TailSpin height="25px" width="25px" color="#999DFF" /> : null}
             </label>
               <button className={styles.btn__followUp} type="button" onClick={updateFollowUp}>Update</button>
             
