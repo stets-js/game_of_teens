@@ -19,7 +19,7 @@ const DropList = ({
   const [isOpen, setIsOpen] = useState(false);
   const getData = async () => {
     const res = await request()
-      .then((res) => res.data)
+      .then((res) => res.data[0])
       .catch((error) => console.log(error));
 
     if (res === undefined) {
@@ -38,12 +38,13 @@ const DropList = ({
       return data;
     };
     get().then((res) => {
-      setValue(res[0]?.name);
+      console.log("resss", res)
+      setValue(res?.name);
       if (setValueSecondary) {
         if (changeAppointment) {
           return;
         }
-        setValueSecondary(res[0]?.manager_id);
+        setValueSecondary(res?.manager_id);
       }
     });
     // getData();

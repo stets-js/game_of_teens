@@ -35,6 +35,14 @@ const getAvailableManagers = (weekId, dayId, hour) => {
       throw error;
     });
 };
+const getAvailableManagersByCourse = (weekId, dayId, hour, courseIdx) => {
+  return axios
+    .get(`/available_managers_by_course/${weekId}/${dayId}/${hour}/${courseIdx}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const getCurrentMeetings = (date) => {
   return axios
@@ -140,4 +148,5 @@ export {
   getCurrentAppointments,
   getManagersByCourse,
   getDateByWeekId,
+  getAvailableManagersByCourse,
 };

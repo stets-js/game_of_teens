@@ -7,6 +7,7 @@ import {
   getCurrentAppointments,
   getManagerById,
   getDateByWeekId,
+  getAvailableManagersByCourse,
 } from "../../../helpers/manager/manager";
 import {
   createAppointment,
@@ -93,6 +94,7 @@ const NewAppointment = ({
       ? `0${moment(callerDate).add(dayIndex, "days").month() + 1}`
       : moment(callerDate).add(dayIndex, "days").month() + 1;
    
+      console.log("courseIdx", +courseIdx)
   return (
     <>
       {isOpen && (
@@ -150,7 +152,7 @@ const NewAppointment = ({
                 setValue={setManager}
                 setValueSecondary={setManagerId}
                 request={() =>
-                  getAvailableManagers(weekId, dayIndex, hourIndex)
+                  getAvailableManagersByCourse(weekId, dayIndex, hourIndex, +courseIdx)
                 }
                 requestAdditional={(managerId) => getManagerById(managerId)}
               />
