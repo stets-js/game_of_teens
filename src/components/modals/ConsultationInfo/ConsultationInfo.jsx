@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getGroups } from "../../../helpers/group/group";
 import { getCourses } from "../../../helpers/course/course";
-import { updateSlot } from "../../../helpers/week/week";
+import { updateSlot, updateSlotFollowUp } from "../../../helpers/week/week";
 import { getAppointment } from "../../../helpers/appointment/appointment";
 import { postConsultationResult } from "../../../helpers/consultation/consultation";
 import { getTable, getWeekId } from "../../../redux/manager/manager-selectors";
@@ -45,17 +45,18 @@ const ConsultationInfo = ({
   //const weekId = useSelector(getWeekId);
   const [currentWeekId, setCurrentWeekId] = useState(weekId);
   const managerTable = useSelector(getTable);
-
+console.log("managerTable", managerTable)
   // useEffect(() => {
   //   const get = async () => await getWeekIdByTableDate();
   //   get().then((data) => setAppointment(data.data));
   // }, []);
- 
+  const [followUp, setFollowUp] = useState("");
 
   useEffect(() => {
     if (isOpen) {
       const get = async () => await getAppointment({ id: slotId });
-      get().then((data) => setAppointment(data.data));
+      get().then((data) => {setAppointment(data.data)
+        setFollowUp(data.data.follow_up)});
     }
   }, [isOpen]);
 
@@ -78,6 +79,26 @@ const ConsultationInfo = ({
         handleReload();
       });
   };
+  const updateFollowUp = () => {
+    console.log("follow Updated", followUp)
+    console.log(dayIndex, "dayIndex")
+     console.log(managerTable[dayIndex], "managerTable[dayIndex]")
+    // console.log("managerTable[dayIndex][hourIndex]", managerTable[dayIndex][hourIndex])
+    if(followUp !== "" && managerTable[dayIndex] && managerTable[dayIndex][hourIndex]){updateSlotFollowUp(managerId ? managerId : manId,
+      weekId,
+      dayIndex,
+      managerTable[dayIndex][hourIndex].time,
+      +result,
+      followUp)}
+      else if(followUp !== ""){
+        updateSlotFollowUp(managerId ? managerId : manId,
+          weekId,
+          dayIndex,
+          hourIndex,
+          +result,
+          followUp)
+      }
+  }
 
   return (
     <>
@@ -117,6 +138,7 @@ const ConsultationInfo = ({
                   setResult(7);
                   setCourse("");
                   setMessage("");
+                  setFollowUp("");
                   return dispatch(setManagerLoading(false));
                 });
             }}
@@ -178,6 +200,18 @@ const ConsultationInfo = ({
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </label>
+
+            <label className={styles.input__checkbox}>
+              <input
+                className={styles.input__checkboxInput}
+                type="checkbox"
+                checked={followUp}
+                onChange={() => setFollowUp(!followUp)}
+              />
+              <p className={styles.input__checkboxLabel}>Follow up</p>
+            </label>
+              <button className={styles.btn__followUp} type="button" onClick={updateFollowUp}>Update</button>
+            
             {/* <label className={styles.input__label}>
               <p className={styles.input__label}>Some Text</p>
             </label> */}

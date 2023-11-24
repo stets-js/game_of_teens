@@ -42,3 +42,40 @@
   font-size: 18px;
   font-family: $poppins;
 }
+
+.input__checkbox{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  
+  margin-top: 20px;
+}
+.input__checkboxInput{
+  color: #fff;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 3px;
+  transform: translateY(-0.075px);
+}
+.input__checkboxLabel{
+  font-family: $poppins;
+  font-size: 20px;
+  width: 25%;
+  z-index: 2000;
+  transition: ease-in-out 0.5s;
+  position: relative;
+  
+}
+.btn__followUp{
+  font-family: $poppins;
+  font-size: 20px;
+  width: 35%;
+  height: 50px;
+  color: #fff;
+  background-color: rgb(65, 142, 249);
+  border: none;
+  border-radius: 8px;
+  margin-top: 15px;
+}
