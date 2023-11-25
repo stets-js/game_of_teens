@@ -82,6 +82,7 @@ console.log('followUp inside', followUp)
         weekId={weekId}
         message={message}
         date={date}
+        isFollowUp={followUp}
       />
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
