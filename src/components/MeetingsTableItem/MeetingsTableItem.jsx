@@ -219,6 +219,7 @@ const MeetingsTableItem = ({
               weekId={weekId}
               manId={managerId}
               handleReload={handleReload}
+              currentTable
             />
           )}
         </>
@@ -262,6 +263,7 @@ const MeetingsTableItem = ({
               weekId={weekId}
               manId={managerId}
               handleReload={handleReload}
+              currentTable
             />
           )}
         </>

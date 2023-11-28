@@ -32,7 +32,8 @@ const ConsultationInfo = ({
   dayIndex,
   hourIndex,
   handleReload,
-  manId
+  manId,
+  currentTable
 }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -46,7 +47,7 @@ const ConsultationInfo = ({
   //const weekId = useSelector(getWeekId);
   const [currentWeekId, setCurrentWeekId] = useState(weekId);
   const managerTable = useSelector(getTable);
-console.log("managerTable", managerTable)
+
   // useEffect(() => {
   //   const get = async () => await getWeekIdByTableDate();
   //   get().then((data) => setAppointment(data.data));
@@ -64,7 +65,7 @@ console.log("managerTable", managerTable)
 
 
   const cancelConfConsultOnClickFn = () => {
-    delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, managerTable[dayIndex][hourIndex].time, 0)
+    delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time, 0)
       .then(() => {
         success({
           text: "Succesfully deleted.",
