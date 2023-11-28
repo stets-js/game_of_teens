@@ -28,7 +28,6 @@ const ChangeAppointment = ({
   age,
   isFollowUp
 }) => {
-  console.log("isFollowUp", isFollowUp)
   const [isOpenPostpone, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");

@@ -40,9 +40,15 @@ export default function CallerPage() {
   const [courseId, setCourses] = useState(3);
 
     useEffect(() => {
+      dispatch(getCallerCurrentWeekByCourse(courseId));
+    },[]);
+
+    useEffect(() => {
     //dispatch(getCallerCurrentWeek(+callerId));
-    dispatch(getCallerCurrentWeekByCourse(courseId));
-    //dispatch(getCallerWeekByCourse({ weekId, courseId }));
+    //dispatch(getCallerCurrentWeekByCourse(courseId));
+    if(weekId){
+    dispatch(getCallerWeekByCourse({ weekId, courseId }));
+    }
 
     getUserById(+callerId)
       .then((data) => {
@@ -103,7 +109,7 @@ export default function CallerPage() {
         <div className={styles.main_wrapper}>
           <h3 className={styles.main_title}>Search by CRM link</h3>
             <div className={styles.main_wrapper2}>
-              <CrmLinks />
+              <CrmLinks setCourses={setCourses}  caller/>
             </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ import {
 import {
   getCallerCurrentWeek,
   getCallerWeek,
+  getCallerWeekByCourse
 } from "../../../redux/caller/caller-operations";
 import Button from "../../Buttons/Buttons";
 // import ManagerListModal from "./ManagerListModal/ManagerListModal";
@@ -128,9 +129,10 @@ export default function PostponeModal({
           </p>
           <section className={styles.tableSection}>
             <DatePicker
-              changeDateFn={getCallerWeek}
+              changeDateFn={getCallerWeekByCourse}
               tableDate={tableDate}
               caller={true}
+              courseId={courseId}
             />
             <Days />
             {!error && (
