@@ -21,6 +21,7 @@ import {
   getTable,
   getWeekId,
 } from "../../redux/manager/manager-selectors";
+import { getTypeSelection } from "../../redux/manager/manager-selectors";
 
 const MeetingsTableItem = ({
   managerName,
@@ -49,7 +50,10 @@ const MeetingsTableItem = ({
   const table = useSelector(getTable);
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState("");
-  
+  const [isConfModalOpen, setIsConfModalOpen] = useState(false);
+  const typeSelection = useSelector(getTypeSelection);
+
+  console.log("typeSelection", typeSelection)
 
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
@@ -134,8 +138,49 @@ const MeetingsTableItem = ({
     setSelectedManagerIds(arr);
   }
 
+  // CONFIRM MODAL/////
+  const openModal = () => {
+    setIsConfModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsConfModalOpen(false);
+  };
+
+  const handleDeleteClick = () => {
+    openModal();
+  };
+
+  const handleConfirmDelete = () => {
+    onClickFn();
+    closeModal();
+  };
+
+  const handleCancelDelete = () => {
+    closeModal();
+  };
+
+  const handleModalClick = (e) => {
+    // Закриваємо модальне вікно при кліку на зовнішній області (div.modal)
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+  ///////
+
   return (
     <>
+    {isConfModalOpen && (
+        <div className={styles.modal} onClick={handleModalClick}>
+          <div className={styles.modal__content}>
+            <p className={styles.label}>Delete this item?</p>
+            <div className={styles.btn_wrapper}>
+              <button className={styles.btn_yes} onClick={handleConfirmDelete}>Yes</button>
+              <button className={styles.btn_no} onClick={handleCancelDelete}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
       {managerName && text === "Managers" ? (
         <>
           <a
@@ -180,7 +225,7 @@ const MeetingsTableItem = ({
       ) : colorId === 3 ? (
         <>
           <li
-            onClick={onClickFn}
+            onClick={typeSelection === "Free" ? handleDeleteClick : onClickFn}
             key={dayIndex}
             className={activeClassnames(colorId)}
           >
@@ -189,7 +234,8 @@ const MeetingsTableItem = ({
               <button
                 type="button"
                 className={styles.styled_button}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsOpen(!isOpen);
                   setModal("appointment");
                 }}
@@ -226,7 +272,7 @@ const MeetingsTableItem = ({
       ) : colorId === 4 ? (
         <>
           <li
-            onClick={onClickFn}
+            onClick={typeSelection == "Free" ? handleDeleteClick : onClickFn}
             key={dayIndex}
             className={activeClassnames(colorId)}
           >
@@ -234,7 +280,8 @@ const MeetingsTableItem = ({
             <div className={styles.hover_buttons}>
               <button
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   onClickSlotButton(dayIndex, hourIndex, managerId);
                 }}
               >
@@ -243,7 +290,8 @@ const MeetingsTableItem = ({
               <button
                 type="button"
                 className={styles.styled_button}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsOpen(!isOpen);
                   setModal("consultation");
                 }}
@@ -268,7 +316,7 @@ const MeetingsTableItem = ({
           )}
         </>
       ) : (
-        <li onClick={onClickFn} className={activeClassnames(colorId)}>
+        <li onClick={typeSelection == "Free" ? handleDeleteClick : onClickFn} className={activeClassnames(colorId)}>
           {text !== undefined ? text : ``}
         </li>
       )}

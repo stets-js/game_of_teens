@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "../SuperAdmin/SuperAdminPage.module.scss";
 import path from "../../helpers/routerPath";
 import Header from "../../components/Header/Header";
@@ -13,6 +14,16 @@ import {
   getWeekId2,
 } from "../../helpers/manager/manager";
 import CrmLinks from "../../components/CrmLinks/CrmLinks";
+
+import RadioButton from "../../components/RadioButton/RadioButton";
+import { changeTypeSelection } from "../../redux/manager/manager-operations";
+import { getTypeSelection } from "../../redux/manager/manager-selectors";
+import {
+  changeStatusSlot,
+  setManagerError,
+  setManagerLoading
+} from "../../redux/manager/manager-operations";
+import { updateSlot } from "../../helpers/week/week";
 
 function CurrentMeetingsPageTable() {
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
@@ -39,6 +50,14 @@ function CurrentMeetingsPageTable() {
     setCureentTableDataWeekId(resWeekId);
     setIsRenderTableAvailable(true);
   }
+
+  const dispatch = useDispatch();
+  const buttonType = useSelector(getTypeSelection);
+  const onCheckedButton = (event) => {
+    dispatch(changeTypeSelection(event.target.name));
+  };
+
+
   return (
     <>
       <Header
@@ -48,6 +67,24 @@ function CurrentMeetingsPageTable() {
         ]}
       />
       <CurrentMeetingsStatusDefinition /> {/* statusDefinition */}
+      <div className={styles.wrapperControlButtons}>
+        <RadioButton
+          buttonType={buttonType}
+          style={styles.controlButton}
+          styleActive={styles.controlButtonGreenFocus}
+          styleColor={styles.controlButtonGreen}
+          onChangeType={onCheckedButton}
+          title="Consultations"
+        />
+        <RadioButton
+          buttonType={buttonType}
+          style={styles.controlButton}
+          styleActive={styles.controlButtonGrayFocus}
+          styleColor={styles.controlButtonGray}
+          onChangeType={onCheckedButton}
+          title="Free"
+        />
+      </div>
       <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} />
       <SortByBox
         sortText={"Selected"}

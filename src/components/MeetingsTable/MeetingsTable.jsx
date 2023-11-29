@@ -1,12 +1,21 @@
 import React, { useEffect, Fragment, useState } from "react";
 import styles from "./MeetingsTable.module.scss";
 import MeetingsTableItem from "../MeetingsTableItem/MeetingsTableItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
 import { TailSpin } from "react-loader-spinner";
 import TableMarkup from "../TableMarkup/TableMarkup";
 import { v4 as uuidv4 } from "uuid";
+
+import { getTypeSelection } from "../../redux/manager/manager-selectors";
+import {
+  changeStatusSlot,
+  setManagerError,
+  setManagerLoading
+} from "../../redux/manager/manager-operations";
+import { updateSlot } from "../../helpers/week/week";
+
 
 const MeetingsTable = ({
   isListView,
@@ -44,12 +53,15 @@ const MeetingsTable = ({
 
   let isTableLengthD = false;
   let isMarkUpAdded = false;
-  const [reload, setReload] = useState(false);
-  useEffect(() => {});
-  useEffect(() => {}, [reload]);
+  //const [reload, setReload] = useState(false);
+  // useEffect(() => {});
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
+  
   table = table.sort((a, b) => a.manager_name.localeCompare(b.manager_name));
+  
+  const dispatch = useDispatch();
+  const typeSelection = useSelector(getTypeSelection);
 
   if (isStatusSorted) {
     table = table.filter((item) => {
@@ -65,6 +77,53 @@ const MeetingsTable = ({
       <MeetingsTableItem key={uuidv4()} text={"no data has been founded"} />
     );
   }
+
+  function Fn(id, week, day, time) {
+    switch (typeSelection) {
+      case "Consultations":
+        dispatch(setManagerLoading(true));
+        return updateSlot(
+          id,
+          week,
+          day,
+          time,
+          1
+        )
+          .then(() => {
+            dispatch(
+              changeStatusSlot({
+                day,
+                time,
+                colorId: 1,
+              })
+            );
+          })
+          .catch((error) => dispatch(setManagerError(error.message)))
+          .finally(() => dispatch(setManagerLoading(false)));
+      case "Free":
+        dispatch(setManagerLoading(true));
+        return updateSlot(
+          id,
+          week,
+          day,
+          time,
+          0
+        )
+          .then(() => {
+            dispatch(
+              changeStatusSlot({
+                day,
+                time,
+                colorId: 0,
+              })
+            );
+          })
+          .catch((error) => dispatch(setManagerError(error.message)))
+          .finally(() => dispatch(setManagerLoading(false)));
+      default:
+        break;
+  }
+}
 
   return (
     <div key={uuidv4()} className={styles.wrapperTable}>
@@ -159,7 +218,8 @@ const MeetingsTable = ({
                         hourIndex={i.time}
                         colorId={i.status_id || i.status}
                         isFollowUp={i.follow_up}
-                        handleReload={()=> setReload(!reload)}
+                        // handleReload={()=> setReload(!reload)}
+                        onClickFn={()=> Fn(item.manager_id, weekId, dayIndex, i.time)}
                       />
                     ))
                   )}
