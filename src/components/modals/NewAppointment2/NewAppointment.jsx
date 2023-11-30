@@ -193,9 +193,10 @@ const NewAppointment = ({
               type="text"
               name="link"
               value={link}
-              placeholder=""
+              placeholder="https://crm.zoho.eu/...."
               isRequired={true}
               handler={setLink}
+              pattern="^https://crm.zoho.eu/.*$"
             />
             <div className={styles.input__block}>
               <FormInput
