@@ -50,6 +50,13 @@ function CurrentMeetingsPageTable() {
     setCureentTableDataWeekId(resWeekId);
     setIsRenderTableAvailable(true);
   }
+  async function getNewTableData(day, month, year) {
+    const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
+      (res) => res.data
+    );
+    setCurrentTableData(resManagers);
+    setIsRenderTableAvailable(true);
+  }
 
   const dispatch = useDispatch();
   const buttonType = useSelector(getTypeSelection);
@@ -103,6 +110,7 @@ function CurrentMeetingsPageTable() {
             setSelectedManagerIds={setSelectedManagerIds}
             currentSelectedSortStatus={currentSelectedSortStatus}
             date={date}
+            getNewTableData={getNewTableData}
           />
           <div className={styles.main_wrapper}>
             <div className={styles.main_wrapper2}>

@@ -29,6 +29,7 @@ const MeetingsTable = ({
   selectedManagerIds,
   setSelectedManagerIds,
   date,
+  getNewTableData
 }) => {
   const indefyTimedSlotText = (timeid) => {
     switch (timeid) {
@@ -79,51 +80,51 @@ const MeetingsTable = ({
   }
 
   function Fn(id, week, day, time) {
-    switch (typeSelection) {
-      case "Consultations":
-        dispatch(setManagerLoading(true));
-        return updateSlot(
-          id,
-          week,
-          day,
-          time,
-          1
-        )
-          .then(() => {
-            dispatch(
-              changeStatusSlot({
-                day,
-                time,
-                colorId: 1,
-              })
-            );
-          })
-          .catch((error) => dispatch(setManagerError(error.message)))
-          .finally(() => dispatch(setManagerLoading(false)));
-      case "Free":
-        dispatch(setManagerLoading(true));
-        return updateSlot(
-          id,
-          week,
-          day,
-          time,
-          0
-        )
-          .then(() => {
-            dispatch(
-              changeStatusSlot({
-                day,
-                time,
-                colorId: 0,
-              })
-            );
-          })
-          .catch((error) => dispatch(setManagerError(error.message)))
-          .finally(() => dispatch(setManagerLoading(false)));
-      default:
-        break;
+    return new Promise((resolve, reject) => {
+      switch (typeSelection) {
+        case "Consultations":
+          dispatch(setManagerLoading(true));
+          updateSlot(id, week, day, time, 1)
+            .then(() => {
+              dispatch(
+                changeStatusSlot({
+                  day,
+                  time,
+                  colorId: 1,
+                })
+              );
+              resolve(); // Розділено виклик resolve після успішного виконання
+            })
+            .catch((error) => {
+              dispatch(setManagerError(error.message));
+              reject(error); // Розділено виклик reject у випадку помилки
+            })
+            .finally(() => dispatch(setManagerLoading(false)));
+          break;
+        case "Free":
+          dispatch(setManagerLoading(true));
+          updateSlot(id, week, day, time, 0)
+            .then(() => {
+              dispatch(
+                changeStatusSlot({
+                  day,
+                  time,
+                  colorId: 0,
+                })
+              );
+              resolve(); // Розділено виклик resolve після успішного виконання
+            })
+            .catch((error) => {
+              dispatch(setManagerError(error.message));
+              reject(error); // Розділено виклик reject у випадку помилки
+            })
+            .finally(() => dispatch(setManagerLoading(false)));
+          break;
+        default:
+          break;
+      }
+    });
   }
-}
 
   return (
     <div key={uuidv4()} className={styles.wrapperTable}>
@@ -219,7 +220,12 @@ const MeetingsTable = ({
                         colorId={i.status_id || i.status}
                         isFollowUp={i.follow_up}
                         // handleReload={()=> setReload(!reload)}
-                        onClickFn={()=> Fn(item.manager_id, weekId, dayIndex, i.time)}
+                        // onClickFn={()=> {Fn(item.manager_id, weekId, dayIndex, i.time)}}
+                        onClickFn={() => {
+                          Fn(item.manager_id, weekId, dayIndex, i.time)
+                            .then(() => getNewTableData(parseInt(date.split('.')[0], 10), parseInt(date.split('.')[1], 10), parseInt(date.split('.')[2], 10)))
+                            .catch((error) => console.error("Error:", error));
+                        }}
                       />
                     ))
                   )}
