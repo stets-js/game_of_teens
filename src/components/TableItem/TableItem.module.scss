@@ -205,6 +205,12 @@
     background-color: darken($caller-lightGreen, 5%);
   }
 }
+.callerLightGreyColor {
+  background-color: $dark_grey;
+  &:hover {
+    background-color: darken($dark_grey, 20%);
+  }
+}
 
 .free__button {
   position: absolute;
@@ -238,6 +244,9 @@
 }
 .callerFreeLightGreenColor {
   border: 2px solid #4a8312;
+}
+.callerFreeLightGreyColor {
+  border: 2px solid #000;
 }
 
 
