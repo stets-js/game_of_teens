@@ -88,7 +88,7 @@ const ConsultationInfo = ({
       updateSlotFollowUp(managerId ? managerId : manId,
       weekId,
       dayIndex,
-      managerTable[dayIndex][hourIndex].time,
+      currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time,
       +result,
       followUp).then(() => {
         setIsLoading(false);
@@ -103,7 +103,7 @@ const ConsultationInfo = ({
         updateSlotFollowUp(managerId ? managerId : manId,
           weekId,
           dayIndex,
-          hourIndex,
+          currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time,
           +result,
           followUp).then(() => {
             setIsLoading(false);
