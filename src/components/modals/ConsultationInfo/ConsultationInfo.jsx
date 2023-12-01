@@ -132,7 +132,7 @@ const ConsultationInfo = ({
                     managerId ? managerId : manId,
                     weekId,
                     dayIndex,
-                    managerTable[dayIndex][hourIndex].time,
+                    currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time,
                     +result
                   )
                     .then((data) => {
