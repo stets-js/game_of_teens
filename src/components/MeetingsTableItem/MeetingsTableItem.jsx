@@ -22,6 +22,7 @@ import {
   getWeekId,
 } from "../../redux/manager/manager-selectors";
 import { getTypeSelection } from "../../redux/manager/manager-selectors";
+import WorkingInfo from "../../components/modals/WorkingInfo/WorkingInfo"
 
 const MeetingsTableItem = ({
   managerName,
@@ -53,7 +54,7 @@ const MeetingsTableItem = ({
   const [isConfModalOpen, setIsConfModalOpen] = useState(false);
   const typeSelection = useSelector(getTypeSelection);
 
-  console.log("typeSelection", typeSelection)
+  console.log("onClickFn", onClickFn)
 
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
@@ -315,7 +316,34 @@ const MeetingsTableItem = ({
             />
           )}
         </>
-      ) : (
+      ) : colorId === 2 ? (
+        <>
+        <li className={activeClassnames(colorId)}>
+        {text !== undefined ? text : ``}
+          <div className={styles.hover_buttons}>
+            <button
+              className={styles.styled_button}
+              type="button"
+              data-modal="working"
+              onClick={() => {
+                setIsOpen(!isOpen);
+                setModal("working");
+              }}
+            >
+              info
+            </button>
+          </div>
+        </li>
+
+        {modal === "working" && (
+          <WorkingInfo
+            slotId={slotId}
+            isOpen={isOpen}
+            handleClose={() => setIsOpen(!isOpen)}
+          />
+        )}
+      </>
+      ):(
         <li onClick={typeSelection == "Free" ? handleDeleteClick : onClickFn} className={activeClassnames(colorId)}>
           {text !== undefined ? text : ``}
         </li>

@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from "./TableItem.module.scss";
 import ConsultationInfo from "../../components/modals/ConsultationInfo/ConsultationInfo";
 import NewAppointment from "../../components/modals/NewAppointment2/NewAppointment";
+import WorkingInfo from "../../components/modals/WorkingInfo/WorkingInfo"
 
 const TableItem = ({
   data,
@@ -62,8 +63,6 @@ const TableItem = ({
     });
   };
   const formattedDate = new Date().toISOString().slice(0, 10);
-  console.log("slots--->>>>", slots ? slots[0].date : null)
-  console.log("ndate", formattedDate)
   return (
     <>
       {caller ? (
@@ -164,6 +163,33 @@ const TableItem = ({
               />
             )}
           </>
+        ) : colorId === 2 ? (
+          <>
+          <li className={activeClassnames(colorId)}>
+            {`${data}:00`}
+            <div className={styles.hover_buttons}>
+              <button
+                className={styles.only_info_button}
+                type="button"
+                data-modal="working"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  setModal("working");
+                }}
+              >
+                info
+              </button>
+            </div>
+          </li>
+
+          {modal === "working" && (
+            <WorkingInfo
+              slotId={slotId}
+              isOpen={isOpen}
+              handleClose={() => setIsOpen(!isOpen)}
+            />
+          )}
+        </>
         ) : (
           <li className={activeClassnames(colorId)}>{`${data}:00`}</li>
         )
