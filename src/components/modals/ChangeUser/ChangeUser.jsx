@@ -23,19 +23,25 @@ const ChangeUser = ({
   dataLogin,
   // dataPassword,
   administrator,
+  dataTeam,
+  dataSlack
 }) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(2);
+  const [team, setTeam] = useState("");
+  const [slack, setSlack] = useState("");
   useEffect(() => {
     setName(dataName);
     setDesc(dataDesc);
     setRole(dataRole);
     setLogin(dataLogin);
+    setSlack(dataSlack);
+    setTeam(dataTeam);
     // setPassword(dataPassword);
-  }, [isOpen, dataDesc, dataLogin, dataRole, dataName]);
+  }, [isOpen, dataDesc, dataLogin, dataRole, dataName, dataSlack, dataTeam]);
 
   return (
     <>
@@ -64,8 +70,12 @@ const ChangeUser = ({
               setPassword("");
               setLogin("");
               setName("");
+              setSlack("");
+              setTeam("");
             }}
             rating={desc}
+            slack={slack}
+            team={team}
             login={login}
             status={{
               successMessage: "Successfully changed user",
@@ -119,6 +129,30 @@ const ChangeUser = ({
                 placeholder="Password"
                 isRequired={true}
                 handler={setPassword}
+              />
+            </div>{" "}
+            <div className={styles.input__block}>
+              <FormInput
+                classname="input__bottom"
+                title="Slack:"
+                type="text"
+                name="slack"
+                max={50}
+                value={slack}
+                placeholder="Slack"
+                // isRequired={true}
+                handler={setSlack}
+              />
+              <FormInput
+                classname="input__bottom"
+                title="Team:"
+                type="text"
+                name="team"
+                value={team}
+                max={2}
+                placeholder="Team"
+                isRequired={true}
+                handler={setTeam}
               />
             </div>{" "}
             <Select

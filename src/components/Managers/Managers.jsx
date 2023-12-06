@@ -10,12 +10,17 @@ import { getManagers } from "../../helpers/manager/manager";
 export default function Managers({ isOpenModal, isAdmin, data }) {
   const [name, setName] = useState("");
   const [rating, setRating] = useState("");
+  const [slack, setSlack] = useState("");
+  const [team, setTeam] = useState("");
   const [managers, setManagers] = useState(data);
   const [id, setId] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [newRole, setRole] = useState("");
   const [newLogin, setLogin] = useState("");
+
+  const [selectedTeam, setSelectedTeam] = useState("All");
+
   let usersArray = [
     {
       text: "Administrators",
@@ -50,23 +55,29 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
     usersArray = usersArray.slice(1);
   }
 
-  const getUsersData = async () => {
+  const getUsersData = async (teamNum) => {
     const arr = [];
     const res = await getUsers().then((res) =>
       res.users.filter((item) => item.role_id > 2)
     );
     const resManagers = await getManagers().then((res) => res.data);
     resManagers.map((item) => (item.role_id = 2));
+    
+    const filteredManagers = teamNum === "All"
+    ? resManagers
+    : resManagers.filter((item) => item.team === parseInt(teamNum, 10));
+    const sortedManagers = filteredManagers.sort((a, b) => a.name.localeCompare(b.name));
     arr.push(...res);
-    arr.push(...resManagers);
+    arr.push(...sortedManagers);
   
     return setManagers(arr);
   };
 
+
   useEffect(() => {
-    getUsersData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, isOpenModal]);
+    getUsersData(selectedTeam);
+  }, [isOpen, isOpenModal, selectedTeam]);
+
   return (
     <>
       {managers?.length > 0 &&
@@ -75,6 +86,25 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
             <React.Fragment key={index}>
               <div className={styles.wrapper} key={index}>
                 <p className={styles.mini_title}>{i.text}</p>
+                {i.text === "Managers" && (
+                  <select
+                    className={styles.managers__select}
+                    value={selectedTeam}
+                    onChange={(e) => {
+                      setSelectedTeam(e.target.value);
+          
+                    }}
+                  >
+                    <option value="All">All</option>
+                    <option value="1">Team 1</option>
+                    <option value="2">Team 2</option>
+                    <option value="3">Team 3</option>
+                    <option value="4">Team 4</option>
+                    <option value="5">Team 5</option>
+                    <option value="6">Team 6</option>
+                    <option value="7">Team 7</option>
+                  </select>
+                )}
                 <ul className={styles.main_wrapper}>
                   {managers.map((item) => {
                     if (i.roleId === item.role_id || !item.role_id) {
@@ -118,6 +148,8 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
                                   setRole(item.role_id);
                                 }
                                 setLogin(item.login);
+                                setSlack(item.slack);
+                                setTeam(item.team);
                               }}
                             />
                           </li>
@@ -139,6 +171,8 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
         administrator={isAdmin}
         dataRole={newRole}
         dataLogin={newLogin}
+        dataTeam={team}
+        dataSlack={slack}
       />
       {/* <div className={styles.wrapper}>
         <p className={styles.mini_title}>{text}</p>
