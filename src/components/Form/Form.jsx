@@ -65,7 +65,10 @@ const Form = ({
       event.preventDefault();
       const data = new FormData();
       for (const i in formData) {
-        if (!formData[i]) {
+        if (role != 2 && formData[i] === undefined){
+          continue
+        }
+        if (!formData[i].toString()) {
           formData[i] = 2;
         }
         data.append(i, formData[i]);

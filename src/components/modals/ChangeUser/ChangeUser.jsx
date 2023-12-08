@@ -33,6 +33,7 @@ const ChangeUser = ({
   const [role, setRole] = useState(2);
   const [team, setTeam] = useState("");
   const [slack, setSlack] = useState("");
+  
   useEffect(() => {
     setName(dataName);
     setDesc(dataDesc);
@@ -97,16 +98,16 @@ const ChangeUser = ({
               isRequired={true}
               handler={setName}
             />
-            <FormInput
+            {dataRole === 2 && <FormInput
               title="Rating:"
               type="text"
               max={50}
-              name="username"
+              name="rating"
               value={desc}
               placeholder="Rating"
               isRequired={true}
               handler={setDesc}
-            />
+            />}
             <div className={styles.input__block}>
               <FormInput
                 classname="input__bottom"
@@ -127,11 +128,10 @@ const ChangeUser = ({
                 value={password}
                 max={50}
                 placeholder="Password"
-                isRequired={true}
                 handler={setPassword}
               />
             </div>{" "}
-            <div className={styles.input__block}>
+            {dataRole === 2 &&  <div className={styles.input__block}>
               <FormInput
                 classname="input__bottom"
                 title="Slack:"
@@ -151,10 +151,10 @@ const ChangeUser = ({
                 value={team}
                 max={2}
                 placeholder="Team"
-                isRequired={true}
+                //isRequired={true}
                 handler={setTeam}
               />
-            </div>{" "}
+            </div>}
             <Select
               title="Role:"
               request={getRoles}
