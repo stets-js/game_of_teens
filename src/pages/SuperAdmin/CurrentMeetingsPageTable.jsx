@@ -39,14 +39,20 @@ function CurrentMeetingsPageTable() {
   const [isRenderTableAvailable, setIsRenderTableAvailable] = useState(false);
   const [cureentTableDataWeekId, setCureentTableDataWeekId] = useState(0);
   const [date, setDate] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("All");
 
   async function getTableData(day, month, year) {
     const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
       (res) => res.data
     );
+    console.log("resManagers", resManagers)
+    const filteredManagers = selectedTeam === "All"
+    ? resManagers
+    : resManagers.filter((item) => item.team === parseInt(selectedTeam, 10));
+
     setDate(`${day}.${month}.${year}`);
     const resWeekId = await getWeekId2(day, month, year).then((res) => res);
-    setCurrentTableData(resManagers);
+    setCurrentTableData(filteredManagers);
     setCureentTableDataWeekId(resWeekId);
     setIsRenderTableAvailable(true);
   }
@@ -92,7 +98,7 @@ function CurrentMeetingsPageTable() {
           title="Free"
         />
       </div>
-      <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} />
+      <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} />
       <SortByBox
         sortText={"Selected"}
         sortTextFunc={setcurrentSelectedSortStatus}
@@ -100,6 +106,23 @@ function CurrentMeetingsPageTable() {
       {!isThatPhone.isPhone ? (
         isRenderTableAvailable ? (
           <>
+                  <select
+                    className={styles.managers__select}
+                    value={selectedTeam}
+                    onChange={(e) => {
+                      setSelectedTeam(e.target.value);
+          
+                    }}
+                  >
+                    <option value="All">All</option>
+                    <option value="1">Team 1</option>
+                    <option value="2">Team 2</option>
+                    <option value="3">Team 3</option>
+                    <option value="4">Team 4</option>
+                    <option value="5">Team 5</option>
+                    <option value="6">Team 6</option>
+                    <option value="7">Team 7</option>
+                  </select>
           <MeetingsTable
             isTableView={true}
             isListView={false}

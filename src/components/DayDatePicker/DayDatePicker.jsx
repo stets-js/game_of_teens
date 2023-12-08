@@ -4,7 +4,7 @@ import moment from "moment";
 import styles from "./DayDatePicker.module.scss";
 import { Fade } from "react-awesome-reveal";
 
-const DayDatePicker = ({ tableDate, changeDateFn, setCurrentTableData }) => {
+const DayDatePicker = ({ tableDate, changeDateFn, setCurrentTableData, setSelectedTeam, selectedTeam }) => {
   const [date, setDate] = useState(new Date(tableDate));
 
   const month =
@@ -26,7 +26,7 @@ const DayDatePicker = ({ tableDate, changeDateFn, setCurrentTableData }) => {
       const year = dateYear.toString();
       changeDateFn(day, month, year);
     }
-  }, [date]);
+  }, [date, selectedTeam]);
 
   const onClickArrowRight = () => {
     setDate(moment(date).add(1, "days")._d);

@@ -4,12 +4,12 @@ import moment from "moment";
 import styles from "./DayTimePicker.module.scss";
 import { Fade } from "react-awesome-reveal";
 
-const DayTimePicker = ({ tableTime, setTableTime }) => {
+const DayTimePicker = ({ tableTime, setTableTime, selectedTeam }) => {
   const [time, setTime] = useState(tableTime);
 
   useEffect(() => {
     setTableTime(time)
-  }, [time]);
+  }, [time, selectedTeam]);
 
 
 const timeIncrement = ()=>{

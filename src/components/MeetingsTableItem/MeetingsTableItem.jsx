@@ -54,8 +54,6 @@ const MeetingsTableItem = ({
   const [isConfModalOpen, setIsConfModalOpen] = useState(false);
   const typeSelection = useSelector(getTypeSelection);
 
-  console.log("onClickFn", onClickFn)
-
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
       [styles.grayColor]: +colorId === 0,
