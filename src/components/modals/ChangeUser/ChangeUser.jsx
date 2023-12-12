@@ -127,6 +127,7 @@ const ChangeUser = ({
                 name="password"
                 value={password}
                 max={50}
+                isRequired={true}
                 placeholder="Password"
                 handler={setPassword}
               />
