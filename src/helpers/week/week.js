@@ -71,9 +71,10 @@ const getWeek = (managerId, weekId) => {
 };
 
 const updateSlot = (managerId, weekId, dayIndex, slotHour, colorId) => {
+  const req_url = encodeURIComponent(window.location.href);
   return axios
     .post(
-      `/update_slot/${managerId}/${weekId}/${dayIndex}/${slotHour}/${colorId}`
+      `/update_slot/${managerId}/${weekId}/${dayIndex}/${slotHour}/${colorId}`,  {req_url}
     )
     .then((res) => res.data)
     .catch((err) => {

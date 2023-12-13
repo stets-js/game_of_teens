@@ -54,8 +54,9 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
 };
 
 const delteConfirmation = (managerId, weekId, weekDay, hour, newStatus) => {
+  const req_url = encodeURIComponent(window.location.href);
   return axios
-    .post(`/update_slot/${managerId}/${weekId}/${weekDay}/${hour}/${newStatus}`)
+    .post(`/update_slot/${managerId}/${weekId}/${weekDay}/${hour}/${newStatus}`, {req_url})
     .then((res) => res.data)
     .catch((error) => {
       throw error;
