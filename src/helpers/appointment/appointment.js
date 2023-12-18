@@ -34,7 +34,20 @@ const getAppointmentByCrm = (credentials) => {
 const putAppointment = (credentials) => {
   return axios
     .post(`/update_superad_appointment`, credentials)
-    .then((res) => res.data)
+    .then((res) => {
+      const responseData = {
+        ...res.data,
+        action: "rescheduled",
+      };
+
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
+
+      return res.data;
+    })
     .catch((error) => {
       throw error;
     });
