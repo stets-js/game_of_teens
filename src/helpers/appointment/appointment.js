@@ -58,7 +58,20 @@ const createAppointment = (
       }`,
       link
     )
-    .then((res) => res.data)
+    .then((res) => {
+      const responseData = {
+        ...res.data,
+        action: "created",
+      };
+
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
+
+      return res.data;
+    })
     .catch((error) => {
       throw error;
     });
