@@ -21,7 +21,8 @@ const TableItem = ({
   postponed,
   slots,
   handleReload,
-  courseId
+  courseId,
+  callerName
 }) => {
 
 
@@ -97,6 +98,7 @@ const TableItem = ({
               slotId={slotId}
               handleClose={() => setIsOpen(!isOpen)}
               courseIdx={courseId}
+              callerName={callerName}
             />
           )}
         </>

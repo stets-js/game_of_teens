@@ -35,6 +35,7 @@ const NewAppointment = ({
   slotId,
   hourIndex,
   courseIdx,
+  callerName,
 }) => {
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
@@ -49,7 +50,7 @@ const NewAppointment = ({
   const [appointmentData, setAppointmentData] = useState([]);
   const [appointmentId, setAppointmentId] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
-
+  const [appointmentType, setAppointmentType] = useState("");
 
   useEffect(() => {
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
@@ -113,7 +114,9 @@ const NewAppointment = ({
                 courseIdx,
                 phone,
                 age,
-                message
+                message,
+                callerName,
+                appointmentType
               )
               .then(() => {
                 success({
@@ -124,6 +127,7 @@ const NewAppointment = ({
                 setMessage("");
                 setAge(0);
                 setPhone("");
+                setAppointmentType("");
                 handleClose();
               })
               .catch(() => {
@@ -188,6 +192,19 @@ const NewAppointment = ({
               defaultValue="Select course"
               title="Course:"
             />
+            <label className={styles.input__label}>
+              <p className={styles.input__label}>Type:</p>
+                  <select
+                    className={styles.select}
+                    value={appointmentType}
+                    onChange={(e) => {
+                      setAppointmentType(e.target.value);
+                    }}
+                  >
+                    <option value="Individual">Individual</option>
+                    <option value="Group">Group</option>
+                  </select>
+            </label>
             <FormInput
               title="CRM link:"
               type="text"

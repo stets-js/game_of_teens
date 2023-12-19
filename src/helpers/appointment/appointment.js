@@ -62,13 +62,15 @@ const createAppointment = (
   courseId,
   phone,
   age,
-  message
+  message,
+  callerName,
+  appointmentType
 ) => {
   return axios
     .post(
       `/create_appointment/${weekId}/${dayIndex}/${time}/${courseId}/${phone ? phone : "0"}/${age}/${managerId}/${
         message ? message : "0"
-      }`,
+      }/${callerName}/${appointmentType}`,
       link
     )
     .then((res) => {

@@ -95,7 +95,7 @@ export default function CallerPage() {
         <DaysPicker caller setDayIndex={setDayIndex} />
       )}
        {window.innerWidth > 1160 ? (
-        <Table table={table} weekId={weekId} courseId={courseId} caller/>
+        <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
       ) : (
         <DayTable
           weekId={weekId} 
