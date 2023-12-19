@@ -50,7 +50,7 @@ const NewAppointment = ({
   const [appointmentData, setAppointmentData] = useState([]);
   const [appointmentId, setAppointmentId] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
-  const [appointmentType, setAppointmentType] = useState("");
+  const [appointmentType, setAppointmentType] = useState("Individual");
 
   useEffect(() => {
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
@@ -127,7 +127,7 @@ const NewAppointment = ({
                 setMessage("");
                 setAge(0);
                 setPhone("");
-                setAppointmentType("");
+                setAppointmentType("Individual");
                 handleClose();
               })
               .catch(() => {
