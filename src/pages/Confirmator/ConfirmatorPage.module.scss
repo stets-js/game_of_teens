@@ -201,3 +201,18 @@ z-index: 11000;
   justify-content: center;
   margin: 0 auto;
 }
+
+.commentsWrapper{
+  position: relative;
+}
+.commentsWindow{
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  width: 300px;
+  border: 2px solid #d2caff;
+  border-radius: 5px;
+  background-color: #e2ddff;
+  padding: 10px;
+  z-index: 10;
+}
