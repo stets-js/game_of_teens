@@ -14,24 +14,25 @@ const ConfirmatorComments = ({ value }) => {
   const [reject, setReject] = useState({});
   const [confirm, setConfirm] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [selectedReason, setSelectedReason] = useState("no parents attending");
 
-  const confirmationTable = [
-    {
-      text: "time",
-    },
-    {
-      text: "money",
-    },
-    {
-      text: "other",
-    },
-  ];
+  // const confirmationTable = [
+  //   {
+  //     text: "time",
+  //   },
+  //   {
+  //     text: "money",
+  //   },
+  //   {
+  //     text: "other",
+  //   },
+  // ];
 
-  useEffect(() => {
-    Object.keys(reject).forEach((item) =>
-      setCancelConfirmation(reject[item].slot_id, 1, reject[item].text)
-    );
-  }, [reject]);
+  // useEffect(() => {
+  //   Object.keys(reject).forEach((item) =>
+  //     setCancelConfirmation(reject[item].slot_id, 1, reject[item].text)
+  //   );
+  // }, [reject]);
 
   const handleMouseEnter = (itemId) => {
     setHoveredItem(itemId);
@@ -41,6 +42,18 @@ const ConfirmatorComments = ({ value }) => {
     setHoveredItem(null);
   };
 
+  const rejectionReasons = [
+    "no parents attending",
+    "child sick",
+    "not interested",
+    "forgot about TL/have no time",
+    "no contact",
+    "tech reasons",
+    "no PC",
+    "no electricity",
+    "other reasons"
+  ];
+console.log("selectedReason", selectedReason)
   return (
     <>
       {appointments.map((item) => (
@@ -70,7 +83,7 @@ const ConfirmatorComments = ({ value }) => {
           )}
           {value[item.appointment_id] === "canceled" && (
             <div className={styles.comment__reject_btn}>
-              {confirmationTable.map((i) => {
+              {/* {confirmationTable.map((i) => {
                 return (
                   <button
                     key={i.text}
@@ -114,7 +127,30 @@ const ConfirmatorComments = ({ value }) => {
                     reject[item.appointment_id]
                   )
                 }
-              />
+              /> */}
+              <select
+                className={styles.reason__select}
+                value={selectedReason}
+                onChange={(e) => setSelectedReason(e.target.value)}
+              >
+                {rejectionReasons.map((reason) => (
+                  <option key={reason} value={reason}>
+                    {reason}
+                  </option>
+                ))}
+              </select>
+              <button
+              className={styles.btn}
+              onClick={() => {
+                setCancelConfirmation(
+                  item.slot_id,
+                  1,
+                  selectedReason
+                )
+              }}
+              >
+                Send
+              </button>
             </div>
           )}
         </div>
