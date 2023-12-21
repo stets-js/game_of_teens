@@ -64,7 +64,20 @@ const removeSlot = (slot_id, reason) => {
   const confirmatorId = +url[url.length-1];
   return axios
     .delete(`remove_slot/${slot_id}/${reason}/${confirmatorId}`)
-    .then((res) => res.data)
+    .then((res) => {
+      const responseData = {
+        ...res.data,
+        action: "canceled",
+      };
+
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
+
+      return res.data;
+    })
     .catch((error) => {
       throw error;
     });
