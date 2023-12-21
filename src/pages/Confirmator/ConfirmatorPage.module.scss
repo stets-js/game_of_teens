@@ -66,8 +66,9 @@
   align-items: center;
 }
 .btn {
-  background-color: $ligh_grey;
-  border: 1px solid $dark_grey;
+  width: 170px;
+  background-color: #aeff83;
+  border: 1px solid #92ff57;
   border-radius: 16px;
   padding: 2px 14px;
   font-family: $poppins;
@@ -78,7 +79,7 @@
   height: 30px;
   transition: $main-transition;
   &_active {
-    background-color: $dark_grey;
+    background-color: #92ff57;
   }
 }
 
