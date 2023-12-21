@@ -205,6 +205,10 @@ z-index: 11000;
 
 .commentsWrapper{
   position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 15px;
 }
 .commentsWindow{
   position: absolute;
