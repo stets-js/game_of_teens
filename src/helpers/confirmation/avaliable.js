@@ -59,9 +59,11 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
     });
 };
 
-const removeSlot = (slot_id) => {
+const removeSlot = (slot_id, reason) => {
+  const url = window.location.href.split('/');
+  const confirmatorId = +url[url.length-1];
   return axios
-    .delete(`remove_slot/${slot_id}`)
+    .delete(`remove_slot/${slot_id}/${reason}/${confirmatorId}`)
     .then((res) => res.data)
     .catch((error) => {
       throw error;

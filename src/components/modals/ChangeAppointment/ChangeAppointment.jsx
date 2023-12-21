@@ -86,6 +86,7 @@ console.log('followUp inside', followUp)
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
           <Form
+            onClose={handleClose}
             isCancel={true}
             slotId={slot}
             onSubmit={() => {

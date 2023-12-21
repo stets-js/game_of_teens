@@ -14,6 +14,7 @@ import styles from "./Form.module.scss";
 defaults.delay = 1000;
 
 const Form = ({
+  onClose,
   type,
   postpone,
   postponeClick,
@@ -44,13 +45,16 @@ const Form = ({
   const [isChangeManagerCoursesOpen, setIsChangeManagerCoursesOpen] =
     useState(false);
   const [errorsuccessMessage, setError] = useState(false);
+  const [inputCancelClicked, setInputCancelClicked] = useState(false);
+  const [selectedReason, setSelectedReason] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (type.type === "no-request-test") {
       return onSubmit();
     }
     if (type.type === "no-request") {
-      if (onSubmit) {
+      if (onSubmit && !inputCancelClicked) {
         return onSubmit()
           // .catch((e) => {
           //   error(`${status.failMessage}, ${e.message}`);
@@ -59,6 +63,7 @@ const Form = ({
           //   // success(status.successMessage);
           // });
       }
+      setInputCancelClicked(false)
       return;
     }
     try {
@@ -243,8 +248,10 @@ const Form = ({
           )}
           {isCancel ? (
             <InputCancel
-              InputCancelFunc={() => {
-                removeSlot(slotId);
+              InputCancelFunc={(reason) => {
+                setInputCancelClicked(true)
+                removeSlot(slotId, reason);
+                onClose();
               }}
             />
           ) : (
