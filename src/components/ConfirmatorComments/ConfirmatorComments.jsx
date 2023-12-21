@@ -68,10 +68,7 @@ console.log("selectedReason", selectedReason)
               <div className={styles.commentsWindow}>
               {item.comments}
               </div>
-              )} <p>{item.comments.length > 10 
-                ? `${item.comments.slice(0, 10)}...` 
-                : item.comments
-              }</p></div>)}
+              )} </div>)}
               
           {value[item.appointment_id] === "confirmed" && (
             <input
