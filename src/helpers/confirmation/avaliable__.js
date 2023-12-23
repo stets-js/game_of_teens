@@ -11,7 +11,7 @@ const getCurrentConfirmatorData = () => {
 
 const getConfirmatorWeekData = (weekId, dayId, halfId) => {
   return axios
-    .get(`/get_confirmation/${weekId}/${dayId}/${halfId}`)
+    .get(`/get_confirmation/${weekId}/${dayId}/${halfId}/`)
     .then((res) => {
       return res.data;
     })
