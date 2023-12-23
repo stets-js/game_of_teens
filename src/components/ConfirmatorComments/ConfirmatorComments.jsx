@@ -8,13 +8,21 @@ import styles from "../../pages/Confirmator/ConfirmatorPage.module.scss";
 import {
   getConfirmatorAppointments,
 } from "../../redux/confirmator/confirmator-selectors";
+import { TailSpin } from "react-loader-spinner";
 
 const ConfirmatorComments = ({ value }) => {
   const appointments = useSelector(getConfirmatorAppointments);
   const [reject, setReject] = useState({});
   const [confirm, setConfirm] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
-  const [selectedReason, setSelectedReason] = useState("no parents attending");
+  const [selectedReason, setSelectedReason] = useState(() => {
+    const initialReasons = {};
+    appointments.forEach((item) => {
+      initialReasons[item.appointment_id] = "no parents attending";
+    });
+    return initialReasons;
+  });
+  const [loadingAppointment, setLoadingAppointment] = useState(null);
 
   // const confirmationTable = [
   //   {
@@ -133,8 +141,13 @@ console.log("selectedReason", selectedReason)
               /> */}
               <select
                 className={styles.reason__select}
-                value={selectedReason}
-                onChange={(e) => setSelectedReason(e.target.value)}
+                value={selectedReason[item.appointment_id]}
+                onChange={(e) => {
+                  setSelectedReason((prevSelectedReasons) => ({
+                    ...prevSelectedReasons,
+                    [item.appointment_id]: e.target.value,
+                  }));
+                }}
               >
                 {rejectionReasons.map((reason) => (
                   <option key={reason} value={reason}>
@@ -142,18 +155,29 @@ console.log("selectedReason", selectedReason)
                   </option>
                 ))}
               </select>
+              {loadingAppointment === item.appointment_id ? (
+                <TailSpin height="25px" width="25px" color="#999DFF" />
+              ) : (
               <button
               className={styles.btn}
-              onClick={() => {
-                setCancelConfirmation(
-                  item.slot_id,
-                  1,
-                  selectedReason
-                )
+              onClick={async () => {
+                try {
+                  setLoadingAppointment(item.appointment_id);
+                  await setCancelConfirmation(
+                    item.slot_id,
+                    1,
+                    selectedReason[item.appointment_id] || "no parents attending"
+                  );
+                } catch (error) {
+                  // Handle error if needed
+                  console.error("Error while cancelling appointment:", error);
+                } finally {
+                  setLoadingAppointment(null);
+                }
               }}
               >
                 Send
-              </button>
+              </button>)}
             </div>
           )}
         </div>
