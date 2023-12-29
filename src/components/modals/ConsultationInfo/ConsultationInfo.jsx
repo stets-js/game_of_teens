@@ -42,6 +42,7 @@ const ConsultationInfo = ({
   const [course, setCourse] = useState("");
   const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
+  const [unsuccessfulMessage, setUnsuccessfulMessage] = useState("");
   const { managerId } = useParams();
   const [appointment, setAppointment] = useState([]);
   //const weekId = useSelector(getWeekId);
@@ -63,6 +64,7 @@ const ConsultationInfo = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {},[result])
 
   const cancelConfConsultOnClickFn = () => {
     delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time, 0)
@@ -126,7 +128,7 @@ const ConsultationInfo = ({
             onSubmit={() => {
               handleClose();
               dispatch(setManagerLoading(true));
-              return postConsultationResult(+slotId, result, group, message)
+              return postConsultationResult(+slotId, result, group, message, unsuccessfulMessage)
                 .then((data) => {
                   return updateSlot(
                     managerId ? managerId : manId,
@@ -154,6 +156,7 @@ const ConsultationInfo = ({
                   setCourse("");
                   setMessage("");
                   setFollowUp("");
+                  setUnsuccessfulMessage("");
                   return dispatch(setManagerLoading(false));
                 });
             }}
@@ -198,6 +201,15 @@ const ConsultationInfo = ({
               <option value={7}>Successful</option>
               <option value={8}>Unsuccessful</option>
             </Select>
+
+           {result == 8 ? <label className={styles.input__label2}>
+              <p className={styles.input__label2}>Unsuccessful description</p>
+              <textarea
+                className={styles.textarea2}
+                value={unsuccessfulMessage || appointment.unsuccessful_message}
+                onChange={(e) => setUnsuccessfulMessage(e.target.value)}
+              ></textarea>
+            </label> : null}
 
             <Select
               title="Group:"

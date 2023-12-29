@@ -1,23 +1,25 @@
 import axios from "../axios-config";
 
-const postConsultationResult = (slotId, result, groupId, message) => {
+const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMessage) => {
+  const formattedMessage = message || "no text";  // Замінюємо відсутній message на пустий рядок
+  const formattedUnsuccessfulMessage = unsuccessfulMessage || "no text";  // Замінюємо відсутній unsuccessfulMessage на пустий рядок
+
+  const endpointPath = `/consultation_result/${slotId}/${result}/${groupId}/${formattedMessage}/${formattedUnsuccessfulMessage}`;
   return axios
     .post(
-      message
-        ? `/consultation_result/${slotId}/${result}/${groupId}/${message}`
-        : `/consultation_result/${slotId}/${result}/${groupId}/no-text`
+      endpointPath
     )
     .then((res) => {
-      const responseData = {
-        ...res.data,
-        action: "attended",
-      };
+      // const responseData = {
+      //   ...res.data,
+      //   action: "attended",
+      // };
 
-      axios.post(
-        "https://zohointegration.goit.global/GoITeens/booking/index.php",
-        JSON.stringify(responseData),
-        { headers: { "Content-Type": "application/json" }}
-      );
+      // axios.post(
+      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
+      //   JSON.stringify(responseData),
+      //   { headers: { "Content-Type": "application/json" }}
+      // );
 
       return res.data;
     })

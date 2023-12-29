@@ -65,16 +65,16 @@ const removeSlot = (slot_id, reason) => {
   return axios
     .delete(`remove_slot/${slot_id}/${reason}/${confirmatorId}`)
     .then((res) => {
-      const responseData = {
-        ...res.data,
-        action: "canceled",
-      };
+      // const responseData = {
+      //   ...res.data,
+      //   action: "canceled",
+      // };
 
-      axios.post(
-        "https://zohointegration.goit.global/GoITeens/booking/index.php",
-        JSON.stringify(responseData),
-        { headers: { "Content-Type": "application/json" }}
-      );
+      // axios.post(
+      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
+      //   JSON.stringify(responseData),
+      //   { headers: { "Content-Type": "application/json" }}
+      // );
 
       return res.data;
     })
