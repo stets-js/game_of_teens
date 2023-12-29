@@ -10,16 +10,16 @@ const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMe
       endpointPath
     )
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "attended",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "attended",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })

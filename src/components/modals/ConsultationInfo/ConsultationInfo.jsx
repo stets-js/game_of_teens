@@ -60,7 +60,10 @@ const ConsultationInfo = ({
     if (isOpen) {
       const get = async () => await getAppointment({ id: slotId });
       get().then((data) => {setAppointment(data.data)
-        setFollowUp(data.data.follow_up)});
+        setFollowUp(data.data.follow_up)
+        setUnsuccessfulMessage(data.data.unsuccessful_message)
+        setMessage(data.data.comments)
+      });
     }
   }, [isOpen]);
 
@@ -201,12 +204,12 @@ const ConsultationInfo = ({
               <option value={7}>Successful</option>
               <option value={8}>Unsuccessful</option>
             </Select>
-
+          
            {result == 8 ? <label className={styles.input__label2}>
               <p className={styles.input__label2}>Unsuccessful description</p>
               <textarea
                 className={styles.textarea2}
-                value={unsuccessfulMessage || appointment.unsuccessful_message}
+                value={unsuccessfulMessage}
                 onChange={(e) => setUnsuccessfulMessage(e.target.value)}
               ></textarea>
             </label> : null}
@@ -223,7 +226,7 @@ const ConsultationInfo = ({
               <p className={styles.input__label}>Message</p>
               <textarea
                 className={styles.textarea}
-                value={message || appointment.comments}
+                value={message}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </label>

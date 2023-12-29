@@ -35,16 +35,16 @@ const putAppointment = (credentials) => {
   return axios
     .post(`/update_superad_appointment`, credentials)
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "rescheduled",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "rescheduled",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })
@@ -74,16 +74,16 @@ const createAppointment = (
       link
     )
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "created",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "created",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })

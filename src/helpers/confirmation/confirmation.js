@@ -28,16 +28,16 @@ const setConfirmation = (slot_id, status, message) => {
         : `/set_confirmation/${slot_id}/${status}/${confirmatorId}/`
     )
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "confirmed",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "confirmed",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })
@@ -56,16 +56,16 @@ const setCancelConfirmation = (slot_id, status, message) => {
         : `/set_cancel_confirmation/${slot_id}/${status}/${confirmatorId}/`
     )
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "canceled",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "canceled",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })
