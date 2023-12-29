@@ -120,6 +120,22 @@ const ConsultationInfo = ({
       }
   }
 
+  const rejectionReasons = [
+    "no parents attending",
+    "child sick",
+    "not interested",
+    "forgot about TL or have no time",
+    "no contact",
+    "tech reasons",
+    "no PC",
+    "no electricity",
+    "other reasons"
+  ];
+  const handleReasonChange = (e) => {
+    // Оновити вибрану причину видалення при зміні в дропдауні
+    setUnsuccessfulMessage(e.target.value);
+  };
+
   return (
     <>
       {isOpen && (
@@ -205,14 +221,18 @@ const ConsultationInfo = ({
               <option value={8}>Unsuccessful</option>
             </Select>
           
-           {result == 8 ? <label className={styles.input__label2}>
-              <p className={styles.input__label2}>Unsuccessful description</p>
-              <textarea
-                className={styles.textarea2}
+           {result == 8 ?  <label className={styles.input__label2}>Reason:
+           <select
+                className={styles.reason__select}
                 value={unsuccessfulMessage}
-                onChange={(e) => setUnsuccessfulMessage(e.target.value)}
-              ></textarea>
-            </label> : null}
+                onChange={handleReasonChange}
+              >
+                {rejectionReasons.map((reason) => (
+                  <option key={reason} value={reason}>
+                    {reason}
+                  </option>
+                ))}
+              </select></label>: null}
 
             <Select
               title="Group:"
