@@ -54,6 +54,8 @@ export default function ManagerListModal({
                       data.append("manager_id", item.manager_id);
                       data.append("message", message);
                       data.append("follow_up", item.follow_up);
+                      data.append("postpone_role", window.location.pathname.split('/')[1]);
+                      data.append("userId", window.location.pathname.split('/')[2]);
                       return putAppointment(data).then(() => {
                         setIsOpenDropdown("");
                         closePostponed();

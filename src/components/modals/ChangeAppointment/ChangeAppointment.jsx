@@ -104,6 +104,8 @@ console.log('followUp inside', followUp)
               data.append("message", message);
               data.append("date", date);
               data.append("follow_up", followUp);
+              data.append("postpone_role", window.location.pathname.split('/')[1]);
+              data.append("userId", window.location.pathname.split('/')[2]);
               return putAppointment(data).finally(() => {
                 setLink("");
                 setCourses("");

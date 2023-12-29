@@ -116,6 +116,8 @@ const ChangeAppointentManager = ({
                           data.append("manager_id", manager.id);
                           data.append("message", message);
                           data.append("follow_up", isFollowUp);
+                          data.append("postpone_role", window.location.pathname.split('/')[1]);
+                          data.append("userId", window.location.pathname.split('/')[2]);
                           putAppointment(data).then(() => {
                             if (isPostponed) {
                               closePostpone();
