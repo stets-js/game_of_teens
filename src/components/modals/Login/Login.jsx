@@ -2,13 +2,12 @@ import styles from "./Login.module.scss";
 import Modal from "../../Modal/Modal";
 import FormInput from "../../FormInput/FormInput";
 import React, { useState } from "react";
-import { postManager } from "../../../helpers/manager/manager";
 import Form from "../../Form/Form";
 
 const Login = ({ isOpen, handleClose }) => {
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState("");
+  // const [remember, setRemember] = useState("");
   return (
     <>
       {isOpen && (
@@ -16,13 +15,14 @@ const Login = ({ isOpen, handleClose }) => {
           <Form
             onSubmit={() => {
               handleClose();
-              setRemember("");
-              setEmail("");
+              // setRemember("");
+              setLogin("");
+              setPassword("");
             }}
-            type={{ type: "no-request", button: "login" }}
+            type={{ type: "login", button: "login" }}
             text={
               <>
-                <p className={styles.exit}>
+                {/* <p className={styles.exit}>
                   Don’t have an account?{" "}
                   <span
                     onClick={() => {
@@ -41,25 +41,26 @@ const Login = ({ isOpen, handleClose }) => {
                   >
                     Click here
                   </span>
-                </p>
+                </p> */}
               </>
             }
-            requests={{ post: postManager }}
-            remember={remember}
-            email={email}
+            requests={{ login: loginUser }}
+            // remember={remember}
+            login={login}
             password={password}
             title="Log In"
           >
+            
             <FormInput
-              classname={styles.title}
-              title="E-Mail:"
-              type="email"
-              name="email"
-              value={email}
-              placeholder="E-Mail"
-              isRequired={true}
-              setValue={setEmail}
-            />
+                classname={styles.title}
+                title="Login:"
+                type="text"
+                name="login"
+                value={login}
+                placeholder="Login"
+                isRequired={true}
+                handler={setLogin}
+              />
 
             <FormInput
               title="Password:"
@@ -69,9 +70,9 @@ const Login = ({ isOpen, handleClose }) => {
               min={5}
               placeholder="Password"
               isRequired={true}
-              setValue={setPassword}
+              handler={setPassword}
             />
-            <label className={styles.input__label}>
+            {/* <label className={styles.input__label}>
               <div className={styles.checkbox__wrapper}>
                 <input
                   className={styles.input}
@@ -84,7 +85,7 @@ const Login = ({ isOpen, handleClose }) => {
 
                 <p className={styles.input__title}>Remember me</p>
               </div>
-            </label>
+            </label> */}
           </Form>
         </Modal>
       )}
