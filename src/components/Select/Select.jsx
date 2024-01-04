@@ -14,6 +14,7 @@ const Select = ({
   groupId,
   administrator,
   manager,
+  signUp,
 }) => {
   const [data, setData] = useState([]);
 
@@ -25,6 +26,11 @@ const Select = ({
     if (res === undefined) {
       setData([]);
       return;
+    }
+    if (signUp){
+      const filteredData = res.filter(i => i.name !== "Administrator");
+      setData(filteredData);
+      return filteredData;
     }
     setData(res);
     return res;

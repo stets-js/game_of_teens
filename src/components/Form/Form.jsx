@@ -39,6 +39,7 @@ const Form = ({
   slotId,
   cancelConfConsultOnClickFn,
   isCancelConfConsult,
+  signUp,
   ...formData
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -122,6 +123,16 @@ const Form = ({
       }
 
       if (+role === 2 && type.type === "post") {
+        onSubmit();
+        return await requests.post(data);
+      }
+      if (type.type === "login") {
+        console.log("login...")
+        onSubmit();
+        return await requests.login(data);
+      }
+      if (+role !== 2 && type.type === "user") {
+        data.append('role_id', role)
         onSubmit();
         return await requests.user(data);
       }
@@ -257,7 +268,7 @@ const Form = ({
           ) : (
             ""
           )}
-          {role === 2 ? (
+          {role === 2 && !signUp ? (
             <>
               <OpenChangeManagerCourses
                 OpenChangeManagerCoursesFunc={setIsChangeManagerCoursesOpen}

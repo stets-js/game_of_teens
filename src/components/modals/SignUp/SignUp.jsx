@@ -3,20 +3,22 @@ import Modal from "../../Modal/Modal";
 import FormInput from "../../FormInput/FormInput";
 import React, { useState } from "react";
 import { postManager } from "../../../helpers/manager/manager";
+import { getRoles, postUser } from "../../../helpers/user/user";
 import Form from "../../Form/Form";
+import Select from "../../Select/Select";
 
 const SignUp = ({ isOpen, handleClose }) => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState(2);
   const [data, setData] = useState("");
   return (
     <>
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
           <Form
-            type={{ type: "no-request", button: "signup" }}
+            type={{ type: role === 2 ? "post" : "user", button: "signup" }}
             text={
               <p className={styles.exit}>
                 Already have an account?{" "}
@@ -29,25 +31,24 @@ const SignUp = ({ isOpen, handleClose }) => {
                 </span>
               </p>
             }
-            requests={{ post: postManager }}
-            setValue={setData}
+            onSubmit={() => {
+              handleClose();
+              setRole(2);
+              setPassword("");
+              setLogin("");
+              setName("");
+            }}
+            requests={{ post: postUser, user:  postManager}}
+            // setValue={setData}
+            // data={data}
             name={name}
-            email={email}
-            data={data}
-            phone={phone}
+            rating={0}
+            login={login}
             password={password}
+            role={role}
             title="Sign Up"
+            signUp={true}
           >
-            <FormInput
-              classname={styles.title}
-              title="E-Mail:"
-              type="email"
-              name="email"
-              value={email}
-              placeholder="E-Mail"
-              isRequired={true}
-              handler={setEmail}
-            />
             <FormInput
               title="Name, Surname:"
               type="text"
@@ -57,27 +58,35 @@ const SignUp = ({ isOpen, handleClose }) => {
               isRequired={true}
               handler={setName}
             />
+            <FormInput
+                classname={styles.title}
+                title="Login:"
+                type="text"
+                name="login"
+                value={login}
+                placeholder="Login"
+                isRequired={true}
+                handler={setLogin}
+              />
 
             <FormInput
               title="Password:"
               type="password"
               name="password"
               value={password}
-              min={5}
-              placeholder="Password(minimum 5)"
+              placeholder="Password"
               isRequired={true}
               handler={setPassword}
             />
-            <FormInput
-              title="Phone number:"
-              type="tel"
-              name="phone"
-              value={phone}
-              pattern="^[0-9]{3}\s[0-9]{2}\s[0-9]{3}\s[0-9]{4}"
-              placeholder="380 96 111 444 8888"
-              isRequired={true}
-              handler={setPhone}
-            />
+            <Select
+              title="Role:"
+              request={getRoles}
+              setValue={setRole}
+              value={role}
+              manager={true}
+              defaultValue="manager/caller/confirmator"
+              signUp={true}
+            ></Select>
           </Form>
         </Modal>
       )}
