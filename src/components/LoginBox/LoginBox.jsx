@@ -4,8 +4,12 @@ import SettingsModal from "../modals/SettingsModal/SettingsModal";
 import Login from "../modals/Login/Login";
 import SignUp from "../modals/SignUp/SignUp";
 import settingsIco from "../../img/icons/settings.png";
+import { useDispatch } from "react-redux";
+import logout from "../../img/logout.svg"
 
-export default function LoginBox({ isAuthenticated }) {
+export default function LoginBox({ loggedUser }) {
+  const dispatch = useDispatch();
+  const { isAuthenticated, user: { name, role }} = loggedUser;
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState("");
   return (
@@ -23,7 +27,7 @@ export default function LoginBox({ isAuthenticated }) {
           <SignUp isOpen={isOpen} handleClose={() => setIsOpen(!isOpen)} />
         )}
         {isAuthenticated ? (
-          <p className={styles.role}>Logged in as: Марія (manager)</p>
+          <p className={styles.role}>Logged: {name}</p>
         ) : (
           <div className={styles.btnWrapper}>
             <button
@@ -48,7 +52,7 @@ export default function LoginBox({ isAuthenticated }) {
             </button>
           </div>
         )}
-        <button
+        {isAuthenticated ? null : <button
           className={styles.button}
           data-modal="settings"
           onClick={() => setIsOpen(!isOpen)}
@@ -60,7 +64,7 @@ export default function LoginBox({ isAuthenticated }) {
             data-modal="settings"
             onClick={() => setIsOpen(!isOpen)}
           />
-        </button>
+        </button>}
         {modal === "settings" && (
           <SettingsModal
             isOpen={isOpen}
@@ -69,8 +73,15 @@ export default function LoginBox({ isAuthenticated }) {
         )}
       </div>
       {isAuthenticated && (
-        <button type="button" className={styles.logout}>
-          Logout
+        <button type="button" className={styles.logout}
+        onClick={()=> {
+          localStorage.removeItem("booking")
+          dispatch({
+            type: 'LOGOUT'
+          });
+        }}
+        >
+          <img src={logout} alt="logout" />
         </button>
       )}
     </div>

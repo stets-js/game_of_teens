@@ -45,7 +45,6 @@ function CurrentMeetingsPageTable() {
     const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
       (res) => res.data
     );
-    console.log("resManagers", resManagers)
     const filteredManagers = selectedTeam === "All"
     ? resManagers
     : resManagers.filter((item) => item.team === parseInt(selectedTeam, 10));

@@ -21,7 +21,6 @@ const WorkingInfo = ({ slotId, isOpen, handleClose }) => {
         data.append("message", message);
         return updateSlotComment(data).finally(() => {
           setMessage("");
-          console.log("Comment updated successfully on the backend");
           handleClose();
         });
     } catch (error) {

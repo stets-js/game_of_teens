@@ -127,7 +127,6 @@ const Form = ({
         return await requests.post(data);
       }
       if (type.type === "login") {
-        console.log("login...")
         onSubmit();
         return await requests.login(data);
       }
@@ -294,7 +293,6 @@ const Form = ({
       data[0] !== 0 &&
       data[0] !== undefined
         ? data.map((item, i) => {
-          console.log("item->>>", item)
             return (
               <React.Fragment key={i}>
                 <Fade cascade triggerOnce duration={300} direction="up">

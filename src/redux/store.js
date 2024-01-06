@@ -15,6 +15,7 @@ import managerReducer from './manager/manager-reducers';
 import callerReducer from './caller/caller-reducers';
 import confirmatorReducer from "./confirmator/confirmator-reducers";
 import avaliableReducer from "./confirmator/avaliable-reducers";
+import authReducer from "./auth";
 
 // const persistConfig = {
 //   key: "booking-system",
@@ -27,6 +28,7 @@ import avaliableReducer from "./confirmator/avaliable-reducers";
 export const store = configureStore({
   // reducer: persistedReducer,
   reducer: {
+    auth: authReducer,
     manager: managerReducer,
     caller: callerReducer,
     confirmator: confirmatorReducer,

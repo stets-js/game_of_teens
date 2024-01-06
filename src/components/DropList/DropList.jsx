@@ -38,7 +38,6 @@ const DropList = ({
       return data;
     };
     get().then((res) => {
-      console.log("resss", res)
       setValue(res?.name);
       if (setValueSecondary) {
         if (changeAppointment) {

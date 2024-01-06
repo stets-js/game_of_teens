@@ -3,8 +3,10 @@ import logo from "../../img/goiteensLOGO.png";
 import LoginBox from "../LoginBox/LoginBox";
 import Navigation from "../Navigation/Navigation";
 import styles from "./Header.module.scss";
+import { useSelector } from "react-redux";
 
 export default function Header({ endpoints = [], user }) {
+  const loggedUser = useSelector((state) => state.auth);
   return (
     <header className={styles.header}>
       <a
@@ -16,7 +18,7 @@ export default function Header({ endpoints = [], user }) {
         <img src={logo} alt="logo" className={styles["logoImg"]} />
       </a>
       <Navigation user={user} links={endpoints} />
-      <LoginBox />
+      <LoginBox loggedUser={loggedUser} />
     </header>
   );
 }

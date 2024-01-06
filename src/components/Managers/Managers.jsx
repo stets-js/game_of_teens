@@ -119,7 +119,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
                           <li className={styles.ul_items} key={item.name}>
                             <Link
                               className={styles.ul_items_link}
-                              target="_blank"
+                              target="_self"
                               to={
                                 i.role === "Manager"
                                   ? `/manager/${item.id}/consultations/`

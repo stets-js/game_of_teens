@@ -1,5 +1,18 @@
 import axios from "../axios-config";
 
+const loginUser = (credentials) => {
+  return axios
+    .post("/login", credentials)
+    .then((res) => {
+      const token = res.data.data;
+      localStorage.setItem('booking', token);
+      return token
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 const getManagers = () => {
   return axios
     .get("/managers")
@@ -135,6 +148,7 @@ const getDateByWeekId = (weekId, day) =>{
 };
 
 export {
+  loginUser,
   getManagers,
   getManagerByName,
   postManager,

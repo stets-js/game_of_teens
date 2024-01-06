@@ -40,49 +40,85 @@ import HomePage from "./pages/HomePage/HomePage";
 import Statistics from "./pages/Statistics/Statistics";
 
 import Footer from "./components/Footer/Footer";
+import { useSelector } from "react-redux";
+
+
 const App = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userRole = useSelector((state) => state.auth.user.role);
+  const userId = useSelector((state) => state.auth.user.id);
   return (
     <>
       <Routes>
-        <Route path={path.modals} element={<ModalsPage />} />
-        <Route path={path.currentManagers} element={<CurrentMeetingsPage />} />
-        <Route path={path.currentManagersList} element={<CurrentMeetingsPageList />} />
-        <Route path={path.currentManagersTable} element={<CurrentMeetingsPageTable />} />
-        <Route path={path.admin} element={<Navigate to={path.users} />} />
-        <Route path={path.admin} element={<AdminPage />}>
-          <Route path={path.users} element={<AdminUsersPage />} />
-          <Route path={path.groups} element={<AdminGroupsPage />} />
-          <Route path={path.courses} element={<AdminCoursesPage />} />
-          <Route path={path.actions} element={<AdminActionsPage />} />
-          <Route path={path.crm} element={<CrmPage />} />
-        </Route>
+        
+      {isAuthenticated ? (
+          <>
+            <Route path={path.modals} element={<ModalsPage />} />
+            <Route path={path.currentManagers} element={<CurrentMeetingsPage />} />
+            <Route path={path.currentManagersList} element={<CurrentMeetingsPageList />} />
+            <Route path={path.currentManagersTable} element={<CurrentMeetingsPageTable />} />
+            <Route path={path.admin} element={<Navigate to={path.users} />} />
+            <Route path={path.admin} element={<AdminPage />}>
+              <Route path={path.users} element={<AdminUsersPage />} />
+              <Route path={path.groups} element={<AdminGroupsPage />} />
+              <Route path={path.courses} element={<AdminCoursesPage />} />
+              <Route path={path.actions} element={<AdminActionsPage />} />
+              <Route path={path.crm} element={<CrmPage />} />
+            </Route>
 
-        <Route path={path.superAdmin} element={<Navigate to={path.users} />} />
-        <Route path={path.superAdmin} element={<SuperAdministratorPage />}>
-          <Route path={path.users} element={<UsersPage />} />
-          <Route path={path.groups} element={<GroupsPage />} />
-          <Route path={path.courses} element={<CoursesPage />} />
-          <Route path={path.actions} element={<ActionsPage />} />
-          <Route path={path.crm} element={<CrmPage />} />
-        </Route>
 
-        <Route path={path.manager} element={<Navigate to={path.planning} />} />
 
-        <Route path={path.manager} element={<ManagerPage />}>
-          <Route path={path.consultations} element={<ConsultationsPage />} />
-          <Route path={path.planning} element={<PlanningPage />} />
-          <Route path={path.crm} element={<CrmPage />} />
-        </Route>
+            {userRole === 3 && <Route path={path.home} element={<Navigate to={`${path.superAdmin}`} />} />}
+            <Route path={path.superAdmin} element={<Navigate to={path.users} />} />
+            <Route path={path.superAdmin} element={<SuperAdministratorPage />}>
+              <Route path={path.users} element={<UsersPage />} />
+              <Route path={path.groups} element={<GroupsPage />} />
+              <Route path={path.courses} element={<CoursesPage />} />
+              <Route path={path.actions} element={<ActionsPage />} />
+              <Route path={path.crm} element={<CrmPage />} />
+            </Route>
 
-        <Route path={path.confirmator} element={<ConfirmatorPage />} />
-        <Route path={path.confirmed} element={<ConfirmedPage />} />
-       
-        <Route path={path.caller} element={<CallerPage />} />
+            {(userRole === 2 || userRole === 3) && (
+              <>
+            {userRole === 2 && <Route path={path.all} element={<Navigate to={`manager/${userId}/consultations/`} />} />}
+              <Route path={path.confirmator} element={<ConfirmatorPage />} />
+              <Route path={path.confirmed} element={<ConfirmedPage />} />
+            {/* <Route path={path.manager} element={<Navigate to={path.planning} />} /> */}
+            <Route path={path.manager} element={<ManagerPage />}>
+              <Route path={path.consultations} element={<ConsultationsPage />} />
+              <Route path={path.planning} element={<PlanningPage />} />
+              <Route path={path.crm} element={<CrmPage />} />
+            </Route>
+            </>
+            )}
 
-        <Route path={path.all} element={<HomePage />} />
-        <Route path={path.statistics} element={<Statistics />} />
-        <Route path={path.avaliable} element={<AvaliablePage />} />
+            {(userRole === 5 || userRole === 3) && (
+              <>
+                {userRole === 5 && <Route path={path.all} element={<Navigate to={`confirmator/${userId}/`} />} />}
+            <Route path={path.confirmator} element={<ConfirmatorPage />} />
+            <Route path={path.confirmed} element={<ConfirmedPage />} />
+              </>
+            )}
+
+            {(userRole === 4 || userRole === 3) && (
+              <>
+            {userRole === 4 && <Route path={path.all} element={<Navigate to={`caller/${userId}/`} />} />}
+            <Route path={path.caller} element={<CallerPage />} />
+            </>
+            )}
+
+            <Route path={path.all} element={<HomePage />} />
+            <Route path={path.statistics} element={<Statistics />} />
+            <Route path={path.avaliable} element={<AvaliablePage />} />
+          </>
+        ) : (
+          <>
+          <Route path={path.all} element={<Navigate to={path.home} />} />
+          <Route path={path.home} element={<HomePage />} />
+          </>
+        )}
       </Routes>
+      
       <Footer />
     </>
   );

@@ -95,7 +95,6 @@ const NewAppointment = ({
       ? `0${moment(callerDate).add(dayIndex, "days").month() + 1}`
       : moment(callerDate).add(dayIndex, "days").month() + 1;
    
-      console.log("courseIdx", +courseIdx)
   return (
     <>
       {isOpen && (

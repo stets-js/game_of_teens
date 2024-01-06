@@ -61,7 +61,6 @@ const ConfirmatorComments = ({ value }) => {
     "no electricity",
     "other reasons"
   ];
-console.log("selectedReason", selectedReason)
   return (
     <>
       {appointments.map((item) => (

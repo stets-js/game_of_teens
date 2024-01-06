@@ -38,7 +38,6 @@ export default function ManagerListModal({
             <p className={styles.availableManager}>Select available manager</p>
             <div className={styles.selectManagerList}>
               {isOpenDropdown.map((item) => {
-                console.log("item for postpone", item)
                 return <Button
                   onclick={(e) => {
                     if (isAppointment) {

@@ -18,8 +18,8 @@ const NewUser = ({ isOpen, handleClose, isAdmin }) => {
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
           <Form
-            type={{ type: "post" }}
-            requests={{ post: postManager, user: postUser }}
+            type={{ type: role === 2 ? "post" : "user" }}
+            requests={{ post: postUser, user:  postManager }}
             name={name}
             role={role}
             onSubmit={() => {

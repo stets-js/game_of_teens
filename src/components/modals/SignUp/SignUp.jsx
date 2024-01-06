@@ -12,7 +12,6 @@ const SignUp = ({ isOpen, handleClose }) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(2);
-  const [data, setData] = useState("");
   return (
     <>
       {isOpen && (

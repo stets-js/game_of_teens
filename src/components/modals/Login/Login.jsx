@@ -3,52 +3,79 @@ import Modal from "../../Modal/Modal";
 import FormInput from "../../FormInput/FormInput";
 import React, { useState } from "react";
 import Form from "../../Form/Form";
+import { loginUser } from "../../../helpers/manager/manager";
+import { useDispatch } from "react-redux";
+import { success, error, defaults } from "@pnotify/core";
 
 const Login = ({ isOpen, handleClose }) => {
+  const dispatch = useDispatch();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   // const [remember, setRemember] = useState("");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const data = new FormData();
+      data.append('login', login);
+      data.append('password', password);
+      const res = await loginUser(data);
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          token: res,
+        },
+      });
+      handleClose();
+      setLogin("");
+      setPassword("");
+    } catch (err) {
+      error(err.response.data.message);
+    }
+  }
+
+
   return (
     <>
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
-          <Form
-            onSubmit={() => {
-              handleClose();
-              // setRemember("");
-              setLogin("");
-              setPassword("");
-            }}
-            type={{ type: "login", button: "login" }}
-            text={
-              <>
-                {/* <p className={styles.exit}>
-                  Don’t have an account?{" "}
-                  <span
-                    onClick={() => {
-                      handleClose();
-                    }}
-                  >
-                    Sign Up
-                  </span>
-                </p>
-                <p className={styles.exit}>
-                  Forgot your password?{" "}
-                  <span
-                    onClick={() => {
-                      handleClose();
-                    }}
-                  >
-                    Click here
-                  </span>
-                </p> */}
-              </>
-            }
-            requests={{ login: loginUser }}
-            // remember={remember}
-            login={login}
-            password={password}
-            title="Log In"
+          <h3 className={styles.title}>Log In</h3>
+          <form
+            // onSubmit={() => {
+            //   handleClose();
+            //   // setRemember("");
+            //   setLogin("");
+            //   setPassword("");
+            // }}
+            // type={{ type: "login", button: "login" }}
+            // text={
+            //   <>
+            //     {/* <p className={styles.exit}>
+            //       Don’t have an account?{" "}
+            //       <span
+            //         onClick={() => {
+            //           handleClose();
+            //         }}
+            //       >
+            //         Sign Up
+            //       </span>
+            //     </p>
+            //     <p className={styles.exit}>
+            //       Forgot your password?{" "}
+            //       <span
+            //         onClick={() => {
+            //           handleClose();
+            //         }}
+            //       >
+            //         Click here
+            //       </span>
+            //     </p> */}
+            //   </>
+            // }
+            // requests={{ login: loginUser }}
+            // // remember={remember}
+            // login={login}
+            // password={password}
           >
             
             <FormInput
@@ -86,7 +113,16 @@ const Login = ({ isOpen, handleClose }) => {
                 <p className={styles.input__title}>Remember me</p>
               </div>
             </label> */}
-          </Form>
+            <button
+              type="button"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+              className={styles.login}
+            >
+              Log in
+            </button>
+          </form>
         </Modal>
       )}
     </>

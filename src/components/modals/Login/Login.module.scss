@@ -2,6 +2,29 @@
 .title {
   margin-top: 30px !important;
 }
+.title {
+  border-bottom: 2px $font-black solid;
+  text-align: center;
+  font-family: $poppins;
+  padding-bottom: 13px;
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+.login {
+  font-family: $poppins;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 10px 24px;
+  margin: 30px auto 0px;
+  color: $font-black;
+  background-color: transparent;
+  border-radius: 43px;
+  border: 1px solid $blue;
+  transition: $main-transition;
+  &:hover {
+    @extend %hover-shadow;
+  }
+}
 .exit {
   color: $font-black;
   font-size: 13px;

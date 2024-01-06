@@ -1,5 +1,13 @@
 @import "../../styles/variables.scss";
 
+.loginBox{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 30px;
+  width: 300px;
+  margin: 0 auto;
+}
 .loginBoxWrapper {
   display: flex;
   align-items: center;
@@ -29,7 +37,6 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  border-bottom: 1px solid #000;
   background-color: transparent;
 }
 .btnWrapper {
