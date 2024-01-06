@@ -7,6 +7,7 @@ import { getGroups } from "../../../helpers/group/group";
 import { getCourses } from "../../../helpers/course/course";
 import { updateSlot, updateSlotFollowUp } from "../../../helpers/week/week";
 import { getAppointment } from "../../../helpers/appointment/appointment";
+import { getSlot } from "../../../helpers/slot/slot";
 import { postConsultationResult } from "../../../helpers/consultation/consultation";
 import { getTable, getWeekId } from "../../../redux/manager/manager-selectors";
 import { Link } from "react-router-dom";
@@ -38,7 +39,7 @@ const ConsultationInfo = ({
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [result, setResult] = useState(7);
+  const [result, setResult] = useState(null);
   const [course, setCourse] = useState("");
   const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
@@ -57,14 +58,28 @@ const ConsultationInfo = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      const get = async () => await getAppointment({ id: slotId });
-      get().then((data) => {setAppointment(data.data)
-        setFollowUp(data.data.follow_up)
-        setUnsuccessfulMessage(data.data.unsuccessful_message)
-        setMessage(data.data.comments)
-      });
-    }
+    const fetchData = async () => {
+      try {
+        if (isOpen) {
+          // Отримання даних про призначення
+          const appointmentData = await getAppointment({ id: slotId });
+          setAppointment(appointmentData.data);
+          setFollowUp(appointmentData.data.follow_up);
+          setUnsuccessfulMessage(appointmentData.data.unsuccessful_message);
+          setMessage(appointmentData.data.comments);
+  
+          // Отримання даних про слот
+          const slotData = await getSlot({ id: slotId });
+          console.log("slot data", slotData);
+          setResult(slotData.status_id)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Обробка помилок, наприклад, виведення повідомлення користувачу
+      }
+    };
+  
+    fetchData();
   }, [isOpen]);
 
   useEffect(() => {},[result])
@@ -214,7 +229,7 @@ const ConsultationInfo = ({
             <Select
               title="Result:"
               type="no-request"
-              defaultValue="Result"
+              value={result}
               setValue={setResult}
             >
               <option value={7}>Successful</option>
