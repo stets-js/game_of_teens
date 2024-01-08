@@ -6,6 +6,7 @@ import { Outlet, useParams } from "react-router-dom";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import { useSelector, useDispatch } from "react-redux";
 import "react-calendar/dist/Calendar.css";
+import path from "../../helpers/routerPath";
 import Table from "../../components/Table/Table";
 import DayTable from "../../components/DayTable/DayTable";
 import Days from "../../components/Days/Days";
@@ -68,7 +69,9 @@ export default function CallerPage() {
 
   return (
     <>
-      <Header user={{ name: callerName, role: "Caller" }} />
+      <Header endpoints={[
+          { text: "Current Meetings", path: path.currentManagers },
+        ]} user={{ name: callerName, role: "Caller" }} />
       <div className={styles.main__wrapper}>
         <BgWrapper top={-160} title="Caller" />
         <Outlet />

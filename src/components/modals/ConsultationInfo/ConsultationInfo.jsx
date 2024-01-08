@@ -91,7 +91,7 @@ const ConsultationInfo = ({
           text: "Succesfully deleted.",
         });
         handleClose();
-        handleReload();
+        handleReload && handleReload();
       })
       .catch(() => {
         // Handle error
@@ -99,7 +99,7 @@ const ConsultationInfo = ({
           text: "Something went wrong",
         });
         handleClose();
-        handleReload();
+        handleReload && handleReload();
       });
   };
   const updateFollowUp = () => {

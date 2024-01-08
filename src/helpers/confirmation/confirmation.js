@@ -90,7 +90,24 @@ const delteConfirmation = (managerId, weekId, weekDay, hour, newStatus) => {
   const req_url = encodeURIComponent(window.location.href);
   return axios
     .post(`/update_slot/${managerId}/${weekId}/${weekDay}/${hour}/${newStatus}`, {req_url})
-    .then((res) => res.data)
+    .then((res) => {
+      const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
+      if(res.data.message === "Appointment successfully removed"){
+      const responseData = {
+        ...res.data,
+        action: "canceled",
+        canceled_by: user_name,
+      };
+
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
+      }
+
+      return res.data;
+      })
     .catch((error) => {
       throw error;
     });

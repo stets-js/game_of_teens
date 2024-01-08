@@ -13,6 +13,7 @@ import ConfirmatorDatePicker from "../../components/ConfirmatorDatePicker/Confir
 import { getUserById } from "../../helpers/user/user";
 import { getConfirmatorLoadings } from "../../redux/confirmator/confirmator-selectors";
 import CrmLinks from "../../components/CrmLinks/CrmLinks";
+import path from "../../helpers/routerPath";
 
 
 const ConfirmatorPage = () => {
@@ -42,6 +43,7 @@ const ConfirmatorPage = () => {
         endpoints={[
           { text: "Confirmator", path: "../confirmator/" + confirmatorId },
           { text: "Confirmed", path: "../confirmed/" + confirmatorId },
+          {text: "Current Meetings", path: path.currentManagers},
         ]}
         user={{ name: confirmatorName, role: "Confirmator" }}
       />
