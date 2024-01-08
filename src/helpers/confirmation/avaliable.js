@@ -1,4 +1,5 @@
 import axios from "../axios-config";
+import {jwtDecode} from "jwt-decode";
 
 const getCurrentConfirmatorData = () => {
   return axios
@@ -61,9 +62,10 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
 
 const removeSlot = (slot_id, reason) => {
   const url = window.location.href.split('/');
-  const confirmatorId = +url[url.length-1];
+  // const confirmatorId = +url[url.length-1];
+  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
   return axios
-    .delete(`remove_slot/${slot_id}/${reason}/${confirmatorId}`)
+    .delete(`remove_slot/${slot_id}/${reason}/${id}`)
     .then((res) => {
       const responseData = {
         ...res.data,

@@ -1,4 +1,5 @@
 import axios from "../axios-config";
+import {jwtDecode} from "jwt-decode";
 
 const getCurrentConfirmatorData = () => {
   return axios
@@ -20,12 +21,13 @@ const getConfirmatorWeekData = (weekId, dayId, halfId) => {
 
 const setConfirmation = (slot_id, status, message) => {
   const url = window.location.href.split('/');
-  const confirmatorId = +url[url.length-1];
+  // const confirmatorId = +url[url.length-1];
+  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
   return axios
     .post(
       message
-        ? `/set_confirmation/${slot_id}/${status}/${message}/${confirmatorId}/`
-        : `/set_confirmation/${slot_id}/${status}/${confirmatorId}/`
+        ? `/set_confirmation/${slot_id}/${status}/${message}/${id}/`
+        : `/set_confirmation/${slot_id}/${status}/${id}/`
     )
     .then((res) => {
       const responseData = {
@@ -48,12 +50,13 @@ const setConfirmation = (slot_id, status, message) => {
 
 const setCancelConfirmation = (slot_id, status, message) => {
   const url = window.location.href.split('/');
-  const confirmatorId = +url[url.length-1];
+  // const confirmatorId = +url[url.length-1];
+  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
   return axios
     .post(
       message
-        ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${confirmatorId}/`
-        : `/set_cancel_confirmation/${slot_id}/${status}/${confirmatorId}/`
+        ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${id}/`
+        : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`
     )
     .then((res) => {
       const responseData = {
