@@ -95,7 +95,7 @@ const delteConfirmation = (managerId, weekId, weekDay, hour, newStatus) => {
       if(res.data.message === "Appointment successfully removed"){
       const responseData = {
         ...res.data,
-        action: "canceled",
+        action: "deleted",
         canceled_by: user_name,
       };
 
