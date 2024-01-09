@@ -1,5 +1,5 @@
 import { defaults, error, success } from "@pnotify/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { removeSlot } from "../../helpers/confirmation/avaliable";
 import { getUserByName, postUser } from "../../helpers/user/user";
@@ -40,6 +40,7 @@ const Form = ({
   cancelConfConsultOnClickFn,
   isCancelConfConsult,
   signUp,
+  removeMessage,
   ...formData
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -260,7 +261,7 @@ const Form = ({
             <InputCancel
               InputCancelFunc={(reason) => {
                 setInputCancelClicked(true)
-                removeSlot(slotId, reason);
+                removeSlot(slotId, reason, removeMessage);
                 onClose();
               }}
             />

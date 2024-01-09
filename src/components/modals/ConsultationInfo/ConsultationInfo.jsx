@@ -85,7 +85,7 @@ const ConsultationInfo = ({
   useEffect(() => {},[result])
 
   const cancelConfConsultOnClickFn = () => {
-    delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time, 0)
+    delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time, 0, message)
       .then(() => {
         success({
           text: "Succesfully deleted.",

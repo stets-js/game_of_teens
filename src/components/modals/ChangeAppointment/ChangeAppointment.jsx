@@ -127,6 +127,7 @@ const ChangeAppointment = ({
             }}
             type={{ type: "no-request" }}
             title="Change appointment info"
+            removeMessage={message}
           >
             <p className={styles.input__title}>
               Manager:

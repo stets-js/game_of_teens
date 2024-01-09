@@ -60,7 +60,7 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
     });
 };
 
-const removeSlot = (slot_id, reason) => {
+const removeSlot = (slot_id, reason, removeMessage) => {
   const url = window.location.href.split('/');
   // const confirmatorId = +url[url.length-1];
   const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
@@ -70,6 +70,7 @@ const removeSlot = (slot_id, reason) => {
       const responseData = {
         ...res.data,
         action: "canceled",
+        canceled_message: removeMessage,
       };
 
       axios.post(
