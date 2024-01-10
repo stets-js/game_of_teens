@@ -80,7 +80,7 @@ const App = () => {
 
             {(userRole === 2 || userRole === 3) && (
               <>
-            {userRole === 2 && <Route path={path.all} element={<Navigate to={`manager/${userId}/consultations/`} />} />}
+            {userRole === 2 && <Route path={path.home} element={<Navigate to={`manager/${userId}/consultations/`} />} />}
               <Route path={path.confirmator} element={<ConfirmatorPage />} />
               <Route path={path.confirmed} element={<ConfirmedPage />} />
             {/* <Route path={path.manager} element={<Navigate to={path.planning} />} /> */}
@@ -94,20 +94,32 @@ const App = () => {
 
             {(userRole === 5 || userRole === 3) && (
               <>
-                {userRole === 5 && <Route path={path.all} element={<Navigate to={`confirmator/${userId}/`} />} />}
+                {userRole === 5 && <Route path={path.home} element={<Navigate to={`confirmator/${userId}/`} />} />}
             <Route path={path.confirmator} element={<ConfirmatorPage />} />
             <Route path={path.confirmed} element={<ConfirmedPage />} />
+
+            <Route path={path.manager} element={<ManagerPage />}>
+              <Route path={path.consultations} element={<ConsultationsPage />} />
+              <Route path={path.planning} element={<PlanningPage />} />
+              <Route path={path.crm} element={<CrmPage />} />
+            </Route>
               </>
             )}
 
             {(userRole === 4 || userRole === 3) && (
               <>
-            {userRole === 4 && <Route path={path.all} element={<Navigate to={`caller/${userId}/`} />} />}
+            {userRole === 4 && <Route path={path.home} element={<Navigate to={`caller/${userId}/`} />} />}
             <Route path={path.caller} element={<CallerPage />} />
+
+            <Route path={path.manager} element={<ManagerPage />}>
+              <Route path={path.consultations} element={<ConsultationsPage />} />
+              <Route path={path.planning} element={<PlanningPage />} />
+              <Route path={path.crm} element={<CrmPage />} />
+            </Route>
             </>
             )}
 
-            <Route path={path.all} element={<HomePage />} />
+            {/* <Route path={path.home} element={<HomePage />} /> */}
             <Route path={path.statistics} element={<Statistics />} />
             <Route path={path.avaliable} element={<AvaliablePage />} />
           </>

@@ -5,6 +5,7 @@ import styles from "./MeetingsTableItem.module.scss";
 import ConsultationInfo from "../modals/ConsultationInfo/ConsultationInfo";
 import NewAppointment from "../modals/NewAppointment2/NewAppointment";
 import Star from "./Star"
+import { Link } from "react-router-dom";
 
 import {
   changeStatusSlot,
@@ -211,15 +212,16 @@ const MeetingsTableItem = ({
             />
             <span className={styles.itemCheckboxCheckmark}></span>
           </label>
-          <a
+          <Link
             className={classNames(
               activeClassnames(colorId),
               styles.managerNameSt
             )}
-            href={`/manager/${managerId}/planning`}
+            to={`/manager/${managerId}/consultations/`}
+            target="_self"
           >
             {text !== undefined ? text : `manager name is undefined`}
-          </a>
+          </Link>
         </>
       ) : colorId === 3 ? (
         <>
