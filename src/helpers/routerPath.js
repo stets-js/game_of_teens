@@ -21,5 +21,8 @@ const path = {
   currentManagers: "/currentManagers/",
   currentManagersList: "/currentManagersList/",
   currentManagersTable: "/currentManagersTable/",
+  history: "/history/",
+  authorization: "auth/",
+  ik: "ik/",
 };
 export default path;

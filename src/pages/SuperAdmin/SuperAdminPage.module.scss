@@ -140,3 +140,74 @@
   background-size: 20px 20px; /* Розмір стрілки */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M7 10l5 5 5-5z"/></svg>');
 }
+
+//////// LOGIN TABLE /////////
+.auth__wrapper{
+  display: flex;
+  justify-content: center;
+}
+.auth__table{
+  width: 60%;
+}
+.auth__header{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 200px;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 34px;
+  margin-bottom: 50px;
+}
+.auth__cellData{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 24px;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  
+}
+.cell1{
+  width: 420px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.cell2{
+  width: 320px;
+  display: flex;
+  justify-content: flex-start;
+}
+.cell3{
+  display: flex;
+  justify-content: flex-start;
+}
+.auth__pagination{
+  margin: 50px 0 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 18px;
+}
+.auth__btn{
+  background-color: #fff;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 18px;
+}

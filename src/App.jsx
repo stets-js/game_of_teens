@@ -24,6 +24,9 @@ import CrmPage from "./pages/SuperAdmin/CrmPage";
 import CurrentMeetingsPage from "./pages/SuperAdmin/CurrentMeetingsPage";
 import CurrentMeetingsPageList from "./pages/SuperAdmin/CurrentMeetingsPageList";
 import CurrentMeetingsPageTable from "./pages/SuperAdmin/CurrentMeetingsPageTable";
+import History from "./pages/SuperAdmin/History";
+import AuthLogs from "./pages/SuperAdmin/AuthLogs";
+import ConsultationLogs from "./pages/SuperAdmin/ConsultationLogs";
 
 import ManagerPage from "./pages/Manager/ManagerPage";
 import ConsultationsPage from "./pages/Manager/ConsultationsPage";
@@ -54,6 +57,10 @@ const App = () => {
       {isAuthenticated ? (
           <>
             <Route path={path.modals} element={<ModalsPage />} />
+              <Route path={path.history} element={<History />} >
+                <Route path={path.authorization} element={<AuthLogs />} />
+                <Route path={path.ik} element={<ConsultationLogs />} />
+              </Route>
             <Route path={path.currentManagers} element={<CurrentMeetingsPage />} />
             <Route path={path.currentManagersList} element={<CurrentMeetingsPageList />} />
             <Route path={path.currentManagersTable} element={<CurrentMeetingsPageTable />} />

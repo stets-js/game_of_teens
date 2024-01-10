@@ -15,7 +15,7 @@ import managerReducer from './manager/manager-reducers';
 import callerReducer from './caller/caller-reducers';
 import confirmatorReducer from "./confirmator/confirmator-reducers";
 import avaliableReducer from "./confirmator/avaliable-reducers";
-import authReducer from "./auth";
+import authReducer from "./auth-reducers";
 
 // const persistConfig = {
 //   key: "booking-system",
