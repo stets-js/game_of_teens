@@ -9,12 +9,12 @@ import { TailSpin } from "react-loader-spinner";
 export default function ConsultationLogs() {
     const [isLoading, setIsLoading] = useState(false)
     const [inputValue, setInputValue] = useState("");
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     console.log("dataaaaaa", data);
     useEffect(() =>{
         async function getData(){
             const res =  await getHistory();
-            setData(res)
+            setData(res.data)
         }
         getData()
     },[]);
