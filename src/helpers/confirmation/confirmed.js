@@ -41,7 +41,7 @@ const setCancelConfirmed = (slot_id, status, message) => {
   ? `/set_cancel_confirmation/${slot_id}/${status}/${message}`
   : `/set_cancel_confirmation/${slot_id}/${status}`;
   return axios
-    .post(url, { headers })
+    .post(url, null, { headers })
     .then((res) => res.data)
     .catch((error) => {
       throw error;

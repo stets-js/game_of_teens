@@ -59,7 +59,7 @@ const setCancelConfirmation = (slot_id, status, message) => {
     ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${id}/`
     : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`;
   return axios
-    .post(url, {headers})
+    .post(url, null, {headers})
     .then((res) => {
       const responseData = {
         ...res.data,
