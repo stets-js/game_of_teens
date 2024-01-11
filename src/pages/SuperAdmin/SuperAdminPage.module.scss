@@ -243,3 +243,50 @@
   height: 50px;
   background-color: #e1e1e1;
 }
+.data__wrapper{
+  display: flex;
+  align-items: center;
+  margin-top: 100px;
+  flex-direction: column;
+}
+.data__item{
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  padding: 10px;
+}
+.data__cell{
+  text-align: left;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 18px;
+}
+
+.data__item :nth-child(4) {
+  // width: 400px;
+  min-width: 400px;
+  max-width: 400px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+.data__item :nth-child(3) {
+min-width: 85px;
+}
+.data__item :nth-child(1) {
+width: 100px;
+}
+.create{
+  background-color: #cbffbe;
+}
+.delete{
+  background-color: #ff8585;
+}
+.postpone{
+  background-color: #ffffbe;
+}

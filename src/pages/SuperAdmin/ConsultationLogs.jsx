@@ -47,7 +47,23 @@ export default function ConsultationLogs() {
         <button className={styles.search__btn} onClick={clickHandler} type="button">{isLoading ? <TailSpin height="30px" width="30px" color="#999DFF" /> : <SearchSVG />}</button>
         </div>
     </div>
-        {data && data.length > 0 ? <p style={{ marginTop: '100px' }}>DATA</p> : <p style={{ marginTop: '100px' }}>No DATA available</p>}
+        {data && data.length > 0 ? (
+      <div className={styles.data__wrapper}>
+        {data.map((item) => (
+          <div key={uuidv4()} className={`${styles.data__item} ${
+            item.action === "Create" ? styles.create :
+            item.action === "Delete" ? styles.delete :
+            item.action === "Postpone" ? styles.postpone : ""
+          }`}>
+            <div className={styles.data__cell}>{new Date(item.date).toLocaleString()}</div>
+            <div className={styles.data__cell}>{item.name}</div>
+            <div className={styles.data__cell}>{item.action}</div>
+            <div className={styles.data__cell}>{item.zoho_link}</div>
+            <div className={styles.data__cell}>{item.comments}</div>
+          </div>
+        ))}
+      </div>
+    ) : (<p style={{ marginTop: '100px' }}>No DATA available</p>)}
 
     </>
     )
