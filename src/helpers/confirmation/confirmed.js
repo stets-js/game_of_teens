@@ -33,17 +33,15 @@ const setConfirmed = (slot_id, status, message) => {
 
 const setCancelConfirmed = (slot_id, status, message) => {
   const authToken = localStorage.getItem("booking");
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+  };
+
+  const url = message
+  ? `/set_cancel_confirmation/${slot_id}/${status}/${message}`
+  : `/set_cancel_confirmation/${slot_id}/${status}`;
   return axios
-    .post(
-      message
-        ? `/set_cancel_confirmation/${slot_id}/${status}/${message}`
-        : `/set_cancel_confirmation/${slot_id}/${status}`, {
-          // Set the Authorization header with the retrieved token
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-    )
+    .post(url, { headers })
     .then((res) => res.data)
     .catch((error) => {
       throw error;
