@@ -88,8 +88,15 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
 
 const delteConfirmation = (managerId, weekId, weekDay, hour, newStatus, message) => {
   const req_url = encodeURIComponent(window.location.href);
+  const authToken = localStorage.getItem("booking");
   return axios
-    .post(`/update_slot/${managerId}/${weekId}/${weekDay}/${hour}/${newStatus}`, {req_url})
+    .post(`/update_slot/${managerId}/${weekId}/${weekDay}/${hour}/${newStatus}`, {req_url},
+     {
+      // Set the Authorization header with the retrieved token
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
     .then((res) => {
       const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
       if(res.data.message === "Appointment successfully removed"){
