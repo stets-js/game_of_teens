@@ -66,12 +66,20 @@ const createAppointment = (
   callerName,
   appointmentType
 ) => {
+  const authToken = localStorage.getItem("booking");
+
   return axios
     .post(
       `/create_appointment/${weekId}/${dayIndex}/${time}/${courseId}/${phone ? phone : "0"}/${age}/${managerId}/${
         message ? message : "0"
       }/${callerName}/${appointmentType}`,
-      link
+      link, 
+      {
+        // Set the Authorization header with the retrieved token
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
     )
     .then((res) => {
       const responseData = {

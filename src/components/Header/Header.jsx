@@ -11,9 +11,9 @@ export default function Header({ endpoints = [], user }) {
     <header className={styles.header}>
       <a
         className={styles["logoLink"]}
-        href="https://goiteens.ua/"
+        href="/"
         rel="noopener noreferrer nofollow"
-        target="_blank"
+        target="_self"
       >
         <img src={logo} alt="logo" className={styles["logoImg"]} />
       </a>

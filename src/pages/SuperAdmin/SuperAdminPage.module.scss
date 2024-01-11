@@ -211,3 +211,35 @@
   color: $font-black;
   font-size: 18px;
 }
+
+/////// APPOINTMENT SEARCH ////////////
+.search__container{
+  display: flex;
+  justify-content: center;
+}
+.search__wrapper{
+  position: relative;
+  width: 600px;
+}
+.search__input{
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: #e1e1e1;
+  border-radius: 25px;
+  padding: 10px 60px 10px 30px;
+  font-family: $poppins;
+  font-weight: 400;
+  color: $font-black;
+  font-size: 20px;
+  transform: translateX(-50%);
+}
+.search__btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: #e1e1e1;
+}
