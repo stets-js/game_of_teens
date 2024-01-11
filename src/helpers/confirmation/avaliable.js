@@ -61,11 +61,15 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
 };
 
 const removeSlot = (slot_id, reason, removeMessage) => {
-  const url = window.location.href.split('/');
-  // const confirmatorId = +url[url.length-1];
-  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
+  const authToken = localStorage.getItem("booking");
+  const { id } = jwtDecode(localStorage.getItem('booking'));
   return axios
-    .delete(`remove_slot/${slot_id}/${reason}/${id}`)
+    .delete(`remove_slot/${slot_id}/${reason}/${id}`, {
+      // Set the Authorization header with the retrieved token
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
     .then((res) => {
       const responseData = {
         ...res.data,

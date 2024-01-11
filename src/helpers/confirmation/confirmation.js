@@ -49,14 +49,18 @@ const setConfirmation = (slot_id, status, message) => {
 };
 
 const setCancelConfirmation = (slot_id, status, message) => {
-  const url = window.location.href.split('/');
-  // const confirmatorId = +url[url.length-1];
-  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
+  const authToken = localStorage.getItem("booking");
+  const { id } = jwtDecode(localStorage.getItem('booking'));
   return axios
     .post(
       message
         ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${id}/`
-        : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`
+        : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`, {
+          // Set the Authorization header with the retrieved token
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
     )
     .then((res) => {
       const responseData = {
