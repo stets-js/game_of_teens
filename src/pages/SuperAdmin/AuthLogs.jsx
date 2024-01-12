@@ -45,7 +45,7 @@ export default function AuthLogs() {
 
     return currentPageData.map((log) => (
       <div className={styles.row} key={uuidv4()}>
-        <div className={styles.cell1}>{new Date(log.date).toLocaleString()} <Arrow /></div>
+        <div className={styles.cell1}>{new Date(new Date(log.date).getTime() - 2 * 60 * 60 * 1000).toLocaleString()} <Arrow /></div>
         <div className={styles.cell2}>{log.name}</div>
         <div className={styles.cell3}>{renderRole(log.role_id)}</div>
       </div>

@@ -56,7 +56,7 @@ export default function ConsultationLogs() {
             item.action === "Postpone" ? styles.postpone : 
             item.action === "Update" ? styles.update : "" 
           }`}>
-            <div className={styles.data__cell}>{new Date(item.date).toLocaleString()}</div>
+            <div className={styles.data__cell}>{new Date(new Date(item.date).getTime() - 2 * 60 * 60 * 1000).toLocaleString()}</div>
             <div className={styles.data__cell}>{item.name}</div>
             <div className={styles.data__cell}>{item.action}</div>
             <div className={styles.data__cell}>{item.zoho_link}</div>
