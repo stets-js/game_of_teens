@@ -24,11 +24,11 @@ const setConfirmation = (slot_id, status, message) => {
   const headers = {
     Authorization: `Bearer ${authToken}`,
   };
-
+  
+  const { id } = jwtDecode(localStorage.getItem('booking'));
   const url = message
   ? `/set_confirmation/${slot_id}/${status}/${message}/${id}/`
         : `/set_confirmation/${slot_id}/${status}/${id}/`;
-  const { id } = jwtDecode(localStorage.getItem('booking'));
   return axios
     .post(url, null, { headers })
     .then((res) => {
