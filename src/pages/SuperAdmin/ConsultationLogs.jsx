@@ -53,6 +53,7 @@ export default function ConsultationLogs() {
           <div key={uuidv4()} className={`${styles.data__item} ${
             item.action === "Create" ? styles.create :
             item.action === "Delete" ? styles.delete :
+            item.action === "Confirmed" ? styles.confirmed : 
             item.action === "Postpone" ? styles.postpone : 
             item.action === "Update" ? styles.update : "" 
           }`}>

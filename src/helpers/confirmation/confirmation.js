@@ -20,15 +20,17 @@ const getConfirmatorWeekData = (weekId, dayId, halfId) => {
 };
 
 const setConfirmation = (slot_id, status, message) => {
-  const url = window.location.href.split('/');
-  // const confirmatorId = +url[url.length-1];
-  const {user_name, role, id } = jwtDecode(localStorage.getItem('booking'));
+  const authToken = localStorage.getItem("booking");
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+  };
+
+  const url = message
+  ? `/set_confirmation/${slot_id}/${status}/${message}/${id}/`
+        : `/set_confirmation/${slot_id}/${status}/${id}/`;
+  const { id } = jwtDecode(localStorage.getItem('booking'));
   return axios
-    .post(
-      message
-        ? `/set_confirmation/${slot_id}/${status}/${message}/${id}/`
-        : `/set_confirmation/${slot_id}/${status}/${id}/`
-    )
+    .post(url, null, { headers })
     .then((res) => {
       const responseData = {
         ...res.data,

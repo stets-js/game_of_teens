@@ -19,12 +19,16 @@ const getConfirmedWeekData = (weekId, dayId, halfId) => {
 };
 
 const setConfirmed = (slot_id, status, message) => {
+  const authToken = localStorage.getItem("booking");
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+  };
+
+  const url = message
+  ? `/set_confirmation/${slot_id}/${status}/${message}`
+        : `/set_confirmation/${slot_id}/${status}`;
   return axios
-    .post(
-      message
-        ? `/set_confirmation/${slot_id}/${status}/${message}`
-        : `/set_confirmation/${slot_id}/${status}`
-    )
+    .post(url, null, { headers })
     .then((res) => res.data)
     .catch((error) => {
       throw error;
