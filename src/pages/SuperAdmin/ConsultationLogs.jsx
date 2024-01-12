@@ -53,7 +53,8 @@ export default function ConsultationLogs() {
           <div key={uuidv4()} className={`${styles.data__item} ${
             item.action === "Create" ? styles.create :
             item.action === "Delete" ? styles.delete :
-            item.action === "Postpone" ? styles.postpone : ""
+            item.action === "Postpone" ? styles.postpone : 
+            item.action === "Update" ? styles.update : "" 
           }`}>
             <div className={styles.data__cell}>{new Date(item.date).toLocaleString()}</div>
             <div className={styles.data__cell}>{item.name}</div>

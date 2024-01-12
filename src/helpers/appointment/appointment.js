@@ -32,8 +32,13 @@ const getAppointmentByCrm = (credentials) => {
 };
 
 const putAppointment = (credentials) => {
+  const token = localStorage.getItem("booking");
   return axios
-    .post(`/update_superad_appointment`, credentials)
+    .post(`/update_superad_appointment`, credentials, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     .then((res) => {
       const responseData = {
         ...res.data,

@@ -88,8 +88,8 @@ const ChangeAppointentManager = ({
 
         {managersList.length === 0 ? (
           <div className={styles.noManagersLoadingWrapper}>
-          <h2 className={styles.noManagersButton}>Loading managers...</h2>
-          <TailSpin height="50px" width="50px" color="#999DFF" />
+          <h2 className={styles.noManagersButton}>Managers list...</h2>
+          {/* <TailSpin height="50px" width="50px" color="#999DFF" /> */}
           </div>
         ) : (
           <div className={styles.managersListBox}>
