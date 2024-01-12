@@ -72,9 +72,14 @@ const getWeek = (managerId, weekId) => {
 
 const updateSlot = (managerId, weekId, dayIndex, slotHour, colorId) => {
   const req_url = encodeURIComponent(window.location.href);
+  const token = localStorage.getItem("booking");
   return axios
     .post(
-      `/update_slot/${managerId}/${weekId}/${dayIndex}/${slotHour}/${colorId}`,  {req_url}
+      `/update_slot/${managerId}/${weekId}/${dayIndex}/${slotHour}/${colorId}`,  {req_url}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     )
     .then((res) => res.data)
     .catch((err) => {
