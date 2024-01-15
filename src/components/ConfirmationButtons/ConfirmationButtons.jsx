@@ -15,6 +15,7 @@ const ConfirmatorButtons = ({ value, setValue }) => {
   const [crm, setCrm] = useState(null);
   const [phone, setPhone] = useState(null);
   const [mess, setMess] = useState(null);
+  const [age, setAge] = useState(null);
 
   const appointments = useSelector(getConfirmatorAppointments);
   const error = useSelector(getConfirmatorError);
@@ -52,6 +53,7 @@ const ConfirmatorButtons = ({ value, setValue }) => {
                      setCrm(item.crm_link)
                      setPhone(item.phone)
                      setMess(item.comments)
+                     setAge(item.age)
                     //setCourse(item.course_id)
                     return setValue({ ...value, [item.appointment_id]: i.btn });
                   }}
@@ -67,7 +69,7 @@ const ConfirmatorButtons = ({ value, setValue }) => {
           </div>
         ))}
       </Fade>
-      <PostponeModal appointmentId={isOpen} message={mess} link={crm} age={0} phone={phone} courseId={course} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <PostponeModal appointmentId={isOpen} message={mess} link={crm} age={age} phone={phone} courseId={course} isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };
