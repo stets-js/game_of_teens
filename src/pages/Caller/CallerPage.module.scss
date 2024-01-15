@@ -185,3 +185,25 @@ z-index: 11000;
   justify-content: center;
   margin: 0 auto;
 }
+
+//////// REASON SELECTOR /////////
+.label{
+  font-family: $poppins;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.reason__select{
+  width: 250px;
+  height: 30px;
+  font-size: 20px;
+  border: solid 2px #000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 20px 20px; /* Розмір стрілки */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M7 10l5 5 5-5z"/></svg>');
+}

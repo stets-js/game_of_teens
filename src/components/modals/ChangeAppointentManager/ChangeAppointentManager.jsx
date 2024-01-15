@@ -28,7 +28,8 @@ const ChangeAppointentManager = ({
   setManager,
   isPostponed,
   closePostpone,
-  isFollowUp
+  isFollowUp,
+  selectedReason
 }) => {
   const [date, setDate] = useState("");
   const [managersList, setManagers] = useState([]);
@@ -118,6 +119,7 @@ const ChangeAppointentManager = ({
                           data.append("follow_up", false);
                           data.append("postpone_role", window.location.pathname.split('/')[1]);
                           data.append("userId", window.location.pathname.split('/')[2]);
+                          data.append("reason_postpone", selectedReason);
                           putAppointment(data).then(() => {
                             if (isPostponed) {
                               closePostpone();

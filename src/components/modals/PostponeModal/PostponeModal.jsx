@@ -17,7 +17,7 @@ import {
 import {
   getCallerCurrentWeek,
   getCallerWeek,
-  getCallerWeekByCourse
+  getCallerWeekByCourse,
 } from "../../../redux/caller/caller-operations";
 import Button from "../../Buttons/Buttons";
 // import ManagerListModal from "./ManagerListModal/ManagerListModal";
@@ -26,7 +26,6 @@ import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointent
 import { createPortal } from "react-dom";
 import { getWeekIdByTableDate } from "../../../helpers/week/week";
 const modalRef = document.querySelector("#postpone-modal");
-
 
 export default function PostponeModal({
   isOpen,
@@ -43,7 +42,7 @@ export default function PostponeModal({
   weekId,
   day,
   hour,
-  isFollowUp
+  isFollowUp,
 }) {
   const [callerId, setCallerId] = useState(null);
   const [error, setError] = useState("");
@@ -56,7 +55,22 @@ export default function PostponeModal({
   const tableDate = useSelector(getCallerDate);
   const wid = useSelector(getWeekId);
   const table = useSelector(getTable);
-  
+  const [selectedReason, setSelectedReason] = useState("no parents attending");
+
+  const rejectionReasons = [
+    "no parents attending",
+    "child sick",
+    "not interested",
+    "forgot about TL or have no time",
+    "no contact",
+    "tech reasons",
+    "no PC",
+    "no electricity",
+    "other reasons",
+  ];
+  const handleReasonChange = (e) => {
+    setSelectedReason(e.target.value);
+  };
 
   const onClickSlotFn = (weekIdNew, dayIndexNew, hourIndexNew) => {
     setCurrentDay(dayIndexNew);
@@ -75,12 +89,12 @@ export default function PostponeModal({
 
   useEffect(() => {
     getWeekIdByTableDate(tableDate).then((data) => {
-      setCurrentWeekId(data.id+1);
+      setCurrentWeekId(data.id + 1);
     });
   }, [tableDate]);
 
   useEffect(() => {
-      setCurrentWeekId(wid+1);
+    setCurrentWeekId(wid + 1);
   }, []);
 
   return createPortal(
@@ -117,16 +131,34 @@ export default function PostponeModal({
             isPostponed={true}
             closePostpone={onClose}
             isFollowUp={isFollowUp}
+            selectedReason={selectedReason}
           />
         )}
+
+        
 
         <Fade duration={200}>
           <BgWrapper top={-120} title="Postpone the meeting" />
           <Outlet />
-          <p className={styles.free__places}>
+          {/* <p className={styles.free__places}>
             <span className={styles.free__span}>--</span> - number of free
             places
-          </p>
+          </p> */}
+          <div>
+          <p className={styles.label}>Select a reason for postpone:</p>
+
+          <select
+            className={styles.reason__select}
+            value={selectedReason}
+            onChange={handleReasonChange}
+          >
+            {rejectionReasons.map((reason) => (
+              <option key={reason} value={reason}>
+                {reason}
+              </option>
+            ))}
+          </select>
+        </div>
           <section className={styles.tableSection}>
             <DatePicker
               changeDateFn={getCallerWeekByCourse}
