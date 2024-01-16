@@ -39,7 +39,7 @@ const ConsultationInfo = ({
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [result, setResult] = useState(7);
+  const [result, setResult] = useState(null);
   const [course, setCourse] = useState("");
   const [group, setGroup] = useState("");
   const [message, setMessage] = useState("");
@@ -71,7 +71,11 @@ const ConsultationInfo = ({
           // Отримання даних про слот
           const slotData = await getSlot({ id: slotId });
           console.log("slot data", slotData);
-          // setResult(slotData.status_id)
+          if (slotData.status_id == 7 || slotData.status_id == 8) {
+            setResult(slotData.status_id);
+          } else {
+            setResult(7);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
