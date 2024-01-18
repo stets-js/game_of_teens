@@ -106,6 +106,7 @@ function CurrentMeetingsPageList() {
                     <option value="5">Team 5</option>
                     <option value="6">Team 6</option>
                     <option value="7">Team 7</option>
+                    <option value="8">CB MIC</option>
                   </select>
         <MeetingsTable
           isListView={true}
