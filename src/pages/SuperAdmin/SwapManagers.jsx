@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import { swapAppointmentManagers } from '../../helpers/appointment/appointment';
+import { info, success, error } from "@pnotify/core";
 
 const SwapManagersComponent = () => {
   const [link1, setLink1] = useState('');
   const [link2, setLink2] = useState('');
 
-  const handleSwapManagers = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('appointment_id_1', link1);
-      formData.append('appointment_id_2', link2);
+  const handleSwapManagers = () => {
+    const data = new FormData();
+    data.append("appointment_id_1", link1);
+    data.append("appointment_id_2", link2);
 
-      const token = localStorage.getItem('booking');
-
-      await swapAppointmentManagers(formData);
-
-      // Оновіть інтерфейс або виконайте додаткові дії після успішного свапу
-
-    } catch (error) {
-      console.error(error);
-      // Обробка помилок або виведення повідомлення користувачу
-    }
+    swapAppointmentManagers(data)
+      .then(() => {
+        success("Swapped successfully");
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle errors here, for example, show an error notification.
+        error("An error occurred while swapping managers");
+      });
   };
 
   return (
