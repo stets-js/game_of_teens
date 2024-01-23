@@ -17,7 +17,6 @@ const SwapManagersComponent = () => {
         success("Swapped successfully");
       })
       .catch((err) => {
-        console.log("err", err);
         error(err.response.data.message);
       });
   };
