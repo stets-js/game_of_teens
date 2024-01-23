@@ -105,10 +105,38 @@ const createAppointment = (
     });
 };
 
+const swapAppointmentManagers = (credentials) => {
+  const token = localStorage.getItem("booking");
+  return axios
+    .post(`/swap_managers`, credentials, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      // const responseData = {
+      //   ...res.data,
+      //   action: "rescheduled",
+      // };
+
+      // axios.post(
+      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
+      //   JSON.stringify(responseData),
+      //   { headers: { "Content-Type": "application/json" }}
+      // );
+
+      return res.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export {
   getAppointment,
   postAppointment,
   createAppointment,
   putAppointment,
   getAppointmentByCrm,
+  swapAppointmentManagers,
 };

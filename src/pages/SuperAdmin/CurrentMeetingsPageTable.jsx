@@ -24,6 +24,7 @@ import {
   setManagerLoading
 } from "../../redux/manager/manager-operations";
 import { updateSlot } from "../../helpers/week/week";
+import SwapManagersComponent from "./SwapManagers";
 
 function CurrentMeetingsPageTable() {
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
@@ -135,6 +136,7 @@ function CurrentMeetingsPageTable() {
             date={date}
             getNewTableData={getNewTableData}
           />
+          <SwapManagersComponent />
           <div className={styles.main_wrapper}>
             <div className={styles.main_wrapper2}>
               <CrmLinks />
