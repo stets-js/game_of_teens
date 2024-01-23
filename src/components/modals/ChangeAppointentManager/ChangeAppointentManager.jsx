@@ -9,6 +9,7 @@ import { putAppointment } from "../../../helpers/appointment/appointment";
 import Modal from "../../Modal/Modal";
 import { info, success, error } from "@pnotify/core";
 import { TailSpin } from "react-loader-spinner";
+import { useSelector } from "react-redux";
 
 const ChangeAppointentManager = ({
   isOpen,
@@ -34,6 +35,8 @@ const ChangeAppointentManager = ({
   const [date, setDate] = useState("");
   const [managersList, setManagers] = useState([]);
 
+  const userRole = useSelector((state) => state.auth.user.role);
+  const userId = useSelector((state) => state.auth.user.id);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -117,8 +120,8 @@ const ChangeAppointentManager = ({
                           data.append("manager_id", manager.id);
                           data.append("message", message);
                           data.append("follow_up", false);
-                          data.append("postpone_role", window.location.pathname.split('/')[1]);
-                          data.append("userId", window.location.pathname.split('/')[2]);
+                          data.append("postpone_role", userRole === 4 ? "caller" : userRole === 5 ? "confirmator" : userRole === 2 ? "manager" : "admin");
+                          data.append("userId", userId);
                           data.append("reason_postpone", selectedReason);
                           putAppointment(data).then(() => {
                             if (isPostponed) {

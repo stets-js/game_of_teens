@@ -5,6 +5,7 @@ import styles from "../../../../pages/Caller/CallerPage.module.scss";
 import { setPostponedConfirmation } from "../../../../helpers/confirmation/confirmation";
 import { putAppointment } from "../../../../helpers/appointment/appointment";
 import { info, success, error } from "@pnotify/core";
+import { useSelector } from "react-redux";
 
 export default function ManagerListModal({
   closePostponed,
@@ -30,6 +31,9 @@ export default function ManagerListModal({
     return formattedDate;
   }
 
+  const userRole = useSelector((state) => state.auth.user.role);
+  const userId = useSelector((state) => state.auth.user.id);
+
   return (
     <>
       {isOpenDropdown && (
@@ -53,8 +57,8 @@ export default function ManagerListModal({
                       data.append("manager_id", item.manager_id);
                       data.append("message", message);
                       data.append("follow_up", item.follow_up);
-                      data.append("postpone_role", window.location.pathname.split('/')[1]);
-                      data.append("userId", window.location.pathname.split('/')[2]);
+                      data.append("postpone_role", userRole === 4 ? "caller" : userRole === 5 ? "confirmator" : userRole === 2 ? "manager" : "admin");
+                      data.append("userId", userId);
                       return putAppointment(data).then(() => {
                         setIsOpenDropdown("");
                         closePostponed();

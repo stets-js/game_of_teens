@@ -9,6 +9,7 @@ import Form from "../../Form/Form";
 import FormInput from "../../FormInput/FormInput";
 import PostponeModal from "../PostponeModal/PostponeModal";
 import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointentManager";
+import { useSelector } from "react-redux";
 
 const ChangeAppointment = ({
   isOpen,
@@ -40,7 +41,10 @@ const ChangeAppointment = ({
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
   const [followUp, setFollowUp] = useState(false);
-console.log("message", message);
+
+  const userRole = useSelector((state) => state.auth.user.role);
+  const userId = useSelector((state) => state.auth.user.id);
+
   useEffect(() => {
     setCourses(course);
     setPhone(number);
@@ -104,8 +108,8 @@ console.log("message", message);
               data.append("message", message);
               data.append("date", date);
               data.append("follow_up", followUp);
-              data.append("postpone_role", window.location.pathname.split('/')[1]);
-              data.append("userId", window.location.pathname.split('/')[2]);
+              data.append("postpone_role", userRole === 4 ? "caller" : userRole === 5 ? "confirmator" : userRole === 2 ? "manager" : "admin");
+              data.append("userId", userId);
               return putAppointment(data).finally(() => {
                 setLink("");
                 setCourses("");
