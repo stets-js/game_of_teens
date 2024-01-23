@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from "./SuperAdminPage.module.scss";
 import { swapAppointmentManagers } from '../../helpers/appointment/appointment';
 import { info, success, error } from "@pnotify/core";
 
@@ -16,24 +17,17 @@ const SwapManagersComponent = () => {
         success("Swapped successfully");
       })
       .catch((err) => {
-        error("An error occurred while swapping managers");
+        console.log("err", err);
+        error(err.response.data.message);
       });
   };
 
   return (
-    <form>
-      <label>
-        Link 1:
-        <input type="text" value={link1} onChange={(e) => setLink1(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Link 2:
-        <input type="text" value={link2} onChange={(e) => setLink2(e.target.value)} />
-      </label>
-      <br />
-      <button type="button" onClick={handleSwapManagers}>
-        Swap Managers
+    <form className={styles.swap__table}>
+        <input className={styles.swap__input} type="text" value={link1} onChange={(e) => setLink1(e.target.value)} placeholder='Input zoho link 1...' />
+        <input className={styles.swap__input} type="text" value={link2} onChange={(e) => setLink2(e.target.value)} placeholder='Input zoho link 2...'/>
+      <button className={styles.swap__btn} type="button" onClick={handleSwapManagers} >
+        Swap
       </button>
     </form>
   );
