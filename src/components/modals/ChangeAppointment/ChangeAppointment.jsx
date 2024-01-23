@@ -32,7 +32,7 @@ const ChangeAppointment = ({
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
   const [courseId, setCourses] = useState(course);
-  const [message, setMessage] = useState(messageInit);
+  const [message, setMessage] = useState("");
   const [managerId, setManagerId] = useState("");
   const [managerName, setManagerName] = useState("");
   const [ageNew, setAge] = useState("");
@@ -51,7 +51,7 @@ console.log("message", message);
     setManagerId(managerIdInit)
     setAge(age)
     setFollowUp(isFollowUp)
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

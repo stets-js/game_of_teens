@@ -44,6 +44,7 @@ const ConfirmatorPage = () => {
           { text: "Confirmator", path: "../confirmator/" + confirmatorId },
           { text: "Confirmed", path: "../confirmed/" + confirmatorId },
           {text: "Current Meetings", path: path.currentManagers},
+          { text: "Search by CRM", path: path.pageCrm },
         ]}
         user={{ name: confirmatorName, role: "Confirmator" }}
       />
@@ -67,12 +68,12 @@ const ConfirmatorPage = () => {
           </div>
         
       </section>
-      <div className={styles.main_wrapper}>
+      {/* <div className={styles.main_wrapper}>
           <h3 className={styles.main_title}>Search by CRM link</h3>
             <div className={styles.main_wrapper2}>
               <CrmLinks />
             </div>
-        </div>
+        </div> */}
     </>
   );
 };
