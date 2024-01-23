@@ -3,10 +3,6 @@ import styles from "../SuperAdmin/SuperAdminPage.module.scss";
 import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 import Header from "../../components/Header/Header";
-import path from "../../helpers/routerPath";
-import { useSelector } from "react-redux";
-
-
 
 const CrmPage = ({ page }) => {
   

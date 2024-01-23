@@ -66,15 +66,13 @@ export default function CallerPage() {
   function setDayIndex(num) {
     setCurrentDayIndex(num);
   }
-  const userRole = useSelector((state) => state.auth.user.role);
-  const userId = useSelector((state) => state.auth.user.id);
-  const callerLinks = [
-    { text: "Current Meetings", path: path.currentManagers },
-    { text: "Search by CRM", path: path.pageCrm },
-  ];
+  
   return (
     <>
-      <Header endpoints={userRole === 4 ? callerLinks : [{ text: "Current Meetings", path: path.currentManagers }]} user={{ name: callerName, role: "Caller" }} />
+      <Header endpoints={[
+          { text: "Current Meetings", path: path.currentManagers },
+          { text: "Search by CRM", path: path.pageCrm },
+        ]} user={{ name: callerName, role: "Caller" }} />
         <Outlet />
       <div className={styles.main__wrapper}>
         <BgWrapper top={-160} title="Caller" />
