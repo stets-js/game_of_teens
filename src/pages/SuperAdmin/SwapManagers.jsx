@@ -15,9 +15,7 @@ const SwapManagersComponent = () => {
       .then(() => {
         success("Swapped successfully");
       })
-      .catch((error) => {
-        console.error(error);
-        // Handle errors here, for example, show an error notification.
+      .catch((err) => {
         error("An error occurred while swapping managers");
       });
   };
