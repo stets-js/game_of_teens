@@ -40,7 +40,7 @@ const ChangeAppointment = ({
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
   const [followUp, setFollowUp] = useState(false);
-
+console.log("message", message);
   useEffect(() => {
     setCourses(course);
     setPhone(number);

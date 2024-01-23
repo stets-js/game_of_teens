@@ -30,11 +30,11 @@ const AdminPage = () => {
           { text: "courses", path: path.courses },
           { text: "Search by CRM", path: path.crm },
         ]}
-        user={{ name: adminName, role: "Admin" }}
+        user={{ name: adminName, role: "Page" }}
       />
       <section className={styles.main_wrapper}>
         <BgWrapper title="Administrator" />
-        <Button
+        {/* <Button
           paddingRight={36}
           paddingLeft={36}
           width={"auto"}
@@ -43,7 +43,7 @@ const AdminPage = () => {
           margin={"0 auto"}
         >
           Manage: Administrator Марія
-        </Button>
+        </Button> */}
         <Outlet />
       </section>
     </>
