@@ -108,7 +108,7 @@ const createAppointment = (
 const swapAppointmentManagers = (credentials) => {
   const token = localStorage.getItem("booking");
   return axios
-    .post(`/swap_managers`, credentials, {
+    .post(`/swap_appointments`, credentials, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
