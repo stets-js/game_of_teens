@@ -114,16 +114,16 @@ const swapAppointmentManagers = (credentials) => {
       },
     })
     .then((res) => {
-      // const responseData = {
-      //   ...res.data,
-      //   action: "rescheduled",
-      // };
+      const responseData = {
+        ...res.data,
+        action: "swapped",
+      };
 
-      // axios.post(
-      //   "https://zohointegration.goit.global/GoITeens/booking/index.php",
-      //   JSON.stringify(responseData),
-      //   { headers: { "Content-Type": "application/json" }}
-      // );
+      axios.post(
+        "https://zohointegration.goit.global/GoITeens/booking/index.php",
+        JSON.stringify(responseData),
+        { headers: { "Content-Type": "application/json" }}
+      );
 
       return res.data;
     })

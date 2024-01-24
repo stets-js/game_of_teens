@@ -10,7 +10,7 @@ export default function ConsultationLogs() {
     const [isLoading, setIsLoading] = useState(false)
     const [inputValue, setInputValue] = useState("");
     const [data, setData] = useState(null);
-    console.log("dataaaaaa", data);
+    
     useEffect(() =>{
         async function getData(){
             const res =  await getHistory();
@@ -55,7 +55,8 @@ export default function ConsultationLogs() {
             item.action === "Delete" ? styles.delete :
             item.action === "Confirmed" ? styles.confirmed : 
             item.action === "Postpone" ? styles.postpone : 
-            item.action === "Update" ? styles.update : "" 
+            item.action === "Update" ? styles.update : 
+            item.action === "Swapped" ? styles.swapped : "" 
           }`}>
             <div className={styles.data__cell}>{new Date(new Date(item.date).getTime() - 2 * 60 * 60 * 1000).toLocaleString()}</div>
             <div className={styles.data__cell}>{item.name}</div>
