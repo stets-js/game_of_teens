@@ -73,7 +73,7 @@ const removeSlot = (slot_id, reason, removeMessage) => {
     .then((res) => {
       const responseData = {
         ...res.data,
-        action: "canceled",
+        action: "removed",
         canceled_message: removeMessage,
       };
 

@@ -18,7 +18,7 @@ export default function Footer() {
           <p className={styles["footerEmail"]}>example@gmail.com</p>
           <p className={styles["footerPhone"]}>+38 011 111 1111</p>
           <div className={styles["infoWrapper"]}>
-            <span className={styles["infoText"]}>© copyright GoITeens 2022</span>
+            <span className={styles["infoText"]}>© copyright GoITeens 2024</span>
             <span className={styles["infoText"]}>privacy policy</span>
             <span className={styles["infoText"]}>terms of service</span>
           </div>
