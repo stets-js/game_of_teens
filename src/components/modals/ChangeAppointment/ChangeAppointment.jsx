@@ -55,7 +55,7 @@ const ChangeAppointment = ({
     setManagerId(managerIdInit)
     setAge(age)
     setFollowUp(isFollowUp)
-  }, [course,number,messageInit,crm,manager,managerIdInit,age,isFollowUp]);
+  }, [course,number,messageInit,crm,slotId,manager,managerIdInit,age,isFollowUp]);
 
   useEffect(() => {
     const fetchData = async () => {
