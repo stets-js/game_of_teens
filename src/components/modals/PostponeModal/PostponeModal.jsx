@@ -56,22 +56,22 @@ export default function PostponeModal({
   const tableDate = useSelector(getCallerDate);
   const wid = useSelector(getWeekId);
   const table = useSelector(getTable);
-  const [selectedReason, setSelectedReason] = useState("no parents attending");
+  // const [selectedReason, setSelectedReason] = useState("no parents attending");
 
-  const rejectionReasons = [
-    "no parents attending",
-    "child sick",
-    "not interested",
-    "forgot about TL or have no time",
-    "no contact",
-    "tech reasons",
-    "no PC",
-    "no electricity",
-    "other reasons",
-  ];
-  const handleReasonChange = (e) => {
-    setSelectedReason(e.target.value);
-  };
+  // const rejectionReasons = [
+  //   "no parents attending",
+  //   "child sick",
+  //   "not interested",
+  //   "forgot about TL or have no time",
+  //   "no contact",
+  //   "tech reasons",
+  //   "no PC",
+  //   "no electricity",
+  //   "other reasons",
+  // ];
+  // const handleReasonChange = (e) => {
+  //   setSelectedReason(e.target.value);
+  // };
 
   const onClickSlotFn = (weekIdNew, dayIndexNew, hourIndexNew) => {
     setCurrentDay(dayIndexNew);
@@ -132,7 +132,7 @@ export default function PostponeModal({
             isPostponed={true}
             closePostpone={onClose}
             isFollowUp={isFollowUp}
-            selectedReason={selectedReason}
+            // selectedReason={selectedReason}
           />
         )}
 
@@ -145,7 +145,7 @@ export default function PostponeModal({
             <span className={styles.free__span}>--</span> - number of free
             places
           </p> */}
-          <div>
+          {/* <div>
           <p className={styles.label}>Select a reason for postpone:</p>
 
           <select
@@ -159,7 +159,7 @@ export default function PostponeModal({
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
           <section className={styles.tableSection}>
             <DatePicker
               changeDateFn={getCallerWeekByCourse}

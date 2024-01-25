@@ -1,3 +1,5 @@
+@import "../../../styles/App.scss";
+
 .managerButton{
     background-color: #000;
     color: #fff;
@@ -27,3 +29,54 @@
     align-items: center;
     gap: 40px;
 }
+
+/////// MODAL CONFIRM POSTPONE/////////
+.confirm__title{
+    font-family: $poppins;
+    font-weight: 400;
+    color: $font-black;
+    font-size: 24px;
+  margin-bottom: 25px;
+}
+.reason__select{
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    border: solid 2px #000;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px; /* Розмір стрілки */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M7 10l5 5 5-5z"/></svg>');
+  }
+  .confirm__wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .confirm__ok{
+    font-family: $poppins;
+    font-size: 20px;
+    height: 30px;
+    width: 50%;
+    border-radius: 3px;
+    border: none;
+    background-color:rgba(112, 191, 32, 1);
+    color: #fff;
+  }
+  .confirm__cancel{
+    font-family: $poppins;
+    font-size: 20px;
+    height: 30px;
+    width: 50%;
+    border-radius: 3px;
+    border: none;
+    background-color:#e83e3e;
+    color: #fff;
+  }
