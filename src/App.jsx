@@ -71,9 +71,8 @@ const App = () => {
               <Route path={path.courses} element={<AdminCoursesPage />} />
               <Route path={path.actions} element={<AdminActionsPage />} />
               <Route path={path.crm} element={<CrmPage />} />
-              <Route path={path.avaliable} element={<AvaliablePage />} />
             </Route>
-            <Route path={path.statistics} element={<Statistics />} />
+
 
 
             {userRole === 3 && <Route path={path.home} element={<Navigate to={`${path.superAdmin}`} />} />}
@@ -129,7 +128,8 @@ const App = () => {
             )}
 
             {/* <Route path={path.home} element={<HomePage />} /> */}
-            
+            <Route path={path.statistics} element={<Statistics />} />
+            <Route path={path.avaliable} element={<AvaliablePage />} />
             
           </>
         ) : (

@@ -4,7 +4,7 @@ const path = {
   modals: "/modals/",
   confirmator: "/confirmator/:confirmatorId/",
   confirmed: "/confirmed/:confirmatorId/",
-  avaliable: "avaliable/",
+  avaliable: "/avaliable/",
   caller: "/caller/:callerId/",
   superAdmin: "/superAdmin/",
   admin: "/admin/:adminId/",
