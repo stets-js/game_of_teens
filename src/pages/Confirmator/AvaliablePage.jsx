@@ -15,7 +15,7 @@ import { getConfirmatorAppointments } from "../../redux/confirmator/avaliable-se
 
 import path from "../../helpers/routerPath";
 
-const ConfirmatorPage = () => {
+const AvaliablePage = () => {
   const [value, setValue] = useState("");
   // const { confirmatorId } = useParams();
   const confirmatorId=3 ;
@@ -68,4 +68,4 @@ const ConfirmatorPage = () => {
   );
 };
 
-export default ConfirmatorPage;
+export default AvaliablePage;
