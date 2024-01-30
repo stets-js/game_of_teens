@@ -18,6 +18,8 @@ import confirmatorReducer from "./confirmator/confirmator-reducers";
 import avaliableReducer from "./confirmator/avaliable-reducers";
 import authReducer from "./auth-reducers";
 
+import {jwtDecode} from "jwt-decode";
+
 const persistConfig = {
   key: "booking-system",
   storage,
@@ -43,5 +45,17 @@ export const store = configureStore({
       },
     }),
 });
+
+store.subscribe(() => {
+  const state = store.getState();
+  if (state.auth.token) {
+    const decodedToken = jwtDecode(state.auth.token);
+    if (decodedToken.exp * 1000 < Date.now()) {
+      // Токен вийшов з ладу, видаляємо його
+      store.dispatch({ type: "LOGOUT" });
+    }
+  }
+});
+
 export const persistor = persistStore(store);
 // export const persistor = persistStore(store);
