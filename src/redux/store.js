@@ -50,6 +50,7 @@ store.subscribe(() => {
   const state = store.getState();
   if (state.auth.token) {
     const decodedToken = jwtDecode(state.auth.token);
+    console.log("decodedToken.exp", decodedToken)
     if (decodedToken.exp * 1000 < Date.now()) {
       // Токен вийшов з ладу, видаляємо його
       store.dispatch({ type: "LOGOUT" });
