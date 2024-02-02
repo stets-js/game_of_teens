@@ -16,6 +16,7 @@ import CrmLinks from "../../components/CrmLinks/CrmLinks";
 import path from "../../helpers/routerPath";
 
 
+
 const ConfirmatorPage = () => {
   const [value, setValue] = useState("");
   const { confirmatorId } = useParams();

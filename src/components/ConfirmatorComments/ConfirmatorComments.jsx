@@ -9,6 +9,7 @@ import {
   getConfirmatorAppointments,
 } from "../../redux/confirmator/confirmator-selectors";
 import { TailSpin } from "react-loader-spinner";
+import { success, error, defaults } from "@pnotify/core";
 
 const ConfirmatorComments = ({ value }) => {
   const appointments = useSelector(getConfirmatorAppointments);
@@ -87,7 +88,7 @@ const ConfirmatorComments = ({ value }) => {
               placeholder="Write a comment here..."
               onChange={({ target }) => setConfirm(target.value)}
               onBlur={() =>
-                confirm && setConfirmation(item.slot_id, 4, confirm)
+                confirm && setConfirmation(item.slot_id, 4, confirm).then(() => success("Successfully confirmed")).catch(err => error("Error",err))
               }
             />
           )}
@@ -172,6 +173,7 @@ const ConfirmatorComments = ({ value }) => {
                   console.error("Error while cancelling appointment:", error);
                 } finally {
                   setLoadingAppointment(null);
+                  success("Succesfully sended");
                 }
               }}
               >
