@@ -76,7 +76,7 @@ const ConfirmatorComments = ({ value }) => {
               <div className={styles.commentsWindow}>
               {item.comments}
               </div>
-              )} <p>{item.comments.length > 10 
+              )} <p>{item.comments?.length > 10 
                 ? `${item.comments.slice(0, 10)}...` 
                 : item.comments
               }</p></div>)}

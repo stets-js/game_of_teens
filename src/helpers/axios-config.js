@@ -20,9 +20,8 @@ axios.interceptors.request.use(
       return response;
     },
     async error => {
-      if (error.response && error.response.status === 401) {
+      if ((error.response && error.response.status === 401) || error.response.status === 400) {
         localStorage.removeItem('booking');
-        window.location.href = '/login';
       }
   
       return Promise.reject(error);
