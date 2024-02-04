@@ -10,6 +10,7 @@ import FormInput from "../../FormInput/FormInput";
 import PostponeModal from "../PostponeModal/PostponeModal";
 import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointentManager";
 import { useSelector } from "react-redux";
+import { TailSpin } from "react-loader-spinner";
 
 const ChangeAppointment = ({
   isOpen,
@@ -41,6 +42,7 @@ const ChangeAppointment = ({
   const [phone, setPhone] = useState("");
   const [slot, setSlot] = useState("");
   const [followUp, setFollowUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userRole = useSelector((state) => state.auth.user.role);
   const userId = useSelector((state) => state.auth.user.id);
@@ -89,11 +91,13 @@ const ChangeAppointment = ({
       />
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
+        {isLoading ? <div className={styles.loadingBackdrop}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : null}
           <Form
             onClose={handleClose}
             isCancel={true}
             slotId={slot}
             onSubmit={() => {
+              setIsLoading(true);
               const data = new FormData();
               data.append("crm_link", link);
               data.append("appointment_id", id);
@@ -119,6 +123,7 @@ const ChangeAppointment = ({
                 setSlot("");
                 setManagerId("");
                 setFollowUp(false);
+                setIsLoading(false);
                 handleClose();
               });
             }}

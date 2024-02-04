@@ -25,6 +25,7 @@ import ChangeAppointentManager from "../ChangeAppointentManager/ChangeAppointent
 import { useSelector } from "react-redux";
 import { getCallerDate } from "../../../redux/caller/caller-selectors";
 import moment from "moment";
+import { TailSpin } from "react-loader-spinner";
 
 const NewAppointment = ({
   isOpen,
@@ -51,6 +52,7 @@ const NewAppointment = ({
   const [appointmentId, setAppointmentId] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
   const [appointmentType, setAppointmentType] = useState("Individual Lesson");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
@@ -99,11 +101,12 @@ const NewAppointment = ({
     <>
       {isOpen && (
         <Modal open={isOpen} onClose={handleClose}>
+          {isLoading ? <div className={styles.loadingBackdrop}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : null}
           <Form
             onSubmit={() => {
               const data = new FormData();
               data.append("crm_link", link);
-              
+              setIsLoading(true);
               createAppointment(
                 data,
                 managerId,
@@ -127,6 +130,7 @@ const NewAppointment = ({
                 setAge(0);
                 setPhone("");
                 setAppointmentType("Individual Lesson");
+                setIsLoading(false);
                 handleClose();
               })
               .catch(() => {
@@ -252,7 +256,7 @@ const NewAppointment = ({
             </label>
           </Form>
         </Modal>
-      )}
+        )}
     </>
   );
 };
