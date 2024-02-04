@@ -22,7 +22,7 @@ axios.interceptors.request.use(
     async error => {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem('booking');
-        return Promise.reject(error);
+        window.location.href = '/login';
       }
   
       return Promise.reject(error);
