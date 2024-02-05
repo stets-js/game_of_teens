@@ -137,6 +137,7 @@ const NewAppointment = ({
                 error({
                   text: "This time appears to be already reserved, please change the appointment time",
                 });
+                setIsLoading(false);
               });
             }}
             status={{
@@ -165,7 +166,7 @@ const NewAppointment = ({
               />
             </span>
             <span className={styles.date_label}>
-              Date: {day}.{month}.2023 Time: {time}:00
+              Date: {day}.{month}.2024 Time: {time}:00
             </span>
             {isChangeOpen ? (
               <ChangeAppointentManager

@@ -20,7 +20,7 @@ axios.interceptors.request.use(
       return response;
     },
     async error => {
-      if ((error.response && error.response.status === 401) || error.response.status === 400) {
+      if (error.response && error.response.status === 401) {
         localStorage.removeItem('booking');
       }
   
