@@ -1,10 +1,10 @@
 import axios from "../axios-config";
 
-const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMessage) => {
+const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMessage, course) => {
   const formattedMessage = message || "no text";  // Замінюємо відсутній message на пустий рядок
   const formattedUnsuccessfulMessage = unsuccessfulMessage || "no text";  // Замінюємо відсутній unsuccessfulMessage на пустий рядок
 
-  const endpointPath = `/consultation_result/${slotId}/${result}/${groupId}/${formattedMessage}/${formattedUnsuccessfulMessage}`;
+  const endpointPath = `/consultation_result/${slotId}/${result}/${groupId}/${formattedMessage}/${formattedUnsuccessfulMessage}/${course}`;
   return axios
     .post(
       endpointPath
