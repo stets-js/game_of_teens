@@ -166,7 +166,7 @@ const ConsultationInfo = ({
             onSubmit={() => {
               handleClose();
               dispatch(setManagerLoading(true));
-              return postConsultationResult(+slotId, result, group, message, unsuccessfulMessage, course)
+              return postConsultationResult(+slotId, result, group, message, unsuccessfulMessage, course || appointment.course_id)
                 .then((data) => {
                   return updateSlot(
                     managerId ? managerId : manId,
