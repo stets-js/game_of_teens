@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { getCallerDate } from "../../../redux/caller/caller-selectors";
 import moment from "moment";
 import { TailSpin } from "react-loader-spinner";
+import {freezeSlotStatus} from "../../../helpers/slot/slot";
 
 const NewAppointment = ({
   isOpen,
@@ -53,6 +54,7 @@ const NewAppointment = ({
   const [currentDate, setCurrentDate] = useState("");
   const [appointmentType, setAppointmentType] = useState("Individual Lesson");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFrozen, setIsFrozen] = useState(false);
 
   useEffect(() => {
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
@@ -96,7 +98,15 @@ const NewAppointment = ({
   const month = moment(callerDate).add(dayIndex, "days").month() + 1 < 10
       ? `0${moment(callerDate).add(dayIndex, "days").month() + 1}`
       : moment(callerDate).add(dayIndex, "days").month() + 1;
-   
+  
+      useEffect(() => {
+        const date = `2024-${month}-${day}`;
+        console.log("DATE", `2024-${month}-${day}`);
+        console.log("time", time);
+        console.log("manager", managerId);
+        date && time && managerId && freezeSlotStatus(date, time, managerId).then((data) => setIsFrozen(data.is_freeze));
+      }, [managerId]);
+
   return (
     <>
       {isOpen && (
@@ -162,7 +172,10 @@ const NewAppointment = ({
                 request={() =>
                   getAvailableManagersByCourse(weekId, dayIndex, hourIndex, +courseIdx)
                 }
-                requestAdditional={(managerId) => getManagerById(managerId)}
+                requestAdditional={(managerId) => {getManagerById(managerId)
+                  const date = `2024-${month}-${day}`;
+                  freezeSlotStatus(date, time, managerId).then((data) => setIsFrozen(data.is_freeze));
+                }}
               />
             </span>
             <span className={styles.date_label}>
@@ -186,7 +199,7 @@ const NewAppointment = ({
                 message={message}
               />
             ) : null}
-
+              {isFrozen? <p className={styles.frozen}>!!! SLOT IS FROZEN !!!</p> : null}
             <Select
               classname={styles.select__label}
               value={courseIdx}

@@ -29,9 +29,18 @@ const freezeSlot = ( slotId ) => {
         throw error;
       });
   };
+const freezeSlotStatus = ( date, time, managerId ) => {
+    return axios
+      .get(`/is_frozen_slot/${date}/${time}/${managerId}`)
+      .then((res) => res.data)
+      .catch((error) => {
+        throw error;
+      });
+  };
 
   export {
     getSlot,
     updateSlotComment,
-    freezeSlot
+    freezeSlot,
+    freezeSlotStatus
   };
