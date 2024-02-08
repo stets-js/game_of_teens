@@ -104,7 +104,18 @@ const NewAppointment = ({
         console.log("DATE", `2024-${month}-${day}`);
         console.log("time", time);
         console.log("manager", managerId);
-        date && time && managerId && freezeSlotStatus(date, time, managerId).then((data) => setIsFrozen(data.is_freeze));
+        setIsLoading(true);
+        if (date && time && managerId) {
+          freezeSlotStatus(date, time, managerId)
+            .then((data) => {
+              setIsFrozen(data.is_freeze);
+              setIsLoading(false);
+            })
+            .catch((error) => {
+              console.error('An error occurred:', error);
+              setIsLoading(false);
+            });
+        }
       }, [managerId]);
 
   return (
@@ -174,7 +185,12 @@ const NewAppointment = ({
                 }
                 requestAdditional={(managerId) => {getManagerById(managerId)
                   const date = `2024-${month}-${day}`;
-                  freezeSlotStatus(date, time, managerId).then((data) => setIsFrozen(data.is_freeze));
+                  setIsLoading(true);
+                  freezeSlotStatus(date, time, managerId).then((data) => {setIsFrozen(data.is_freeze)
+                    setIsLoading(false)}).catch(error => {
+                      console.error('An error occurred:', error);
+                      setIsLoading(false);
+                    });
                 }}
               />
             </span>
@@ -199,7 +215,7 @@ const NewAppointment = ({
                 message={message}
               />
             ) : null}
-              {isFrozen? <p className={styles.frozen}>!!! SLOT IS FROZEN !!!</p> : null}
+              {isFrozen ? <p className={styles.frozen}>!!! SLOT IS FROZEN !!!</p> : null}
             <Select
               classname={styles.select__label}
               value={courseIdx}
