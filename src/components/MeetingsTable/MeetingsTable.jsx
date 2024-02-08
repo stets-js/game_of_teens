@@ -202,6 +202,7 @@ const MeetingsTable = ({
                     />
                   ) : (
                     item.manager_appointments.map((i) => (
+                      <>{console.log("item and i", i)}
                       <MeetingsTableItem
                         key={uuidv4()}
                         managerId={item.manager_id}
@@ -219,6 +220,8 @@ const MeetingsTable = ({
                         hourIndex={i.time}
                         colorId={i.status_id || i.status}
                         isFollowUp={i.follow_up}
+                        isFreeze={i.is_freeze}
+                        
                         // handleReload={()=> setReload(!reload)}
                         // onClickFn={()=> {Fn(item.manager_id, weekId, dayIndex, i.time)}}
                         onClickFn={() => {
@@ -226,7 +229,7 @@ const MeetingsTable = ({
                             .then(() => getNewTableData(parseInt(date.split('.')[0], 10), parseInt(date.split('.')[1], 10), parseInt(date.split('.')[2], 10)))
                             .catch((error) => console.error("Error:", error));
                         }}
-                      />
+                      /></>
                     ))
                   )}
                 </ul>

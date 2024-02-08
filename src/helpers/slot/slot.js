@@ -21,8 +21,17 @@ const getSlot = ({ id }) => {
         throw error;
       });
   };
+const freezeSlot = ( slotId ) => {
+    return axios
+      .put(`/freeze_slot/${slotId}`)
+      .then((res) => res.data)
+      .catch((error) => {
+        throw error;
+      });
+  };
 
   export {
     getSlot,
-    updateSlotComment
+    updateSlotComment,
+    freezeSlot
   };

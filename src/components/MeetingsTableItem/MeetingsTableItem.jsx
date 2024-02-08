@@ -5,7 +5,10 @@ import styles from "./MeetingsTableItem.module.scss";
 import ConsultationInfo from "../modals/ConsultationInfo/ConsultationInfo";
 import NewAppointment from "../modals/NewAppointment2/NewAppointment";
 import Star from "./Star"
+import Snowflake from "./Snowflake"
 import { Link } from "react-router-dom";
+import { success, error, defaults } from "@pnotify/core";
+import {freezeSlot} from "../../helpers/slot/slot"
 
 import {
   changeStatusSlot,
@@ -46,7 +49,8 @@ const MeetingsTableItem = ({
   selectedManagerIds,
   setSelectedManagerIds,
   isFollowUp,
-  handleReload
+  handleReload,
+  isFreeze
 }) => {
   const [isManagerSelected, setisManagerSelected]=useState(isManagerSelectedFr)
   const table = useSelector(getTable);
@@ -343,7 +347,27 @@ const MeetingsTableItem = ({
           />
         )}
       </>
-      ):(
+      ):colorId === 1 ? (
+        <>
+        <li className={activeClassnames(colorId)}>
+        {text !== undefined ? text : ``}
+          <div className={styles.hover_buttons}>
+            <button
+              className={styles.styled_button}
+              type="button"
+              data-modal="freeze"
+              onClick={() => {
+                console.log("Click on slot", +slotId)
+                freezeSlot(+slotId).then(() => success("Freezing toggled")).catch(err => error("Error",err))
+              }}
+            >
+              freeze
+            </button>
+          </div>
+          {isFreeze ? <div className={styles.asterix}><Snowflake /></div> : null}
+        </li>
+      </>
+      ) : (
         <li onClick={typeSelection == "Free" ? handleDeleteClick : onClickFn} className={activeClassnames(colorId)}>
           {text !== undefined ? text : ``}
         </li>
