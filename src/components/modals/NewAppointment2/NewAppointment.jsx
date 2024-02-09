@@ -101,9 +101,6 @@ const NewAppointment = ({
   
       useEffect(() => {
         const date = `2024-${month}-${day}`;
-        console.log("DATE", `2024-${month}-${day}`);
-        console.log("time", time);
-        console.log("manager", managerId);
         setIsLoading(true);
         if (date && time && managerId) {
           freezeSlotStatus(date, time, managerId)

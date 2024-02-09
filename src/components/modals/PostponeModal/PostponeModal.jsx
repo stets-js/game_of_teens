@@ -44,7 +44,6 @@ export default function PostponeModal({
   hour,
   isFollowUp,
 }) {
-  console.log("message in postpone modal", message);
   const [callerId, setCallerId] = useState(null);
   const [error, setError] = useState("");
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);

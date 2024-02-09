@@ -9,8 +9,6 @@ export default function AuthLogs() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  console.log("data", data);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -70,7 +70,6 @@ const ConsultationInfo = ({
   
           // Отримання даних про слот
           const slotData = await getSlot({ id: slotId });
-          console.log("slot data", slotData);
           if (slotData.status_id == 7 || slotData.status_id == 8) {
             setResult(slotData.status_id);
           } else {

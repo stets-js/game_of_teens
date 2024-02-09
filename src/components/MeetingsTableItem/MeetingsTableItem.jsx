@@ -171,6 +171,12 @@ const MeetingsTableItem = ({
     }
   };
   ///////
+  const handleFreezeClick = (e) => {
+    e.stopPropagation();
+    freezeSlot(+slotId)
+      .then(() => success("Freezing toggled"))
+      .catch((err) => error("Error", err));
+  };
 
   return (
     <>
@@ -349,17 +355,16 @@ const MeetingsTableItem = ({
       </>
       ):colorId === 1 ? (
         <>
-        <li className={activeClassnames(colorId)}>
+        <li className={activeClassnames(colorId)}
+        onClick={typeSelection === "Free" ? handleDeleteClick : onClickFn}
+        >
         {text !== undefined ? text : ``}
           <div className={styles.hover_buttons}>
             <button
               className={styles.styled_button}
               type="button"
               data-modal="freeze"
-              onClick={() => {
-                console.log("Click on slot", +slotId)
-                freezeSlot(+slotId).then(() => success("Freezing toggled")).catch(err => error("Error",err))
-              }}
+              onClick={handleFreezeClick}
             >
               freeze
             </button>
