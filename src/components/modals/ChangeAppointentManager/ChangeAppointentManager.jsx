@@ -10,6 +10,8 @@ import Modal from "../../Modal/Modal";
 import { info, success, error } from "@pnotify/core";
 import { TailSpin } from "react-loader-spinner";
 import { useSelector } from "react-redux";
+import {freezeSlotStatus} from "../../../helpers/slot/slot"
+import Snowflake from "../../MeetingsTableItem/Snowflake"
 
 const ChangeAppointentManager = ({
   isOpen,
@@ -66,16 +68,37 @@ const ChangeAppointentManager = ({
     const fetchData = async () => {
       try {
         const result = await getDateByWeekId(weekId, day);
-        setDate(result.date)
         const date = result.date;
+        setDate(date);
+  
+        const [formattedDay, formattedMonth, formattedYear] = date.split('.');
+        
         const managers = await getManagersByCourse(courseId, date, hour);
-        setManagers(managers.managers.sort((a, b) => b.rating - a.rating));
+        const freezeStatusPromises = managers.managers.map(manager => 
+          freezeSlotStatus(`${formattedYear}-${formattedMonth}-${formattedDay}`, hour, manager.id).then(data => data.is_freeze)
+        );
+        
+        // Очікуємо завершення всіх промісів
+        const freezeStatuses = await Promise.all(freezeStatusPromises);
+        
+        // Додаємо інформацію про статус заморозки до кожного менеджера
+        const updatedManagers = managers.managers.map((manager, index) => ({
+          ...manager,
+          is_freeze: freezeStatuses[index]
+        }));
+  
+        // Сортуємо менеджерів за рейтингом
+        const sortedManagers = updatedManagers.sort((a, b) => b.rating - a.rating);
+        setManagers(sortedManagers);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, [day, weekId, courseId, hour]);
+  
+
+  console.log(managersList)
 
   const [selectedReason, setSelectedReason] = useState("no parents attending");
   const [isConfirmPostponeOpen, setIsConfirmPostponeOpen] = useState(false);
@@ -189,6 +212,7 @@ const ChangeAppointentManager = ({
                   className={styles.managerButton}
                 >
                   {manager.name}
+                  {manager.is_freeze ? <Snowflake className={styles.snowflake} /> : null}
                 </button>
               </div>
 

@@ -1,6 +1,7 @@
 @import "../../../styles/App.scss";
 
 .managerButton{
+    position: relative;
     background-color: #000;
     color: #fff;
     height: 50px;
@@ -79,4 +80,9 @@
     border: none;
     background-color:#e83e3e;
     color: #fff;
+  }
+  .snowflake{
+    position: absolute;
+    top:0;
+    right: -20px;
   }

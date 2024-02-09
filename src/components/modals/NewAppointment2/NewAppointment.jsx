@@ -113,7 +113,7 @@ const NewAppointment = ({
               setIsLoading(false);
             });
         }
-      }, [managerId]);
+      }, [managerId, isOpen]);
 
   return (
     <>
