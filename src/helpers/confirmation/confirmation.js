@@ -91,7 +91,7 @@ const setCancelConfirmation = (slot_id, status, message) => {
   const data = { slot_id, cancel_type: status, message, confirmatorId: id };
 
   return axios
-    .post(`/set_cancel_confirmation`, data, { headers })
+    .post(`/set_cancel_confirmation/`, data, { headers })
     .then((res) => {
       const responseData = {
         ...res.data,
