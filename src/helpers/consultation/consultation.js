@@ -33,7 +33,7 @@ const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMe
   const formattedUnsuccessfulMessage = unsuccessfulMessage || "";
 
   const data = {
-    slotId,
+    slot_id: slotId,
     consultation_result: result,
     group_id: groupId,
     message: formattedMessage,
