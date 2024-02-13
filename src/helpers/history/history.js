@@ -22,4 +22,13 @@ const getAppointmentHistory = (credentials) => {
     });
 };
 
-export { getHistory, getAppointmentHistory };
+const getSlotsHistory = (manager_name) => {
+  return axios
+    .get(`/history_slots/${manager_name}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export { getHistory, getAppointmentHistory, getSlotsHistory };

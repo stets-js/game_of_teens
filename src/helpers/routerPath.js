@@ -25,5 +25,6 @@ const path = {
   history: "/history/",
   authorization: "auth/",
   ik: "ik/",
+  slotHistory: "slotHistory/",
 };
 export default path;
