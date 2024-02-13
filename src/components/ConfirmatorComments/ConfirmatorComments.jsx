@@ -55,7 +55,7 @@ const ConfirmatorComments = ({ value }) => {
     "no parents attending",
     "child sick",
     "not interested",
-    "forgot about TL or have no time",
+    "forgot about TL / have no time",
     "no contact",
     "tech reasons",
     "no PC",

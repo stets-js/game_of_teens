@@ -50,18 +50,48 @@ const setConfirmation = (slot_id, status, message) => {
     });
 };
 
+// const setCancelConfirmation = (slot_id, status, message) => {
+//   const authToken = localStorage.getItem("booking");
+//   const { id } = jwtDecode(localStorage.getItem('booking'));
+//   const headers = {
+//     Authorization: `Bearer ${authToken}`,
+//   };
+
+//   const url = message
+//     ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${id}/`
+//     : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`;
+//   return axios
+//     .post(url, null, {headers})
+//     .then((res) => {
+//       const responseData = {
+//         ...res.data,
+//         action: "canceled",
+//       };
+
+//       axios.post(
+//         "https://zohointegration.goit.global/GoITeens/booking/index.php",
+//         JSON.stringify(responseData),
+//         { headers: { "Content-Type": "application/json" }}
+//       );
+
+//       return res.data;
+//     })
+//     .catch((error) => {
+//       throw error;
+//     });
+// };
+
 const setCancelConfirmation = (slot_id, status, message) => {
   const authToken = localStorage.getItem("booking");
   const { id } = jwtDecode(localStorage.getItem('booking'));
   const headers = {
     Authorization: `Bearer ${authToken}`,
   };
+  
+  const data = { slot_id, cancel_type: status, message, confirmatorId: id };
 
-  const url = message
-    ? `/set_cancel_confirmation/${slot_id}/${status}/${message}/${id}/`
-    : `/set_cancel_confirmation/${slot_id}/${status}/${id}/`;
   return axios
-    .post(url, null, {headers})
+    .post(`/set_cancel_confirmation`, data, { headers })
     .then((res) => {
       const responseData = {
         ...res.data,
@@ -80,6 +110,7 @@ const setCancelConfirmation = (slot_id, status, message) => {
       throw error;
     });
 };
+
 
 const setPostponedConfirmation = (slot_id, appointment_id) => {
   return axios

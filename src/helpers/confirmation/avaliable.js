@@ -60,14 +60,52 @@ const setPostponedConfirmation = (slot_id, appointment_id) => {
     });
 };
 
+// const removeSlot = (slot_id, reason, removeMessage) => {
+//   const authToken = localStorage.getItem("booking");
+//   const { id } = jwtDecode(localStorage.getItem('booking'));
+//   return axios
+//     .delete(`remove_slot/${slot_id}/${reason}/${id}`, {
+//       // Set the Authorization header with the retrieved token
+//       headers: {
+//         Authorization: `Bearer ${authToken}`,
+//       },
+//     })
+//     .then((res) => {
+//       const responseData = {
+//         ...res.data,
+//         action: "removed",
+//         canceled_message: removeMessage,
+//       };
+
+//       axios.post(
+//         "https://zohointegration.goit.global/GoITeens/booking/index.php",
+//         JSON.stringify(responseData),
+//         { headers: { "Content-Type": "application/json" }}
+//       );
+
+//       return res.data;
+//     })
+//     .catch((error) => {
+//       throw error;
+//     });
+// };
+
 const removeSlot = (slot_id, reason, removeMessage) => {
   const authToken = localStorage.getItem("booking");
   const { id } = jwtDecode(localStorage.getItem('booking'));
-  return axios
-    .delete(`remove_slot/${slot_id}/${reason}/${id}`, {
+
+  const data = {
+    slot_id,
+    reason,
+    confirmatorId: id
+  };
+
+  return axios.delete(`remove_slot`, {
+      data,  // Use data instead of URL params
       // Set the Authorization header with the retrieved token
       headers: {
         Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'application/json' // Make sure to set Content-Type header
       },
     })
     .then((res) => {
@@ -89,6 +127,7 @@ const removeSlot = (slot_id, reason, removeMessage) => {
       throw error;
     });
 };
+
 
 export {
   setPostponedConfirmation,
