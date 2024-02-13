@@ -8,6 +8,7 @@ axios.interceptors.request.use(
       if (bookingToken) {
         config.headers['Authorization'] = `Bearer ${bookingToken}`;
       }
+      config.headers["Cache-Control"] = "no-cache";
       return config;
     },
     error => {
