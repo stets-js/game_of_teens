@@ -289,7 +289,7 @@ const MeetingsTableItem = ({
           >
             {text !== undefined ? text : ``}
             <div className={styles.hover_buttons}>
-              <button
+              {/* <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -297,7 +297,7 @@ const MeetingsTableItem = ({
                 }}
               >
                 start
-              </button>
+              </button> */}
               <button
                 type="button"
                 className={styles.styled_button}
