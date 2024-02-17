@@ -16,9 +16,10 @@ export default function ManagerPage() {
     <>
       <Header
         endpoints={[
-          { text: "consultations", path: path.consultations },
-          { text: "planning", path: path.planning },
+          { text: "Consultations", path: path.consultations },
+          { text: "Planning", path: path.planning },
           { text: "CRM", path: path.crm },
+          { text: "Analytics", path: path.analytics },
           // { text: "Postpone", path: path.postpone },
         ]}
         user={{ name: managerName, role: "Manager" }}

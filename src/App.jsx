@@ -32,6 +32,7 @@ import SlotHistory from "./pages/SuperAdmin/SlotHistory";
 import ManagerPage from "./pages/Manager/ManagerPage";
 import ConsultationsPage from "./pages/Manager/ConsultationsPage";
 import PlanningPage from "./pages/Manager/PlanningPage";
+import Analytics from "./pages/Manager/Analytics";
 
 import CallerPage from "./pages/Caller/CallerPage";
 import ConfirmatorPage from "./pages/Confirmator/ConfirmatorPage";
@@ -97,6 +98,7 @@ const App = () => {
               <Route path={path.consultations} element={<ConsultationsPage />} />
               <Route path={path.planning} element={<PlanningPage />} />
               <Route path={path.crm} element={<CrmPage />} />
+              <Route path={path.analytics} element={<Analytics />} />
             </Route>
             </>
             )}
