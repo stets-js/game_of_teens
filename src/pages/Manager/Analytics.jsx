@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ManagerPage.module.scss";
-import { getManagerAnalytic } from "../../helpers/manager/manager";
+import { getManagerAnalytic, updateManagerAnalytic } from "../../helpers/manager/manager";
 
 const Analytics = () => {
-    const manager_id = window.location.pathname.split("/")[window.location.pathname.split("/").length - 2];
+    const manager_id = window.location.pathname.split("/")[2];
     const [isLoading, setIsLoading] = useState(false);
     const [date, setDate] = useState(new Date().getMonth() + 1);
-    const [analyticData, setAnalyticData] = useState(null);
+    const [analyticData, setAnalyticData] = useState([]);
+    const [page, setPage] = useState(1);
+    const [perPage] = useState(20);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    console.log("analyticData", analyticData)
     
     const months = [
         { value: 1, label: "January" },
@@ -24,45 +29,175 @@ const Analytics = () => {
     ];
 
     useEffect(() => {
-      setIsLoading(true);
+        setIsLoading(true);
 
-      const getData = async (manager_id, date) => {
-          try {
-              const res = await getManagerAnalytic(manager_id, date);
-              setAnalyticData(res.data);
-              setIsLoading(false); 
-          } catch (error) {
-              console.error("Error fetching manager analytic data:", error);
-              setIsLoading(false);
-          }
-      };
-      getData(manager_id, date);
+        const getData = async (manager_id, date) => {
+            try {
+                const res = await getManagerAnalytic(manager_id, date);
+                setAnalyticData(res);
+                setIsLoading(false); 
+            } catch (error) {
+                console.error("Error fetching manager analytic data:", error);
+                setIsLoading(false);
+            }
+        };
+        getData(manager_id, date);
 
-  }, [date]);
+    }, [date]);
+
+    const handleUpdate = async (index) => {
+        const updatedItem = analyticData[index];
+        try {
+            // Оновити дані на сервері
+            // await updateManagerAnalytic(updatedItem);
+            console.log("Updated item:", updatedItem);
+        } catch (error) {
+            console.error("Error updating item:", error);
+        }
+    };
+
+    // Фільтрація даних за зазначеним терміном пошуку
+    const filteredData = searchTerm ? analyticData.filter(item => item.zoho_link.includes(searchTerm)) : analyticData;
+
+    // Обрахунок індексів для сторінки
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+
+    // Дані, що відображаються на поточній сторінці
+    const currentPageData = filteredData.slice(startIndex, endIndex);
+
+    // Функція для зміни сторінки
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
 
     return (
-      <>
-        <div className={styles.btn__wrapper}>
-            <select
-                className={styles.select}
-                value={months.find(month => month.value === date)?.label}
-                onChange={(e) => {
-                    const selectedMonth = months.find(month => month.label === e.target.value);
-                    setDate(+selectedMonth?.value || 1);
-                }}
-              >
-                {months.map((m, index) => (
-                  <option key={index} value={m.label}>
-                    {m.label}
-                  </option>
-                ))}
-              </select>
-        </div>
-        {isLoading ? <p>Loading...</p> : (
-            analyticData ? <p>DATA</p> : <p>No DATA available</p>
-        )}
-      </>
-  );
+        <>
+            <div className={styles.btn__wrapper}>
+                <input
+                className={styles.searchTermInput}
+                    type="text"
+                    placeholder="Search Zoho link"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <select
+                    className={styles.select}
+                    value={months.find(month => month.value === date)?.label}
+                    onChange={(e) => {
+                        const selectedMonth = months.find(month => month.label === e.target.value);
+                        setDate(+selectedMonth?.value || 1);
+                    }}
+                >
+                    {months.map((m, index) => (
+                        <option key={index} value={m.label}>
+                            {m.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            {isLoading ? <p>Loading...</p> : (
+                currentPageData.length > 0 ? (
+                    currentPageData.map((item, index) => (
+                        <div key={index} className={styles.item__wrapper}>
+                            <div className={styles.item__analytic}>
+                                <label>Zoho link:</label>
+                                <p>{item.zoho_link}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Occurred:</label>
+                                <input
+                                    type="number"
+                                    value={item.occurred}
+                                    min={0}
+                                    max={1}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].occurred = parseFloat(e.target.value);
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Bill:</label>
+                                <input
+                                    type="number"
+                                    value={item.bill}
+                                    min={0}
+                                    max={1}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].bill = parseFloat(e.target.value);
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Bought:</label>
+                                <input
+                                    type="number"
+                                    value={item.bought}
+                                    min={0}
+                                    max={1}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].bought = parseFloat(e.target.value);
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Comments:</label>
+                                <input
+                                    type="text"
+                                    value={item.comments}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].comments = e.target.value;
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Date:</label>
+                                <p>{item.date}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Time:</label>
+                                <p>{item.time}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Manager:</label>
+                                <p>{item.manager_id}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Course:</label>
+                                <p>{item.course_id}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>YouTube:</label>
+                                <input
+                                    type="text"
+                                    value={item.you_tube}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].you_tube = e.target.value;
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <button className={styles.item__btn} onClick={() => handleUpdate(index)}>Update</button>
+                        </div>
+                    ))
+                ) : <p>No DATA available</p>
+            )}
+            {/* Кнопки пагінації */}
+            <div className={styles.pagination}>
+                            <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Previous</button>
+                            <button onClick={() => handlePageChange(page + 1)} disabled={endIndex >= filteredData.length}>Next</button>
+                        </div>
+        </>
+    );
 };
 
 export default Analytics;
