@@ -291,3 +291,15 @@ word-wrap: break-word;
   border-radius: 8px;
   background-color: #fff;
 }
+.managerTotal{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+.totalItem p{
+  font-size: 20px;
+  font-family: $poppins;
+}

@@ -74,6 +74,11 @@ const Analytics = () => {
         setPage(newPage);
     };
 
+    const occurredTotal = analyticData.reduce((total, item) => total + item.occurred, 0);
+    const billTotal = analyticData.reduce((total, item) => total + item.bill, 0);
+    const boughtTotal = analyticData.reduce((total, item) => total + item.bought, 0);
+    const priceTotal = analyticData.reduce((total, item) => total + item.price, 0);
+
     return (
         <>
             <div className={styles.btn__wrapper}>
@@ -206,6 +211,26 @@ const Analytics = () => {
                     ))
                 ) : <p>No DATA available</p>
             )}
+            {/* Блок з заголовком та загальною сумою */}
+            <div className={styles.managerTotal}>
+                <h2>Manager TOTAL:</h2>
+                <div className={styles.totalItem}>
+                    <p>Occurred total:</p>
+                    <p>{occurredTotal}</p>
+                </div>
+                <div className={styles.totalItem}>
+                    <p>Bill total:</p>
+                    <p>{billTotal}</p>
+                </div>
+                <div className={styles.totalItem}>
+                    <p>Bought total:</p>
+                    <p>{boughtTotal}</p>
+                </div>
+                <div className={styles.totalItem}>
+                    <p>Price total:</p>
+                    <p>{priceTotal} uah</p>
+                </div>
+            </div>
             {/* Кнопки пагінації */}
             <div className={styles.pagination}>
                             <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Previous</button>
