@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ManagerPage.module.scss";
 import { getManagerAnalytic, updateManagerAnalytic } from "../../helpers/manager/manager";
+import { success, error, defaults } from "@pnotify/core";
 
 const Analytics = () => {
     const manager_id = window.location.pathname.split("/")[2];
@@ -36,8 +37,9 @@ const Analytics = () => {
                 const res = await getManagerAnalytic(manager_id, date);
                 setAnalyticData(res);
                 setIsLoading(false); 
-            } catch (error) {
-                console.error("Error fetching manager analytic data:", error);
+            } catch (err) {
+                console.error("Error fetching manager analytic data:", err);
+                error(err)
                 setIsLoading(false);
             }
         };
@@ -48,8 +50,9 @@ const Analytics = () => {
     const handleUpdate = async (index) => {
         const updatedItem = analyticData[index];
         try {
-            // Оновити дані на сервері
-            // await updateManagerAnalytic(updatedItem);
+            await updateManagerAnalytic(updatedItem).then(
+              success('Analytic updated successfully')
+            );
             console.log("Updated item:", updatedItem);
         } catch (error) {
             console.error("Error updating item:", error);
@@ -142,6 +145,18 @@ const Analytics = () => {
                                     onChange={(e) => {
                                         const updatedData = [...analyticData];
                                         updatedData[index].bought = parseFloat(e.target.value);
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Price:</label>
+                                <input
+                                    type="number"
+                                    value={item.price}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].price = parseFloat(e.target.value);
                                         setAnalyticData(updatedData);
                                     }}
                                 />
