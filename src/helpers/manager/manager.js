@@ -147,7 +147,17 @@ const getDateByWeekId = (weekId, day) =>{
     });
 };
 
+const getManagerAnalytic = (manager_id, month) =>{
+  return axios
+    .get(`/get_manager_analytic/${manager_id}/${month}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export {
+  getManagerAnalytic,
   loginUser,
   getManagers,
   getManagerByName,
