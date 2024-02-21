@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./ManagerPage.module.scss";
 import { getManagerAnalytic, updateManagerAnalytic } from "../../helpers/manager/manager";
 import { success, error, defaults } from "@pnotify/core";
+import { TailSpin } from "react-loader-spinner";
+import NoData from '../SuperAdmin/NoData';
 
 const Analytics = () => {
     const manager_id = window.location.pathname.split("/")[2];
@@ -104,7 +106,7 @@ const Analytics = () => {
                     ))}
                 </select>
             </div>
-            {isLoading ? <p>Loading...</p> : (
+            {isLoading ? <div className={styles.tailspin}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : (
                 currentPageData.length > 0 ? (
                     currentPageData.map((item, index) => (
                         <div key={index} className={styles.item__wrapper}>
@@ -192,7 +194,7 @@ const Analytics = () => {
                             </div>
                             <div className={styles.item__analytic}>
                                 <label>Course:</label>
-                                <p>{item.course_id}</p>
+                                <p>{item.course_name}</p>
                             </div>
                             <div className={styles.item__analytic}>
                                 <label>YouTube:</label>
@@ -209,7 +211,9 @@ const Analytics = () => {
                             <button className={styles.item__btn} onClick={() => handleUpdate(index)}>Update</button>
                         </div>
                     ))
-                ) : <p>No DATA available</p>
+                ) : <div className={styles.noData}>
+                <NoData />
+            </div>
             )}
             {/* Блок з заголовком та загальною сумою */}
             <div className={styles.managerTotal}>
