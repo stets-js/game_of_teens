@@ -6,6 +6,7 @@ import { success, error, defaults } from "@pnotify/core";
 import { getAllManagersAnalytics } from "../../helpers/manager/manager";
 import { TailSpin } from "react-loader-spinner";
 import NoData from './NoData';
+import { Link } from "react-router-dom";
 
 export default function ManagersAnalytic() {
   const [isLoading, setIsLoading] = useState(false);
@@ -164,7 +165,13 @@ console.log("team", team)
         currentPageData.map((item, index) => (
           <div key={index} className={styles.item__wrapper}>
             <div className={styles.item__analytic}>
-              <p>{item.manager_name}</p>
+              <Link
+            className={styles.managerNameSt}
+            to={`/manager/${item.manager_id}/analytics/`}
+            target="_self"
+          >
+            {item.manager_name}
+          </Link>
             </div>
             <div className={styles.item__analytic}>
               <label>Occurred:</label>
