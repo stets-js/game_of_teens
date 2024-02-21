@@ -380,3 +380,63 @@ width: 100px;
   align-items: center;
   margin-top: 100px;
 }
+////////MANAGERS ANALYTICS////////
+.searchTermInput{
+  width: 25%;
+  padding: 10px;
+  font-size: 20px;
+  font-family: $poppins;
+  background-color: #ededed;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+.btn__wrapper{
+  width: 90%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 100px;
+}
+.select::after {
+  content: "../";
+  justify-self: end;
+  width: 0.8em;
+  height: 0.5em;
+  background-color: #777;
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+.select {
+  display: block;
+  width: 200px;
+  background-color: $grey;
+  border-radius: 10px;
+  border: 0;
+  height: 50px;
+  padding-left: 15px;
+  font-size: 20px;
+  font-family: $poppins;
+  padding: 10px;
+  -moz-appearance: none;
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../img/down-arrow.png");
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 55%, 0 0;
+  align-items: center;
+  transition: all 0.5s;
+}
+.select::-ms-expand {
+  display: none;
+}
+.select:hover {
+  border-color: #888;
+}
+.select:focus {
+  outline: none;
+}
+
+.select option {
+  font-weight: normal;
+}

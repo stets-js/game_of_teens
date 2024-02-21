@@ -27,5 +27,6 @@ const path = {
   ik: "ik/",
   slotHistory: "slotHistory/",
   analytics: "analytics/",
+  managersAnalytics: "/managers_analytics/",
 };
 export default path;

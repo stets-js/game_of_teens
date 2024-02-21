@@ -165,7 +165,17 @@ const updateManagerAnalytic = (credentials)=>{
   });
 }
 
+const getAllManagersAnalytics = (month)=>{
+  return axios
+  .get(`/all_managers_analytics/${month}`)
+  .then((res) => res.data)
+  .catch((error) => {
+    throw error;
+  });
+}
+
 export {
+  getAllManagersAnalytics,
   updateManagerAnalytic,
   getManagerAnalytic,
   loginUser,

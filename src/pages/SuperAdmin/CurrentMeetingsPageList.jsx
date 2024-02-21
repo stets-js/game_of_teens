@@ -75,6 +75,7 @@ function CurrentMeetingsPageList() {
         endpoints={[
           { text: "List View", path: path.currentManagersList },
           { text: "Table View", path: path.currentManagersTable },
+          { text: "Managers analytics", path: path.managersAnalytics },
         ]}
       />
       <div style={isThatPhone.isPhone ? dividerStylesAdpt : dividerStyles}>

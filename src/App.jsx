@@ -28,6 +28,7 @@ import History from "./pages/SuperAdmin/History";
 import AuthLogs from "./pages/SuperAdmin/AuthLogs";
 import ConsultationLogs from "./pages/SuperAdmin/ConsultationLogs";
 import SlotHistory from "./pages/SuperAdmin/SlotHistory";
+import ManagersAnalytics from './pages/SuperAdmin/ManagersAnalytic';
 
 import ManagerPage from "./pages/Manager/ManagerPage";
 import ConsultationsPage from "./pages/Manager/ConsultationsPage";
@@ -67,6 +68,7 @@ const App = () => {
             <Route path={path.currentManagers} element={<CurrentMeetingsPage />} />
             <Route path={path.currentManagersList} element={<CurrentMeetingsPageList />} />
             <Route path={path.currentManagersTable} element={<CurrentMeetingsPageTable />} />
+            <Route path={path.managersAnalytics} element={<ManagersAnalytics />} />
             <Route path={path.admin} element={<Navigate to={path.users} />} />
             <Route path={path.admin} element={<AdminPage />}>
               <Route path={path.users} element={<AdminUsersPage />} />
