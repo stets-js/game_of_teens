@@ -440,3 +440,59 @@ width: 100px;
 .select option {
   font-weight: normal;
 }
+.pagination{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 50px auto;
+  
+}
+.pagination button{
+  font-size: 20px;
+  font-family: $poppins;
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.managerTotal{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+.totalItem p{
+  font-size: 20px;
+  font-family: $poppins;
+}
+.item__wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 90%;
+  margin: 15px auto;
+  gap: 10px;
+}
+.item__analytic{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  max-width: calc(100%/10);
+  font-size: 20px;
+  font-family: $poppins;
+}
+.item__analytic p{
+width: 100%;
+font-weight: 700;
+// word-wrap: break-word;
+}
+.tailspin{
+  margin: 100px auto;
+}
+.noData{
+  margin: 0 auto;
+}

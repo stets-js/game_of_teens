@@ -3,7 +3,9 @@ import styles from "./SuperAdminPage.module.scss";
 import Header from "../../components/Header/Header";
 import path from "../../helpers/routerPath";
 import { success, error, defaults } from "@pnotify/core";
-import {getAllManagersAnalytics} from "../../helpers/manager/manager";
+import { getAllManagersAnalytics } from "../../helpers/manager/manager";
+import { TailSpin } from "react-loader-spinner";
+import NoData from './NoData';
 
 export default function ManagersAnalytic() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +15,7 @@ export default function ManagersAnalytic() {
   const [perPage] = useState(20);
   const [team, setTeam] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-
+console.log("team", team)
   const months = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -39,37 +41,73 @@ export default function ManagersAnalytic() {
     { value: 7, label: "Team 7" },
     { value: 8, label: "CB MIC" },
   ];
-// Фільтрація даних за зазначеним терміном пошуку
-const filteredData = searchTerm ? analyticData.filter(item => item.zoho_link.includes(searchTerm)) : analyticData;
+  // Фільтрація даних за зазначеним терміном пошуку
+  const filteredData = searchTerm
+    ? analyticData.filter((item) => item.manager_name.includes(searchTerm))
+    : analyticData;
 
-// Обрахунок індексів для сторінки
-const startIndex = (page - 1) * perPage;
-const endIndex = startIndex + perPage;
+  // Обрахунок індексів для сторінки
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
 
-// Дані, що відображаються на поточній сторінці
-const currentPageData = filteredData.slice(startIndex, endIndex);
-
-// Функція для зміни сторінки
-const handlePageChange = (newPage) => {
+  // Дані, що відображаються на поточній сторінці
+  const filterByTeam = (data, selectedTeam) => {
+    if (selectedTeam === 0) {
+      return data; // Якщо обрано "All", повертаємо всі дані
+    } else {
+      return data.filter((item) => item.manager_team === selectedTeam); // Вибираємо менеджерів з обраною командою
+    }
+  };
+  // const currentPageData = filteredData.slice(startIndex, endIndex);
+  const currentPageData = filterByTeam(filteredData, team).slice(
+    startIndex,
+    endIndex
+  );
+  // Функція для зміни сторінки
+  const handlePageChange = (newPage) => {
     setPage(newPage);
-};
-useEffect(() => {
+  };
+  useEffect(() => {
     setIsLoading(true);
 
     const getData = async (date) => {
-        try {
-            const res = await getAllManagersAnalytics(date);
-            setAnalyticData(res);
-            setIsLoading(false); 
-        } catch (err) {
-            console.error("Error fetching manager analytic data:", err);
-            error(err)
-            setIsLoading(false);
-        }
+      try {
+        const res = await getAllManagersAnalytics(date);
+        // Сортування за рейтингом в порядку спадання
+        res.sort((a, b) => b.manager_rating - a.manager_rating);
+        setAnalyticData(res);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Error fetching manager analytic data:", err);
+        error(err);
+        setIsLoading(false);
+      }
     };
     getData(date);
+  }, [date]);
 
-}, [date]);
+  const calculateTotals = (data) => {
+    let occurredTotal = 0;
+    let billTotal = 0;
+    let boughtTotal = 0;
+    let priceTotal = 0;
+  
+    // Фільтруємо дані для обраної команди або для All (team === 0)
+    const filteredTeamData = data.filter(item => item.manager_team === team || team === 0);
+  
+    // Підрахунок тоталу для обраної команди або для All
+    filteredTeamData.forEach((item) => {
+      occurredTotal += item.occurred_total;
+      billTotal += item.bill_total;
+      boughtTotal += item.bought_total;
+      priceTotal += item.price_total;
+    });
+  
+    return { occurredTotal, billTotal, boughtTotal, priceTotal };
+  };
+  
+  const { occurredTotal, billTotal, boughtTotal, priceTotal } = calculateTotals(filteredData);
+  const filteredTeamData2 = filteredData.filter(item => item.manager_team === team || team === 0);
 
   return (
     <>
@@ -87,6 +125,7 @@ useEffect(() => {
           onChange={(e) => {
             const selectedTeams = teams.find((t) => t.label === e.target.value);
             setTeam(+selectedTeams?.value || 0);
+            setPage(1)
           }}
         >
           {teams.map((m, index) => (
@@ -118,6 +157,72 @@ useEffect(() => {
             </option>
           ))}
         </select>
+      </div>
+      {isLoading ? (
+        <div className={styles.tailspin}><TailSpin height="150px" width="150px" color="#999DFF" /></div>
+      ) : currentPageData.length > 0 ? (
+        currentPageData.map((item, index) => (
+          <div key={index} className={styles.item__wrapper}>
+            <div className={styles.item__analytic}>
+              <p>{item.manager_name}</p>
+            </div>
+            <div className={styles.item__analytic}>
+              <label>Occurred:</label>
+              <p>{item.occurred_total}</p>
+            </div>
+            <div className={styles.item__analytic}>
+              <label>Bill:</label>
+              <p>{item.bill_total}</p>
+            </div>
+            <div className={styles.item__analytic}>
+              <label>Bought:</label>
+              <p>{item.bought_total}</p>
+            </div>
+            <div className={styles.item__analytic}>
+              <label>Price:</label>
+              <p>{item.price_total}</p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className={styles.noData}>
+            <NoData />
+        </div>
+      )}
+      {/* Блок з заголовком та загальною сумою */}
+      <div className={styles.managerTotal}>
+        <h2>Managers TOTAL:</h2>
+        <div className={styles.totalItem}>
+          <p>Occurred total:</p>
+          <p>{occurredTotal}</p>
+        </div>
+        <div className={styles.totalItem}>
+          <p>Bill total:</p>
+          <p>{billTotal}</p>
+        </div>
+        <div className={styles.totalItem}>
+          <p>Bought total:</p>
+          <p>{boughtTotal}</p>
+        </div>
+        <div className={styles.totalItem}>
+          <p>Price total:</p>
+          <p>{priceTotal} uah</p>
+        </div>
+      </div>
+      {/* Кнопки пагінації */}
+      <div className={styles.pagination}>
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={endIndex >= filteredData.length}
+        >
+          Next
+        </button>
       </div>
     </>
   );
