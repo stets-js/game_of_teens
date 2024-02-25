@@ -16,8 +16,9 @@ export default function CrmLinks({setCourses, caller}) {
       <Fade cascade triggerOnce duration={500} direction="up">
         {caller ? <Form
           onSubmit={async () => {
+            const trimmedLink = link.trim();
             const formData = new FormData();
-            formData.append("crm_link", link);
+            formData.append("crm_link", trimmedLink);
             const res = await getAppointmentByCrm(formData)
               .then((res) => {
                 setLink("");
@@ -41,7 +42,7 @@ export default function CrmLinks({setCourses, caller}) {
           }}
           buttonTitle={"Search"}
           width={"400px"}
-          link={link}
+          link={link.trim()}
           title={false}
           data={data}
         >
@@ -57,8 +58,9 @@ export default function CrmLinks({setCourses, caller}) {
           />
         </Form> : <Form
           onSubmit={async () => {
+            const trimmedLink = link.trim();
             const formData = new FormData();
-            formData.append("crm_link", link);
+            formData.append("crm_link", trimmedLink);
             const res = await getAppointmentByCrm(formData)
               .then((res) => {
                 setLink("");
@@ -81,7 +83,7 @@ export default function CrmLinks({setCourses, caller}) {
           }}
           buttonTitle={"Search"}
           width={"400px"}
-          link={link}
+          link={link.trim()}
           title={false}
           data={data}
         >

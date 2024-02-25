@@ -111,12 +111,6 @@ export default function CallerPage() {
       )}
           {error && <p className={styles.free__places}>{error.message}</p>}
         </section>
-        {/* <div className={styles.main_wrapper}>
-          <h3 className={styles.main_title}>Search by CRM link</h3>
-            <div className={styles.main_wrapper2}>
-              <CrmLinks setCourses={setCourses}  caller/>
-            </div>
-        </div> */}
       </div>
     </>
   );

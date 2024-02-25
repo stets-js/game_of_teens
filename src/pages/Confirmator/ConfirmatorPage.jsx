@@ -69,12 +69,6 @@ const ConfirmatorPage = () => {
           </div>
         
       </section>
-      {/* <div className={styles.main_wrapper}>
-          <h3 className={styles.main_title}>Search by CRM link</h3>
-            <div className={styles.main_wrapper2}>
-              <CrmLinks />
-            </div>
-        </div> */}
     </>
   );
 };
