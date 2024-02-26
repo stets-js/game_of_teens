@@ -111,8 +111,16 @@ const Analytics = () => {
                     currentPageData.map((item, index) => (
                         <div key={index} className={styles.item__wrapper}>
                             <div className={styles.item__analytic}>
+                                <label>Date:</label>
+                                <p>{item.date}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
                                 <label>Zoho link:</label>
                                 <p>{item.zoho_link}</p>
+                            </div>
+                            <div className={styles.item__analytic}>
+                                <label>Course:</label>
+                                <p>{item.course_name}</p>
                             </div>
                             <div className={styles.item__analytic}>
                                 <label>Occurred:</label>
@@ -180,22 +188,16 @@ const Analytics = () => {
                                     }}
                                 />
                             </div>
-                            <div className={styles.item__analytic}>
-                                <label>Date:</label>
-                                <p>{item.date}</p>
-                            </div>
+                            
                             <div className={styles.item__analytic}>
                                 <label>Time:</label>
                                 <p>{item.time}</p>
                             </div>
-                            <div className={styles.item__analytic}>
+                            {/* <div className={styles.item__analytic}>
                                 <label>Manager:</label>
                                 <p>{item.manager_id}</p>
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Course:</label>
-                                <p>{item.course_name}</p>
-                            </div>
+                            </div> */}
+                            
                             <div className={styles.item__analytic}>
                                 <label>YouTube:</label>
                                 <input
