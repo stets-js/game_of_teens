@@ -193,10 +193,10 @@ const Analytics = () => {
                                 <label>Time:</label>
                                 <p>{item.time}</p>
                             </div>
-                            {/* <div className={styles.item__analytic}>
+                            <div className={styles.item__analytic}>
                                 <label>Manager:</label>
                                 <p>{item.manager_id}</p>
-                            </div> */}
+                            </div>
                             
                             <div className={styles.item__analytic}>
                                 <label>YouTube:</label>
