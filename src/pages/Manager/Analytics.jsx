@@ -180,7 +180,7 @@ const Analytics = () => {
                                 <label>Payment date:</label>
                                 <input
                                     type="date"
-                                    value={new Date(item.payment_date).toISOString().split('T')[0]}
+                                    value={item.payment_date}
                                     onChange={(e) => {
                                         const updatedData = [...analyticData];
                                         updatedData[index].payment_date = e.target.value;
