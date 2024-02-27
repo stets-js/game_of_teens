@@ -228,7 +228,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90%;
+  width: 97%;
   margin: 15px auto;
   gap: 10px;
 }
@@ -239,7 +239,7 @@
   justify-content: flex-start;
   gap: 10px;
   max-width: calc(100%/10);
-  font-size: 20px;
+  font-size: 18px;
   font-family: $poppins;
 }
 .item__analytic:nth-child(3){
@@ -251,7 +251,7 @@
 .item__analytic input{
   width: 100%;
   padding: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: $poppins;
   background-color: #ededed;
   border: 2px solid #000;
@@ -306,7 +306,7 @@ word-wrap: break-word;
   margin-top: 50px;
 }
 .totalItem p{
-  font-size: 20px;
+  font-size: 18px;
   font-family: $poppins;
 }
 .tailspin{
