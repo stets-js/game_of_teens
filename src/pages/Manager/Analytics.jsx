@@ -37,6 +37,7 @@ const Analytics = () => {
         const getData = async (manager_id, date) => {
             try {
                 const res = await getManagerAnalytic(manager_id, date);
+                res.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setAnalyticData(res);
                 setIsLoading(false); 
             } catch (err) {
