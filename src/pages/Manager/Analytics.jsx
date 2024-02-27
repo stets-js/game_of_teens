@@ -177,6 +177,18 @@ const Analytics = () => {
                                 />
                             </div>
                             <div className={styles.item__analytic}>
+                                <label>Payment date:</label>
+                                <input
+                                    type="date"
+                                    value={new Date(item.payment_date).toISOString().split('T')[0]}
+                                    onChange={(e) => {
+                                        const updatedData = [...analyticData];
+                                        updatedData[index].payment_date = e.target.value;
+                                        setAnalyticData(updatedData);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.item__analytic}>
                                 <label>Comments:</label>
                                 <input
                                     type="text"
