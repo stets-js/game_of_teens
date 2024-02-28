@@ -116,7 +116,18 @@ const Login = ({ isOpen, handleClose }) => {
             <button
               type="button"
               onClick={(e) => {
-                handleSubmit(e);
+                const tokenFromLocalStorage = localStorage.getItem("booking");
+              
+                  if (tokenFromLocalStorage) {
+                      dispatch({
+                        type: 'LOGIN_SUCCESS',
+                        payload: {
+                          token: tokenFromLocalStorage,
+                        },
+                      });
+                  } else {
+                    handleSubmit(e);
+                  }
               }}
               className={styles.login}
             >

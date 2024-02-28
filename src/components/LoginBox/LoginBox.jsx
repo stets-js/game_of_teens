@@ -35,6 +35,16 @@ export default function LoginBox({ loggedUser }) {
               data-modal="login"
               onClick={() => {
                 setIsOpen(!isOpen);
+                  const tokenFromLocalStorage = localStorage.getItem("booking");
+              
+                  if (tokenFromLocalStorage) {
+                      dispatch({
+                        type: 'LOGIN_SUCCESS',
+                        payload: {
+                          token: tokenFromLocalStorage,
+                        },
+                      });
+                  }
               }}
               className={styles.login}
             >
