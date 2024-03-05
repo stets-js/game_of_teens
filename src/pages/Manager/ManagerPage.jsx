@@ -20,6 +20,7 @@ export default function ManagerPage() {
           { text: "Planning", path: path.planning },
           { text: "CRM", path: path.crm },
           { text: "Analytics", path: path.analytics },
+          { text: "Working slots", path: path.workingSlots },
           // { text: "Postpone", path: path.postpone },
         ]}
         user={{ name: managerName, role: "Manager" }}

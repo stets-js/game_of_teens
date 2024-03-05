@@ -155,6 +155,14 @@ const getManagerAnalytic = (manager_id, month) =>{
       throw error;
     });
 };
+const getManagerWorkingSlots = (manager_id, month) =>{
+  return axios
+    .get(`/get_manager_working_slots/${manager_id}/${month}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const updateManagerAnalytic = (credentials)=>{
   return axios
@@ -175,6 +183,7 @@ const getAllManagersAnalytics = (month)=>{
 }
 
 export {
+  getManagerWorkingSlots,
   getAllManagersAnalytics,
   updateManagerAnalytic,
   getManagerAnalytic,
