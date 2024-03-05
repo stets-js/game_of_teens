@@ -13,6 +13,7 @@ const Analytics = () => {
     const [page, setPage] = useState(1);
     const [perPage] = useState(20);
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchDate, setSearchDate] = useState("");
 
     console.log("analyticData", analyticData)
     
@@ -37,7 +38,13 @@ const Analytics = () => {
         const getData = async (manager_id, date) => {
             try {
                 const res = await getManagerAnalytic(manager_id, date);
-                res.sort((a, b) => new Date(b.date) - new Date(a.date));
+                res.sort((a, b) => {
+                    let dateComparison = new Date(a.date) - new Date(b.date);
+                    if (dateComparison === 0) {
+                        return new Date(a.time) - new Date(b.time);
+                    }
+                    return dateComparison;
+                });
                 setAnalyticData(res);
                 setIsLoading(false); 
             } catch (err) {
@@ -63,7 +70,7 @@ const Analytics = () => {
     };
 
     // Фільтрація даних за зазначеним терміном пошуку
-    const filteredData = searchTerm ? analyticData.filter(item => item.zoho_link.includes(searchTerm)) : analyticData;
+    const filteredData = searchTerm ? analyticData.filter(item => item.zoho_link.includes(searchTerm)) : searchDate ? analyticData.filter(item => item.date.includes(searchDate)) : analyticData;
 
     // Обрахунок індексів для сторінки
     const startIndex = (page - 1) * perPage;
@@ -85,6 +92,13 @@ const Analytics = () => {
     return (
         <>
             <div className={styles.btn__wrapper}>
+                <input
+                className={styles.searchDateInput}
+                    type="text"
+                    placeholder="Search Date YEAR-MONTH-DAY"
+                    value={searchDate}
+                    onChange={(e) => setSearchDate(e.target.value)}
+                />
                 <input
                 className={styles.searchTermInput}
                     type="text"
@@ -117,7 +131,7 @@ const Analytics = () => {
                             </div>
                             <div className={styles.item__analytic}>
                                 <label>Zoho link:</label>
-                                <p>{item.zoho_link}</p>
+                                <a href={item.zoho_link}>Link</a>
                             </div>
                             <div className={styles.item__analytic}>
                                 <label>Course:</label>
