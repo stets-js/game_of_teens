@@ -153,7 +153,7 @@ const Analytics = () => {
               </div>
               <div className={styles.item__analytic}>
                 <label>Zoho link:</label>
-                <a href={item.zoho_link}>Link</a>
+                <a href={item.zoho_link} target="_blank" rel="noopener noreferrer">Link</a>
               </div>
               <div className={styles.item__analytic}>
                 <label>Course:</label>
