@@ -124,120 +124,122 @@ const Analytics = () => {
             {isLoading ? <div className={styles.tailspin}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : (
                 currentPageData.length > 0 ? (
                     currentPageData.map((item, index) => (
-                        <div key={index} className={styles.item__wrapper}>
-                            <div className={styles.item__analytic}>
-                                <label>Date:</label>
-                                <p>{item.date}</p>
+                       <div className={styles.items__wrapper}>
+                            <div key={index} className={styles.item__wrapper}>
+                                <div className={styles.item__analytic}>
+                                    <label>Date:</label>
+                                    <p>{item.date}</p>
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Zoho link:</label>
+                                    <a href={item.zoho_link}>Link</a>
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Course:</label>
+                                    <p>{item.course_name}</p>
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Occurred:</label>
+                                    <input
+                                        type="number"
+                                        value={item.occurred}
+                                        min={0}
+                                        max={1}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].occurred = parseFloat(e.target.value);
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Bill:</label>
+                                    <input
+                                        type="number"
+                                        value={item.bill}
+                                        min={0}
+                                        max={1}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].bill = parseFloat(e.target.value);
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Bought:</label>
+                                    <input
+                                        type="number"
+                                        value={item.bought}
+                                        min={0}
+                                        max={1}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].bought = parseFloat(e.target.value);
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Price:</label>
+                                    <input
+                                        type="number"
+                                        value={item.price}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].price = parseFloat(e.target.value);
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Payment date:</label>
+                                    <input
+                                        type="date"
+                                        value={item.payment_date}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].payment_date = e.target.value;
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Comments:</label>
+                                    <input
+                                        type="text"
+                                        value={item.comments}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].comments = e.target.value;
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                
+                                <div className={styles.item__analytic}>
+                                    <label>Time:</label>
+                                    <p>{item.time}</p>
+                                </div>
+                                <div className={styles.item__analytic}>
+                                    <label>Manager:</label>
+                                    <p>{item.manager_id}</p>
+                                </div>
+                                
+                                <div className={styles.item__analytic}>
+                                    <label>YouTube:</label>
+                                    <input
+                                        type="text"
+                                        value={item.you_tube}
+                                        onChange={(e) => {
+                                            const updatedData = [...analyticData];
+                                            updatedData[index].you_tube = e.target.value;
+                                            setAnalyticData(updatedData);
+                                        }}
+                                    />
+                                </div>
+                                <button className={styles.item__btn} onClick={() => handleUpdate(index)}>Update</button>
                             </div>
-                            <div className={styles.item__analytic}>
-                                <label>Zoho link:</label>
-                                <a href={item.zoho_link}>Link</a>
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Course:</label>
-                                <p>{item.course_name}</p>
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Occurred:</label>
-                                <input
-                                    type="number"
-                                    value={item.occurred}
-                                    min={0}
-                                    max={1}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].occurred = parseFloat(e.target.value);
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Bill:</label>
-                                <input
-                                    type="number"
-                                    value={item.bill}
-                                    min={0}
-                                    max={1}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].bill = parseFloat(e.target.value);
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Bought:</label>
-                                <input
-                                    type="number"
-                                    value={item.bought}
-                                    min={0}
-                                    max={1}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].bought = parseFloat(e.target.value);
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Price:</label>
-                                <input
-                                    type="number"
-                                    value={item.price}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].price = parseFloat(e.target.value);
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Payment date:</label>
-                                <input
-                                    type="date"
-                                    value={item.payment_date}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].payment_date = e.target.value;
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Comments:</label>
-                                <input
-                                    type="text"
-                                    value={item.comments}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].comments = e.target.value;
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            
-                            <div className={styles.item__analytic}>
-                                <label>Time:</label>
-                                <p>{item.time}</p>
-                            </div>
-                            <div className={styles.item__analytic}>
-                                <label>Manager:</label>
-                                <p>{item.manager_id}</p>
-                            </div>
-                            
-                            <div className={styles.item__analytic}>
-                                <label>YouTube:</label>
-                                <input
-                                    type="text"
-                                    value={item.you_tube}
-                                    onChange={(e) => {
-                                        const updatedData = [...analyticData];
-                                        updatedData[index].you_tube = e.target.value;
-                                        setAnalyticData(updatedData);
-                                    }}
-                                />
-                            </div>
-                            <button className={styles.item__btn} onClick={() => handleUpdate(index)}>Update</button>
                         </div>
                     ))
                 ) : <div className={styles.noData}>

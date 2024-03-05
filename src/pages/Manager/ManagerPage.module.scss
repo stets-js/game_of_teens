@@ -324,3 +324,6 @@ word-wrap: break-word;
 .noData{
   margin: 0 auto;
 }
+.items__wrapper:nth-child(even) {
+  background-color: #d1ffd0;
+}
