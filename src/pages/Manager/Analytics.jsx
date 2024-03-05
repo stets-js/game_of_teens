@@ -14,6 +14,7 @@ const Analytics = () => {
     const [perPage] = useState(20);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchDate, setSearchDate] = useState("");
+    const [showTooltip, setShowTooltip] = useState(null);
 
     console.log("analyticData", analyticData)
     
@@ -209,12 +210,17 @@ const Analytics = () => {
                                     <input
                                         type="text"
                                         value={item.comments}
+                                        onMouseEnter={() => setShowTooltip(index)}
+                                        onMouseLeave={() => setShowTooltip(null)}
                                         onChange={(e) => {
                                             const updatedData = [...analyticData];
                                             updatedData[index].comments = e.target.value;
                                             setAnalyticData(updatedData);
                                         }}
                                     />
+                                    {showTooltip === index && (
+        <div className={styles.comment__tooltip}>{item.comments}</div>
+    )}
                                 </div>
                                 
                                 <div className={styles.item__analytic}>

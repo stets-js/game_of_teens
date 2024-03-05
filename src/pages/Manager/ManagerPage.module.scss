@@ -233,6 +233,7 @@
   gap: 10px;
 }
 .item__analytic{
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -326,4 +327,16 @@ word-wrap: break-word;
 }
 .items__wrapper:nth-child(even) {
   background-color: #d1ffd0;
+}
+.comment__tooltip {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background-color: #fff; 
+  border: 1px solid #5e2121;
+  border-radius: 8px;
+  padding: 5px; 
+  z-index: 2;
+  width: auto;
+  white-space: pre-line;
 }
