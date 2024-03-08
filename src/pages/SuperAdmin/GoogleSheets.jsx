@@ -36,6 +36,7 @@ const GoogleSheets = () => {
 
     } catch (err) {
       error("Error:", err);
+      setIsLoading(false)
     }
   };
 
