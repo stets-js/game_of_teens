@@ -173,7 +173,7 @@ const ConfirmatorComments = ({ value }) => {
                   console.error("Error while cancelling appointment:", error);
                 } finally {
                   setLoadingAppointment(null);
-                  success("Succesfully sended");
+                  success("Successfully sended");
                 }
               }}
               >

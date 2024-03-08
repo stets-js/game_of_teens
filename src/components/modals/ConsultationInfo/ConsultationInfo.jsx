@@ -91,7 +91,7 @@ const ConsultationInfo = ({
     delteConfirmation(managerId ? managerId : manId, weekId, dayIndex, currentTable ? hourIndex : managerTable[dayIndex][hourIndex].time, 0, message)
       .then(() => {
         success({
-          text: "Succesfully deleted.",
+          text: "Successfully deleted.",
         });
         handleClose();
         handleReload && handleReload();

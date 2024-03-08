@@ -23,7 +23,7 @@ export default function CrmLinks({setCourses, caller}) {
               .then((res) => {
                 setLink("");
                 setCourses(3);
-                success("Succesfully found");
+                success("Successfully found");
                 return res.data;
               })
               .catch((err) => {
@@ -64,7 +64,7 @@ export default function CrmLinks({setCourses, caller}) {
             const res = await getAppointmentByCrm(formData)
               .then((res) => {
                 setLink("");
-                success("Succesfully found");
+                success("Successfully found");
                 return res.data;
               })
               .catch((err) => {

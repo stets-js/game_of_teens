@@ -26,6 +26,7 @@ const path = {
   authorization: "auth/",
   ik: "ik/",
   slotHistory: "slotHistory/",
+  googleSheets: "googleSheets/",
   analytics: "analytics/",
   workingSlots: "working_slots/",
   managersAnalytics: "/managers_analytics/",
