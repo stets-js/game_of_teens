@@ -60,14 +60,26 @@ const Analytics = () => {
     getData(manager_id, date);
   }, [date]);
 
-  const handleUpdate = async (index) => {
-    const updatedItem = analyticData[index];
+  const handleUpdate = async (itemId) => {
+    // Знаходимо елемент в `analyticData` за його ідентифікатором
+    const updatedItemIndex = analyticData.findIndex((item) => item.id === itemId);
+    if (updatedItemIndex === -1) {
+      console.error("Item with id", itemId, "not found");
+      return;
+    }
+  
+    const updatedItem = analyticData[updatedItemIndex];
+    
     try {
-      await updateManagerAnalytic(updatedItem).then(
-        success("Analytic updated successfully")
-      );
+      // Оновлюємо дані на сервері
+      await updateManagerAnalytic(updatedItem);
+  
+      // Виводимо повідомлення про успішне оновлення
+      success("Analytic updated successfully");
+  
       console.log("Updated item:", updatedItem);
     } catch (error) {
+      // Обробляємо помилку при оновленні
       console.error("Error updating item:", error);
     }
   };
@@ -145,7 +157,7 @@ const Analytics = () => {
         </div>
       ) : currentPageData.length > 0 ? (
         currentPageData.map((item, index) => (
-          <div className={styles.items__wrapper}>
+          <div key={item.id} className={styles.items__wrapper}>
             <div key={index} className={styles.item__wrapper}>
               <div className={styles.item__analytic}>
                 <label>Date:</label>
@@ -167,8 +179,12 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].occurred = parseFloat(e.target.value);
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, occurred: parseFloat(e.target.value) };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -181,8 +197,12 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].bill = parseFloat(e.target.value);
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, bill: parseFloat(e.target.value) };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -195,8 +215,12 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].bought = parseFloat(e.target.value);
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, bought: parseFloat(e.target.value) };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -207,8 +231,12 @@ const Analytics = () => {
                   type="number"
                   value={item.price}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].price = parseFloat(e.target.value);
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, price: parseFloat(e.target.value) };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -219,8 +247,12 @@ const Analytics = () => {
                   type="date"
                   value={item.payment_date}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].payment_date = e.target.value;
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, payment_date: e.target.value };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -233,8 +265,12 @@ const Analytics = () => {
                   onMouseEnter={() => setShowTooltip(index)}
                   onMouseLeave={() => setShowTooltip(null)}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].comments = e.target.value;
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, comments: e.target.value };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
@@ -258,15 +294,19 @@ const Analytics = () => {
                   type="text"
                   value={item.you_tube}
                   onChange={(e) => {
-                    const updatedData = [...analyticData];
-                    updatedData[index].you_tube = e.target.value;
+                    const updatedData = analyticData.map(analyticItem => {
+                      if (analyticItem.id === item.id) {
+                        return { ...analyticItem, you_tube: e.target.value };
+                      }
+                      return analyticItem;
+                    });
                     setAnalyticData(updatedData);
                   }}
                 />
               </div>
               <button
                 className={styles.item__btn}
-                onClick={() => handleUpdate(index)}
+                onClick={() => handleUpdate(item.id)}
               >
                 Update
               </button>
