@@ -10,10 +10,10 @@ const SuperAdministrator = () => {
     <>
       <Header
         endpoints={[
-          { text: "users", path: path.users },
+          { text: "Users", path: path.users },
           { text: "Avaliable Managers", path: path.avaliable },
-          { text: "groups", path: path.groups },
-          { text: "courses", path: path.courses },
+          { text: "Groups", path: path.groups },
+          { text: "Courses", path: path.courses },
           { text: "Search by CRM", path: path.crm },
           { text: "Current Meetings", path: path.currentManagers },
           { text: "History", path: path.history },

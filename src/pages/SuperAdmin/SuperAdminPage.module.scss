@@ -29,7 +29,7 @@
 }
 
 .btn_wrapper {
-  margin-top: 56px;
+  margin-bottom: 30px;
 }
 .text_wrapper {
   display: flex;
@@ -52,7 +52,7 @@
   font-weight: 400;
   font-size: 32px;
   color: $font-black;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   @media screen and (max-width: 600px) {
     font-size: 26px;
   }

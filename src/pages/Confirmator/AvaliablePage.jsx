@@ -40,10 +40,10 @@ const AvaliablePage = () => {
     <>
       <Header 
       endpoints={[
-        { text: "users", path: "../superadmin/"+path.users },
+        { text: "Users", path: "../superadmin/"+path.users },
         { text: "Avaliable Managers", path: path.avaliable },
-        { text: "groups", path: "../superadmin/"+path.groups },
-        { text: "courses", path: "../superadmin/"+path.courses },
+        { text: "Groups", path: "../superadmin/"+path.groups },
+        { text: "Courses", path: "../superadmin/"+path.courses },
         { text: "Search by CRM", path: "../superadmin/"+path.crm },
         { text: "Current Meetings", path: path.currentManagers },
        

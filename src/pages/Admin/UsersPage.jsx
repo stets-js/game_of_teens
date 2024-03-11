@@ -37,6 +37,22 @@ export default function UsersPage() {
   return (
     <>
       <h3 className={styles.main_title}>Manage users</h3>
+      <div className={styles.btn_wrapper}>
+        <button
+          className={styles.add_btn}
+          data-modal="new-user"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          Add new user +
+        </button>
+        <NewUser
+          isOpen={isOpen}
+          handleClose={() => handleClose()}
+          isAdmin={true}
+        />
+      </div>
       <div className={styles.main_wrapper2}>
         {usersArray.map((item, index) => {
           return (
@@ -53,22 +69,7 @@ export default function UsersPage() {
           );
         })}
       </div>
-      <div className={styles.btn_wrapper}>
-        <button
-          className={styles.add_btn}
-          data-modal="new-user"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          Add new administrator +
-        </button>
-        <NewUser
-          isOpen={isOpen}
-          handleClose={() => handleClose()}
-          isAdmin={true}
-        />
-      </div>
+      
     </>
   );
 }
