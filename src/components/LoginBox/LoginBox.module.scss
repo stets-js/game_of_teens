@@ -7,6 +7,9 @@
   gap: 30px;
   width: 400px;
   margin: 0 auto;
+  @media screen and (max-width: $tablet) {
+    width: 300px;
+  }
 }
 .loginBoxWrapper {
   display: flex;
@@ -44,6 +47,9 @@
   justify-content: space-between;
   align-items: center;
   width: 272px;
+  @media screen and (max-width: $tablet) {
+    width: 240px;
+  }
 }
 .login {
   font-family: $poppins;
@@ -58,6 +64,9 @@
   &:hover {
     @extend %hover-shadow;
   }
+  @media screen and (max-width: $tablet) {
+    font-size: 20px;
+  }
 }
 .signup {
   border-radius: 43px;
@@ -70,5 +79,8 @@
   transition: $main-transition;
   &:hover {
     @extend %hover-shadow;
+  }
+  @media screen and (max-width: $tablet) {
+    font-size: 20px;
   }
 }

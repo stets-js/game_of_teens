@@ -34,8 +34,7 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
         setcurrentUserTypeIndex(3);
         break;
       default:
-        //console.log(`Sorry, u got no bitches`);
-        //console.log(`index is ${currentUserTypeIndex}`);
+        
     }
   };
 
@@ -89,10 +88,11 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
     getUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, isOpenModal]);
+  
   const currentUserArray = managers.sort((item) => item.role_id=currentUserTypeIndex);
+
   return (
     <>
-    {/* {console.table(managers.sort((item) => item.role_id=2))} */}
       {managers?.length > 0 &&
         usersArray.map((i, index) => {
           return (

@@ -1,3 +1,4 @@
+@import "../../styles/variables.scss";
 .Overlay {
   position: fixed;
   top: 0;
@@ -21,4 +22,8 @@
   padding: 25px 40px 35px 40px;
   overflow-y: auto;
   max-height: 90vh;
+  @media screen and (max-width: $tablet) {
+    min-width: 200px;
+    max-width: 400px;
+  }
 }

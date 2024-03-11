@@ -24,6 +24,9 @@
   &:hover {
     @extend %hover-shadow;
   }
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 .exit {
   color: $font-black;
