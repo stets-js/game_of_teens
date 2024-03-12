@@ -59,6 +59,9 @@
   &:hover {
     background-color: #575aaf;
   }
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 
 .managerLinkTitle {

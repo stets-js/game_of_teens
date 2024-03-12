@@ -18,6 +18,9 @@
   &:hover {
     background-color: #e83e3e;
   }
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 
 ////// MODAL DELETE CONFIRMATION ///////
