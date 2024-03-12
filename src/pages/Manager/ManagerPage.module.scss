@@ -369,6 +369,9 @@ word-wrap: break-word;
   height: 50px;
   border-radius: 8px;
   background-color: #fff;
+  @media screen and (max-width: $tablet) {
+    width: 50%;
+  }
 }
 .managerTotal{
   display: flex;
@@ -401,7 +404,7 @@ word-wrap: break-word;
   margin: 100px auto;
 }
 .noData{
-  margin: 0 auto;
+  margin: 50px auto;
 }
 @media screen and (max-width: $tablet) {
   .noData svg{

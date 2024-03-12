@@ -62,21 +62,23 @@ const Analytics = () => {
 
   const handleUpdate = async (itemId) => {
     // Знаходимо елемент в `analyticData` за його ідентифікатором
-    const updatedItemIndex = analyticData.findIndex((item) => item.id === itemId);
+    const updatedItemIndex = analyticData.findIndex(
+      (item) => item.id === itemId
+    );
     if (updatedItemIndex === -1) {
       console.error("Item with id", itemId, "not found");
       return;
     }
-  
+
     const updatedItem = analyticData[updatedItemIndex];
-    
+
     try {
       // Оновлюємо дані на сервері
       await updateManagerAnalytic(updatedItem);
-  
+
       // Виводимо повідомлення про успішне оновлення
       success("Analytic updated successfully");
-  
+
       console.log("Updated item:", updatedItem);
     } catch (error) {
       // Обробляємо помилку при оновленні
@@ -165,7 +167,13 @@ const Analytics = () => {
               </div>
               <div className={styles.item__analytic}>
                 <label>Zoho link:</label>
-                <a href={item.zoho_link} target="_blank" rel="noopener noreferrer">Link</a>
+                <a
+                  href={item.zoho_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Link
+                </a>
               </div>
               <div className={styles.item__analytic}>
                 <label>Course:</label>
@@ -179,9 +187,11 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const newValue = parseFloat(e.target.value);
+                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
-                        return { ...analyticItem, occurred: parseFloat(e.target.value) };
+                        return { ...analyticItem, occurred: updatedValue };
                       }
                       return analyticItem;
                     });
@@ -197,9 +207,11 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const newValue = parseFloat(e.target.value);
+                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
-                        return { ...analyticItem, bill: parseFloat(e.target.value) };
+                        return { ...analyticItem, bill: updatedValue };
                       }
                       return analyticItem;
                     });
@@ -215,9 +227,11 @@ const Analytics = () => {
                   min={0}
                   max={1}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const newValue = parseFloat(e.target.value);
+                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
-                        return { ...analyticItem, bought: parseFloat(e.target.value) };
+                        return { ...analyticItem, bought: updatedValue };
                       }
                       return analyticItem;
                     });
@@ -231,9 +245,12 @@ const Analytics = () => {
                   type="number"
                   value={item.price}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
-                        return { ...analyticItem, price: parseFloat(e.target.value) };
+                        return {
+                          ...analyticItem,
+                          price: parseFloat(e.target.value),
+                        };
                       }
                       return analyticItem;
                     });
@@ -247,9 +264,12 @@ const Analytics = () => {
                   type="date"
                   value={item.payment_date}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
-                        return { ...analyticItem, payment_date: e.target.value };
+                        return {
+                          ...analyticItem,
+                          payment_date: e.target.value,
+                        };
                       }
                       return analyticItem;
                     });
@@ -265,7 +285,7 @@ const Analytics = () => {
                   onMouseEnter={() => setShowTooltip(index)}
                   onMouseLeave={() => setShowTooltip(null)}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
                         return { ...analyticItem, comments: e.target.value };
                       }
@@ -294,7 +314,7 @@ const Analytics = () => {
                   type="text"
                   value={item.you_tube}
                   onChange={(e) => {
-                    const updatedData = analyticData.map(analyticItem => {
+                    const updatedData = analyticData.map((analyticItem) => {
                       if (analyticItem.id === item.id) {
                         return { ...analyticItem, you_tube: e.target.value };
                       }

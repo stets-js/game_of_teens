@@ -5,24 +5,43 @@
   font-weight: 400;
   font-size: 32px;
   color: $font-black;
-  margin-top: 35px;
-  margin-bottom: 45px;
+  margin-bottom: 30px;
+  @media screen and (max-width: 600px) {
+    font-size: 26px;
+  }
 }
 .main_title::after {
-  width: 881px;
+  width: 536px;
   height: 2px;
   background-color: #000000;
   display: block;
   content: "";
   margin: 0 auto;
   margin-top: 17px;
+
+  @media screen and (max-width: 600px) {
+    width: 400px;
+    height: 2px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 420px) {
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .main_wrapper2 {
   display: flex;
   justify-content: center;
-  min-height: 500px;
   margin: 0 auto;
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+  }
 }
 .add_btn {
   padding: 11px 39px;
@@ -34,9 +53,10 @@
   font-weight: 400;
   font-size: 20px;
   margin: 0 auto;
-  margin-top: 56px;
-  margin-bottom: 57px;
 }
 .main_wrapper {
   flex-grow: 1;
+}
+.btn_wrapper {
+  margin-bottom: 30px;
 }
