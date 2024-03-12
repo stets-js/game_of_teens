@@ -16,7 +16,7 @@ export default function ManagersAnalytic() {
   const [perPage] = useState(20);
   const [team, setTeam] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-console.log("team", team)
+
   const months = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },

@@ -394,6 +394,9 @@ width: 100px;
   background-color: #ededed;
   border: 2px solid #000;
   border-radius: 8px;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 .btn__wrapper{
   width: 90%;
@@ -402,6 +405,11 @@ width: 100px;
   align-items: center;
   gap: 20px;
   margin-bottom: 100px;
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto 50px;
+  }
 }
 .select::after {
   content: "../";
@@ -431,6 +439,9 @@ width: 100px;
   background-position: right 0.7em top 55%, 0 0;
   align-items: center;
   transition: all 0.5s;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 .select::-ms-expand {
   display: none;
@@ -467,10 +478,23 @@ width: 100px;
   align-items: center;
   gap: 50px;
   margin-top: 50px;
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    margin: 0 auto;
+  }
 }
 .totalItem p{
   font-size: 20px;
   font-family: $poppins;
+}
+@media screen and (max-width: $tablet) {
+  .totalItem{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+  }
 }
 .item__wrapper{
   display: flex;
@@ -479,6 +503,9 @@ width: 100px;
   width: 90%;
   margin: 15px auto;
   gap: 10px;
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+  }
 }
 .item__analytic{
   display: flex;
@@ -489,10 +516,15 @@ width: 100px;
   max-width: calc(100%/10);
   font-size: 20px;
   font-family: $poppins;
+  @media screen and (max-width: $tablet) {
+    max-width: 100%;
+    flex-direction: row;
+  }
 }
 .item__analytic p{
 width: 100%;
 font-weight: 700;
+text-align: end;
 // word-wrap: break-word;
 }
 .tailspin{
@@ -500,6 +532,12 @@ font-weight: 700;
 }
 .noData{
   margin: 0 auto;
+  
+}
+@media screen and (max-width: $tablet) {
+  .noData svg{
+    width: 400px;
+  } 
 }
 .managerNameSt {
   // min-width: 265px;
