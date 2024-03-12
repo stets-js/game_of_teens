@@ -284,6 +284,9 @@
   align-items: center;
   margin-top: 40px;
   flex-direction: column;
+  @media screen and (max-width: $tablet) {
+    margin-top: 100px;
+  }
 }
 .slot__header{
   width: 80%;
@@ -318,6 +321,9 @@
   border-radius: 8px;
   padding: 10px;
   justify-content: space-between;
+  @media screen and (max-width:$tablet) {
+    flex-direction: column;
+  }
 }
 .data__cell{
   text-align: left;
@@ -416,6 +422,9 @@ width: 100px;
   flex-direction: row;
   align-items: center;
   margin-top: 100px;
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
 }
 ////////MANAGERS ANALYTICS////////
 .searchTermInput{
