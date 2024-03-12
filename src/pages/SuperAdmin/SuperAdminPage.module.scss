@@ -150,9 +150,17 @@
 .auth__wrapper{
   display: flex;
   justify-content: center;
+  @media screen and (max-width: $tablet) {
+    justify-content: flex-start;
+    width: 90%;
+    margin: 0 auto;
+  }
 }
 .auth__table{
   width: 60%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }
 .auth__header{
   display: flex;
@@ -165,6 +173,9 @@
   color: $font-black;
   font-size: 34px;
   margin-bottom: 50px;
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
 }
 .auth__cellData{
   display: flex;
@@ -174,27 +185,41 @@
   font-weight: 400;
   color: $font-black;
   font-size: 24px;
+  @media screen and (max-width: $tablet) {
+    font-size: 18px;
+  }
 }
 .row{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  
+  @media screen and (max-width: $tablet) {
+    gap: 20px;
+  }
 }
 .cell1{
   width: 400px;
   display: flex;
   justify-content: flex-start;
   gap: 10px;
+  @media screen and (max-width: $tablet) {
+    width: calc(100%/3);
+  }
 }
 .cell2{
   width: 500px;
   display: flex;
   justify-content: flex-start;
+  @media screen and (max-width: $tablet) {
+    width: calc(100%/3);
+  }
 }
 .cell3{
   display: flex;
   justify-content: flex-start;
+  @media screen and (max-width: $tablet) {
+    width: calc(100%/3);
+  }
 }
 .auth__pagination{
   margin: 50px 0 50px;
