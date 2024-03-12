@@ -270,6 +270,10 @@
   max-width: calc(100%/10);
   font-size: 18px;
   font-family: $poppins;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 .item__analytic:nth-child(3){
   width: 150px;
