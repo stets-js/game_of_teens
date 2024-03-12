@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import SearchSVG from "./Search_svg";
 import { getSlotsHistory } from "../../helpers/history/history";
 import { TailSpin } from "react-loader-spinner";
+import NoData from "../SuperAdmin/NoData";
 
 export default function AuthLogs() {
     const [isLoading, setIsLoading] = useState(false)
@@ -62,7 +63,9 @@ export default function AuthLogs() {
               </div>
             ))}
           </div>
-        </>) : (<p style={{ marginTop: '100px' }}>No DATA available</p>)}
+        </>) : (<div className={styles.noData}>
+          <NoData />
+        </div>)}
     
         </>
     )
