@@ -403,6 +403,11 @@ word-wrap: break-word;
 .noData{
   margin: 0 auto;
 }
+@media screen and (max-width: $tablet) {
+  .noData svg{
+    width: 350px;
+  } 
+}
 .items__wrapper:nth-child(even) {
   background-color: #d1ffd0;
 }
