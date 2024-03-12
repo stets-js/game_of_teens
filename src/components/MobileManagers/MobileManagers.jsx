@@ -1,44 +1,26 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../helpers/user/user";
 import styles from "./MobileManagers.module.scss";
 import ChangeUser from "../modals/ChangeUser/ChangeUser";
 import { Fade } from "react-awesome-reveal";
 import { getManagers } from "../../helpers/manager/manager";
-import { v4 as uuidv4 } from 'uuid';
 
-export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
+export default function MobileManagers({ isOpenModal, isAdmin, data }) {
+  const [selectedRole, setSelectedRole] = useState("Administrator");
+  const [managers, setManagers] = useState(data);
+  const [selectedTeam, setSelectedTeam] = useState("All");
+  const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const [rating, setRating] = useState("");
-  const [managers, setManagers] = useState(data);
-  const [id, setId] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [slack, setSlack] = useState("");
+  const [team, setTeam] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [newRole, setRole] = useState("");
   const [newLogin, setLogin] = useState("");
-  const [currentUserType, setcurrentUserType] = useState("Managers");
-  const [currentUserTypeIndex, setcurrentUserTypeIndex] = useState(3);
-  const currentUserTypeCalc = (type) => {
-    switch (type) {
-      case "Administrators":
-        setcurrentUserTypeIndex(0);
-        break;
-      case "Managers":
-        setcurrentUserTypeIndex(1);
-        break;
-      case "Confirmators":
-        setcurrentUserTypeIndex(2);
-        break;
-      case "Call center":
-        setcurrentUserTypeIndex(3);
-        break;
-      default:
-        
-    }
-  };
 
-  let usersArray = [
+  const usersArray = [
     {
       text: "Administrators",
       role: "Administrator",
@@ -68,101 +50,130 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
       isManager: false,
     },
   ];
-  if (isAdmin) {
-    usersArray = usersArray.slice(1);
-  }
 
-  const getUsersData = async () => {
+  const getUsersData = async (teamNum) => {
     const arr = [];
     const res = await getUsers().then((res) =>
       res.users.filter((item) => item.role_id > 2)
     );
     const resManagers = await getManagers().then((res) => res.data);
     resManagers.map((item) => (item.role_id = 2));
+    
+    const filteredManagers = teamNum === "All"
+    ? resManagers
+    : resManagers.filter((item) => item.team === parseInt(teamNum, 10));
+    const sortedManagers = filteredManagers.sort((a, b) => a.name.localeCompare(b.name));
     arr.push(...res);
-    arr.push(...resManagers);
+    arr.push(...sortedManagers);
+  
     return setManagers(arr);
   };
 
   useEffect(() => {
-    getUsersData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, isOpenModal]);
-  
-  const currentUserArray = managers.sort((item) => item.role_id=currentUserTypeIndex);
+    getUsersData(selectedTeam);
+  }, [isOpen, isOpenModal, selectedTeam]);
+
+  const handleRoleChange = (e) => {
+    setSelectedRole(e.target.value);
+  };
 
   return (
     <>
-      {managers?.length > 0 &&
-        usersArray.map((i, index) => {
-          return (
-            <React.Fragment key={uuidv4()}>
-              <div className={styles.wrapper} key={uuidv4()}>
-                <p
-                  className={styles.mini_title}
-                  onClick={() => {
-                    
-                    setcurrentUserType(i.text);
-                    currentUserTypeCalc(i.text)
-                  }}
-                >
-                  {i.text}
-                </p>
-                <ul className={styles.main_wrapper}>
-                  {currentUserArray.map((item) => {
-                    if (i.roleId === item.role_id || !item.role_id) {
-                      return (
-                        <Fade
-                          cascade
-                          triggerOnce
-                          duration={300}
-                          direction="up"
-                          key={uuidv4()}
+      <select
+        className={styles.roles__select}
+        value={selectedRole}
+        onChange={handleRoleChange}
+      >
+        {usersArray.map((role) => (
+          <option key={role.role} value={role.role}>
+            {role.text}
+          </option>
+        ))}
+      </select>
+
+      {managers?.length > 0 && (
+        <React.Fragment>
+          <div className={styles.wrapper}>
+            {selectedRole === "Manager" && (
+              <select
+                className={styles.managers__select}
+                value={selectedTeam}
+                onChange={(e) => {
+                  setSelectedTeam(e.target.value);
+                }}
+              >
+                <option value="All">All</option>
+                <option value="1">Team 1</option>
+                <option value="2">Team 2</option>
+                <option value="3">Team 3</option>
+                <option value="4">Team 4</option>
+                <option value="5">Team 5</option>
+                <option value="6">Team 6</option>
+                <option value="7">Team 7</option>
+                <option value="8">CB MIC</option>
+              </select>
+            )}
+            <ul className={styles.main_wrapper}>
+              {managers.map((item) => {
+                if (
+                  selectedRole === "Manager"
+                    ? item.role_id === 2
+                    : item.role_id === usersArray.find(role => role.role === selectedRole).roleId
+                ) {
+                  return (
+                    <Fade
+                      cascade
+                      triggerOnce
+                      duration={300}
+                      direction="up"
+                      key={item.id}
+                    >
+                      <li className={styles.ul_items} key={item.name}>
+                        <Link
+                          className={styles.ul_items_link}
+                          target="_self"
+                          to={
+                            selectedRole === "Manager"
+                              ? `/manager/${item.id}/consultations/`
+                              : selectedRole === "Administrator"
+                              ? `/admin/${item.id}`
+                              : selectedRole === "Caller"
+                              ? `/caller/${item.id}`
+                              : selectedRole === "Confirmator" &&
+                                `/confirmator/${item.id}`
+                          }
                         >
-                          <li className={styles.ul_items} key={uuidv4()}>
-                            <Link
-                              className={styles.ul_items_link}
-                              target="_blank"
-                              to={
-                                i.role === "Manager"
-                                  ? `/manager/${item.id}/planning/`
-                                  : i.role === "Administrator"
-                                  ? `/admin/${item.id}`
-                                  : i.role === "Caller"
-                                  ? `/caller/${item.id}`
-                                  : i.role === "Confirmator" &&
-                                    `/confirmator/${item.id}`
-                              }
-                            >
-                              <p className={styles.ul_items_text}>
-                                {item.name} ({item.id})
-                              </p>
-                            </Link>
-                            <button
-                              className={styles.ul_items_btn}
-                              data-modal="change-user"
-                              onClick={() => {
-                                setIsOpen(!isOpen);
-                                setId(item.id);
-                                setName(item.name);
-                                setRating(item.rating);
-                                if (!item.role_id) setRole(2);
-                                else {
-                                  setRole(item.role_id);
-                                }
-                                setLogin(item.login);
-                              }}
-                            />
-                          </li>
-                        </Fade>
-                      );
-                    }
-                  })}
-                </ul>
-              </div>
-            </React.Fragment>
-          );
-        })}
+                          <p className={styles.ul_items_text}>
+                            {item.name} ({item.id})
+                          </p>
+                        </Link>
+                        <button
+                          className={styles.ul_items_btn}
+                          data-modal="change-user"
+                          onClick={() => {
+                            setIsOpen(!isOpen);
+                            setId(item.id);
+                            setName(item.name);
+                            setRating(item.rating);
+                            if (!item.role_id) setRole(2);
+                            else {
+                              setRole(item.role_id);
+                            }
+                            setLogin(item.login);
+                            setSlack(item.slack);
+                            setTeam(item.team);
+                          }}
+                        />
+                      </li>
+                    </Fade>
+                  );
+                }
+              })}
+            </ul>
+          </div>
+        </React.Fragment>
+      )}
+
       <ChangeUser
         isOpen={isOpen}
         handleClose={() => setIsOpen(!isOpen)}
@@ -172,6 +183,8 @@ export default function MobileManagers({ isOpenModal, role, isAdmin, data }) {
         administrator={isAdmin}
         dataRole={newRole}
         dataLogin={newLogin}
+        dataTeam={team}
+        dataSlack={slack}
       />
     </>
   );
