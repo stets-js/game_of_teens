@@ -304,6 +304,9 @@
   margin-bottom: 30px;
   border-radius: 8px;
   padding: 10px;
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+  }
 }
 .slot__item{
   width: 80%;
@@ -345,6 +348,10 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  @media screen and (max-width: $tablet) {
+    min-width: 100%;
+  max-width: 100%;
+  }
 }
 .data__item :nth-child(3) {
 min-width: 85px;
