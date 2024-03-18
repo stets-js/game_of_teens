@@ -179,6 +179,7 @@ const Analytics = () => {
                 <label>Course:</label>
                 <p>{item.course_name}</p>
               </div>
+              <div className={styles.group__wrapper}>
               <div className={styles.item__analytic}>
                 <label>Occurred:</label>
                 <input
@@ -257,6 +258,7 @@ const Analytics = () => {
                     setAnalyticData(updatedData);
                   }}
                 />
+              </div>
               </div>
               <div className={styles.item__analytic}>
                 <label>Payment date:</label>

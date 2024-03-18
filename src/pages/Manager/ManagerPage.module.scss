@@ -252,7 +252,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-  max-width: calc(100%/10);
+  max-width: 100%;
   font-size: 18px;
   font-family: $poppins;
   @media screen and (max-width: $tablet) {
@@ -430,3 +430,10 @@ word-wrap: break-word;
   white-space: pre-line;
   word-wrap: break-word;
 }
+.group__wrapper{
+      display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 7px;
+
+  }
