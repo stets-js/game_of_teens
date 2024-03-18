@@ -90,12 +90,12 @@ const ConsultationPage = () => {
       <StatusDefinition />
       {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
       <DatePicker tableDate={tableDate} changeDateFn={getManagerWorkWeek} />
-      {window.innerWidth > 1160 ? (
+      {window.innerWidth > 1100 ? (
         <Days />
       ) : (
         <DaysPicker setDayIndex={setDayIndex} />
       )}
-      {window.innerWidth > 1160 ? (
+      {window.innerWidth > 1100 ? (
         <Table table={table} weekId={weekId} consultation handleReload={()=> setReload(!reload)} onClickSlotFn={onClickSlotButton} />
       ) : (
         <DayTable

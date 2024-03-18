@@ -15,7 +15,7 @@
   width: 97%;
   margin: 15px auto;
   gap: 50px;
-  @media screen and (max-width:$tablet) {
+  @media screen and (max-width:$mobile) {
    flex-direction: column;
    gap: 25px; 
   }
@@ -28,10 +28,13 @@
   background-color: #ededed;
   border: 2px solid #000;
   border-radius: 8px;
-  @media screen and (max-width:$tablet) {
+  @media screen and (max-width:$mobile) {
     width: 80%;
     margin: 0 auto;
    }
+   @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    width: 30%;
+  }
 }
 
 .btn__wrapper{
@@ -42,10 +45,14 @@
     flex-wrap: nowrap;
     gap: 20px;
     margin-top: 30px;
-    @media screen and (max-width:$tablet) {
+    @media screen and (max-width:$mobile) {
       flex-direction: column;
       gap: 25px; 
      }
+     @media screen and (min-width: $mobile) and (max-width: $desktop) {
+      display: grid;
+      grid-template-columns: repeat(3, 30%);
+    }
 }
 .btn__wrapper button{
     padding: 10px;
@@ -54,7 +61,7 @@
   background-color: #75aaff;
   color: #FFF;
   border-radius: 8px;
-  @media screen and (max-width:$tablet) {
+  @media screen and (max-width:$mobile) {
     width: 80%; 
    }
 }
@@ -63,7 +70,7 @@
 }
 .wrapper{
     height: 400px;
-    @media screen and (max-width:$tablet) {
+    @media screen and (max-width:$mobile) {
       height: 100%;
       margin-bottom: 50px;
      }

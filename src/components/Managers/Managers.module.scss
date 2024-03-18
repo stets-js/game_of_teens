@@ -24,6 +24,9 @@
   &:hover .ul_items_link {
     color: $blue;
   }
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    width: 100%;
+  }
 }
 
 .ul_items_link {
@@ -54,12 +57,18 @@
   &:nth-last-child(1) {
     border-right: none;
   }
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    width: 160px;
+  }
 }
 .ul_items_text {
   font-family: "Poppins";
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    font-size: 12px;
+  }
 }
 .main_wrapper {
   border-right: 2px solid black;
@@ -73,6 +82,11 @@
 
   &:nth-last-child(1) {
     border-right: 0;
+  }
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    width: 100%;
+    align-items: center;
+    padding: 0;
   }
 }
 

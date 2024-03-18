@@ -13,7 +13,7 @@
 .error {
   font-size: 80px;
   font-family: $poppins;
-  @media  screen and (max-width: $tablet) {
+  @media  screen and (max-width: $mobile) {
     font-size: 70px;
   }
 }
@@ -21,4 +21,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 350px;
 }

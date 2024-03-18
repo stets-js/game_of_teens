@@ -24,7 +24,7 @@
   &:hover .ul_items_link {
     color: $blue;
   }
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     width: 100%;
   }
 }
@@ -57,7 +57,7 @@
   // &:nth-last-child(1) {
   //   border-right: none;
   // }
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     width: 300px;
   }
 }
@@ -80,7 +80,7 @@
   // &:nth-last-child(1) {
   //   border-right: 0;
   // }
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     margin: 0 auto;
     width: 100%;
   }

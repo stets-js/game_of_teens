@@ -22,7 +22,7 @@
   display: flex;
   justify-content: center;
   margin: 25px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     flex-direction: column;
   }
 }
@@ -105,7 +105,7 @@
   &:hover {
     background-color: #575aaf;
   }
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     width: 100%;
   }
 }

@@ -26,7 +26,7 @@ function CurrentMeetingsPageList() {
     fontSize: "30px",
   };
   const isThatPhone = {
-    isPhone: window.innerWidth <= 1160,
+    isPhone: window.innerWidth <= 1000,
   };
   const dividerStyles = {
     display: "flex",

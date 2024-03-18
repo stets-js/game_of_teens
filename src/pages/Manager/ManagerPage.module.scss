@@ -166,7 +166,7 @@
   align-items: center;
   gap: 20px;
   margin-bottom: 100px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     flex-direction: column;
     justify-content: center;
     margin: 0 auto 50px;
@@ -215,7 +215,7 @@
   background-position: right 0.7em top 55%, 0 0;
   align-items: center;
   transition: all 0.5s;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
@@ -253,7 +253,7 @@
   width: 97%;
   margin: 15px auto;
   gap: 10px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     flex-direction: column;
     width: 80%;
     align-items: center
@@ -269,7 +269,7 @@
   max-width: 100%;
   font-size: 18px;
   font-family: $poppins;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     max-width: 100%;
     width: 100%;
   }
@@ -284,20 +284,20 @@
   max-width: calc(100%/10);
   font-size: 18px;
   font-family: $poppins;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
     max-width: 100%;
   }
 }
 .item__analytic:nth-child(3){
   width: 150px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
 .item__analytic:nth-child(2){
   width: 100px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
@@ -341,7 +341,7 @@ word-wrap: break-word;
   height: 50px;
   width: 100px;
   margin-top: 31px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
@@ -353,7 +353,7 @@ word-wrap: break-word;
   background-color: #ededed;
   border: 2px solid #000;
   border-radius: 8px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
@@ -365,7 +365,7 @@ word-wrap: break-word;
   background-color: #ededed;
   border: 2px solid #000;
   border-radius: 8px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 100%;
   }
 }
@@ -383,7 +383,7 @@ word-wrap: break-word;
   height: 50px;
   border-radius: 8px;
   background-color: #fff;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     width: 50%;
   }
 }
@@ -394,7 +394,7 @@ word-wrap: break-word;
   align-items: center;
   gap: 50px;
   margin-top: 50px;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $desktop) {
     flex-direction: column;
     gap: 20px;
     align-items: stretch;
@@ -406,7 +406,7 @@ word-wrap: break-word;
   font-size: 18px;
   font-family: $poppins;
 }
-@media screen and (max-width: $tablet) {
+@media screen and (max-width: $desktop) {
   .totalItem{
     display: flex;
     flex-direction: row;
@@ -420,7 +420,7 @@ word-wrap: break-word;
 .noData{
   margin: 50px auto;
 }
-@media screen and (max-width: $tablet) {
+@media screen and (max-width: $desktop) {
   .noData svg{
     width: 350px;
   } 

@@ -94,12 +94,12 @@ export default function CallerPage() {
             />
 
           <DatePicker changeDateFn={getCallerWeekByCourse} tableDate={tableDate} courseId={courseId} caller />
-         {window.innerWidth > 1160 ? (
+         {window.innerWidth > 1100 ? (
         <Days caller />
       ) : (
         <DaysPicker caller setDayIndex={setDayIndex} />
       )}
-       {window.innerWidth > 1160 ? (
+       {window.innerWidth > 1100 ? (
         <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
       ) : (
         <DayTable

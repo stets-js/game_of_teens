@@ -23,7 +23,7 @@
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     width: 100%;
   }
 }
@@ -63,7 +63,7 @@
   &:hover {
     background-color: #575aaf;
   }
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile) {
     width: 100%;
   }
 }

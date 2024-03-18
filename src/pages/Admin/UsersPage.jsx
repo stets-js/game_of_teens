@@ -58,7 +58,7 @@ export default function UsersPage() {
           const key = uuidv4();
           return (
             <React.Fragment key={key}>
-              {screenWidth > 1160 ? (
+              {screenWidth > 600 ? (
                 <Managers
                   key={key}
                   isOpenModal={isOpen}

@@ -17,6 +17,9 @@
   position: relative;
   height: 70px;
   width: 100%;
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    font-size: 12px;
+  }
 }
 
 .itemCheckboxLabel {
@@ -40,6 +43,10 @@
   border-left: none;
   border-right: 1.5px solid #000;
   margin-left: 40px;
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    font-size: 12px;
+    min-width: 15%;
+  }
 }
 .itemCheckbox {
   height: 25px;
@@ -232,21 +239,25 @@
   font-size: 24px;
   border-left: none;
   border-right: 1.5px solid #000;
-}
-
-@media screen and (max-width: 1330px) {
-  .hover_buttons button:nth-child(1) {
-    margin-right: 17px;
+  @media screen and (min-width: $mobile) and (max-width: $desktop) {
+    font-size: 12px;
+    min-width: 15%;
   }
 }
 
-@media screen and (max-width: 715px) {
-  .managerNameSt {
-    min-width: 50%;
-    height: 70px;
-    font-size: 19px;
-  }
-}
+// @media screen and (max-width: 1330px) {
+//   .hover_buttons button:nth-child(1) {
+//     margin-right: 17px;
+//   }
+// }
+
+// @media screen and (max-width: 715px) {
+//   .managerNameSt {
+//     min-width: 50%;
+//     height: 70px;
+//     font-size: 19px;
+//   }
+// }
 
 .asterix{
   position: absolute;

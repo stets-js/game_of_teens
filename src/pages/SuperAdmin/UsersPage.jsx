@@ -7,6 +7,7 @@ import { getUsers } from "../../helpers/user/user";
 // import { getManagers } from "../../helpers/manager/manager";
 import { v4 as uuidv4 } from "uuid";
 
+
 export default function UsersPage() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -81,7 +82,7 @@ export default function UsersPage() {
           const key = uuidv4();
           return (
             <React.Fragment key={key}>
-              {screenWidth > 1160 ? (
+              {screenWidth > 600 ? (
                 <Managers
                   key={key}
                   isOpenModal={isOpen}
