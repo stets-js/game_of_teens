@@ -22,7 +22,7 @@
       right: 0;
       z-index: 99;
       display: block;
-      width: 53px;
+      width: 40px;
       height: 60px;
       background-color: inherit;
     }
@@ -36,7 +36,7 @@
       left: 0;
       z-index: 99;
       display: block;
-      width: 53px;
+      width: 40px;
       height: 60px;
       background-color: inherit;
     }
@@ -253,8 +253,8 @@
 
 
 
-@media screen and  (max-width: 1330px) {
-.hover_buttons button:nth-child(1) {
-  margin-right: 17px;
-}
-}
+// @media screen and  (max-width: 1330px) {
+// .hover_buttons button:nth-child(1) {
+//   margin-right: 17px;
+// }
+// }
