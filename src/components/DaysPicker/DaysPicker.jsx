@@ -11,7 +11,7 @@ const DaysPicker = ({ caller, setDayIndex }) => {
   const callerDate = new Date(useSelector(getCallerDate));
   const arrayDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   let date = caller ? callerDate : managerDate;
-  const [currentDate, setCurrentDate] = useState(0);
+  const [currentDate, setCurrentDate] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleDayClick = (index) => {
