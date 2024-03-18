@@ -169,7 +169,8 @@ const Analytics = () => {
         <div className={styles.sort__item}
         onClick={() => {
           setSortDate(!sortDate);
-        }}>
+        }}
+        >
           <p>Date sorting</p>
           <SortIcon />
           </div>
