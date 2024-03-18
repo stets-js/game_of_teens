@@ -548,6 +548,10 @@ width: 100px;
     flex-direction: column;
   }
 }
+.items__container  .item__wrapper:nth-child(even) {
+  background-color: #d2defe;
+  padding: 10px;
+}
 .item__analytic{
   display: flex;
   flex-direction: column;
@@ -583,6 +587,13 @@ text-align: end;
 .managerNameSt {
   // min-width: 265px;
   background-color: #fff;
+  font-family: $poppins;
+  color: $font-black;
+  font-weight: 500;
+  font-size: 20px;
+}
+.managerNameAnalytic {
+  // min-width: 265px;
   font-family: $poppins;
   color: $font-black;
   font-weight: 500;

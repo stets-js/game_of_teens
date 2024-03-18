@@ -159,6 +159,7 @@ export default function ManagersAnalytic() {
           ))}
         </select>
       </div>
+      <div className={styles.items__container}>
       {isLoading ? (
         <div className={styles.tailspin}><TailSpin height="150px" width="150px" color="#999DFF" /></div>
       ) : currentPageData.length > 0 ? (
@@ -166,7 +167,7 @@ export default function ManagersAnalytic() {
           <div key={index} className={styles.item__wrapper}>
             <div className={styles.item__analytic}>
               <Link
-            className={styles.managerNameSt}
+            className={styles.managerNameAnalytic}
             to={`/manager/${item.manager_id}/analytics/`}
             target="_self"
           >
@@ -195,7 +196,7 @@ export default function ManagersAnalytic() {
         <div className={styles.noData}>
             <NoData />
         </div>
-      )}
+      )}</div>
       {/* Блок з заголовком та загальною сумою */}
       <div className={styles.managerTotal}>
         <h2>Managers TOTAL:</h2>
