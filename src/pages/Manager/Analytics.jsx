@@ -7,6 +7,7 @@ import {
 import { success, error, defaults } from "@pnotify/core";
 import { TailSpin } from "react-loader-spinner";
 import NoData from "../SuperAdmin/NoData";
+import SortIcon from "./SortIcon";
 
 const Analytics = () => {
   const manager_id = window.location.pathname.split("/")[2];
@@ -18,8 +19,7 @@ const Analytics = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchDate, setSearchDate] = useState("");
   const [showTooltip, setShowTooltip] = useState(null);
-
-  console.log("analyticData", analyticData);
+  const [sortDate, setSortDate] = useState(true);
 
   const months = [
     { value: 1, label: "January" },
@@ -42,13 +42,25 @@ const Analytics = () => {
     const getData = async (manager_id, date) => {
       try {
         const res = await getManagerAnalytic(manager_id, date);
-        res.sort((a, b) => {
-          let dateComparison = new Date(a.date) - new Date(b.date);
-          if (dateComparison === 0) {
-            return new Date(a.time) - new Date(b.time);
-          }
-          return dateComparison;
-        });
+        if (sortDate) {
+          // Сортування за датою в порядку зростання
+          res.sort((a, b) => {
+            let dateComparison = new Date(a.date) - new Date(b.date);
+            if (dateComparison === 0) {
+              return new Date(a.time) - new Date(b.time);
+            }
+            return dateComparison;
+          });
+        } else {
+          // Сортування за датою в порядку спадання
+          res.sort((a, b) => {
+            let dateComparison = new Date(b.date) - new Date(a.date);
+            if (dateComparison === 0) {
+              return new Date(a.time) - new Date(b.time);
+            }
+            return dateComparison;
+          });
+        }
         setAnalyticData(res);
         setIsLoading(false);
       } catch (err) {
@@ -58,7 +70,7 @@ const Analytics = () => {
       }
     };
     getData(manager_id, date);
-  }, [date]);
+  }, [date, sortDate]);
 
   const handleUpdate = async (itemId) => {
     // Знаходимо елемент в `analyticData` за його ідентифікатором
@@ -153,6 +165,15 @@ const Analytics = () => {
           ))}
         </select>
       </div>
+      <div className={styles.sort__wrapper}>
+        <div className={styles.sort__item}
+        onClick={() => {
+          setSortDate(!sortDate);
+        }}>
+          <p>Date sorting</p>
+          <SortIcon />
+          </div>
+      </div>
       {isLoading ? (
         <div className={styles.tailspin}>
           <TailSpin height="150px" width="150px" color="#999DFF" />
@@ -164,6 +185,7 @@ const Analytics = () => {
               <div className={styles.item__analytic}>
                 <label>Date:</label>
                 <p>{item.date}</p>
+                
               </div>
               <div className={styles.item__analytic}>
                 <label>Zoho link:</label>

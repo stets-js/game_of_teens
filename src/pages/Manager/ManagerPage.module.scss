@@ -232,6 +232,20 @@
 .select option {
   font-weight: normal;
 }
+.sort__wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 15px 30px;
+}
+.sort__item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  font-size: 16px;
+  font-family: $poppins;
+}
 .item__wrapper{
   display: flex;
   flex-direction: row;
