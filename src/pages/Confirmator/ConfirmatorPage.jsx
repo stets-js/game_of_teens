@@ -56,7 +56,7 @@ const ConfirmatorPage = () => {
       <ConfirmatorDatePicker />
       
         <h2 className={styles.title}>Confirmation</h2>
-        
+        {window.innerWidth > 700 ? (
           <div className={styles.table__wrapper}>
             <Confirmator />
 
@@ -67,6 +67,10 @@ const ConfirmatorPage = () => {
               <ConfirmatorComments value={value} />
             </div>
           </div>
+          ):(
+            <div>This table only for PC</div>
+          )
+        }
         
       </section>
     </>

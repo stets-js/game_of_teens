@@ -4,12 +4,18 @@
   margin: 0 auto;
   text-align: center;
   margin-bottom: 72px;
+  @media screen and (max-width: $desktop) {
+    width: 100%;
+  }
 }
 .table__wrapper {
   overflow: scroll;
   width: 1400px;
   height: 600px;
   display: flex;
+  @media screen and (max-width: $desktop) {
+    width: 100%;
+  }
 }
 .title {
   font-size: 32px;
@@ -64,6 +70,9 @@
   border-right: 2px solid black;
   height: fit-content;
   align-items: center;
+  @media screen and (max-width: $desktop) {
+    width: 100%;
+  }
 }
 .btn {
   width: 170px;
@@ -80,6 +89,10 @@
   transition: $main-transition;
   &_active {
     background-color: #92ff57;
+  }
+  @media screen and (max-width: $desktop) {
+    width: 50%;
+    font-size: 12px;
   }
 }
 
@@ -98,6 +111,9 @@
 .btn_input_wrapper {
   margin-left: 36px;
   flex-grow: 1;
+  @media screen and (max-width: $desktop) {
+    margin-left: 10px;
+  }
 }
 .comment__wrapper {
   height: 57px;
@@ -106,6 +122,9 @@
   // justify-content: space-between;
   align-items: center;
   // background-color: #000;
+  @media screen and (max-width: $desktop) {
+    width: 100%;
+  }
 }
 .comment__input {
   font-family: $poppins;
@@ -135,6 +154,10 @@
   justify-content: space-between;
   align-items: center;
   width: 460px;
+  @media screen and (max-width: $desktop) {
+    width: 100%;
+    gap: 10px;
+  }
 }
 
 
@@ -220,6 +243,11 @@ z-index: 11000;
   background-color: #e2ddff;
   padding: 10px;
   z-index: 10;
+  @media screen and (max-width: $desktop) {
+    top: 45px;
+  right: 0px;
+  left: auto;
+  }
 }
 
 .reason__select{
@@ -236,4 +264,8 @@ z-index: 11000;
   background-repeat: no-repeat;
   background-size: 20px 20px; /* Розмір стрілки */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M7 10l5 5 5-5z"/></svg>');
+  @media screen and (max-width: $desktop) {
+    width: 110px;
+    font-size: 12px;
+  }
 }

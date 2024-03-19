@@ -12,6 +12,11 @@
   display: block;
   height: 30px;
   transition: $main-transition;
+  @media screen and (max-width: $desktop) {
+    font-size: 12px;
+    padding: 2px 5px;
+    width: 100%;
+  }
 }
 
 .btn_yelllow {
@@ -43,4 +48,8 @@
   height: 57px;
   margin-right: 36px;
   margin-left: 36px;
+  @media screen and (max-width: $desktop) {
+    margin-right: 10px;
+  margin-left: 10px;
+  }
 }
