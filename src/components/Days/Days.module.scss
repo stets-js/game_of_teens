@@ -27,6 +27,9 @@
     color: $font-black;
     font-weight: 400;
     font-size: 36px;
+    @media screen and (max-width: $desktop) {
+        font-size: 18px; 
+    }
 }
 
 .dayDate {
@@ -34,4 +37,7 @@
     color: $font-black;
     font-weight: 400;
     font-size: 26px;
+    @media screen and (max-width: $desktop) {
+        font-size: 18px; 
+    }
 }
