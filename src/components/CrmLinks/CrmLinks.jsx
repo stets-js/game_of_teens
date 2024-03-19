@@ -38,18 +38,16 @@ export default function CrmLinks({ setCourses, caller }) {
     try {
       // Оновлюємо дані на сервері
       await updateManagerAnalytic(updatedItem);
-
-      // Виводимо повідомлення про успішне оновлення
       success("Analytic updated successfully");
       setAnalyticData([])
-      console.log("Updated item:", updatedItem);
     } catch (error) {
       // Обробляємо помилку при оновленні
       console.error("Error updating item:", error);
     }
   };
+
 useEffect(()=>{},[analyticData])
-console.log("a data", analyticData)
+
   return (
     <>
       <div className={styles.searching__wrapper}>
@@ -150,7 +148,6 @@ console.log("a data", analyticData)
               setIsLoading(true)
               try {
                 const res = await getAnalyticByCrm(link);
-                console.log(res, "analytic");
                 setAnalyticData([res]);
                 setIsLoading(false)
               } catch (e) {
