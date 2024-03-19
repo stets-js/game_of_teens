@@ -31,7 +31,7 @@ function CurrentMeetingsPageTable() {
     useState(false);
   const [selectedManagerIds, setSelectedManagerIds] = useState([]);
   const isThatPhone = {
-    isPhone: window.innerWidth <= 1000,
+    isPhone: window.innerWidth <= 700,
   };
   
   const tableDate = new Date().toString();
