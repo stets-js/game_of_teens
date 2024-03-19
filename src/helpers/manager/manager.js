@@ -181,8 +181,17 @@ const getAllManagersAnalytics = (month)=>{
     throw error;
   });
 }
+const getAnalyticByCrm = (link)=>{
+  return axios
+  .post(`/get_analytic_by_crm`, { crm_link: link })
+  .then((res) => res.data)
+  .catch((error) => {
+    throw error;
+  });
+}
 
 export {
+  getAnalyticByCrm,
   getManagerWorkingSlots,
   getAllManagersAnalytics,
   updateManagerAnalytic,

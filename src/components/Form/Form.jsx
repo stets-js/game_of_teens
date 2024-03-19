@@ -48,7 +48,7 @@ const Form = ({
     useState(false);
   const [errorsuccessMessage, setError] = useState(false);
   const [inputCancelClicked, setInputCancelClicked] = useState(false);
-  const [selectedReason, setSelectedReason] = useState("");
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -325,6 +325,7 @@ const Form = ({
                       {item.course}, {item.manager_name}, {item.phone}{" "}
                     </p>
                   </div>
+                  
                 </Fade>
               </React.Fragment>
             );
