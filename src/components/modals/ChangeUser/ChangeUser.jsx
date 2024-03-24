@@ -24,7 +24,8 @@ const ChangeUser = ({
   // dataPassword,
   administrator,
   dataTeam,
-  dataSlack
+  dataSlack,
+  dataZohoId
 }) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -33,6 +34,7 @@ const ChangeUser = ({
   const [role, setRole] = useState(2);
   const [team, setTeam] = useState("");
   const [slack, setSlack] = useState("");
+  const [zohoId, setZohoId] = useState("");
   
   useEffect(() => {
     setName(dataName);
@@ -41,6 +43,7 @@ const ChangeUser = ({
     setLogin(dataLogin);
     setSlack(dataSlack);
     setTeam(dataTeam);
+    setZohoId(dataZohoId);
     // setPassword(dataPassword);
   }, [isOpen, dataDesc, dataLogin, dataRole, dataName, dataSlack, dataTeam]);
 
@@ -73,11 +76,13 @@ const ChangeUser = ({
               setName("");
               setSlack("");
               setTeam("");
+              setZohoId("");
             }}
             rating={desc}
             slack={slack}
             team={team}
             login={login}
+            zoho_id={zohoId}
             status={{
               successMessage: "Successfully changed user",
               failMessage: "Failed to change user",
@@ -108,6 +113,15 @@ const ChangeUser = ({
               isRequired={true}
               handler={setDesc}
             />}
+            <FormInput
+                classname="input__bottom"
+                title="Zoho id:"
+                type="text"
+                name="zoho_id"
+                value={zohoId}
+                placeholder="Zoho id"
+                handler={setZohoId}
+              />
             <div className={styles.input__block}>
               <FormInput
                 classname="input__bottom"
