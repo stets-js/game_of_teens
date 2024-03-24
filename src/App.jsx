@@ -81,8 +81,6 @@ const App = () => {
               <Route path={path.crm} element={<CrmPage />} />
             </Route>
 
-
-
             {userRole === 3 && <Route path={path.all} element={<Navigate to={`${path.superAdmin}`} />} />}
             <Route path={path.superAdmin} element={<Navigate to={path.users} />} />
             <Route path={path.superAdmin} element={<SuperAdministratorPage />}>
