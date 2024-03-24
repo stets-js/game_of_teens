@@ -1,4 +1,7 @@
 import axios from "../axios-config";
+import {jwtDecode} from "jwt-decode";
+
+const { zoho_id } = jwtDecode(localStorage.getItem('booking'));
 
 axios.create({
   withCredentials: true,
@@ -43,6 +46,7 @@ const putAppointment = (credentials) => {
       const responseData = {
         ...res.data,
         action: "rescheduled",
+        zoho_id: zoho_id,
       };
 
       axios.post(
@@ -90,6 +94,7 @@ const createAppointment = (
       const responseData = {
         ...res.data,
         action: "created",
+        zoho_id: zoho_id,
       };
 
       axios.post(
@@ -117,6 +122,7 @@ const swapAppointmentManagers = (credentials) => {
       const responseData = {
         ...res.data,
         action: "swapped",
+        zoho_id: zoho_id,
       };
 
       axios.post(
