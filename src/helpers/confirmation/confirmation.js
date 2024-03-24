@@ -25,7 +25,7 @@ const setConfirmation = (slot_id, status, message) => {
     Authorization: `Bearer ${authToken}`,
   };
   
-  const { id, zoho_id } = jwtDecode(localStorage.getItem('booking'));
+  const { id, zoho_id } = jwtDecode(authToken);
   const url = message
   ? `/set_confirmation/${slot_id}/${status}/${message}/${id}/`
         : `/set_confirmation/${slot_id}/${status}/${id}/`;
@@ -54,7 +54,7 @@ const setConfirmation = (slot_id, status, message) => {
 
 const setCancelConfirmation = (slot_id, status, message) => {
   const authToken = localStorage.getItem("booking");
-  const { id,zoho_id } = jwtDecode(localStorage.getItem('booking'));
+  const { id,zoho_id } = jwtDecode(authToken);
   const headers = {
     Authorization: `Bearer ${authToken}`,
   };
@@ -105,7 +105,7 @@ const delteConfirmation = (managerId, weekId, weekDay, hour, newStatus, message)
       },
     })
     .then((res) => {
-      const {user_name, role, id, zoho_id } = jwtDecode(localStorage.getItem('booking'));
+      const {user_name, role, id, zoho_id } = jwtDecode(authToken);
       if(res.data.message === "Appointment successfully removed"){
       const responseData = {
         ...res.data,

@@ -1,8 +1,6 @@
 import axios from "../axios-config";
 import {jwtDecode} from "jwt-decode";
 
-const { zoho_id } = jwtDecode(localStorage.getItem('booking'));
-
 axios.create({
   withCredentials: true,
 });
@@ -43,6 +41,7 @@ const putAppointment = (credentials) => {
       },
     })
     .then((res) => {
+      const { zoho_id } = jwtDecode(token);
       const responseData = {
         ...res.data,
         action: "rescheduled",
@@ -91,6 +90,7 @@ const createAppointment = (
       }
     )
     .then((res) => {
+      const { zoho_id } = jwtDecode(authToken);
       const responseData = {
         ...res.data,
         action: "created",
@@ -119,6 +119,7 @@ const swapAppointmentManagers = (credentials) => {
       },
     })
     .then((res) => {
+      const { zoho_id } = jwtDecode(token);
       const responseData = {
         ...res.data,
         action: "swapped",

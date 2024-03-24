@@ -16,7 +16,8 @@ const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMe
 
   return axios.post("/consultation_result", data)
     .then((res) => {
-      const {user_name, role, id, zoho_id } = jwtDecode(localStorage.getItem('booking'));
+      const authToken = localStorage.getItem("booking");
+      const { zoho_id } = jwtDecode(authToken);
       const responseData = {
         ...res.data,
         action: "attended",
