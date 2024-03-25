@@ -119,6 +119,7 @@ const ChangeUser = ({
                 type="text"
                 name="zoho_id"
                 value={zohoId}
+                max={30}
                 placeholder="Zoho id"
                 handler={setZohoId}
               />
