@@ -105,6 +105,7 @@ export default function CallerPage() {
           weekId={weekId} 
           table={table[currentDayIndex]}
           dayIndex={currentDayIndex}
+          courseId={courseId}
           caller
         />
       )}

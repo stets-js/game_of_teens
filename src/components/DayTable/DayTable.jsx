@@ -18,6 +18,7 @@ const DayTable = ({
   isAppointment,
   dayIndex,
   handleReload,
+  courseId,
 }) => {
   useEffect(() => {});
   const managerLoading = useSelector(isManagerLoading);
@@ -46,6 +47,7 @@ const DayTable = ({
                   slotId={item.slot_id}
                   dayIndex={dayIndex}
                   slots={item?.slots}
+                  courseId={courseId}
                 />
               ) : consultation ? (
                 <TableItem
