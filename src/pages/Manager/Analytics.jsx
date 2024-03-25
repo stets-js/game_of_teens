@@ -18,6 +18,7 @@ const Analytics = () => {
   const [perPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchDate, setSearchDate] = useState("");
+  const [packagePeriod, setPackagePeriod] = useState("");
   const [showTooltip, setShowTooltip] = useState(null);
   const [sortDate, setSortDate] = useState(true);
 
@@ -166,14 +167,15 @@ const Analytics = () => {
         </select>
       </div>
       <div className={styles.sort__wrapper}>
-        <div className={styles.sort__item}
-        onClick={() => {
-          setSortDate(!sortDate);
-        }}
+        <div
+          className={styles.sort__item}
+          onClick={() => {
+            setSortDate(!sortDate);
+          }}
         >
           <p>Date sorting</p>
           <SortIcon />
-          </div>
+        </div>
       </div>
       {isLoading ? (
         <div className={styles.tailspin}>
@@ -186,7 +188,6 @@ const Analytics = () => {
               <div className={styles.item__analytic}>
                 <label>Date:</label>
                 <p>{item.date}</p>
-                
               </div>
               <div className={styles.item__analytic}>
                 <label>Zoho link:</label>
@@ -203,85 +204,112 @@ const Analytics = () => {
                 <p>{item.course_name}</p>
               </div>
               <div className={styles.group__wrapper}>
-              <div className={styles.item__analytic}>
-                <label>Occurred:</label>
-                <input
-                  type="number"
-                  value={item.occurred}
-                  min={0}
-                  max={1}
-                  onChange={(e) => {
-                    const newValue = parseFloat(e.target.value);
-                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
-                    const updatedData = analyticData.map((analyticItem) => {
-                      if (analyticItem.id === item.id) {
-                        return { ...analyticItem, occurred: updatedValue };
-                      }
-                      return analyticItem;
-                    });
-                    setAnalyticData(updatedData);
-                  }}
-                />
-              </div>
-              <div className={styles.item__analytic}>
-                <label>Bill:</label>
-                <input
-                  type="number"
-                  value={item.bill}
-                  min={0}
-                  max={1}
-                  onChange={(e) => {
-                    const newValue = parseFloat(e.target.value);
-                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
-                    const updatedData = analyticData.map((analyticItem) => {
-                      if (analyticItem.id === item.id) {
-                        return { ...analyticItem, bill: updatedValue };
-                      }
-                      return analyticItem;
-                    });
-                    setAnalyticData(updatedData);
-                  }}
-                />
-              </div>
-              <div className={styles.item__analytic}>
-                <label>Bought:</label>
-                <input
-                  type="number"
-                  value={item.bought}
-                  min={0}
-                  max={1}
-                  onChange={(e) => {
-                    const newValue = parseFloat(e.target.value);
-                    const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
-                    const updatedData = analyticData.map((analyticItem) => {
-                      if (analyticItem.id === item.id) {
-                        return { ...analyticItem, bought: updatedValue };
-                      }
-                      return analyticItem;
-                    });
-                    setAnalyticData(updatedData);
-                  }}
-                />
-              </div>
-              <div className={styles.item__analytic}>
-                <label>Price:</label>
-                <input
-                  type="number"
-                  value={item.price}
-                  onChange={(e) => {
-                    const updatedData = analyticData.map((analyticItem) => {
-                      if (analyticItem.id === item.id) {
-                        return {
-                          ...analyticItem,
-                          price: parseFloat(e.target.value),
-                        };
-                      }
-                      return analyticItem;
-                    });
-                    setAnalyticData(updatedData);
-                  }}
-                />
-              </div>
+                <div className={styles.item__analytic}>
+                  <label>Occurred:</label>
+                  <input
+                    type="number"
+                    value={item.occurred}
+                    min={0}
+                    max={1}
+                    onChange={(e) => {
+                      const newValue = parseFloat(e.target.value);
+                      const updatedValue = Math.min(1, Math.max(0, newValue));
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return { ...analyticItem, occurred: updatedValue };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  />
+                </div>
+                <div className={styles.item__analytic}>
+                  <label>Bill:</label>
+                  <input
+                    type="number"
+                    value={item.bill}
+                    min={0}
+                    max={1}
+                    onChange={(e) => {
+                      const newValue = parseFloat(e.target.value);
+                      const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return { ...analyticItem, bill: updatedValue };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  />
+                </div>
+                <div className={styles.item__analytic}>
+                  <label>Bought:</label>
+                  <input
+                    type="number"
+                    value={item.bought}
+                    min={0}
+                    max={1}
+                    onChange={(e) => {
+                      const newValue = parseFloat(e.target.value);
+                      const updatedValue = Math.min(1, Math.max(0, newValue)); // Обмеження значення в діапазоні від 0 до 1
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return { ...analyticItem, bought: updatedValue };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  />
+                </div>
+                <div className={styles.item__analytic}>
+                  <label>Price:</label>
+                  <input
+                    type="number"
+                    value={item.price}
+                    onChange={(e) => {
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return {
+                            ...analyticItem,
+                            price: parseFloat(e.target.value),
+                          };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  />
+                </div>
+                <div className={styles.item__analytic}>
+                  <label>Package:</label>
+                  <select
+                    value={packagePeriod}
+                    onChange={(e) => {
+                      setPackagePeriod(e.target.value);
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return {
+                            ...analyticItem,
+                            package_period: e.target.value,
+                          };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  >
+                    <option value="">-package-</option>
+                    <option value="1">1 month</option>
+                    <option value="3">3 month</option>
+                    <option value="6">6 month</option>
+                    <option value="9">9 month</option>
+                    <option value="12">12 month</option>
+                    <option value="24">24 month</option>
+                  </select>
+                </div>
               </div>
               <div className={styles.item__analytic}>
                 <label>Payment date:</label>
