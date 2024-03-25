@@ -18,7 +18,6 @@ const Analytics = () => {
   const [perPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchDate, setSearchDate] = useState("");
-  const [packagePeriod, setPackagePeriod] = useState("");
   const [showTooltip, setShowTooltip] = useState(null);
   const [sortDate, setSortDate] = useState(true);
 
@@ -286,9 +285,8 @@ const Analytics = () => {
                 <div className={styles.item__analytic}>
                   <label>Package:</label>
                   <select
-                    value={packagePeriod}
+                    value={item.package_period}
                     onChange={(e) => {
-                      setPackagePeriod(e.target.value);
                       const updatedData = analyticData.map((analyticItem) => {
                         if (analyticItem.id === item.id) {
                           return {
