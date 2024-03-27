@@ -266,6 +266,32 @@ useEffect(()=>{},[analyticData])
                       }}
                     />
                   </div>
+                  <div className={styles.item__analytic}>
+                  <label>Package:</label>
+                  <select
+                    value={item.package_period}
+                    onChange={(e) => {
+                      const updatedData = analyticData.map((analyticItem) => {
+                        if (analyticItem.id === item.id) {
+                          return {
+                            ...analyticItem,
+                            package_period: e.target.value,
+                          };
+                        }
+                        return analyticItem;
+                      });
+                      setAnalyticData(updatedData);
+                    }}
+                  >
+                    <option value="">-package-</option>
+                    <option value="1">1 month</option>
+                    <option value="3">3 month</option>
+                    <option value="6">6 month</option>
+                    <option value="9">9 month</option>
+                    <option value="12">12 month</option>
+                    <option value="24">24 month</option>
+                  </select>
+                </div>
                 </div>
                 <div className={styles.item__analytic}>
                   <label>Payment date:</label>

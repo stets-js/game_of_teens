@@ -164,6 +164,16 @@
   width: 100%;
   word-wrap: break-word;
 }
+.item__analytic select{
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  font-family: $poppins;
+  background-color: #ededed;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+
 .group__wrapper{
   display: flex;
 flex-direction: row;
