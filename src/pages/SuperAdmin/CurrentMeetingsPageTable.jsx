@@ -56,6 +56,7 @@ function CurrentMeetingsPageTable() {
     setCureentTableDataWeekId(resWeekId);
     setIsRenderTableAvailable(true);
   }
+
   async function getNewTableData(day, month, year) {
     const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
       (res) => res.data
@@ -99,7 +100,9 @@ function CurrentMeetingsPageTable() {
           title="Free"
         />
       </div>
-      <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} setSelectedTeam={setSelectedTeam} />
+
+      <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} />
+      
       <SortByBox
         sortText={"Selected"}
         sortTextFunc={setcurrentSelectedSortStatus}

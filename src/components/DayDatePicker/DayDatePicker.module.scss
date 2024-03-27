@@ -1,10 +1,7 @@
 @import "../../styles/variables.scss";
 .calendarController {
-    width: 200px;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto 49px auto;
-    margin-top: 20px;
+    width: 300px;
+    margin: 20px auto;
 }
 
 .calendarControllerText {
@@ -39,6 +36,14 @@
     color: $font-black;
     font-weight: 400;
     font-size: 24px;
+}
 
-
+.calendarInput{
+    width: 100%;
+  padding: 5px;
+  font-size: 24px;
+  font-family: $poppins;
+  background-color: #ededed;
+  border: 2px solid #000;
+  border-radius: 8px;
 }
