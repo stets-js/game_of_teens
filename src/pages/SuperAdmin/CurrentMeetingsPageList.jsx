@@ -8,6 +8,7 @@ import DayTimePicker from "../../components/DayTimePicker/DayTimePicker";
 import MeetingsTable from "../../components/MeetingsTable/MeetingsTable";
 import SortByBox from "../../components/SortByBox/SortByBox";
 import mainstyles from "../SuperAdmin/SuperAdminPage.module.scss";
+import { TailSpin } from "react-loader-spinner";
 
 import {
   getCurrentAppointments,
@@ -54,6 +55,7 @@ function CurrentMeetingsPageList() {
   const [cureentTableDataWeekId, setCureentTableDataWeekId] = useState(0);
   const [date, setDate] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
 
     async function getTableData(day, month, year) {
     const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
@@ -80,7 +82,7 @@ function CurrentMeetingsPageList() {
       />
       <div style={isThatPhone.isPhone ? dividerStylesAdpt : dividerStyles}>
         {" "}
-        <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} />
+        <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} setIsLoading={setIsLoading} />
         <DayTimePicker tableTime={tableTime} setTableTime={setTableTime} selectedTeam={selectedTeam} />
       </div>
       <SortByBox
@@ -109,7 +111,9 @@ function CurrentMeetingsPageList() {
                     <option value="7">Team 7</option>
                     <option value="8">CB MIC</option>
                   </select>
-        <MeetingsTable
+                  
+          <MeetingsTable
+          isLoading={isLoading}
           isListView={true}
           isStatusSorted={currentSortStatus}
           tableTime={tableTime}

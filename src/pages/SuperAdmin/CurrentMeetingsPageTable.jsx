@@ -21,10 +21,11 @@ import { getTypeSelection } from "../../redux/manager/manager-selectors";
 import {
   changeStatusSlot,
   setManagerError,
-  setManagerLoading
+  setManagerLoading,
 } from "../../redux/manager/manager-operations";
 import { updateSlot } from "../../helpers/week/week";
 import SwapManagersComponent from "./SwapManagers";
+import { TailSpin } from "react-loader-spinner";
 
 function CurrentMeetingsPageTable() {
   const [currentSelectedSortStatus, setcurrentSelectedSortStatus] =
@@ -33,7 +34,7 @@ function CurrentMeetingsPageTable() {
   const isThatPhone = {
     isPhone: window.innerWidth <= 700,
   };
-  
+
   const tableDate = new Date().toString();
 
   const [currentTableData, setCurrentTableData] = useState(null);
@@ -41,14 +42,18 @@ function CurrentMeetingsPageTable() {
   const [cureentTableDataWeekId, setCureentTableDataWeekId] = useState(0);
   const [date, setDate] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getTableData(day, month, year) {
-    const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
-      (res) => res.data
-    );
-    const filteredManagers = selectedTeam === "All"
-    ? resManagers
-    : resManagers.filter((item) => item.team === parseInt(selectedTeam, 10));
+    const resManagers = await getCurrentAppointments(
+      `${day}.${month}.${year}`
+    ).then((res) => res.data);
+    const filteredManagers =
+      selectedTeam === "All"
+        ? resManagers
+        : resManagers.filter(
+            (item) => item.team === parseInt(selectedTeam, 10)
+          );
 
     setDate(`${day}.${month}.${year}`);
     const resWeekId = await getWeekId2(day, month, year).then((res) => res);
@@ -58,9 +63,9 @@ function CurrentMeetingsPageTable() {
   }
 
   async function getNewTableData(day, month, year) {
-    const resManagers = await getCurrentAppointments(`${day}.${month}.${year}`).then(
-      (res) => res.data
-    );
+    const resManagers = await getCurrentAppointments(
+      `${day}.${month}.${year}`
+    ).then((res) => res.data);
     setCurrentTableData(resManagers);
     setIsRenderTableAvailable(true);
   }
@@ -70,7 +75,6 @@ function CurrentMeetingsPageTable() {
   const onCheckedButton = (event) => {
     dispatch(changeTypeSelection(event.target.name));
   };
-
 
   return (
     <>
@@ -100,9 +104,12 @@ function CurrentMeetingsPageTable() {
           title="Free"
         />
       </div>
-
-      <DayDatePicker tableDate={tableDate} changeDateFn={getTableData} selectedTeam={selectedTeam} />
-      
+      <DayDatePicker
+        tableDate={tableDate}
+        changeDateFn={getTableData}
+        selectedTeam={selectedTeam}
+        setIsLoading={setIsLoading}
+      />
       <SortByBox
         sortText={"Selected"}
         sortTextFunc={setcurrentSelectedSortStatus}
@@ -110,42 +117,43 @@ function CurrentMeetingsPageTable() {
       {!isThatPhone.isPhone ? (
         isRenderTableAvailable ? (
           <>
-                  <select
-                    className={styles.managers__select}
-                    value={selectedTeam}
-                    onChange={(e) => {
-                      setSelectedTeam(e.target.value);
-          
-                    }}
-                  >
-                    <option value="All">All</option>
-                    <option value="1">Team 1</option>
-                    <option value="2">Team 2</option>
-                    <option value="3">Team 3</option>
-                    <option value="4">Team 4</option>
-                    <option value="5">Team 5</option>
-                    <option value="6">Team 6</option>
-                    <option value="7">Team 7</option>
-                    <option value="8">CB MIC</option>
-                  </select>
-          <MeetingsTable
-            isTableView={true}
-            isListView={false}
-            weekId={cureentTableDataWeekId.id}
-            dayIndex={cureentTableDataWeekId.day_index}
-            table={currentTableData}
-            selectedManagerIds={selectedManagerIds}
-            setSelectedManagerIds={setSelectedManagerIds}
-            currentSelectedSortStatus={currentSelectedSortStatus}
-            date={date}
-            getNewTableData={getNewTableData}
-          />
-          <SwapManagersComponent />
-          <div className={styles.main_wrapper}>
-            <div className={styles.main_wrapper2}>
-              <CrmLinks />
+            <select
+              className={styles.managers__select}
+              value={selectedTeam}
+              onChange={(e) => {
+                setSelectedTeam(e.target.value);
+              }}
+            >
+              <option value="All">All</option>
+              <option value="1">Team 1</option>
+              <option value="2">Team 2</option>
+              <option value="3">Team 3</option>
+              <option value="4">Team 4</option>
+              <option value="5">Team 5</option>
+              <option value="6">Team 6</option>
+              <option value="7">Team 7</option>
+              <option value="8">CB MIC</option>
+            </select>
+            
+            <MeetingsTable
+              isLoading={isLoading}
+              isTableView={true}
+              isListView={false}
+              weekId={cureentTableDataWeekId.id}
+              dayIndex={cureentTableDataWeekId.day_index}
+              table={currentTableData}
+              selectedManagerIds={selectedManagerIds}
+              setSelectedManagerIds={setSelectedManagerIds}
+              currentSelectedSortStatus={currentSelectedSortStatus}
+              date={date}
+              getNewTableData={getNewTableData}
+            />
+            <SwapManagersComponent />
+            <div className={styles.main_wrapper}>
+              <div className={styles.main_wrapper2}>
+                <CrmLinks />
+              </div>
             </div>
-          </div>
           </>
         ) : (
           <div className={styles.blank}>loading</div>

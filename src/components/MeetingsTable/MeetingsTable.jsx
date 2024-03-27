@@ -18,6 +18,7 @@ import { updateSlot } from "../../helpers/week/week";
 
 
 const MeetingsTable = ({
+  isLoading,
   isListView,
   tableTime,
   table,
@@ -133,6 +134,8 @@ const MeetingsTable = ({
         <TailSpin height="130px" width="130px" color="#999DFF" />
         </div>
       )}
+      <div>
+      {isLoading ? <div className={styles.loadingBackdrop}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : null}
       <ul
         key={uuidv4()}
         className={!isListView ? styles.table : styles.table_list}
@@ -237,6 +240,7 @@ const MeetingsTable = ({
           );
         })}
       </ul>
+      </div>
     </div>
   );
 };

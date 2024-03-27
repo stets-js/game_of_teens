@@ -3,7 +3,7 @@ import moment from "moment";
 import styles from "./DayDatePicker.module.scss";
 import { Fade } from "react-awesome-reveal";
 
-const DayDatePicker = ({ tableDate, changeDateFn, selectedTeam }) => {
+const DayDatePicker = ({ tableDate, changeDateFn, selectedTeam, setIsLoading }) => {
   const [date, setDate] = useState(new Date(tableDate));
 
   const month = date.getMonth() + 1;
@@ -14,7 +14,16 @@ const DayDatePicker = ({ tableDate, changeDateFn, selectedTeam }) => {
 
 
   useEffect(() => {
-      changeDateFn(day, month, year);
+    setIsLoading(true);
+    changeDateFn(day, month, year)
+      .then(() => {
+
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error:', error.message);
+        setIsLoading(false);
+      });
   }, [date, selectedTeam]);
 
   return (
