@@ -23,7 +23,6 @@ const DayDatePicker = ({ tableDate, changeDateFn, selectedTeam }) => {
 <div className={styles.calendarController}>
       <Fade cascade triggerOnce duration={300} direction="up">
       <input
-      
               type="date"
               value={moment(date).format("YYYY-MM-DD")}
               onChange={(e) => setDate(new Date(e.target.value))}
