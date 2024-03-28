@@ -65,7 +65,7 @@ const ConsultationInfo = ({
           const appointmentData = await getAppointment({ id: slotId });
           setAppointment(appointmentData.data);
           setFollowUp(appointmentData.data.follow_up);
-          setUnsuccessfulMessage(appointmentData.data.unsuccessful_message);
+          setUnsuccessfulMessage(appointmentData.data.unsuccessful_message || "no parents attending");
           setMessage(appointmentData.data.comments);
   
           // Отримання даних про слот
