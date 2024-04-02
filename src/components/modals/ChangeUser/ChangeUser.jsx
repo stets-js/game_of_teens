@@ -21,7 +21,7 @@ const ChangeUser = ({
   dataRole,
   // manager,
   dataLogin,
-  // dataPassword,
+  dataPassword,
   administrator,
   dataTeam,
   dataSlack,
@@ -44,8 +44,8 @@ const ChangeUser = ({
     setSlack(dataSlack);
     setTeam(dataTeam);
     setZohoId(dataZohoId);
-    // setPassword(dataPassword);
-  }, [isOpen, dataDesc, dataLogin, dataRole, dataName, dataSlack, dataTeam]);
+    setPassword(dataPassword);
+  }, [isOpen, dataDesc, dataLogin, dataRole, dataName, dataSlack, dataTeam, dataPassword]);
 
   return (
     <>
@@ -138,7 +138,7 @@ const ChangeUser = ({
               <FormInput
                 classname="input__bottom"
                 title="Password:"
-                type="password"
+                type="text"
                 name="password"
                 value={password}
                 max={50}

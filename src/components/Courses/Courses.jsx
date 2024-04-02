@@ -44,11 +44,6 @@ export default function Courses({ text, isOpenModal, role }) {
                 return (
                   <li className={styles.ul_items} key={item.name}>
                     <p className={styles.ul_items_text}>{item.name}</p>
-                    {/* <button className={styles.ul_items_btn} onClick={ <ChangeUser
-              isOpen={isOpen}
-              handleClose={() => handleClose()}
-              id={id}
-            />}/> */}
                     <button
                       className={styles.ul_items_btn}
                       data-modal="change-user"

@@ -20,6 +20,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
   const [newLogin, setLogin] = useState("");
   const [zohoId, setZohoId] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("All");
+  const [password, setPassword] = useState("");
 
   let usersArray = [
     {
@@ -152,6 +153,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
                                 setSlack(item.slack);
                                 setTeam(item.team);
                                 setZohoId(item.zoho_id);
+                                setPassword(item.password);
                               }}
                             />
                           </li>
@@ -176,6 +178,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
         dataTeam={team}
         dataSlack={slack}
         dataZohoId={zohoId}
+        dataPassword={password}
       />
     </>
   );
