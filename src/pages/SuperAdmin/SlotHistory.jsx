@@ -54,7 +54,7 @@ export default function AuthLogs() {
                 item.status === 1 ? styles.create :
                 item.status === 0 ? styles.delete : styles.swapped
               }`}>
-                <div className={styles.slot__cell}>{new Date(new Date(item.date).getTime() - 2 * 60 * 60 * 1000).toLocaleString()}</div>
+                <div className={styles.slot__cell}>{new Date(new Date(item.date).getTime() - 3 * 60 * 60 * 1000).toLocaleString()}</div>
                 <div className={styles.slot__cell}>{item.set_by}</div>
                 <div className={styles.slot__cell}>{new Date(item.slot_date).toLocaleDateString()}</div>
                 <div className={styles.slot__cell}>{item.slot_time}</div>
