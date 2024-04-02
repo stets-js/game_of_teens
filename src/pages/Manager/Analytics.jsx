@@ -127,7 +127,14 @@ const Analytics = () => {
     0
   );
   const priceTotal = analyticData.reduce(
-    (total, item) => total + item.price,
+    (total, item) => {
+      // Додавання ціни лише для контрактів, які були куплені (item.bought === 1)
+      if (item.bought === 1) {
+        return total + item.price;
+      } else {
+        return total;
+      }
+    },
     0
   );
 
