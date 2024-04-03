@@ -58,6 +58,7 @@ const MeetingsTableItem = ({
   const [modal, setModal] = useState("");
   const [isConfModalOpen, setIsConfModalOpen] = useState(false);
   const typeSelection = useSelector(getTypeSelection);
+  const [freeze, setFreeze] = useState(isFreeze);
 
   const activeClassnames = (colorId) => {
     return classNames(styles.item, {
@@ -173,6 +174,7 @@ const MeetingsTableItem = ({
   ///////
   const handleFreezeClick = (e) => {
     e.stopPropagation();
+    setFreeze(!freeze);
     freezeSlot(+slotId)
       .then(() => success("Freezing toggled"))
       .catch((err) => error("Error", err));
@@ -364,12 +366,13 @@ const MeetingsTableItem = ({
               className={styles.styled_button}
               type="button"
               data-modal="freeze"
+              isFreeze={freeze}
               onClick={typeSelection === "Free" ? handleDeleteClick : handleFreezeClick}
             >
               freeze
             </button>
           </div>
-          {isFreeze ? <div className={styles.asterix}><Snowflake /></div> : null}
+          {freeze ? <div className={styles.asterix}><Snowflake /></div> : null}
         </li>
       </>
       ) : (
