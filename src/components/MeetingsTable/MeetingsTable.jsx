@@ -55,8 +55,6 @@ const MeetingsTable = ({
 
   let isTableLengthD = false;
   let isMarkUpAdded = false;
-  //const [reload, setReload] = useState(false);
-  // useEffect(() => {});
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
   
@@ -92,6 +90,25 @@ const MeetingsTable = ({
                   day,
                   time,
                   colorId: 1,
+                })
+              );
+              resolve(); // Розділено виклик resolve після успішного виконання
+            })
+            .catch((error) => {
+              dispatch(setManagerError(error.message));
+              reject(error); // Розділено виклик reject у випадку помилки
+            })
+            .finally(() => dispatch(setManagerLoading(false)));
+          break;
+        case "Working time":
+          dispatch(setManagerLoading(true));
+          updateSlot(id, week, day, time, 2)
+            .then(() => {
+              dispatch(
+                changeStatusSlot({
+                  day,
+                  time,
+                  colorId: 2,
                 })
               );
               resolve(); // Розділено виклик resolve після успішного виконання
@@ -223,9 +240,6 @@ const MeetingsTable = ({
                         colorId={i.status_id || i.status}
                         isFollowUp={i.follow_up}
                         isFreeze={i.is_freeze}
-                        
-                        // handleReload={()=> setReload(!reload)}
-                        // onClickFn={()=> {Fn(item.manager_id, weekId, dayIndex, i.time)}}
                         onClickFn={() => {
                           Fn(item.manager_id, weekId, dayIndex, i.time)
                             .then(() => getNewTableData(parseInt(date.split('.')[0], 10), parseInt(date.split('.')[1], 10), parseInt(date.split('.')[2], 10)))

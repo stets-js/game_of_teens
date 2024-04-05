@@ -98,6 +98,14 @@ function CurrentMeetingsPageTable() {
         <RadioButton
           buttonType={buttonType}
           style={styles.controlButton}
+          styleActive={styles.controlButtonOrangeFocus}
+          styleColor={styles.controlButtonOrange}
+          onChangeType={onCheckedButton}
+          title="Working time"
+        />
+        <RadioButton
+          buttonType={buttonType}
+          style={styles.controlButton}
           styleActive={styles.controlButtonGrayFocus}
           styleColor={styles.controlButtonGray}
           onChangeType={onCheckedButton}
@@ -156,7 +164,7 @@ function CurrentMeetingsPageTable() {
             </div>
           </>
         ) : (
-          <div className={styles.blank}>loading</div>
+          <div className={styles.blank}>loading...</div>
         )
       ) : (
         <div className={styles.blank}>this table is for PC use only</div>

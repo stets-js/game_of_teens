@@ -94,7 +94,7 @@
 
 ///// RADIO BUTTONS//////
 .wrapperControlButtons {
-  width: 300px;
+  width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -117,6 +117,13 @@
 
 .controlButtonGray {
   background-color: $tableItem-grayColor;
+}
+.controlButtonOrange {
+  background-color: $tableItem-orangeColor;
+}
+.controlButtonOrangeFocus {
+  background-color: $tableItem-orangeHover;
+  border: 3px solid rgba(141, 129, 85, 1);
 }
 .controlButtonGreenFocus {
   background-color: $tableItem-greenHover;

@@ -330,7 +330,9 @@ const MeetingsTableItem = ({
         </>
       ) : colorId === 2 ? (
         <>
-        <li className={activeClassnames(colorId)}>
+        <li className={activeClassnames(colorId)}
+        onClick={typeSelection === "Free" ? handleDeleteClick : onClickFn}
+        >
         {text !== undefined ? text : ``}
           <div className={styles.hover_buttons}>
             <button
