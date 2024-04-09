@@ -31,27 +31,30 @@ export default function CallerPage() {
   const weekId = useSelector(getWeekId);
   const { callerId } = useParams();
   const [callerName, setCallerName] = useState("");
-  
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
-
   const [courseId, setCourses] = useState(3);
 
-    useEffect(() => {
-    if(weekId){
-    dispatch(getCallerWeekByCourse({ weekId, courseId }));
-    }
-
+  useEffect(() => {
     getUserById(+callerId)
       .then((data) => {
-        setCallerName(data.data.name);
+        const fetchedCallerName = data.data.name;
+        setCallerName(fetchedCallerName);
+        if (fetchedCallerName === "Sales Department") {
+          setCourses(53);
+        }
       })
       .catch((err) => {
         setError(err);
       });
-  }, [dispatch, callerId, courseId]);
+  }, [callerId]);
 
-  
+  useEffect(() => {
+    if (weekId && callerName !== "") {
+      dispatch(getCallerWeekByCourse({ weekId, courseId }));
+    }
+  }, [dispatch, weekId, callerName, courseId]);
+
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
   function setDayIndex(num) {
@@ -74,36 +77,36 @@ export default function CallerPage() {
 
         {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
         <Select
-              classname={styles.select__label2}
-              value={courseId}
-              setValue={setCourses}
-              request={getCourses}
-              callerName={callerName}
-              label="course"
-              defaultValue="Select course"
-              title="Course:"
-            />
-
-          <DatePicker changeDateFn={getCallerWeekByCourse} tableDate={tableDate} courseId={courseId} caller />
-         {window.innerWidth > 1100 ? (
-        <Days caller />
-      ) : (
-        <DaysPicker caller setDayIndex={setDayIndex} />
-      )}
-       {window.innerWidth > 1100 ? (
-        <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
-      ) : (
-        <DayTable
-          weekId={weekId} 
-          table={table[currentDayIndex]}
-          dayIndex={currentDayIndex}
-          courseId={courseId}
-          caller
+          classname={styles.select__label2}
+          value={courseId}
+          setValue={setCourses}
+          request={getCourses}
+          callerName={callerName}
+          label="course"
+          defaultValue="Select course"
+          title="Course:"
         />
-      )}
-          {error && <p className={styles.free__places}>{error.message}</p>}
-        </section>
-      </div>
-    </>
-  );
+
+        <DatePicker changeDateFn={getCallerWeekByCourse} tableDate={tableDate} courseId={courseId} caller />
+        {window.innerWidth > 1100 ? (
+          <Days caller />
+        ) : (
+          <DaysPicker caller setDayIndex={setDayIndex} />
+        )}
+        {window.innerWidth > 1100 ? (
+          <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
+        ) : (
+          <DayTable
+            weekId={weekId} 
+            table={table[currentDayIndex]}
+            dayIndex={currentDayIndex}
+            courseId={courseId}
+            caller
+          />
+        )}
+        {error && <p className={styles.free__places}>{error.message}</p>}
+      </section>
+    </div>
+  </>
+);
 }
