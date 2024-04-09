@@ -17,14 +17,11 @@ import {
   getTable,
   getWeekId,
 } from "../../redux/caller/caller-selectors";
-import { getCallerCurrentWeek, getCallerWeek,getCallerWeekByCourse, getCallerCurrentWeekByCourse } from "../../redux/caller/caller-operations";
-
+import { getCallerWeekByCourse } from "../../redux/caller/caller-operations";
 import Select from "../../components/Select/Select";
 import { getCourses } from "../../helpers/course/course";
-
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
-import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 export default function CallerPage() {
   const [error, setError] = useState("");
@@ -41,12 +38,6 @@ export default function CallerPage() {
   const [courseId, setCourses] = useState(3);
 
     useEffect(() => {
-      dispatch(getCallerCurrentWeekByCourse(courseId));
-    },[]);
-
-    useEffect(() => {
-    //dispatch(getCallerCurrentWeek(+callerId));
-    //dispatch(getCallerCurrentWeekByCourse(courseId));
     if(weekId){
     dispatch(getCallerWeekByCourse({ weekId, courseId }));
     }
