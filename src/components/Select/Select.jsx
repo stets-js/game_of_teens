@@ -1,6 +1,6 @@
-import styles from "./Select.module.scss";
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
+import styles from "./Select.module.scss";
 
 const Select = ({
   classname,
@@ -15,6 +15,7 @@ const Select = ({
   administrator,
   manager,
   signUp,
+  callerName,
 }) => {
   const [data, setData] = useState([]);
 
@@ -27,8 +28,8 @@ const Select = ({
       setData([]);
       return;
     }
-    if (signUp){
-      const filteredData = res.filter(i => i.name !== "Administrator");
+    if (signUp) {
+      const filteredData = res.filter((i) => i.name !== "Administrator");
       setData(filteredData);
       return filteredData;
     }
@@ -43,7 +44,7 @@ const Select = ({
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <label className={styles.input__label}>
       <p className={classnames(styles.input__title, classname)}>{title}</p>
@@ -82,21 +83,12 @@ const Select = ({
           )}
 
           {data.map((i) => {
-            if (i.name === "Administrator" && administrator === true) {
-              return "";
+            // Додайте умову для відображення курсів тільки у випадку, коли callerName === "Sales Department"
+            if (callerName === "Sales Department" && ![55, 53].includes(i.id)) {
+              return null; // Приховати всі інші курси, крім 55 та 53
             }
-            if (i.name === "Не призначено" && manager) {
-              return "";
-            }
-            if (groupId === i.course_id) {
-              return (
-                <option value={i.id} key={i.id}>
-                  {i.name}
-                </option>
-              );
-            } else if (groupId) {
-              return;
-            }
+
+            // Інакше відображайте всі курси
             return (
               <option value={i.id} key={i.id}>
                 {i.name}
