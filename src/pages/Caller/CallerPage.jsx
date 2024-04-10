@@ -17,11 +17,13 @@ import {
   getTable,
   getWeekId,
 } from "../../redux/caller/caller-selectors";
-import { getCallerWeekByCourse, getCallerCurrentWeekByCourse } from "../../redux/caller/caller-operations";
+import { getCallerCurrentWeek, getCallerWeek,getCallerWeekByCourse, getCallerCurrentWeekByCourse } from "../../redux/caller/caller-operations";
 import Select from "../../components/Select/Select";
 import { getCourses } from "../../helpers/course/course";
+
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
 import { getCallerLoading } from "../../redux/caller/caller-selectors";
+import CrmLinks from "../../components/CrmLinks/CrmLinks";
 
 export default function CallerPage() {
   const [error, setError] = useState("");
@@ -31,36 +33,31 @@ export default function CallerPage() {
   const weekId = useSelector(getWeekId);
   const { callerId } = useParams();
   const [callerName, setCallerName] = useState("");
+  
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
-  const [courseId, setCourses] = useState(3);
+  const [courseId, setCourses] = useState(+callerId === 31 ? 53 : 3);
 
-  useEffect(() => {
-    dispatch(getCallerCurrentWeekByCourse(courseId));
-  },[]);
+    useEffect(() => {
+      dispatch(getCallerCurrentWeekByCourse(courseId));
+    },[]);
 
-  useEffect(() => {
+    useEffect(() => {
+    //dispatch(getCallerCurrentWeek(+callerId));
+    //dispatch(getCallerCurrentWeekByCourse(courseId));
+    if(weekId){
+    dispatch(getCallerWeekByCourse({ weekId, courseId }));
+    }
     getUserById(+callerId)
       .then((data) => {
-        const fetchedCallerName = data.data.name;
-        setCallerName(fetchedCallerName);
-        if (fetchedCallerName === "Sales Department") {
-          setCourses(53);
-        }
+        setCallerName(data.data.name);
       })
       .catch((err) => {
         setError(err);
       });
-  }, [callerId]);
-
-  useEffect(() => {
-    if (weekId && callerName !== "") {
-      dispatch(getCallerWeekByCourse({ weekId, courseId }));
-    }
-  }, [dispatch, weekId, callerName, courseId]);
-
+  }, [dispatch, callerId, courseId]);
+  
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
-
   function setDayIndex(num) {
     setCurrentDayIndex(num);
   }
@@ -78,39 +75,37 @@ export default function CallerPage() {
           <span className={styles.free__span}>--</span> - number of free places
         </p>
         <section className={styles.tableSection}>
-
         {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
         <Select
-          classname={styles.select__label2}
-          value={courseId}
-          setValue={setCourses}
-          request={getCourses}
-          callerName={callerName}
-          label="course"
-          defaultValue="Select course"
-          title="Course:"
+              classname={styles.select__label2}
+              value={courseId}
+              setValue={setCourses}
+              request={getCourses}
+              callerName={callerName}
+              label="course"
+              defaultValue="Select course"
+              title="Course:"
+            />
+          <DatePicker changeDateFn={getCallerWeekByCourse} tableDate={tableDate} courseId={courseId} caller />
+         {window.innerWidth > 1100 ? (
+        <Days caller />
+      ) : (
+        <DaysPicker caller setDayIndex={setDayIndex} />
+      )}
+       {window.innerWidth > 1100 ? (
+        <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
+      ) : (
+        <DayTable
+          weekId={weekId} 
+          table={table[currentDayIndex]}
+          dayIndex={currentDayIndex}
+          courseId={courseId}
+          caller
         />
-
-        <DatePicker changeDateFn={getCallerWeekByCourse} tableDate={tableDate} courseId={courseId} caller />
-        {window.innerWidth > 1100 ? (
-          <Days caller />
-        ) : (
-          <DaysPicker caller setDayIndex={setDayIndex} />
-        )}
-        {window.innerWidth > 1100 ? (
-          <Table table={table} weekId={weekId} courseId={courseId} callerName={callerName} caller/>
-        ) : (
-          <DayTable
-            weekId={weekId} 
-            table={table[currentDayIndex]}
-            dayIndex={currentDayIndex}
-            courseId={courseId}
-            caller
-          />
-        )}
-        {error && <p className={styles.free__places}>{error.message}</p>}
-      </section>
-    </div>
-  </>
-);
+      )}
+          {error && <p className={styles.free__places}>{error.message}</p>}
+        </section>
+      </div>
+    </>
+  );
 }
