@@ -36,7 +36,7 @@ export default function CallerPage() {
   
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
-  const [courseId, setCourses] = useState(+callerId === 31 ? 53 : 3);
+  const [courseId, setCourses] = useState(+callerId === 31 ? 53 : 3); // 31 - its id off Sales Course, 53 - id of default shown course on SC page, 3 - id of default shown course 
 
     useEffect(() => {
       dispatch(getCallerCurrentWeekByCourse(courseId));
