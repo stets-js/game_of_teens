@@ -36,10 +36,6 @@ export default function CallerPage() {
   const [courseId, setCourses] = useState(3);
 
   useEffect(() => {
-    dispatch(getCallerCurrentWeekByCourse(courseId));
-  },[]);
-
-  useEffect(() => {
     getUserById(+callerId)
       .then((data) => {
         const fetchedCallerName = data.data.name;
@@ -54,6 +50,7 @@ export default function CallerPage() {
   }, [callerId]);
 
   useEffect(() => {
+    console.log("weekId", weekId)
     if (weekId && callerName !== "") {
       dispatch(getCallerWeekByCourse({ weekId, courseId }));
     }
