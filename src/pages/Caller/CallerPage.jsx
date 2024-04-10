@@ -17,7 +17,7 @@ import {
   getTable,
   getWeekId,
 } from "../../redux/caller/caller-selectors";
-import { getCallerWeekByCourse } from "../../redux/caller/caller-operations";
+import { getCallerWeekByCourse, getCallerCurrentWeekByCourse } from "../../redux/caller/caller-operations";
 import Select from "../../components/Select/Select";
 import { getCourses } from "../../helpers/course/course";
 import { isManagerLoading } from "../../redux/manager/manager-selectors";
@@ -34,6 +34,10 @@ export default function CallerPage() {
   const managerLoading = useSelector(isManagerLoading);
   const callerLoading = useSelector(getCallerLoading);
   const [courseId, setCourses] = useState(3);
+
+  useEffect(() => {
+    dispatch(getCallerCurrentWeekByCourse(courseId));
+  },[]);
 
   useEffect(() => {
     getUserById(+callerId)
