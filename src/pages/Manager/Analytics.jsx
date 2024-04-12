@@ -8,6 +8,7 @@ import { success, error, defaults } from "@pnotify/core";
 import { TailSpin } from "react-loader-spinner";
 import NoData from "../SuperAdmin/NoData";
 import SortIcon from "./SortIcon";
+import CreateEventButton from "./Event";
 
 const Analytics = () => {
   const manager_id = window.location.pathname.split("/")[2];
@@ -140,6 +141,7 @@ const Analytics = () => {
 
   return (
     <>
+    <CreateEventButton />
       <div className={styles.btn__wrapper}>
         <input
           className={styles.searchDateInput}
