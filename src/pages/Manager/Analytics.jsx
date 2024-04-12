@@ -141,7 +141,6 @@ const Analytics = () => {
 
   return (
     <>
-    <CreateEventButton />
       <div className={styles.btn__wrapper}>
         <input
           className={styles.searchDateInput}
