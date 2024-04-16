@@ -56,6 +56,7 @@ const ConsultationInfo = ({
   // }, []);
   const [followUp, setFollowUp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenPostpone, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -201,9 +202,9 @@ const ConsultationInfo = ({
             description={desc}
             course={course}
             result={result}
-            // login={login}
-            // password={password}
-            // role={role}
+            postpone
+            postponeClick={() => setIsOpen(!isOpenPostpone)}
+            handleClose={handleClose}
             status={{
               successMessage: "Successfully changed consultation info",
               failMessage: "Failed to change consultation info",
