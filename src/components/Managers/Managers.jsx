@@ -105,6 +105,7 @@ export default function Managers({ isOpenModal, isAdmin, data }) {
                     <option value="6">Team 6</option>
                     <option value="7">Team 7</option>
                     <option value="8">CB MIC</option>
+                    <option value="9">Without sale</option>
                   </select>
                 )}
                 <ul className={styles.main_wrapper}>

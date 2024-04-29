@@ -41,6 +41,7 @@ export default function ManagersAnalytic() {
     { value: 6, label: "Team 6" },
     { value: 7, label: "Team 7" },
     { value: 8, label: "CB MIC" },
+    { value: 9, label: "Without sale" },
   ];
   // Фільтрація даних за зазначеним терміном пошуку
   const filteredData = searchTerm
