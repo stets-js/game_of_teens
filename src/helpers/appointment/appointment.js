@@ -1,5 +1,6 @@
 import axios from "../axios-config";
 import {jwtDecode} from "jwt-decode";
+import { alert, notice, info, success, error } from "@pnotify/core";
 
 axios.create({
   withCredentials: true,
@@ -47,14 +48,17 @@ const putAppointment = (credentials) => {
         action: "rescheduled",
         zoho_id: zoho_id,
       };
-
+      info("Data sending to ZOHO...");
       axios.post(
         "https://zohointegration.goit.global/GoITeens/booking/index.php",
         JSON.stringify(responseData),
         { headers: { "Content-Type": "application/json" }}
-      );
-
-      return res.data;
+      ).then((res) => {
+        success("Successfully sended to ZOHO!")
+        return res.data;
+      }).catch((err) => {
+        error("Data not sended to ZOHO!")
+      });
     })
     .catch((error) => {
       throw error;
@@ -75,6 +79,7 @@ const createAppointment = (
   appointmentType
 ) => {
   const authToken = localStorage.getItem("booking");
+
 
   return axios
     .post(
@@ -97,13 +102,20 @@ const createAppointment = (
         zoho_id: zoho_id,
       };
 
+      info("Data sending to ZOHO...");
+      
       axios.post(
         "https://zohointegration.goit.global/GoITeens/booking/index.php",
         JSON.stringify(responseData),
         { headers: { "Content-Type": "application/json" }}
-      );
+      ).then((res) => {
+        success("Successfully sended to ZOHO!")
+        return res.data;
+      }).catch((err) => {
+        error("Data not sended to ZOHO!")
+      });
 
-      return res.data;
+      
     })
     .catch((error) => {
       throw error;
@@ -125,14 +137,17 @@ const swapAppointmentManagers = (credentials) => {
         action: "swapped",
         zoho_id: zoho_id,
       };
-
+      info("Data sending to ZOHO...");
       axios.post(
         "https://zohointegration.goit.global/GoITeens/booking/index.php",
         JSON.stringify(responseData),
         { headers: { "Content-Type": "application/json" }}
-      );
-
-      return res.data;
+      ).then((res) => {
+        success("Successfully sended to ZOHO!")
+        return res.data;
+      }).catch((err) => {
+        error("Data not sended to ZOHO!")
+      });
     })
     .catch((error) => {
       throw error;

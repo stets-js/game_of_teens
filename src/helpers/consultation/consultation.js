@@ -1,5 +1,6 @@
 import axios from "../axios-config";
 import {jwtDecode} from "jwt-decode";
+import { alert, notice, info, success, error } from "@pnotify/core";
 
 const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMessage, course) => {
   const formattedMessage = message || ""; 
@@ -23,14 +24,17 @@ const postConsultationResult = (slotId, result, groupId, message, unsuccessfulMe
         action: "attended",
         zoho_id: zoho_id,
       };
-
+      info("Data sending to ZOHO...");
       axios.post(
         "https://zohointegration.goit.global/GoITeens/booking/index.php",
         JSON.stringify(responseData),
         { headers: { "Content-Type": "application/json" }}
-      );
-
-      return res.data;
+      ).then((res) => {
+        success("Successfully sended to ZOHO!")
+        return res.data;
+      }).catch((err) => {
+        error("Data not sended to ZOHO!")
+      });
     })
     .catch((error) => {
       throw error;
