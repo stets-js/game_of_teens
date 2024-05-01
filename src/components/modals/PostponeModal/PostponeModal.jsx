@@ -46,7 +46,6 @@ export default function PostponeModal({
 }) {
   const [callerId, setCallerId] = useState(null);
   const [error, setError] = useState("");
-  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [isChangeManagerOpened, setIsChangeManagerOpened] = useState(false);
   const [currentDay, setCurrentDay] = useState(day);
   const [currentHour, setCurrentHour] = useState(hour);
@@ -55,22 +54,7 @@ export default function PostponeModal({
   const tableDate = useSelector(getCallerDate);
   const wid = useSelector(getWeekId);
   const table = useSelector(getTable);
-  // const [selectedReason, setSelectedReason] = useState("no parents attending");
-
-  // const rejectionReasons = [
-  //   "no parents attending",
-  //   "child sick",
-  //   "not interested",
-  //   "forgot about TL / have no time",
-  //   "no contact",
-  //   "tech reasons",
-  //   "no PC",
-  //   "no electricity",
-  //   "other reasons",
-  // ];
-  // const handleReasonChange = (e) => {
-  //   setSelectedReason(e.target.value);
-  // };
+ 
 
   const onClickSlotFn = (weekIdNew, dayIndexNew, hourIndexNew) => {
     setCurrentDay(dayIndexNew);
@@ -166,7 +150,7 @@ export default function PostponeModal({
               caller={true}
               courseId={courseId}
             />
-            <Days />
+            <Days caller={true} />
             {!error && (
               <Table
                 postponed

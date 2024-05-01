@@ -24,6 +24,7 @@ import Select from "../../Select/Select";
 import Form from "../../Form/Form";
 import { TailSpin } from "react-loader-spinner";
 
+import PostponeModal from "../../../components/modals/PostponeModal/PostponeModal";
 
 const ConsultationInfo = ({
   isOpen,
@@ -288,6 +289,21 @@ const ConsultationInfo = ({
           </Form>
         </Modal>
       )}
+      {isOpenPostpone && <PostponeModal
+        isOpen={isOpenPostpone}
+        onClose={() => setIsOpen(false)}
+        appointmentId={appointment.id}
+        link={appointment.zoho_link}
+        courseId={appointment.course_id}
+        day={dayIndex}
+        hour={hourIndex}
+        phone={appointment.phone}
+        age={appointment.age}
+        slotId={slotId}
+        weekId={weekId}
+        message={message}
+        isFollowUp={followUp}
+      />}
     </>
   );
 };
