@@ -339,7 +339,8 @@ const MeetingsTableItem = ({
               className={styles.styled_button}
               type="button"
               data-modal="working"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsOpen(!isOpen);
                 setModal("working");
               }}
