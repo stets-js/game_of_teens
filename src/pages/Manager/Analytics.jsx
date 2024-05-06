@@ -357,27 +357,6 @@ const Analytics = () => {
                 )}
               </div>
               <div className={styles.item__analytic}>
-                  <label>ENG:</label>
-                  <select
-                    value={item.language_data}
-                    onChange={(e) => {
-                      const updatedData = analyticData.map((analyticItem) => {
-                        if (analyticItem.id === item.id) {
-                          return {
-                            ...analyticItem,
-                            language_data: e.target.value,
-                          };
-                        }
-                        return analyticItem;
-                      });
-                      setAnalyticData(updatedData);
-                    }}
-                  >
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                  </select>
-                </div>
-              <div className={styles.item__analytic}>
                 <label>Time:</label>
                 <p>{item.time}</p>
               </div>
