@@ -261,7 +261,7 @@
 /////// APPOINTMENT SEARCH ////////////
 .search__container{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 .search__wrapper{
   position: relative;
@@ -292,7 +292,7 @@
 .data__wrapper{
   display: flex;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
   flex-direction: column;
 }
 .slot__wrapper{
@@ -503,7 +503,7 @@ width: 100px;
   display: block;
   width: 200px;
   background-color: $grey;
-  border-radius: 10px;
+  border-radius: 25px;
   border: 0;
   height: 50px;
   padding-left: 15px;
@@ -667,4 +667,9 @@ text-align: end;
     font-size: 16px;
     font-family: $poppins;
     cursor: pointer;
+  }
+  .sort__instruments{
+    display: flex;
+    margin-top: 50px;
+    justify-content: space-around;
   }
