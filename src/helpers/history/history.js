@@ -4,14 +4,14 @@ axios.create({
     withCredentials: true,
   });
 
-const getHistory = () => {
-  return axios
-    .get(`/history_logs`)
-    .then((res) => res.data)
-    .catch((error) => {
-      throw error;
-    });
-};
+  const getHistory = (month) => {
+    return axios
+      .get(`/history_logs/${month}`)
+      .then((res) => res.data)
+      .catch((error) => {
+        throw error;
+      });
+  };
 
 const getAppointmentHistory = (credentials) => {
   return axios

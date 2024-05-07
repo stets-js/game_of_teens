@@ -5,19 +5,55 @@ import SearchSVG from "./Search_svg";
 import { useLinkClickHandler } from "react-router-dom";
 import { getHistory, getAppointmentHistory } from "../../helpers/history/history";
 import { TailSpin } from "react-loader-spinner";
+import SortIcon from "../Manager/SortIcon";
 
 export default function ConsultationLogs() {
     const [isLoading, setIsLoading] = useState(false)
     const [inputValue, setInputValue] = useState("");
     const [data, setData] = useState(null);
+    const [month, setMonth] = useState(new Date().getMonth() + 1);
+    const [sortDate, setSortDate] = useState(true);
+
+    const months = [
+      { value: 1, label: "January" },
+      { value: 2, label: "February" },
+      { value: 3, label: "March" },
+      { value: 4, label: "April" },
+      { value: 5, label: "May" },
+      { value: 6, label: "June" },
+      { value: 7, label: "July" },
+      { value: 8, label: "August" },
+      { value: 9, label: "September" },
+      { value: 10, label: "October" },
+      { value: 11, label: "November" },
+      { value: 12, label: "December" },
+    ];
     
     useEffect(() =>{
-        async function getData(){
-            const res =  await getHistory();
-            setData(res.data)
+      async function getData(month){
+        setIsLoading(true);
+        try{ 
+          const res =  await getHistory(month);
+          setIsLoading(false);
+          sortAndSetData(res.data);
+        }catch(err){
+          console.error("Error fetching data:", err);
+          setIsLoading(false);
         }
-        getData()
-    },[]);
+      }
+      getData(month);
+  },[month, sortDate]);
+  
+  const sortAndSetData = (data) => {
+    if (sortDate) {
+      // Сортування за датою в порядку зростання
+      data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else {
+      // Сортування за датою в порядку спадання
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+    setData(data);
+  };
 
     const clickHandler = async () => {
         try {
@@ -46,9 +82,35 @@ export default function ConsultationLogs() {
           onChange={handleInputChange} />
         <button className={styles.search__btn} onClick={clickHandler} type="button">{isLoading ? <TailSpin height="30px" width="30px" color="#999DFF" /> : <SearchSVG />}</button>
         </div>
+        <select
+          className={styles.select}
+          value={months.find((mo) => mo.value === month)?.label}
+          onChange={(e) => {
+            const selectedMonth = months.find(
+              (month) => month.label === e.target.value
+            );
+            setMonth(+selectedMonth?.value || 1);
+          }}
+        >
+          {months.map((m, index) => (
+            <option key={index} value={m.label}>
+              {m.label}
+            </option>
+          ))}
+        </select>
     </div>
+    <div
+          className={styles.sort__item}
+          onClick={() => {
+            setSortDate(!sortDate);
+          }}
+        >
+          <p>Date sorting</p>
+          <SortIcon />
+        </div>
         {data && data.length > 0 ? (
       <div className={styles.data__wrapper}>
+        {isLoading ? <div className={styles.loadingBackdrop}><TailSpin height="150px" width="150px" color="#999DFF" /></div> : null}
         {data.map((item) => (
           <div key={uuidv4()} className={`${styles.data__item} ${
             item.action === "Create" ? styles.create :
