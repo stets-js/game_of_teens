@@ -26,7 +26,7 @@ import {
   getManagerWeek,
 } from "../../redux/manager/manager-operations";
 import { updateSlot, saveTable, getWeekTable } from "../../helpers/week/week";
-import {getSlotInfo} from "../../helpers/slot/slot";
+import { getSlotInfo } from "../../helpers/slot/slot";
 import Button from "../../components/Buttons/Buttons";
 import ControlButtons from "../../components/ControlButtons/ControlButtons";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -143,33 +143,39 @@ const PlanningPage = () => {
           .finally(() => dispatch(setManagerLoading(false)));
       case "Free":
         dispatch(setManagerLoading(true));
-  getSlotInfo(managerId, weekId, dayIndex, table[dayIndex][hourIndex].time)
-    .then((slotInfo) => {
-      console.log("slotInfo", slotInfo)
-      if (slotInfo.data.status_id > 2) {
-        error("Slot is occupied");
-      } else {
-        updateSlot(
+        getSlotInfo(
           managerId,
           weekId,
           dayIndex,
-          table[dayIndex][hourIndex].time,
-          0
+          table[dayIndex][hourIndex].time
         )
-        .then(() => {
-          dispatch(
-            changeStatusSlot({
-              dayIndex,
-              hourIndex,
-              colorId: 0,
-            })
-          );
-        })
-        .catch((err) => dispatch(setManagerError(err.message)))
-        .finally(() => dispatch(setManagerLoading(false)));
-      }
-    })
-    .catch((err) => dispatch(setManagerError(err.message))).finally(() => dispatch(setManagerLoading(false)));
+          .then((slotInfo) => {
+            console.log("slotInfo", slotInfo);
+            if (slotInfo.data.status_id > 2) {
+              error("Slot is occupied");
+            } else {
+              updateSlot(
+                managerId,
+                weekId,
+                dayIndex,
+                table[dayIndex][hourIndex].time,
+                0
+              )
+                .then(() => {
+                  dispatch(
+                    changeStatusSlot({
+                      dayIndex,
+                      hourIndex,
+                      colorId: 0,
+                    })
+                  );
+                })
+                .catch((err) => dispatch(setManagerError(err.message)))
+                .finally(() => dispatch(setManagerLoading(false)));
+            }
+          })
+          .catch((err) => dispatch(setManagerError(err.message)))
+          .finally(() => dispatch(setManagerLoading(false)));
       default:
         break;
     }
@@ -199,11 +205,13 @@ const PlanningPage = () => {
       [styles.tableButtonDisabled]: templateText === "No template",
     });
   };
-  
+
   return (
     <section className={styles.tableSection}>
       <ControlButtons />
-      {managerLoading || callerLoading ? <div className={styles.loadingBackdrop}></div> : null}
+      {managerLoading || callerLoading ? (
+        <div className={styles.loadingBackdrop}></div>
+      ) : null}
       <DatePicker tableDate={tableDate} changeDateFn={getManagerWeek} />
       {window.innerWidth > 1100 ? (
         <Days />
