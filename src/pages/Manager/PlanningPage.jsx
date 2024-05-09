@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import classNames from "classnames";
+import { success, error, defaults } from "@pnotify/core";
 import { useSelector, useDispatch } from "react-redux";
 import "react-calendar/dist/Calendar.css";
 import styles from "./ManagerPage.module.scss";
@@ -25,6 +26,7 @@ import {
   getManagerWeek,
 } from "../../redux/manager/manager-operations";
 import { updateSlot, saveTable, getWeekTable } from "../../helpers/week/week";
+import {getSlotInfo} from "../../helpers/slot/slot";
 import Button from "../../components/Buttons/Buttons";
 import ControlButtons from "../../components/ControlButtons/ControlButtons";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -72,7 +74,7 @@ const PlanningPage = () => {
           })
         );
       })
-      .catch((error) => dispatch(setManagerError(error.message)))
+      .catch((err) => dispatch(setManagerError(err.message)))
       .finally(() => dispatch(setManagerLoading(false)));
   };
   const getTemplate = () => {
@@ -117,7 +119,7 @@ const PlanningPage = () => {
               })
             );
           })
-          .catch((error) => dispatch(setManagerError(error.message)))
+          .catch((err) => dispatch(setManagerError(err.message)))
           .finally(() => dispatch(setManagerLoading(false)));
       case "Working time":
         dispatch(setManagerLoading(true));
@@ -137,28 +139,37 @@ const PlanningPage = () => {
               })
             );
           })
-          .catch((error) => dispatch(setManagerError(error.message)))
+          .catch((err) => dispatch(setManagerError(err.message)))
           .finally(() => dispatch(setManagerLoading(false)));
       case "Free":
         dispatch(setManagerLoading(true));
-        return updateSlot(
+  getSlotInfo(managerId, weekId, dayIndex, table[dayIndex][hourIndex].time)
+    .then((slotInfo) => {
+      console.log("slotInfo", slotInfo)
+      if (slotInfo.data.status_id > 2) {
+        error("Slot is occupied");
+      } else {
+        updateSlot(
           managerId,
           weekId,
           dayIndex,
           table[dayIndex][hourIndex].time,
           0
         )
-          .then(() => {
-            dispatch(
-              changeStatusSlot({
-                dayIndex,
-                hourIndex,
-                colorId: 0,
-              })
-            );
-          })
-          .catch((error) => dispatch(setManagerError(error.message)))
-          .finally(() => dispatch(setManagerLoading(false)));
+        .then(() => {
+          dispatch(
+            changeStatusSlot({
+              dayIndex,
+              hourIndex,
+              colorId: 0,
+            })
+          );
+        })
+        .catch((err) => dispatch(setManagerError(err.message)))
+        .finally(() => dispatch(setManagerLoading(false)));
+      }
+    })
+    .catch((err) => dispatch(setManagerError(err.message))).finally(() => dispatch(setManagerLoading(false)));
       default:
         break;
     }
@@ -178,8 +189,8 @@ const PlanningPage = () => {
           })
         );
       })
-      .catch((error) => {
-        return dispatch(setManagerError(error.message));
+      .catch((err) => {
+        return dispatch(setManagerError(err.message));
       });
   }, [dispatch, managerId]);
 

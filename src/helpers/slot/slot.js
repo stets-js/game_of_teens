@@ -38,9 +38,19 @@ const freezeSlotStatus = ( date, time, managerId ) => {
       });
   };
 
+  const getSlotInfo = (managerId, weekId, dayIndex, slotHour) => {
+    return axios
+      .get(`/get_slot_info/${managerId}/${weekId}/${dayIndex}/${slotHour}`)
+      .then((res) => res.data)
+      .catch((error) => {
+        throw error;
+      });
+  };
+
   export {
     getSlot,
     updateSlotComment,
     freezeSlot,
-    freezeSlotStatus
+    freezeSlotStatus,
+    getSlotInfo
   };
