@@ -27,6 +27,11 @@ import { getCallerDate } from "../../../redux/caller/caller-selectors";
 import moment from "moment";
 import { TailSpin } from "react-loader-spinner";
 import {freezeSlotStatus} from "../../../helpers/slot/slot";
+import axios from "axios";
+
+import { useGoogleOneTapLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const NewAppointment = ({
   isOpen,
@@ -46,6 +51,7 @@ const NewAppointment = ({
   const [appointment, setAppointment] = useState({});
   const [managerId, setManagerId] = useState("");
   const [message, setMessage] = useState("");
+  const [googleLink, setGoogleLink] = useState("");
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState("");
   const [isChangeOpen, setIsChangeOpen] = useState(false);
@@ -77,20 +83,6 @@ const NewAppointment = ({
       .then((data) => { setAppointmentData(data.data) });
   }, [isOpen]);
 
-  // useEffect(() => {
-  //   const result = appointmentData.find((appointment) => {
-  //     const found = appointment.manager_appointments.some((item) => {
-  //       setAppointmentId(item.id);
-  //     });
-  //     return found;
-  //   });
-
-  //   if (result?.managerId !== undefined) {
-  //     setManagerId(result.managerId);
-  //   }
-
-  //   console.log("result-->>>",result);
-  // }, [appointmentData]);
   const callerDate = new Date(useSelector(getCallerDate));
   const day = moment(callerDate).add(dayIndex, "days").date() < 10
               ? `0${moment(callerDate).add(dayIndex, "days").date()}`
@@ -114,6 +106,55 @@ const NewAppointment = ({
             });
         }
       }, [managerId, isOpen]);
+
+      // const glogin = useGoogleLogin({
+      //   onSuccess: tokenResponse => console.log(tokenResponse),
+      // });
+      // console.log("login: " + glogin);
+
+      // const generateGoogleMeetLink = () => {
+      //   glogin()
+      //   // try {
+      //   //   // Дані для створення події
+      //   //   const eventData = {
+      //   //     summary: 'Зустріч через Google Meet',
+      //   //     start: {
+      //   //       dateTime: '2024-05-13T10:00:00', // Початок події (формат YYYY-MM-DDTHH:mm:ss)
+      //   //       timeZone: 'Europe/Kiev', // Часовий пояс (наприклад, Europe/Kiev)
+      //   //     },
+      //   //     end: {
+      //   //       dateTime: '2024-05-13T11:00:00', // Кінець події (формат YYYY-MM-DDTHH:mm:ss)
+      //   //       timeZone: 'Europe/Kiev', // Часовий пояс (наприклад, Europe/Kiev)
+      //   //     },
+      //   //     conferenceData: {
+      //   //       createRequest: {
+      //   //         requestId: 'randomstring', // Ідентифікатор запиту (може бути будь-яким унікальним рядком)
+      //   //         conferenceSolutionKey: {
+      //   //           type: 'hangoutsMeet', // Тип конференції (тут використовується Google Meet)
+      //   //         },
+      //   //       },
+      //   //     },
+      //   //   };
+      
+      //   //   // Відправлення запиту на створення події
+      //   //   const response = await axios.post('https://www.googleapis.com/calendar/v3/calendars/trials@goiteens.ua/events', eventData, {
+      //   //     params: {
+      //   //       sendUpdates: 'all',
+      //   //       sendNotifications: true,
+      //   //       conferenceDataVersion: 1,
+      //   //     },
+      //   //   });
+      
+      //   //   // Отримання посилання на Google Meet
+      //   //   const meetLink = response.data.conferenceData.entryPoints.find(entryPoint => entryPoint.entryPointType === 'video').uri;
+      //   //   console.log("meetLink", meetLink);
+      //   //   // Повернення посилання на Google Meet
+      //   //   return meetLink;
+      //   // } catch (error) {
+      //   //   console.error('Помилка під час створення події в календарі Google:', error);
+      //   //   throw error; // Можна обробити помилку подальше за необхідності
+      //   // }
+      // };
 
   return (
     <>
@@ -273,6 +314,18 @@ const NewAppointment = ({
                 handler={setPhone}
               />
             </div>
+            {/* <label className={styles.input__label}>
+              <p className={styles.input__label}>Google Meet</p>
+              <div className={styles.google_wrapper}>
+              <input
+                className={styles.textarea_google}
+                value={googleLink}
+                onChange={(e) => setGoogleLink(e.target.value)}
+              ></input>
+              <button className={styles.generate_btn} type="button" onClick={generateGoogleMeetLink}>
+                    Generate
+              </button></div>
+            </label> */}
             <label className={styles.input__label}>
               <p className={styles.input__label}>Message</p>
               <textarea

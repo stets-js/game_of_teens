@@ -50,6 +50,7 @@ import Statistics from "./pages/Statistics/Statistics";
 import Footer from "./components/Footer/Footer";
 import { useSelector } from "react-redux";
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -57,6 +58,7 @@ const App = () => {
   const userId = useSelector((state) => state.auth.user.id);
   return (
     <>
+    <GoogleOAuthProvider clientId="980947183760-vfj7ar1369hg3gb3d6i5s3s15r56v1to.apps.googleusercontent.com">
       <Routes>
         
       {isAuthenticated ? (
@@ -146,6 +148,7 @@ const App = () => {
       </Routes>
       
       <Footer />
+      </GoogleOAuthProvider>
     </>
   );
 };

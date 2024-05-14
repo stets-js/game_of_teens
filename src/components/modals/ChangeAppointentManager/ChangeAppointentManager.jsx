@@ -213,6 +213,7 @@ const ChangeAppointentManager = ({
                 >
                   {manager.name}
                   {manager.is_freeze ? <Snowflake className={styles.snowflake} /> : null}
+                <p className={styles.managers_team}>Team: {manager.team}</p>
                 </button>
               </div>
 
