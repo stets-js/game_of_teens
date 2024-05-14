@@ -21,7 +21,7 @@ export default function ManagerPage() {
           { text: "CRM", path: path.crm },
           { text: "Analytics", path: path.analytics },
           { text: "Working slots", path: path.workingSlots },
-          // { text: "Postpone", path: path.postpone },
+          { text: "Study booking", path: "https://study-booking.netlify.app/MIC" },
         ]}
         user={{ name: managerName, role: "Manager" }}
       />
