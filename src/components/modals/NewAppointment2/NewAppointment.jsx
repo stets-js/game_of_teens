@@ -52,6 +52,7 @@ const NewAppointment = ({
   const [managerId, setManagerId] = useState("");
   const [message, setMessage] = useState("");
   const [googleLink, setGoogleLink] = useState("");
+  const [googleToken, setGoogleToken] = useState("");
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState("");
   const [isChangeOpen, setIsChangeOpen] = useState(false);
@@ -107,54 +108,67 @@ const NewAppointment = ({
         }
       }, [managerId, isOpen]);
 
-      // const glogin = useGoogleLogin({
-      //   onSuccess: tokenResponse => console.log(tokenResponse),
-      // });
-      // console.log("login: " + glogin);
-
-      // const generateGoogleMeetLink = () => {
-      //   glogin()
-      //   // try {
-      //   //   // Дані для створення події
-      //   //   const eventData = {
-      //   //     summary: 'Зустріч через Google Meet',
-      //   //     start: {
-      //   //       dateTime: '2024-05-13T10:00:00', // Початок події (формат YYYY-MM-DDTHH:mm:ss)
-      //   //       timeZone: 'Europe/Kiev', // Часовий пояс (наприклад, Europe/Kiev)
-      //   //     },
-      //   //     end: {
-      //   //       dateTime: '2024-05-13T11:00:00', // Кінець події (формат YYYY-MM-DDTHH:mm:ss)
-      //   //       timeZone: 'Europe/Kiev', // Часовий пояс (наприклад, Europe/Kiev)
-      //   //     },
-      //   //     conferenceData: {
-      //   //       createRequest: {
-      //   //         requestId: 'randomstring', // Ідентифікатор запиту (може бути будь-яким унікальним рядком)
-      //   //         conferenceSolutionKey: {
-      //   //           type: 'hangoutsMeet', // Тип конференції (тут використовується Google Meet)
-      //   //         },
-      //   //       },
-      //   //     },
-      //   //   };
+      const generateGoogleMeetLink = async (accessToken) => {
+        try {
+          // Дані для створення події
+          const eventData = {
+            summary: `${link}`,
+            start: {
+              dateTime: `2024-${month}-${day}T${time}:00:00`,
+              timeZone: 'Europe/Kiev',
+            },
+            end: {
+              dateTime: `2024-${month}-${day}T${+time + 1}:00:00`,
+              timeZone: 'Europe/Kiev',
+            },
+            conferenceData: {
+              createRequest: {
+                requestId: 'randomstring',
+                conferenceSolutionKey: {
+                  type: 'hangoutsMeet',
+                },
+              },
+            },
+          };
+    
+          const transformedData = JSON.stringify(eventData);
       
-      //   //   // Відправлення запиту на створення події
-      //   //   const response = await axios.post('https://www.googleapis.com/calendar/v3/calendars/trials@goiteens.ua/events', eventData, {
-      //   //     params: {
-      //   //       sendUpdates: 'all',
-      //   //       sendNotifications: true,
-      //   //       conferenceDataVersion: 1,
-      //   //     },
-      //   //   });
+          
+          const response = await axios.post('https://www.googleapis.com/calendar/v3/calendars/c_cd4573bc6239e095763c76fc947e92d35dc267600bbddeb846d4597b501c454b@group.calendar.google.com/events', transformedData, {
+            params: {
+              sendUpdates: 'all',
+              sendNotifications: true,
+              conferenceDataVersion: 1,
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            transformRequest: [(data, headers) => {
+              headers['Authorization'] = `Bearer ${accessToken}`;
+              return data;
+            }],
+          });
       
-      //   //   // Отримання посилання на Google Meet
-      //   //   const meetLink = response.data.conferenceData.entryPoints.find(entryPoint => entryPoint.entryPointType === 'video').uri;
-      //   //   console.log("meetLink", meetLink);
-      //   //   // Повернення посилання на Google Meet
-      //   //   return meetLink;
-      //   // } catch (error) {
-      //   //   console.error('Помилка під час створення події в календарі Google:', error);
-      //   //   throw error; // Можна обробити помилку подальше за необхідності
-      //   // }
-      // };
+          
+          const meetLink = response.data.conferenceData.entryPoints.find(entryPoint => entryPoint.entryPointType === 'video').uri;
+          console.log("meetLink", meetLink);
+          setGoogleLink(meetLink)
+          return meetLink;
+        } catch (error) {
+          console.error('Помилка під час створення події в календарі Google:', error);
+          throw error;
+        }
+      };
+      
+      const glogin = useGoogleLogin({
+        clientId: '980947183760-vfj7ar1369hg3gb3d6i5s3s15r56v1to.apps.googleusercontent.com',
+        onSuccess: tokenResponse => {
+          const accessToken = tokenResponse.access_token;
+          generateGoogleMeetLink(accessToken);
+        },
+        scope: 'https://www.googleapis.com/auth/calendar.events',
+      });
 
   return (
     <>
@@ -314,7 +328,7 @@ const NewAppointment = ({
                 handler={setPhone}
               />
             </div>
-            {/* <label className={styles.input__label}>
+            <label className={styles.input__label}>
               <p className={styles.input__label}>Google Meet</p>
               <div className={styles.google_wrapper}>
               <input
@@ -322,10 +336,10 @@ const NewAppointment = ({
                 value={googleLink}
                 onChange={(e) => setGoogleLink(e.target.value)}
               ></input>
-              <button className={styles.generate_btn} type="button" onClick={generateGoogleMeetLink}>
+              <button className={styles.generate_btn} type="button" onClick={glogin}>
                     Generate
               </button></div>
-            </label> */}
+            </label>
             <label className={styles.input__label}>
               <p className={styles.input__label}>Message</p>
               <textarea
