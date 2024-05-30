@@ -289,6 +289,7 @@ useEffect(()=>{},[analyticData])
                     <option value="6">6 month</option>
                     <option value="9">9 month</option>
                     <option value="12">12 month</option>
+                    <option value="18">18 month</option>
                     <option value="24">24 month</option>
                   </select>
                 </div>
