@@ -109,3 +109,67 @@
     width: 100%;
   }
 }
+
+.confirmationBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmationModal {
+  width: 300px;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.confirmationTitle{
+  font-family: $poppins;
+  font-size: 20px;
+}
+.courseTitle{
+  font-family: $poppins;
+  font-size: 18px;
+}
+.courseTitleAccent{
+  font-family: $poppins;
+  font-size: 18px;
+  font-weight: bold;
+}
+.btn_wrapper{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 50px;
+  justify-content: center;
+}
+
+.yesButton{
+  font-family: $poppins;
+  font-size: 20px;
+  height: 30px;
+  width: 50%;
+  border-radius: 3px;
+  border: none;
+  background-color:rgba(112, 191, 32, 1);
+  color: #fff;
+}
+.noButton{
+  font-family: $poppins;
+  font-size: 20px;
+  height: 30px;
+  width: 50%;
+  border-radius: 3px;
+  border: none;
+  background-color:#e83e3e;
+  color: #fff;
+}

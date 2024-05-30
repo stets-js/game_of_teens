@@ -201,11 +201,12 @@ const ConsultationInfo = ({
             }}
             name={name}
             description={desc}
-            course={course}
+            course={course || appointment.course_id}
             result={result}
             postpone
             postponeClick={() => setIsOpen(!isOpenPostpone)}
             handleClose={handleClose}
+            successConfirm
             status={{
               successMessage: "Successfully changed consultation info",
               failMessage: "Failed to change consultation info",

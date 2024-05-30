@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { defaults, error, success } from "@pnotify/core";
-import React, { useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { removeSlot } from "../../helpers/confirmation/avaliable";
 import { getUserByName, postUser } from "../../helpers/user/user";
@@ -10,6 +10,9 @@ import OpenChangeManagerCourses from "../OpenChangeManagerCourses/OpenChangeMana
 import ChangeAppointment from "../modals/ChangeAppointment/ChangeAppointment";
 import ChangeManagerCourses from "../modals/ChangeManagerCourses/ChangeManagerCourses";
 import styles from "./Form.module.scss";
+
+import { getCourses } from "../../helpers/course/course";
+import Select from "../../components/Select/Select";
 
 defaults.delay = 1000;
 
@@ -41,6 +44,7 @@ const Form = ({
   isCancelConfConsult,
   signUp,
   removeMessage,
+  successConfirm,
   ...formData
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,32 +52,35 @@ const Form = ({
     useState(false);
   const [errorsuccessMessage, setError] = useState(false);
   const [inputCancelClicked, setInputCancelClicked] = useState(false);
-  
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  console.log("formData", formData);
+  const [course, setCourse] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleConfirm = async () => {
+    setIsConfirmationOpen(false);
+    await handleSubmitConfirmed();
+  };
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleSubmitConfirmed = async () => {
     if (type.type === "no-request-test") {
       return onSubmit();
     }
     if (type.type === "no-request") {
       if (onSubmit && !inputCancelClicked) {
-        return onSubmit()
-          // .catch((e) => {
-          //   error(`${status.failMessage}, ${e.message}`);
-          // })
-          // .then(() => {
-          //   // success(status.successMessage);
-          // });
+        return onSubmit();
       }
-      setInputCancelClicked(false)
+      setInputCancelClicked(false);
       return;
     }
     try {
-      event.preventDefault();
       const data = new FormData();
       for (const i in formData) {
-        if (role != 2 && formData[i] === undefined){
-          continue
+        if (role != 2 && formData[i] === undefined) {
+          continue;
         }
         if (!formData[i].toString()) {
           formData[i] = 2;
@@ -132,7 +139,7 @@ const Form = ({
         return await requests.login(data);
       }
       if (+role !== 2 && type.type === "user") {
-        data.append('role_id', role)
+        data.append("role_id", role);
         onSubmit();
         return await requests.user(data);
       }
@@ -171,6 +178,20 @@ const Form = ({
       setError(!errorsuccessMessage);
       error(`${e.response.data.message ? e.response.data.message : e.message}`);
       console.error(e);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (successConfirm) {
+      setIsConfirmationOpen(true);
+      const course = await getCourses().then((data) =>
+        data.data.find((c) => c.id === +formData.course)
+      );
+      console.log("courses", course);
+      setCourse(course.name);
+    } else {
+      await handleSubmitConfirmed();
     }
   };
 
@@ -260,7 +281,7 @@ const Form = ({
           {isCancel ? (
             <InputCancel
               InputCancelFunc={(reason) => {
-                setInputCancelClicked(true)
+                setInputCancelClicked(true);
                 removeSlot(slotId, reason, removeMessage);
                 onClose();
               }}
@@ -325,7 +346,6 @@ const Form = ({
                       {item.course}, {item.manager_name}, {item.phone}{" "}
                     </p>
                   </div>
-                  
                 </Fade>
               </React.Fragment>
             );
@@ -339,6 +359,23 @@ const Form = ({
       {text}
       {type.type !== "no-request-test" && (
         <p className={styles.exit}>Click outside to exit</p>
+      )}
+      {isConfirmationOpen && successConfirm && (
+        <div className={styles.confirmationBackdrop}>
+        <div className={styles.confirmationModal}>
+          <p className={styles.confirmationTitle}>Submit the form with selected course?</p>
+          <p className={styles.courseTitle}>Course: <span className={styles.courseTitleAccent}>{course}</span></p>
+          <div className={styles.btn_wrapper}>
+
+          <button onClick={handleConfirm} className={styles.yesButton}>
+            Yes
+          </button>
+          <button onClick={handleCancel} className={styles.noButton}>
+            No
+          </button>
+          </div>
+        </div>
+        </div>
       )}
     </div>
   );
