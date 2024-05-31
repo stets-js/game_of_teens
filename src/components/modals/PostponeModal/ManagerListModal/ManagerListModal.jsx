@@ -63,6 +63,8 @@ export default function ManagerListModal({
                         setIsOpenDropdown("");
                         closePostponed();
                         success("Successfully postponed");
+                      }).catch((err) => {
+                        error(err.response.data.message);
                       });
                     }
                     return setPostponedConfirmation(item.id, appointmentId)

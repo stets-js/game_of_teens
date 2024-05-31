@@ -1,5 +1,6 @@
 import styles from "./ChangeAppointment.module.scss";
 import Modal from "../../Modal/Modal";
+import { info, success, error } from "@pnotify/core";
 import React, { useState, useEffect } from "react";
 import { putAppointment } from "../../../helpers/appointment/appointment";
 import { getCourses } from "../../../helpers/course/course";
@@ -125,6 +126,8 @@ const ChangeAppointment = ({
                 setFollowUp(false);
                 setIsLoading(false);
                 handleClose();
+              }).catch((err) => {
+                error(err.response.data.message);
               });
             }}
             postpone

@@ -130,7 +130,9 @@ const ChangeAppointentManager = ({
       handleClose(!isOpen);
       success("Manager changed successfully");
       setIsConfirmPostponeOpen(false);
-    });
+    }).catch((err) => {
+      error(err.response.data.message);
+    });;
   };
 
   const handleCancelPostpone = () => {
@@ -206,6 +208,8 @@ const ChangeAppointentManager = ({
                             }
                             handleClose(!isOpen);
                             success("Manager changed successfully");
+                          }).catch((err) => {
+                            error(err.response.data.message);
                           });
                         }
                   }
