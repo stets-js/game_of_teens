@@ -108,67 +108,6 @@ const NewAppointment = ({
         }
       }, [managerId, isOpen]);
 
-      const generateGoogleMeetLink = async (accessToken) => {
-        try {
-          // Дані для створення події
-          const eventData = {
-            summary: `${link}`,
-            start: {
-              dateTime: `2024-${month}-${day}T${time}:00:00`,
-              timeZone: 'Europe/Kiev',
-            },
-            end: {
-              dateTime: `2024-${month}-${day}T${+time + 1}:00:00`,
-              timeZone: 'Europe/Kiev',
-            },
-            conferenceData: {
-              createRequest: {
-                requestId: 'randomstring',
-                conferenceSolutionKey: {
-                  type: 'hangoutsMeet',
-                },
-              },
-            },
-          };
-    
-          const transformedData = JSON.stringify(eventData);
-      
-          
-          const response = await axios.post('https://www.googleapis.com/calendar/v3/calendars/c_cd4573bc6239e095763c76fc947e92d35dc267600bbddeb846d4597b501c454b@group.calendar.google.com/events', transformedData, {
-            params: {
-              sendUpdates: 'all',
-              sendNotifications: true,
-              conferenceDataVersion: 1,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
-            },
-            transformRequest: [(data, headers) => {
-              headers['Authorization'] = `Bearer ${accessToken}`;
-              return data;
-            }],
-          });
-      
-          
-          const meetLink = response.data.conferenceData.entryPoints.find(entryPoint => entryPoint.entryPointType === 'video').uri;
-          console.log("meetLink", meetLink);
-          setGoogleLink(meetLink)
-          return meetLink;
-        } catch (error) {
-          console.error('Помилка під час створення події в календарі Google:', error);
-          throw error;
-        }
-      };
-      
-      const glogin = useGoogleLogin({
-        clientId: '980947183760-vfj7ar1369hg3gb3d6i5s3s15r56v1to.apps.googleusercontent.com',
-        onSuccess: tokenResponse => {
-          const accessToken = tokenResponse.access_token;
-          generateGoogleMeetLink(accessToken);
-        },
-        scope: 'https://www.googleapis.com/auth/calendar.events',
-      });
 
   return (
     <>
@@ -328,18 +267,7 @@ const NewAppointment = ({
                 handler={setPhone}
               />
             </div>
-            <label className={styles.input__label}>
-              <p className={styles.input__label}>Google Meet</p>
-              <div className={styles.google_wrapper}>
-              <input
-                className={styles.textarea_google}
-                value={googleLink}
-                onChange={(e) => setGoogleLink(e.target.value)}
-              ></input>
-              <button className={styles.generate_btn} type="button" onClick={glogin}>
-                    Generate
-              </button></div>
-            </label>
+            
             <label className={styles.input__label}>
               <p className={styles.input__label}>Message</p>
               <textarea
