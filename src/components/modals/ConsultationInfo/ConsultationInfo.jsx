@@ -181,7 +181,7 @@ const ConsultationInfo = ({
                         changeStatusSlot({
                           dayIndex,
                           hourIndex,
-                          colorId: +result,
+                          colorId: +result === 8 ? 1 : +result,
                         })
                       );
                     })
