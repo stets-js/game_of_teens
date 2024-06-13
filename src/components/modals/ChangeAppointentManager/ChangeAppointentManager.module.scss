@@ -87,6 +87,10 @@
     background-color:rgba(112, 191, 32, 1);
     color: #fff;
   }
+  .confirm__ok:disabled {
+    background-color: rgb(108, 108, 108);
+    cursor: not-allowed;
+}
   .confirm__cancel{
     font-family: $poppins;
     font-size: 20px;

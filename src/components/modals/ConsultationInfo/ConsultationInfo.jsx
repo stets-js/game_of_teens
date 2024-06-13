@@ -67,7 +67,7 @@ const ConsultationInfo = ({
           const appointmentData = await getAppointment({ id: slotId });
           setAppointment(appointmentData.data);
           setFollowUp(appointmentData.data.follow_up);
-          setUnsuccessfulMessage(appointmentData.data.unsuccessful_message || "no parents attending");
+          setUnsuccessfulMessage(appointmentData.data.unsuccessful_message || "");
           setMessage(appointmentData.data.comments);
   
           // Отримання даних про слот
@@ -140,17 +140,7 @@ const ConsultationInfo = ({
       }
   }
 
-  const rejectionReasons = [
-    "no parents attending",
-    "child sick",
-    "not interested",
-    "forgot about TL / have no time",
-    "no contact",
-    "tech reasons",
-    "no PC",
-    "no electricity",
-    "other reasons"
-  ];
+  
   const handleReasonChange = (e) => {
     // Оновити вибрану причину видалення при зміні в дропдауні
     setUnsuccessfulMessage(e.target.value);
@@ -212,6 +202,8 @@ const ConsultationInfo = ({
               failMessage: "Failed to change consultation info",
             }}
             title="Consultation Info"
+            // some magic below
+            isSubmitDisabled={result == 7 ? false : !unsuccessfulMessage} 
           >
             <label className={styles.input__label}>
               {appointment && (
@@ -248,11 +240,16 @@ const ConsultationInfo = ({
                 value={unsuccessfulMessage}
                 onChange={handleReasonChange}
               >
-                {rejectionReasons.map((reason) => (
-                  <option key={reason} value={reason}>
-                    {reason}
-                  </option>
-                ))}
+                <option value="" disabled selected>-None-</option>
+              <option value="no parents attending">No parents attending</option>
+              <option value="child sick">Child sick</option>
+              <option value="not interested">Not interested</option>
+              <option value="forgot about TL / have no time">Forgot about TL / have no time</option>
+              <option value="no contact">No contact</option>
+              <option value="tech reasons">Tech reasons</option>
+              <option value="no PC">No PC</option>
+              <option value="no electricity">No electricity</option>
+              <option value="other reasons">Other reasons</option>
               </select></label>: null}
 
             <Select

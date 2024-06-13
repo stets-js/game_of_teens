@@ -45,6 +45,7 @@ const Form = ({
   signUp,
   removeMessage,
   successConfirm,
+  isSubmitDisabled,
   ...formData
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -260,7 +261,7 @@ const Form = ({
             </button>
           )}{" "}
           {!type.button && (
-            <InputSubmit buttonTitle={buttonTitle ? buttonTitle : "Save"} />
+            <InputSubmit disabled={isSubmitDisabled} buttonTitle={buttonTitle ? buttonTitle : "Save"} />
           )}
           {isCancelConfConsult && (
             <InputDelete handleDelete={cancelConfConsultOnClickFn} />

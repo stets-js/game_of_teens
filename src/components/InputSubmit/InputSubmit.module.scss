@@ -23,3 +23,7 @@
     width: 100%;
   }
 }
+.input__submit:disabled {
+    background-color: rgb(108, 108, 108);
+    cursor: not-allowed;
+}

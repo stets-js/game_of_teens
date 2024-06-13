@@ -95,7 +95,12 @@
     font-size: 12px;
   }
 }
-
+.btn:disabled {
+  background-color: rgb(139, 137, 137);
+  border: 1px solid #5a5b5a;
+  color: #fff;
+  cursor: not-allowed;
+}
 .input {
   width: 130px;
   height: 32px;

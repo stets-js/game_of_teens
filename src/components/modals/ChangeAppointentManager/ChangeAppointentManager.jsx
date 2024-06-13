@@ -100,7 +100,7 @@ const ChangeAppointentManager = ({
 
   console.log(managersList)
 
-  const [selectedReason, setSelectedReason] = useState("no parents attending");
+  const [selectedReason, setSelectedReason] = useState("");
   const [isConfirmPostponeOpen, setIsConfirmPostponeOpen] = useState(false);
 
   const handlePostpone = () => {
@@ -237,6 +237,7 @@ const ChangeAppointentManager = ({
               value={selectedReason}
               onChange={(e) => setSelectedReason(e.target.value)}
             >
+              <option value="" disabled selected>-None-</option>
               <option value="no parents attending">No parents attending</option>
               <option value="child sick">Child sick</option>
               <option value="not interested">Not interested</option>
@@ -250,7 +251,7 @@ const ChangeAppointentManager = ({
               {/* Додайте інші причини, які вам потрібні */}
             </select>
             <div className={styles.confirm__wrapper}>
-              <button className={styles.confirm__ok} onClick={() => handleConfirmPostpone(selectedManager)}>Postpone</button>
+              <button className={styles.confirm__ok} onClick={() => handleConfirmPostpone(selectedManager)} disabled={!selectedReason}>Postpone</button>
               <button className={styles.confirm__cancel} onClick={handleCancelPostpone}>Cancel</button>
             </div>
           </div>

@@ -19,7 +19,7 @@ const ConfirmatorComments = ({ value }) => {
   const [selectedReason, setSelectedReason] = useState(() => {
     const initialReasons = {};
     appointments.forEach((item) => {
-      initialReasons[item.appointment_id] = "no parents attending";
+      initialReasons[item.appointment_id] = "";
     });
     return initialReasons;
   });
@@ -51,17 +51,6 @@ const ConfirmatorComments = ({ value }) => {
     setHoveredItem(null);
   };
 
-  const rejectionReasons = [
-    "no parents attending",
-    "child sick",
-    "not interested",
-    "forgot about TL / have no time",
-    "no contact",
-    "tech reasons",
-    "no PC",
-    "no electricity",
-    "other reasons"
-  ];
   return (
     <>
       {appointments.map((item) => (
@@ -149,11 +138,16 @@ const ConfirmatorComments = ({ value }) => {
                   }));
                 }}
               >
-                {rejectionReasons.map((reason) => (
-                  <option key={reason} value={reason}>
-                    {reason}
-                  </option>
-                ))}
+                <option value="" disabled selected>-none-</option>
+              <option value="no parents attending">no parents attending</option>
+              <option value="child sick">child sick</option>
+              <option value="not interested">not interested</option>
+              <option value="forgot about TL / have no time">forgot about TL / have no time</option>
+              <option value="no contact">no contact</option>
+              <option value="tech reasons">tech reasons</option>
+              <option value="no PC">no PC</option>
+              <option value="no electricity">no electricity</option>
+              <option value="other reasons">other reasons</option>
               </select>
               {loadingAppointment === item.appointment_id ? (
                 <TailSpin height="25px" width="25px" color="#999DFF" />
@@ -166,7 +160,7 @@ const ConfirmatorComments = ({ value }) => {
                   await setCancelConfirmation(
                     item.slot_id,
                     1,
-                    selectedReason[item.appointment_id] || "no parents attending"
+                    selectedReason[item.appointment_id]
                   );
                 } catch (error) {
                   // Handle error if needed
@@ -175,7 +169,9 @@ const ConfirmatorComments = ({ value }) => {
                   setLoadingAppointment(null);
                   success("Successfully sended");
                 }
-              }}
+              }
+            }
+            disabled={!selectedReason[item.appointment_id]}
               >
                 Send
               </button>)}
