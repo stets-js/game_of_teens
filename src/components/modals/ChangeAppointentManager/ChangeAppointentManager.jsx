@@ -10,8 +10,8 @@ import Modal from "../../Modal/Modal";
 import { info, success, error } from "@pnotify/core";
 import { TailSpin } from "react-loader-spinner";
 import { useSelector } from "react-redux";
-import {freezeSlotStatus} from "../../../helpers/slot/slot"
-import Snowflake from "../../MeetingsTableItem/Snowflake"
+import { freezeSlotStatus, getSlot } from "../../../helpers/slot/slot";
+import Snowflake from "../../MeetingsTableItem/Snowflake";
 
 const ChangeAppointentManager = ({
   isOpen,
@@ -32,37 +32,18 @@ const ChangeAppointentManager = ({
   isPostponed,
   closePostpone,
   isFollowUp,
+  appointmentSlotId,
   // selectedReason
 }) => {
   const [date, setDate] = useState("");
   const [managersList, setManagers] = useState([]);
+  const [isInner, setIsInner] = useState(false);
+  const [selectedReason, setSelectedReason] = useState("");
+  const [isConfirmPostponeOpen, setIsConfirmPostponeOpen] = useState(false);
+  const [selectedManager, setSelectedManager] = useState(null);
 
   const userRole = useSelector((state) => state.auth.user.role);
   const userId = useSelector((state) => state.auth.user.id);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await getDateByWeekId(weekId, day);
-  //       console.log("result.date",result.date);
-  //       setDate(result.date);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [day, weekId]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await getManagersByCourse(courseId, date, hour);
-  //       setManagers(result.managers);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [courseId, date, hour]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,24 +51,43 @@ const ChangeAppointentManager = ({
         const result = await getDateByWeekId(weekId, day);
         const date = result.date;
         setDate(date);
-  
+
+        const appointmentSlotResult = await getSlot({ id: appointmentSlotId });
+        const appointmentSlotDate = appointmentSlotResult.date;
+        console.log("Fetched date:", date);
+        console.log("Fetched appointmentSlotDate:", appointmentSlotDate);
+
+        // Перетворення дат у однаковий формат yyyy-mm-dd
+      const formatDate = (dateStr) => {
+        const [day, month, year] = dateStr.split('.');
+        return `${year}-${month}-${day}`;
+      };
+        const formattedDate = formatDate(date);
+      const dateObj1 = new Date(formattedDate);
+      const dateObj2 = new Date(appointmentSlotDate);
+
+      if (dateObj1.getTime() === dateObj2.getTime()) {
+        setIsInner(true);
+        console.log("Dates match. Setting isInner to true.");
+      } else {
+        setIsInner(false);
+        console.log("Dates do not match. Setting isInner to false.");
+      }
+
         const [formattedDay, formattedMonth, formattedYear] = date.split('.');
-        
+
         const managers = await getManagersByCourse(courseId, date, hour);
-        const freezeStatusPromises = managers.managers.map(manager => 
+        const freezeStatusPromises = managers.managers.map(manager =>
           freezeSlotStatus(`${formattedYear}-${formattedMonth}-${formattedDay}`, hour, manager.id).then(data => data.is_freeze)
         );
-        
-        // Очікуємо завершення всіх промісів
+
         const freezeStatuses = await Promise.all(freezeStatusPromises);
-        
-        // Додаємо інформацію про статус заморозки до кожного менеджера
+
         const updatedManagers = managers.managers.map((manager, index) => ({
           ...manager,
           is_freeze: freezeStatuses[index]
         }));
-  
-        // Сортуємо менеджерів за рейтингом
+
         const sortedManagers = updatedManagers.sort((a, b) => b.rating - a.rating);
         setManagers(sortedManagers);
       } catch (error) {
@@ -95,20 +95,13 @@ const ChangeAppointentManager = ({
       }
     };
     fetchData();
-  }, [day, weekId, courseId, hour]);
-  
-
-  console.log(managersList)
-
-  const [selectedReason, setSelectedReason] = useState("");
-  const [isConfirmPostponeOpen, setIsConfirmPostponeOpen] = useState(false);
+  }, [day, weekId, courseId, hour, appointmentSlotId]);
 
   const handlePostpone = () => {
     setIsConfirmPostponeOpen(true);
   };
 
   const handleConfirmPostpone = (manager) => {
-    // Викликається при підтвердженні відкладання
     const data = new FormData();
     data.append("appointment_id", appointmentId);
     data.append("date", date);
@@ -132,13 +125,13 @@ const ChangeAppointentManager = ({
       setIsConfirmPostponeOpen(false);
     }).catch((err) => {
       error(err.response.data.message);
-    });;
+    });
   };
 
   const handleCancelPostpone = () => {
-  setIsConfirmPostponeOpen(false);
-  handleClose(!isOpen);
-};
+    setIsConfirmPostponeOpen(false);
+    handleClose(!isOpen);
+  };
 
   const getPostponeRole = (role) => {
     switch (role) {
@@ -153,7 +146,6 @@ const ChangeAppointentManager = ({
     }
   };
 
-  const [selectedManager, setSelectedManager] = useState(null);
   return (
     <>
       <Modal
@@ -167,8 +159,8 @@ const ChangeAppointentManager = ({
 
         {managersList.length === 0 ? (
           <div className={styles.noManagersLoadingWrapper}>
-          <h2 className={styles.noManagersButton}>Managers list...</h2>
-          {/* <TailSpin height="50px" width="50px" color="#999DFF" /> */}
+            <h2 className={styles.noManagersButton}>Managers list...</h2>
+            {/* <TailSpin height="50px" width="50px" color="#999DFF" /> */}
           </div>
         ) : (
           <div className={styles.managersListBox}>
@@ -181,10 +173,16 @@ const ChangeAppointentManager = ({
                           setManagerId(manager.id);
                           setManager(manager.name);
                           handleClose(!isOpen);
-                        } :
-                        isPostponed ? () => {
+                        }
+                      : isPostponed
+                      ? () => {
                           setSelectedManager(manager);
-                          handlePostpone();
+                          console.log("isInner:", isInner);
+                          if (isInner) {
+                            handleConfirmPostpone(manager);
+                          } else {
+                            handlePostpone();
+                          }
                         }
                       : (e) => {
                           const data = new FormData();
@@ -217,12 +215,9 @@ const ChangeAppointentManager = ({
                 >
                   {manager.name}
                   {manager.is_freeze ? <Snowflake className={styles.snowflake} /> : null}
-                <p className={styles.managers_team}>Team: {manager.team}</p>
+                  <p className={styles.managers_team}>Team: {manager.team}</p>
                 </button>
               </div>
-
-
-                    
             ))}
           </div>
         )}
@@ -237,27 +232,37 @@ const ChangeAppointentManager = ({
               value={selectedReason}
               onChange={(e) => setSelectedReason(e.target.value)}
             >
-              <option value="" disabled selected>-None-</option>
+              <option value="" disabled selected>
+                -None-
+              </option>
               <option value="no parents attending">No parents attending</option>
               <option value="child sick">Child sick</option>
               <option value="not interested">Not interested</option>
-              <option value="forgot about TL / have no time">Forgot about TL / have no time</option>
+              <option value="forgot about TL / have no time">
+                Forgot about TL / have no time
+              </option>
               <option value="no contact">No contact</option>
               <option value="tech reasons">Tech reasons</option>
               <option value="no PC">No PC</option>
               <option value="no electricity">No electricity</option>
               <option value="other reasons">Other reasons</option>
-              
               {/* Додайте інші причини, які вам потрібні */}
             </select>
             <div className={styles.confirm__wrapper}>
-              <button className={styles.confirm__ok} onClick={() => handleConfirmPostpone(selectedManager)} disabled={!selectedReason}>Postpone</button>
-              <button className={styles.confirm__cancel} onClick={handleCancelPostpone}>Cancel</button>
+              <button
+                className={styles.confirm__ok}
+                onClick={() => handleConfirmPostpone(selectedManager)}
+                disabled={!selectedReason}
+              >
+                Postpone
+              </button>
+              <button className={styles.confirm__cancel} onClick={handleCancelPostpone}>
+                Cancel
+              </button>
             </div>
           </div>
         </Modal>
       )}
-
     </>
   );
 };

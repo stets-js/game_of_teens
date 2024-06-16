@@ -115,6 +115,7 @@ export default function PostponeModal({
             isPostponed={true}
             closePostpone={onClose}
             isFollowUp={isFollowUp}
+            appointmentSlotId={slotId}
             // selectedReason={selectedReason}
           />
         )}
