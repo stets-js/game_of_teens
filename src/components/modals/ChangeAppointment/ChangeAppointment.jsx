@@ -169,6 +169,7 @@ const ChangeAppointment = ({
                 phone={phone}
                 message={message}
                 isFollowUp={followUp}
+                appointmentSlotId={slotId}
               />
             ) : null}
             <Select
