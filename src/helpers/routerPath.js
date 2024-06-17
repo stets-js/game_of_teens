@@ -1,7 +1,7 @@
 const path = {
   all: "*",
   home: "/",
-  superAdmin: "/superAdmin/",
+  superAdmin: "/superadmin/",
   jury: "/jury/:juryId/",
   
 };
