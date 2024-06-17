@@ -4,32 +4,34 @@ import FormInput from "../../FormInput/FormInput";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { success, error, defaults } from "@pnotify/core";
+import {loginUser} from "../../../helpers/auth/auth"
 
 const Login = ({ isOpen, handleClose }) => {
   const dispatch = useDispatch();
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // try {
-    //   const data = new FormData();
-    //   data.append('login', login);
-    //   data.append('password', password);
-    //   // const res = await loginUser(data);
+    try {
+      const data = {
+        email: email,
+        password: password
+      };
+      const res = await loginUser(data);
 
-    //   dispatch({
-    //     type: 'LOGIN_SUCCESS',
-    //     payload: {
-    //       token: res,
-    //     },
-    //   });
-    //   handleClose();
-    //   setLogin("");
-    //   setPassword("");
-    // } catch (err) {
-    //   error(err.response.data.message);
-    // }
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          token: res.token,
+        },
+      });
+      handleClose();
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      error(err.response.data.message);
+    }
   }
 
 
@@ -41,13 +43,13 @@ const Login = ({ isOpen, handleClose }) => {
           <form>
             <FormInput
                 classname={styles.title}
-                title="Login:"
+                title="Email:"
                 type="text"
-                name="login"
-                value={login}
-                placeholder="Login"
+                name="email"
+                value={email}
+                placeholder="Email"
                 isRequired={true}
-                handler={setLogin}
+                handler={setEmail}
               />
 
             <FormInput

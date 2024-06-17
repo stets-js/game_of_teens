@@ -1,14 +1,19 @@
 import axios from "../axios-config";
 
-const getAuthLogs = () => {
+
+  const loginUser = (credentials) => {
     return axios
-      .get(`/login_log`)
-      .then((res) => res.data)
+      .post("/api/auth/login", credentials)
+      .then((res) => {
+
+        localStorage.setItem('got', res.data.token);
+        return res.data
+      })
       .catch((error) => {
         throw error;
       });
   };
 
 export {
-    getAuthLogs,
+  loginUser,
 }

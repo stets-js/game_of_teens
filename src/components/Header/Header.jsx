@@ -17,7 +17,7 @@ export default function Header({ endpoints = [], user }) {
       >
         <img src={logo} alt="logo" className={styles["logoImg"]} />
       </a>
-      <Navigation user={user} links={endpoints} />
+      {/* <Navigation user={user} links={endpoints} /> */}
       <LoginBox loggedUser={loggedUser} />
     </header>
   );

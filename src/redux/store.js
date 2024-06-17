@@ -39,12 +39,8 @@ export const store = configureStore({
 store.subscribe(() => {
   const state = store.getState();
   if (state.auth.token) {
-    const decodedToken = jwtDecode(state.auth.token);
     const localToken = localStorage.getItem('got');
     if (!localToken) {
-      store.dispatch({ type: "LOGOUT" });
-    }
-    if (decodedToken.exp * 1000 < Date.now()) {
       store.dispatch({ type: "LOGOUT" });
     }
   }

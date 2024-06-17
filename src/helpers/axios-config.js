@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-axios.defaults.baseURL = "https://king-prawn-app-hnaei.ondigitalocean.app";
+axios.defaults.baseURL = "https://back-gameofteens.onrender.com";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.request.use(

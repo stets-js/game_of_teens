@@ -18,7 +18,7 @@ const authReducer = (state = initialState, action) => {
           ...state,
           isAuthenticated: true,
           user: {
-            name: decodedToken.user_name,
+            name: decodedToken.name,
             role: decodedToken.role,
             id: decodedToken.id,
           },
