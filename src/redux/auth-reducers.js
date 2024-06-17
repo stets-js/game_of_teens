@@ -25,7 +25,7 @@ const authReducer = (state = initialState, action) => {
           token: action.payload.token,
         };
       case 'LOGOUT':
-        localStorage.removeItem('booking');
+        localStorage.removeItem('got');
         return initialState;
       default:
         return state;

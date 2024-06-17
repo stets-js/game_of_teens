@@ -6,10 +6,10 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.request.use(
     config => {
-      const bookingToken = localStorage.getItem('got');
+      const token = localStorage.getItem('got');
       
-      if (bookingToken) {
-        config.headers['Authorization'] = `Bearer ${bookingToken}`;
+      if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
       }
       return config;
     },

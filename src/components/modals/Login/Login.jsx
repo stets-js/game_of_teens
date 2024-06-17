@@ -64,7 +64,7 @@ const Login = ({ isOpen, handleClose }) => {
             <button
               type="button"
               onClick={(e) => {
-                const tokenFromLocalStorage = localStorage.getItem("booking");
+                const tokenFromLocalStorage = localStorage.getItem("got");
               
                   if (tokenFromLocalStorage) {
                       dispatch({
