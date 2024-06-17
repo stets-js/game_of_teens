@@ -6,7 +6,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.request.use(
     config => {
-      const bookingToken = localStorage.getItem('booking');
+      const bookingToken = localStorage.getItem('got');
       
       if (bookingToken) {
         config.headers['Authorization'] = `Bearer ${bookingToken}`;
@@ -24,7 +24,7 @@ axios.interceptors.request.use(
     },
     async error => {
       if (error.response && error.response.status === 401) {
-        localStorage.removeItem('booking');
+        localStorage.removeItem('got');
       }
   
       return Promise.reject(error);

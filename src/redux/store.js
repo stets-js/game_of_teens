@@ -12,27 +12,17 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import managerReducer from './manager/manager-reducers';
-import callerReducer from './caller/caller-reducers';
-import confirmatorReducer from "./confirmator/confirmator-reducers";
-import avaliableReducer from "./confirmator/avaliable-reducers";
 import authReducer from "./auth-reducers";
 
 import {jwtDecode} from "jwt-decode";
 
 const persistConfig = {
-  key: "booking-system",
+  key: "game_of_teens",
   storage,
-  // blacklist: ['token'],
 };
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
 const persistedReducer = persistReducer(persistConfig, combineReducers({
   auth: authReducer,
-  manager: managerReducer,
-  caller: callerReducer,
-  confirmator: confirmatorReducer,
-  avaliable: avaliableReducer,
 }));
 
 export const store = configureStore({
@@ -50,17 +40,15 @@ store.subscribe(() => {
   const state = store.getState();
   if (state.auth.token) {
     const decodedToken = jwtDecode(state.auth.token);
-    const localToken = localStorage.getItem('booking');
+    const localToken = localStorage.getItem('got');
     if (!localToken) {
       store.dispatch({ type: "LOGOUT" });
     }
     if (decodedToken.exp * 1000 < Date.now()) {
-      // Токен вийшов з ладу, видаляємо його
       store.dispatch({ type: "LOGOUT" });
     }
   }
 });
 
 export const persistor = persistStore(store);
-// export const persistor = persistStore(store);
 

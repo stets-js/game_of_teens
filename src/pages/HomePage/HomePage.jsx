@@ -4,12 +4,13 @@ import Header from "../../components/Header/Header";
 import styles from "./HomePage.module.scss";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import banner from "../../img/got_banner.png"
 
 const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const tokenFromLocalStorage = localStorage.getItem("booking");
+    const tokenFromLocalStorage = localStorage.getItem("got");
 
     if (tokenFromLocalStorage) {
         dispatch({
@@ -24,13 +25,12 @@ const HomePage = () => {
   return (
     <>
       <Header endpoints={
-        //  [{ text: "superadmin", path: "superadmin/users/" }]
          [{}]
         } />
       <section className={styles.home}>
         <Fade triggerOnce duration={250} direction="down">
           <div className="divider">
-            <p className={styles.error}>Welcome</p>
+            <img src={banner} alt="got_banner" />
           </div>
         </Fade>
       </section>

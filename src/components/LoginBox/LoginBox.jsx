@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LoginBox.module.scss";
-import SettingsModal from "../modals/SettingsModal/SettingsModal";
 import Login from "../modals/Login/Login";
-import SignUp from "../modals/SignUp/SignUp";
-import settingsIco from "../../img/icons/settings.png";
 import { useDispatch } from "react-redux";
 import logout from "../../img/logout.svg"
 
@@ -23,9 +20,7 @@ export default function LoginBox({ loggedUser }) {
         {modal === "login" && (
           <Login isOpen={isOpen} handleClose={() => setIsOpen(!isOpen)} />
         )}
-        {modal === "signup" && (
-          <SignUp isOpen={isOpen} handleClose={() => setIsOpen(!isOpen)} />
-        )}
+
         {isAuthenticated ? (
           <p className={styles.role}>Logged: {name}</p>
         ) : (
@@ -50,38 +45,11 @@ export default function LoginBox({ loggedUser }) {
             >
               Log in
             </button>
-            <button
-              type="button"
-              data-modal="signup"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-              className={styles.signup}
-            >
-              Sign up
-            </button>
           </div>
         )}
-        {isAuthenticated ? null : <button
-          className={styles.button}
-          data-modal="settings"
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-        >
-          <img
-            src={settingsIco}
-            alt="settings"
-            data-modal="settings"
-            onClick={() => setIsOpen(!isOpen)}
-          />
-        </button>}
-        {modal === "settings" && (
-          <SettingsModal
-            isOpen={isOpen}
-            handleClose={() => setIsOpen(!isOpen)}
-          />
-        )}
+        
       </div>
+
       {isAuthenticated && (
         <button type="button" className={styles.logout}
         onClick={()=> {
