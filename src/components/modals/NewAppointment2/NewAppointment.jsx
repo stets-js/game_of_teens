@@ -67,6 +67,7 @@ const NewAppointment = ({
     !isOpen && dispatch(getCallerWeekByCourse({ weekId, courseId: courseIdx }));
   }, [isOpen, dispatch]);
 
+  console.log("slotId----", slotId)
   // useEffect(() => {
   //   const get = async () => await getAppointment({ id: slotId });
   //   get().then((data) => setAppointment(data.data));
@@ -204,6 +205,7 @@ const NewAppointment = ({
                 age={age}
                 phone={phone}
                 message={message}
+                appointmentSlotId={slotId}
               />
             ) : null}
               {isFrozen ? <p className={styles.frozen}>!!! SLOT IS FROZEN !!!</p> : null}
