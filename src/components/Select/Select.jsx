@@ -73,7 +73,7 @@ const Select = ({
 
           {data.map((i) => {
             return (
-              <option value={i.id} key={i.id}>
+              <option value={i._id} key={i._id}>
                 {i.name}
               </option>
             );

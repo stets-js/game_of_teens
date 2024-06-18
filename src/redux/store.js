@@ -13,6 +13,7 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import authReducer from "./auth-reducers";
+import loadReducer from "./loading/loading-reducer";
 
 import {jwtDecode} from "jwt-decode";
 
@@ -23,6 +24,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, combineReducers({
   auth: authReducer,
+  load: loadReducer,
 }));
 
 export const store = configureStore({

@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import BgWrapper from "../../components/BgWrapper/BgWrapper";
 import styles from "./JuryPage.module.scss";
 import Select from "../../components/Select/Select";
 import Table from "../../components/Table/Table";
 import {getCourses} from "../../helpers/courses/courses";
+import { getProjectsByCourse } from "../../helpers/project/project";
+import { startLoading, stopLoading } from '../../redux/loading/loading-actions';
 
 
 export default function JuryPage() {
   const userName = useSelector((state) => state.auth.user.name);
+  const dispatch = useDispatch();
   const [courseId, setCourses] = useState("");
   const [projects, setProjects] = useState([]);
+  console.log("courseId", courseId)
+
+  useEffect(() => {
+   if(courseId){
+    dispatch(startLoading());
+    try{
+      const allProjects = async ()=> await getProjectsByCourse(courseId)
+      allProjects().then(res=> {
+        console.log("render", res.data.data)
+        dispatch(stopLoading());
+       return setProjects(res.data.data)})
+    } catch(err){
+      console.log(err)
+      dispatch(stopLoading());
+    }
+  }
+  }, [courseId]);
 
   return (
     <>
