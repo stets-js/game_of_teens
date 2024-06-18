@@ -11,27 +11,17 @@ const Select = ({
   children,
   value,
   setValue,
-  groupId,
-  administrator,
   manager,
-  signUp,
-  callerName,
 }) => {
   const [data, setData] = useState([]);
 
   const getData = async () => {
     const res = await request()
-      .then((res) => res.data)
+      .then((res) => res.data.data)
       .catch((error) => console.log(error));
-
     if (res === undefined) {
       setData([]);
       return;
-    }
-    if (signUp) {
-      const filteredData = res.filter((i) => i.name !== "Administrator");
-      setData(filteredData);
-      return filteredData;
     }
     setData(res);
     return res;
@@ -42,7 +32,6 @@ const Select = ({
       return;
     }
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -83,12 +72,6 @@ const Select = ({
           )}
 
           {data.map((i) => {
-            // Додайте умову для відображення курсів тільки у випадку, коли callerName === "Sales Department"
-            if (callerName === "Sales Department" && ![55, 53].includes(i.id)) {
-              return null; // Приховати всі інші курси, крім 55 та 53
-            }
-
-            // Інакше відображайте всі курси
             return (
               <option value={i.id} key={i.id}>
                 {i.name}
