@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import styles from "./EditForm.module.scss";
+import { useSelector } from "react-redux";
+import {updateProject} from "../../helpers/project/project"
 
 const EditForm = ({ item, onClose }) => {
+    const userId = useSelector((state) => state.auth.user.id);
+    console.log("item", item);
     const [formData, setFormData] = useState({
+        projectId: item._id,
+        jureId: userId,
+        course: item.course,
         project_link: item.project_link,
         video_link: item.video_link,
-        scores: item.jures[0]?.scores.map(score => ({ ...score, score: score.score || '' })) || [],
+        scores: item.jures[0]?.scores.map(score => ({ ...score, score: score.score || 0 })) || [],
         comment: item.jures[0]?.comment || '',
     });
 
@@ -18,17 +25,21 @@ const EditForm = ({ item, onClose }) => {
         const { value } = e.target;
         if (value >= 0 && value <= 10) {
             const newScores = [...formData.scores];
-            newScores[index].score = value;
+            newScores[index].score = +value;
             setFormData({ ...formData, scores: newScores });
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Обробка збереження даних
-        console.log("Збережені дані:", formData);
-        onClose();
-    };
+        try {
+          await updateProject(formData.projectId, formData);
+          console.log("Збережені дані:", formData);
+          onClose();
+        } catch (error) {
+          console.error("Помилка збереження даних:", error);
+        }
+      };
 
     const handleConfirm = () => {
         // Обробка підтвердження проекту
