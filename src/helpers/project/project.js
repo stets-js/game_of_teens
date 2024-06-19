@@ -16,8 +16,17 @@ const updateProject = (projectId, formData) => {
       throw error;
     });
 };
+const confirmProject = (projectId) => {
+  return axios
+    .patch(`/api/projects/${projectId}/confirm`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 export {
     getProjectsByCourse,
     updateProject,
+    confirmProject
 };

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./EditForm.module.scss";
-import { updateProject } from "../../helpers/project/project";
+import { updateProject, confirmProject } from "../../helpers/project/project";
 
 const EditForm = ({ item, onClose, onUpdate }) => {
+    console.log("item", item)
+
   const userId = useSelector((state) => state.auth.user.id);
+  const userJure = item.jures.find((jure) => jure.jureId === userId);
   const [formData, setFormData] = useState({
     projectId: item._id,
     jureId: userId,
@@ -43,7 +46,7 @@ const EditForm = ({ item, onClose, onUpdate }) => {
 
   const handleConfirm = async () => {
     try {
-      await updateProject(formData.projectId, formData);
+      await confirmProject(formData.projectId);
       console.log("Проект підтверджено:", formData);
       onUpdate();
       onClose();
