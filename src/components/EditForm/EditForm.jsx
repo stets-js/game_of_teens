@@ -76,8 +76,8 @@ const EditForm = ({ item, onClose }) => {
                 />
             </label>
             <div className={styles.buttons}>
-                <button type="submit">Save</button>
-                <button type="button" onClick={handleConfirm}>Confirm project</button>
+                <button className={styles.button__save} type="submit">Save</button>
+                <button className={styles.button__confirm} type="button" onClick={handleConfirm}>Confirm project</button>
             </div>
         </form>
     );
