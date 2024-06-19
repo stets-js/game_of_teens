@@ -15,9 +15,12 @@ const EditForm = ({ item, onClose }) => {
     };
 
     const handleScoreChange = (e, index) => {
-        const newScores = [...formData.scores];
-        newScores[index].score = e.target.value;
-        setFormData({ ...formData, scores: newScores });
+        const { value } = e.target;
+        if (value >= 0 && value <= 10) {
+            const newScores = [...formData.scores];
+            newScores[index].score = value;
+            setFormData({ ...formData, scores: newScores });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -63,6 +66,8 @@ const EditForm = ({ item, onClose }) => {
                         name={`score-${score.criteria}`}
                         value={score.score}
                         onChange={(e) => handleScoreChange(e, index)}
+                        min={0}
+                        max={10}
                         required
                     />
                 </label>
