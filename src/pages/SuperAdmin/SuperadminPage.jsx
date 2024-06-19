@@ -56,7 +56,7 @@ const SuperAdministrator = () => {
         defaultValue="Select course"
         title="Course:"
         />
-        <Table data={projects} />
+        <Table data={projects} admin />
       </section>
     </>
   );
