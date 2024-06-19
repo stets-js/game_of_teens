@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import Select from "../../components/Select/Select";
 import {getCourses} from "../../helpers/courses/courses";
+import {getProjectsByCourse} from "../../helpers/project/project";
 import Table from "../../components/Table/Table";
 import { startLoading, stopLoading } from '../../redux/loading/loading-actions';
 
@@ -19,14 +20,15 @@ const SuperAdministrator = () => {
 
   const fetchProjects = async (courseId) => {
     dispatch(startLoading());
-    // try {
-    //   const res = await getProjectsByCourse(courseId);
-    //   setProjects(res.data.data);
-    // } catch (err) {
-    //   console.error(err);
-    // } finally {
-    //   dispatch(stopLoading());
-    // }
+    try {
+      const res = await getProjectsByCourse(courseId);
+      console.log("res.data.data", res.data.data)
+      setProjects(res.data.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      dispatch(stopLoading());
+    }
   };
 
   useEffect(() => {

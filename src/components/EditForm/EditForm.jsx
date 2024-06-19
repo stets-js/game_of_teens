@@ -14,8 +14,8 @@ const EditForm = ({ item, onClose, onUpdate }) => {
     course: item.course,
     project_link: item.project_link,
     video_link: item.video_link,
-    scores: item.jures[0]?.scores.map((score) => ({ ...score, score: score.score || 0 })) || [],
-    comment: item.jures[0]?.comment || '',
+    scores: userJure ? userJure.scores.map((score) => ({ ...score, score: score.score || 0 })) : [],
+    comment: userJure ? userJure.comment || '' : '',
   });
 
   const handleChange = (e) => {
