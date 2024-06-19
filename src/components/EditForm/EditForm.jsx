@@ -52,7 +52,7 @@ const EditForm = ({ item, onClose }) => {
             <label>
                 Лінк на репозиторій:
                 <input
-                    type="url"
+                    type="text"
                     name="project_link"
                     value={formData.project_link}
                     onChange={handleChange}
@@ -62,7 +62,7 @@ const EditForm = ({ item, onClose }) => {
             <label>
                 Лінк на відео:
                 <input
-                    type="url"
+                    type="text"
                     name="video_link"
                     value={formData.video_link}
                     onChange={handleChange}

@@ -53,7 +53,7 @@ export default function Table({ data }) {
                                         {data[0].criterias.map((criteria) => (
                                             <div key={criteria._id} className={styles.th}>{criteria.name}</div>
                                         ))}
-                                        <div className={styles.th}>Редагувати</div>
+                                        <div className={styles.th}>Оцінити</div>
                                     </div>
                                 </div>
                                 <div className={styles.tbody}>
@@ -79,7 +79,7 @@ export default function Table({ data }) {
                                                     return <div key={criteria._id} className={styles.td}>{score}</div>;
                                                 })}
                                                 <div className={styles.td}>
-                                                    <button onClick={() => handleEdit(item)} className={styles.btn__edit}>Редагувати</button>
+                                                    <button onClick={() => handleEdit(item)} className={styles.btn__edit}>Оцінити</button>
                                                 </div>
                                             </div>
                                         );
