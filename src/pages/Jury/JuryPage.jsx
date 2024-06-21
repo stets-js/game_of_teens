@@ -7,7 +7,7 @@ import styles from "./JuryPage.module.scss";
 import Select from "../../components/Select/Select";
 import Table from "../../components/Table/Table";
 import { getCourses } from "../../helpers/courses/courses";
-import { getProjectsByCourse } from "../../helpers/project/project";
+import { getProjectsByCourse, confirmAllProjects } from "../../helpers/project/project";
 import { startLoading, stopLoading } from '../../redux/loading/loading-actions';
 
 export default function JuryPage() {
@@ -25,6 +25,17 @@ export default function JuryPage() {
       console.error(err);
     } finally {
       dispatch(stopLoading());
+    }
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const formData = { projects };
+      await confirmAllProjects(formData);
+      console.log("Проекти підтверджено");
+      fetchProjects(courseId); // Викликати для оновлення списку проєктів після підтвердження
+    } catch (error) {
+      console.error("Помилка підтвердження проєкту:", error);
     }
   };
 
@@ -52,6 +63,13 @@ export default function JuryPage() {
           title="Course:"
         />
         <Table data={projects} onUpdate={() => fetchProjects(courseId)} />
+        <button
+          className={styles.button__confirm}
+          type="button"
+          onClick={handleConfirm}
+        >
+          Confirm all projects
+        </button>
       </section>
     </>
   );

@@ -24,9 +24,18 @@ const confirmProject = (projectId) => {
       throw error;
     });
 };
+const confirmAllProjects = (formData) => {
+  return axios
+    .post(`/api/projects/confirm`, formData)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 export {
     getProjectsByCourse,
     updateProject,
-    confirmProject
+    confirmProject,
+    confirmAllProjects
 };

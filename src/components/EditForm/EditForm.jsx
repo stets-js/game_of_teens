@@ -44,17 +44,7 @@ const EditForm = ({ item, onClose, onUpdate }) => {
     }
   };
 
-  const handleConfirm = async () => {
-    try {
-      await confirmProject(formData.projectId);
-      console.log("Проект підтверджено:", formData);
-      onUpdate();
-      onClose();
-    } catch (error) {
-      console.error("Помилка підтвердження проекту:", error);
-    }
-  };
-
+  
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <label>
@@ -102,13 +92,6 @@ const EditForm = ({ item, onClose, onUpdate }) => {
       <div className={styles.buttons}>
         <button className={styles.button__save} type="submit">
           Save
-        </button>
-        <button
-          className={styles.button__confirm}
-          type="button"
-          onClick={handleConfirm}
-        >
-          Confirm project
         </button>
       </div>
     </form>
