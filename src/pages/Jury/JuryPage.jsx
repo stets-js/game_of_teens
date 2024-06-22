@@ -12,9 +12,12 @@ import { startLoading, stopLoading } from '../../redux/loading/loading-actions';
 
 export default function JuryPage() {
   const userName = useSelector((state) => state.auth.user.name);
+  const userId = useSelector((state) => state.auth.user.id);
   const dispatch = useDispatch();
   const [courseId, setCourses] = useState("");
   const [projects, setProjects] = useState([]);
+  
+  console.log("projects",projects)
 
   const fetchProjects = async (courseId) => {
     dispatch(startLoading());
@@ -30,7 +33,12 @@ export default function JuryPage() {
 
   const handleConfirm = async () => {
     try {
-      const formData = { projects };
+      const filteredProjects = projects.filter(project => {
+        const jury = project.jures.find(jure => jure.jureId === userId);
+        return jury && jury.scores.every(score => score.score > 0);
+      });
+
+      const formData = { projects: filteredProjects };
       await confirmAllProjects(formData);
       console.log("Проекти підтверджено");
       fetchProjects(courseId); // Викликати для оновлення списку проєктів після підтвердження
