@@ -62,3 +62,17 @@ textarea {
 .button__confirm:hover {
     background-color: #3ec500;
 }
+
+.link{
+    padding: 8px;
+    font-size: 16px;
+    &__wrapper{
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 100%;
+    &:not(:last-child){
+        margin-bottom: 15px;
+    }
+    }
+   
+}

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import styles from "./Table.module.scss";
-import NoData from "../NoData/NoData";
-import { TailSpin } from "react-loader-spinner";
-import Modal from "../Modal/Modal";
-import EditForm from "../EditForm/EditForm";
+import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import styles from './Table.module.scss';
+import NoData from '../NoData/NoData';
+import {TailSpin} from 'react-loader-spinner';
+import Modal from '../Modal/Modal';
+import EditForm from '../EditForm/EditForm';
 
-export default function Table({ data, onUpdate, admin }) {
-  const userId = useSelector((state) => state.auth.user.id);
-  const loading = useSelector((state) => state.load.loading);
+export default function Table({data, onUpdate, admin}) {
+  const userId = useSelector(state => state.auth.user.id);
+  const loading = useSelector(state => state.load.loading);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [sortedData, setSortedData] = useState([]);
 
-  const handleEdit = (item) => {
+  const handleEdit = item => {
     setCurrentItem(item);
     setIsModalOpen(true);
   };
@@ -21,7 +21,7 @@ export default function Table({ data, onUpdate, admin }) {
   const closeModal = () => {
     setIsModalOpen(false);
     setCurrentItem(null);
-    onUpdate();  // Викликаємо onUpdate при закритті модалки
+    onUpdate(); // Викликаємо onUpdate при закритті модалки
   };
 
   useEffect(() => {
@@ -38,13 +38,15 @@ export default function Table({ data, onUpdate, admin }) {
       <div className={styles.thead}>
         <div className={styles.tr}>
           <div className={styles.th}>Ім'я</div>
-          <div className={styles.th}>Лінк на репозиторій</div>
-          {data[0].criterias.map((criteria) => (
+          <div className={styles.th}>Лінки</div>
+          {data[0].criterias.map(criteria => (
             <div key={criteria._id} className={styles.th} colSpan={data[0].jures.length + 1}>
               {criteria.name}
               <div className={styles.subthead}>
-                {data[0].jures.map((jure) => (
-                  <div key={`${criteria._id}-${jure.jureId}`} className={styles.th}>{jure.name}</div>
+                {data[0].jures.map(jure => (
+                  <div key={`${criteria._id}-${jure.jureId}`} className={styles.th}>
+                    {jure.name}
+                  </div>
                 ))}
                 <div className={styles.th}>Середня</div>
               </div>
@@ -59,18 +61,33 @@ export default function Table({ data, onUpdate, admin }) {
           <div key={item._id} className={styles.tr}>
             <div className={styles.td}>{item.name}</div>
             <div className={styles.td}>
-              <a href={item.project_link} target="_blank" rel="noopener noreferrer">Репозиторій</a>
+              {(item.links || []).map(link => {
+                // !TODO: remove || after deleting all test data
+                return (
+                  <div>
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                      {(() => {
+                        const extention = link.split('.');
+                        return extention[extention.length - 1];
+                      })()}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
-            {item.criterias.map((criteria) => (
+            {item.criterias.map(criteria => (
               <React.Fragment key={criteria._id}>
                 <div className={styles.tc}>
-                {item.jures.map((jure) => {
-                  const score = jure.scores.find((score) => score.criteria === criteria._id)?.score || 'N/A';
-                  return <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>{score}</div>;
-                })}
-                <div className={styles.td}>
-                  {item.avgScores[criteria._id].toFixed(2)}
-                </div>
+                  {item.jures.map(jure => {
+                    const score =
+                      jure.scores.find(score => score.criteria === criteria._id)?.score || 'N/A';
+                    return (
+                      <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>
+                        {score}
+                      </div>
+                    );
+                  })}
+                  <div className={styles.td}>{item.avgScores[criteria._id].toFixed(2)}</div>
                 </div>
               </React.Fragment>
             ))}
@@ -87,38 +104,53 @@ export default function Table({ data, onUpdate, admin }) {
       <div className={styles.thead}>
         <div className={styles.tr}>
           <div className={styles.th}>Ім'я</div>
-          <div className={styles.th}>Лінк на репозиторій</div>
-          <div className={styles.th}>Лінк на відео</div>
-          {data[0].criterias.map((criteria) => (
-            <div key={criteria._id} className={styles.th}>{criteria.name}</div>
+          {/* { <div className={styles.th}>Лінк на репозиторій</div>
+          <div className={styles.th}>Лінк на відео</div>} */}
+          <div className={styles.th}>Лінки</div>
+          {data[0].criterias.map(criteria => (
+            <div key={criteria._id} className={styles.th}>
+              {criteria.name}
+            </div>
           ))}
           <div className={styles.th}>Оцінити</div>
         </div>
       </div>
       <div className={styles.tbody}>
-        {data.map((item) => {
-          const userJure = item.jures.find((jure) => jure.jureId === userId);
+        {data.map(item => {
+          const userJure = item.jures.find(jure => jure.jureId === userId);
           return (
             <div key={item._id} className={styles.tr}>
               <div className={styles.td}>{item.name}</div>
+
               <div className={styles.td}>
-                <a href={item.project_link} target="_blank" rel="noopener noreferrer">
-                  Репозиторій
-                </a>
-              </div>
-              <div className={styles.td}>
-                <a href={item.video_link} target="_blank" rel="noopener noreferrer">
-                  Відео
-                </a>
+                {(item.links || []).map(link => {
+                  // !TODO: remove || after deleting all test data
+                  return (
+                    <div>
+                      <a href={link} target="_blank" rel="noopener noreferrer">
+                        {(() => {
+                          const extention = link.split('.');
+                          return extention[extention.length - 1];
+                        })()}
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
               {item.criterias.map((criteria, index) => {
                 const score = userJure
-                  ? userJure.scores.find((score) => score.criteria === criteria._id)?.score
+                  ? userJure.scores.find(score => score.criteria === criteria._id)?.score
                   : 'N/A';
-                return <div key={`${criteria._id}-${index}`} className={styles.td}>{score}</div>;
+                return (
+                  <div key={`${criteria._id}-${index}`} className={styles.td}>
+                    {score}
+                  </div>
+                );
               })}
               <div className={styles.td}>
-                <button onClick={() => handleEdit(item)} className={styles.btn__edit}>Оцінити</button>
+                <button onClick={() => handleEdit(item)} className={styles.btn__edit}>
+                  Оцінити
+                </button>
               </div>
             </div>
           );
@@ -145,7 +177,9 @@ export default function Table({ data, onUpdate, admin }) {
               window.innerWidth <= 600 ? (
                 <p className={styles.table__emptyText}>NO DATA AVAILABLE</p>
               ) : (
-                <div className={styles.table__emptyImg}><NoData /></div>
+                <div className={styles.table__emptyImg}>
+                  <NoData />
+                </div>
               )
             ) : admin ? (
               renderAdminTable()
