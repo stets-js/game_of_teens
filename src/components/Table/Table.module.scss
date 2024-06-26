@@ -42,7 +42,9 @@
 .tr {
     display: table-row;
 }
-
+.tr:nth-child(2n){
+    background-color: rgb(217, 217, 229);
+}
 .th, .td {
     display: table-cell;
     padding: 10px;
