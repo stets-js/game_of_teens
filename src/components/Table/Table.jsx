@@ -5,6 +5,7 @@ import NoData from '../NoData/NoData';
 import {TailSpin} from 'react-loader-spinner';
 import Modal from '../Modal/Modal';
 import EditForm from '../EditForm/EditForm';
+import getDomainOrExtension from '../../helpers/link_shredder';
 
 export default function Table({data, onUpdate, admin}) {
   const userId = useSelector(state => state.auth.user.id);
@@ -66,10 +67,7 @@ export default function Table({data, onUpdate, admin}) {
                 return (
                   <div>
                     <a href={link} target="_blank" rel="noopener noreferrer">
-                      {(() => {
-                        const extention = link.split('.');
-                        return extention[extention.length - 1];
-                      })()}
+                      {getDomainOrExtension(link)}
                     </a>
                   </div>
                 );
@@ -128,10 +126,7 @@ export default function Table({data, onUpdate, admin}) {
                   return (
                     <div>
                       <a href={link} target="_blank" rel="noopener noreferrer">
-                        {(() => {
-                          const extention = link.split('.');
-                          return extention[extention.length - 1];
-                        })()}
+                        {getDomainOrExtension(link)}
                       </a>
                     </div>
                   );
