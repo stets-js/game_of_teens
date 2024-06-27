@@ -1,3 +1,16 @@
+const shortDomains = {
+  'www.canva.com': 'canva',
+  'canva.com': 'canva',
+  'makecode.com': 'mkcd',
+  'drive.google.com': 'Disk',
+  'www.loom.com': 'loom',
+  'loom.com': 'loom',
+  'photos.app.goo.gl': 'Photo',
+  'docs.google.com': 'Docs',
+  's3.eu-north-1.amazonaws.com': 'file',
+  'scratch.mit.edu': 'scratch'
+};
+
 const getDomainOrExtension = url => {
   // Парсинг URL
   try {
@@ -10,7 +23,7 @@ const getDomainOrExtension = url => {
     if (fileExtensionMatch) {
       return fileExtensionMatch[0].slice(1); // Возвращаем расширение файла
     } else {
-      return domain; // Возвращаем домен
+      return shortDomains[domain] || domain;
     }
   } catch (error) {
     console.log(url);

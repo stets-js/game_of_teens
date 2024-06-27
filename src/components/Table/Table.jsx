@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Tooltip} from 'react-tooltip';
+
 import {useSelector} from 'react-redux';
 import styles from './Table.module.scss';
 import NoData from '../NoData/NoData';
@@ -45,8 +47,16 @@ export default function Table({data, onUpdate, admin}) {
               {criteria.name}
               <div className={styles.subthead}>
                 {data[0].jures.map(jure => (
-                  <div key={`${criteria._id}-${jure.jureId}`} className={styles.th}>
-                    {jure.name}
+                  <div
+                    key={`${criteria._id}-${jure.jureId}`}
+                    className={styles.th}
+                    data-tooltip-id={`${criteria._id}-${jure.jureId}`}
+                    data-tooltip-content={jure.name}>
+                    {(() => {
+                      const fullName = jure.name.split(' ');
+                      return `${fullName[0][0]}.${fullName[1][0]}`;
+                    })()}
+                    <Tooltip id={`${criteria._id}-${jure.jureId}`} />
                   </div>
                 ))}
                 <div className={styles.th}>Середня</div>
