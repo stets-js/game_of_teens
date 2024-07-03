@@ -1,0 +1,43 @@
+@import '../../styles/variables.scss';
+
+.marathon{
+    &__container{
+        border:1px solid black;
+        font-family: $poppins;
+        font-size: 24px;
+        width: 60%;
+        padding: 20px;
+        border-radius: 25px;
+    }
+    &__button{
+        font-family: $poppins;
+        font-size: 24px;
+        font-weight: 400;
+        padding: 10px 24px;
+        color: $font-black;
+        background-color: transparent;
+        border-radius: 43px;
+        border: 1px solid $blue;
+        transition: $main-transition;
+        &:hover {
+          @extend %hover-shadow;
+        }
+        @media screen and (max-width: $mobile) {
+          width: 100%;
+        }
+    }
+    &__course{
+        &__wrapper{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    }
+    &__description{
+        padding: 10px;
+        text-align: left;
+        border:1px solid black;
+    }
+}
