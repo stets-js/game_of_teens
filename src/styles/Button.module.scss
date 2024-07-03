@@ -1,0 +1,19 @@
+@import './variables.scss';
+
+.button {
+  font-family: $poppins;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 10px 24px;
+  color: $font-black;
+  background-color: transparent;
+  border-radius: 43px;
+  border: 1px solid $blue;
+  transition: $main-transition;
+  &:hover {
+    @extend %hover-shadow;
+  }
+  @media screen and (max-width: $mobile) {
+    width: 100%;
+  }
+}

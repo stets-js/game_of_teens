@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import {useSelector} from 'react-redux';
 import PlayerPage from './pages/Player/PlayerPage';
 import CoursesPage from './pages/Player/CoursesPage';
+import CourseDetailPage from './pages/Player/CourseDetailPage';
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -46,8 +47,9 @@ const App = () => {
         )}
         {isAuthenticated && userRole === 2 && (
           <>
+            <Route path={`player/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
             <Route path={`player/${userId}/courses`} element={<CoursesPage />} />
-            <Route path={`player/${userId}`} element={<PlayerPage />}></Route>
+            <Route path={`player/${userId}`} element={<PlayerPage />} />
             <Route path={path.all} element={<Navigate to={`player/${userId}`} />} />
           </>
         )}

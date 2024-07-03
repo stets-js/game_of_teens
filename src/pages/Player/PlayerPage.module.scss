@@ -1,47 +1,85 @@
 @import '../../styles/variables.scss';
 .logo {
-    width: 194px;
+  width: 194px;
+}
+.aside {
+  &__wrapper {
+    font-family: $poppins;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 29%;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 20px;
   }
-.aside{
-    &__wrapper{
-        font-family: $poppins;
-        height:40%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 29%;
-        justify-content: center;
-        border:1px solid black;
-        padding: 20px;
-    }
 }
 
-.header{
-    &__container{
-        display: flex;
-    }
-&__main{
-    flex:1;
+.header {
+  &__container {
+    display: flex;
+  }
+  &__main {
+    flex: 1;
+  }
 }
-}
-.avatar{
-    width: 75%;
-    border-radius: 50%;
-    &__label{
-        &__wrapper{
-            display: flex;
-            column-gap: 15px;
-        }
-        font-size: 30px;
+.avatar {
+  width: 75%;
+  border-radius: 50%;
+  &__label {
+    &__wrapper {
+      display: flex;
+      column-gap: 15px;
     }
+    font-size: 30px;
+  }
 }
 
-.marathons{
-    &__wrapper{
-        margin-top: 20px;
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
+.marathons {
+  &__wrapper {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.details {
+  width: 60%;
+  padding: 20px;
+  &__subscribed {
+    font-size: 24px;
+    align-items: center;
+    align-self: center;
+    font-family: $poppins;
+  }
+
+  &__header {
+    font-size: 34px;
+    font-family: $poppins;
+
+    &__wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
+  }
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  &__description {
+    font-family: $poppins;
+    font-size: 24px;
+    border: 1px solid black;
+    text-align: justify;
+  }
+  &__course {
+    font-size: 34px;
+    font-family: $poppins;
+  }
 }

@@ -9,4 +9,7 @@ const getAllMarathons = () => {
     });
 };
 
-export {getAllMarathons};
+const subscribeToMarathon = (userId, marathonId) => {
+  return axios.post(`/api/users/${userId}/subscribe/${marathonId}`);
+};
+export {getAllMarathons, subscribeToMarathon};
