@@ -46,9 +46,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 272px;
+  width: 372px;
+  column-gap: 20px;
   @media screen and (max-width: $mobile) {
     width: 240px;
+    column-gap: 5px;
   }
 }
 .login {

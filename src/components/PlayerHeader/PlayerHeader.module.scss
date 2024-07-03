@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.list{
+    &__wrapper{
+        border:1px solid black;
+        margin-left: 1px;
+        // width: 100%;
+        padding: 20px;
+        padding-right: 0;
+        font-family: $poppins;
+        font-size: 20px;
+        display: flex;
+        justify-content: start;
+        column-gap: 20px;
+        border-right: 0;
+        height: 1.5em;
+    }
+    &__link{
+        margin: 12px auto;
+        color: $font-black;
+        transition: 200ms linear;
+        z-index: 3;
+    }
+}
