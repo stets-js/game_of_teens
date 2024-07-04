@@ -1,14 +1,12 @@
 @import '../../styles/variables.scss';
-.logo {
-  width: 194px;
-}
+
 .aside {
   &__wrapper {
     font-family: $poppins;
-    height: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     width: 29%;
     justify-content: center;
     border: 1px solid black;
