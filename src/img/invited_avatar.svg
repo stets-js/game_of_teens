@@ -1,0 +1,17 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" fill="#000000" version="1.1" xml:space="preserve">
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <g id="svg_2">
+    <circle fill="#DDDDDD" cx="256" cy="114.526" r="114.526" id="svg_3"/>
+   </g>
+  </g>
+  <g id="svg_4">
+   <g id="svg_5">
+    <path fill="#BBBBBB" d="m256,256c-111.619,0 -202.105,90.487 -202.105,202.105c0,29.765 24.13,53.895 53.895,53.895l296.421,0c29.765,0 53.895,-24.13 53.895,-53.895c-0.001,-111.618 -90.487,-202.105 -202.106,-202.105z" id="svg_6"/>
+   </g>
+  </g>
+  <text transform="matrix(6.94705 0 0 6.08543 -47.5764 -1185.21)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_7" y="248.51135" x="9.41234" fill="#000000">Invited</text>
+ </g>
+
+</svg>
