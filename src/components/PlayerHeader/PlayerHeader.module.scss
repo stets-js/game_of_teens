@@ -1,24 +1,68 @@
-@import "../../styles/variables.scss";
+@import '../../styles/variables.scss';
 
-.list{
-    &__wrapper{
-        border:1px solid black;
-        margin-left: 1px;
-        // width: 100%;
-        padding: 20px;
-        padding-right: 0;
-        font-family: $poppins;
-        font-size: 20px;
-        display: flex;
-        justify-content: start;
-        column-gap: 20px;
-        border-right: 0;
-        height: 1.5em;
-    }
-    &__link{
-        margin: 12px auto;
-        color: $font-black;
-        transition: 200ms linear;
-        z-index: 3;
-    }
+.list {
+	&__wrapper {
+		background-color: transparent;
+		// width: 100%;
+		padding: 0;
+
+		font-family: $poppins;
+		font-size: 22px;
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		column-gap: 30px;
+		border-right: 0;
+		height: 4em;
+	}
+	&__item {
+		width: fit-content;
+		.logo {
+			height: 50%;
+			width: calc(100% - 70px);
+		}
+		a {
+			margin: 12px auto;
+			color: $font-black;
+			transition: 200ms linear;
+			z-index: 3;
+			&:visited {
+				color: $font-black;
+			}
+			p {
+				position: relative;
+				display: inline-block;
+				&::before {
+					content: '';
+					position: absolute;
+					width: 0;
+					height: 2px;
+					bottom: -4px;
+					left: 50%;
+					background-color: $font-black;
+					transition: all 0.3s ease;
+				}
+				&:hover::before {
+					width: 100%;
+					left: 0;
+				}
+			}
+		}
+	}
+	&__account {
+		display: flex;
+		align-items: center;
+		padding: 20px;
+		margin-left: auto;
+		&__label {
+			padding-right: 20px;
+			font-size: 20px;
+		}
+		&__logout {
+			background-color: transparent;
+			&:hover {
+				color: $red
+			}
+		}
+	}
 }

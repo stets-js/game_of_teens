@@ -1,5 +1,7 @@
 @import './variables.scss';
 
+
+
 .button {
   font-family: $poppins;
   font-size: 24px;
@@ -11,7 +13,8 @@
   border: 1px solid $blue;
   transition: $main-transition;
   &:hover {
-    @extend %hover-shadow;
+    // @extend %hover-shadow;
+    background-color: $yellow;
   }
   @media screen and (max-width: $mobile) {
     width: 100%;
