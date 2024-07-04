@@ -6,23 +6,40 @@ import {useLocation} from 'react-router-dom';
 import MarathonDescription from '../../components/Marathon/MarathonDescription';
 import {useDispatch, useSelector} from 'react-redux';
 import {subscribeToMarathon} from '../../helpers/marathon/marathon';
-import {getTeamAsMember, postTeam, sendInviteToTeam} from '../../helpers/team/team';
+import {
+  acceptInvite,
+  deleteInvite,
+  getInvites,
+  getMyInvites,
+  getTeamAsMember,
+  postTeam,
+  sendInviteToTeam
+} from '../../helpers/team/team';
 import avatar from '../../img/basic_avatar.svg';
 import leaderAvatar from '../../img/ledear_avatar.svg';
+import invitedAvatar from '../../img/invited_avatar.svg';
+import classNames from 'classnames';
+
 import {getUsers} from '../../helpers/users/users';
 
 export default function CourseDetailPage() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const {marathon} = location.state;
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
   const userId = useSelector(state => state.auth.user.id);
-  const dispatch = useDispatch();
+  const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
+  const [myTeam, setMyTeam] = useState(null);
+  const [usersForInvite, setUsersForInvite] = useState([]);
+  const [inviteEmail, setInviteEmail] = useState(null);
+  const [invitedPlayers, setInvitedPlayers] = useState([]);
+  const [myInvites, setMyInvites] = useState([]);
+
   const subscribeTo = async () => {
     const res = await subscribeToMarathon(userId, marathon._id);
     dispatch({type: 'CHANGE_SUBSCRIBED_TO', payload: res.data.user.subscribedTo});
   };
-  const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
-  const [myTeam, setMyTeam] = useState(null);
+
   const fetchMyTeam = async () => {
     const {data} = await getTeamAsMember(userId, marathon._id);
     if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
@@ -34,11 +51,12 @@ export default function CourseDetailPage() {
     fetchMyTeam();
   }, []);
 
-  const [usersForInvite, setUsersForInvite] = useState([]);
   useEffect(() => {
     if (userSubscribedTo && myTeam && myTeam.leader._id === userId) {
       getUsersForInvite();
     }
+    if (userSubscribedTo && myTeam) getinvitedUsers();
+    else if (userSubscribedTo) fetchMyInvites();
   }, [myTeam, userId, userSubscribedTo]);
 
   const createTeam = async () => {
@@ -47,20 +65,32 @@ export default function CourseDetailPage() {
       setMyTeam(data.team);
     }
   };
-  const [inviteEmail, setInviteEmail] = useState(null);
+
   const getUsersForInvite = async () => {
     const res = await getUsers(`marathonId=${marathon._id}`);
     setUsersForInvite(res.data.data.filter(user => user._id !== userId));
   };
-
   const sendInvite = async () => {
     const user = usersForInvite.filter(user => user.email === inviteEmail);
     if (!user) {
       return; // !!!
     }
-    const res = await sendInviteToTeam(myTeam._id, user[0]._id);
-    console.log(res);
+    try {
+      const res = await sendInviteToTeam(myTeam._id, user[0]._id, marathon._id);
+      setInvitedPlayers(prev => [...prev, res.invitation.player]);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const fetchMyInvites = async () => {
+    const res = await getMyInvites();
+    setMyInvites(res.data.data);
+  };
+  const getinvitedUsers = async () => {
+    const invites = await getInvites(myTeam._id);
+    setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
+  };
+  console.log(myInvites);
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -104,20 +134,68 @@ export default function CourseDetailPage() {
                 <div className={styles.details__team}>
                   <div className={styles.details__team__invintaion__wrapper}>
                     <span>Invintation</span>
-                    <button className={buttonStyle.button}>Refresh</button>
+                    <button
+                      className={buttonStyle.button}
+                      onClick={() => {
+                        fetchMyInvites();
+                      }}>
+                      Refresh
+                    </button>
+                  </div>
+                  <div>
+                    {myInvites.length > 0 &&
+                      myInvites.map(invite => (
+                        <div className={styles.details__team__invintaion__card} key={invite._id}>
+                          <span>{invite?.team?.leader?.name}'s team invites You!</span>
+                          <div className={styles.details__team__button__wrapper}>
+                            <button
+                              onClick={async () => {
+                                const res = await acceptInvite(
+                                  invite.team._id,
+                                  invite._id,
+                                  marathon._id
+                                );
+                                console.log(res);
+                                setMyTeam(res.data.team);
+                              }}
+                              className={classNames(
+                                buttonStyle.button,
+                                styles.details__team__button__accept
+                              )}>
+                              Accept
+                            </button>
+                            <button
+                              className={classNames(
+                                buttonStyle.button,
+                                styles.details__team__button__delete
+                              )}
+                              onClick={async () => {
+                                const res = await deleteInvite(invite.team._id, invite._id);
+                                if (res) fetchMyInvites();
+                              }}>
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
               ) : (
                 <>
-                  {' '}
-                  <div>
+                  <div className={styles.details__team__members}>
                     {myTeam.members.map(member => (
-                      <div key={member._id}>
+                      <div key={member._id} className={styles.details__team__member}>
                         <img
                           src={member._id === myTeam.leader._id ? leaderAvatar : avatar}
                           alt="avatar"
                           className={styles.avatar__small}
                         />
+                        <label htmlFor="avatar">{member.name}</label>
+                      </div>
+                    ))}
+                    {invitedPlayers.map(member => (
+                      <div key={member._id}>
+                        <img src={invitedAvatar} alt="avatar" className={styles.avatar__small} />
                         <label htmlFor="avatar">{member.name}</label>
                       </div>
                     ))}
