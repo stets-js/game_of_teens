@@ -13,8 +13,8 @@
   border: 1px solid $blue;
   transition: $main-transition;
   &:hover {
-    // @extend %hover-shadow;
     background-color: $yellow;
+    border: 1px solid black;
   }
   @media screen and (max-width: $mobile) {
     width: 100%;
