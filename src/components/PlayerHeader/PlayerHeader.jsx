@@ -26,7 +26,7 @@ export default function PlayerHeader() {
 				</div>
 				<div className={styles.list__item}>
 					<a href={`/player/${userId}/courses`}>
-						<p>Cources</p>
+						<p>Courses</p>
 					</a>
 				</div>
 				<div className={styles.list__account}>
