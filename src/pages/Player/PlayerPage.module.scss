@@ -25,6 +25,13 @@
   }
 }
 .avatar {
+  &__small{
+    width: 64px;
+    border:1px solid black;
+    border-radius: 50%;
+    padding:2px;
+    height: 64px;
+  }
   width: 75%;
   border-radius: 50%;
   &__label {
@@ -81,5 +88,32 @@
   &__course {
     font-size: 34px;
     font-family: $poppins;
+  }
+
+  &__team{
+    display: flex;
+    width: calc(100% - 40px);
+    justify-content: center;
+    padding:20px;
+    &__wrapper{
+      border:1px solid black;
+      font-family: $poppins;
+      font-size: 24px;
+      margin-top:20px;
+    }
+
+    &__header{
+      
+    }
+&__invintaion{
+  &__wrapper{
+    border:1px solid black;
+    width: 70%;
+    padding:20px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
   }
 }
