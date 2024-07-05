@@ -157,7 +157,7 @@ export default function CourseDetailPage() {
 										Створити команду
 									</button>
 								) : (
-									'Team member✅'
+									'В команді✅'
 								)}
 							</div>
 
@@ -297,8 +297,8 @@ export default function CourseDetailPage() {
 										))}
 									</div>
 									{myTeam.leader._id === userId && (
-										<div>
-											Invite:{' '}
+										<div className={styles.details__team__input}>
+											Запросити:{' '}
 											<input
 												list="invites"
 												value={inviteEmail}
@@ -326,7 +326,7 @@ export default function CourseDetailPage() {
 													sendInvite();
 												}}
 											>
-												Invite
+												Відправити
 											</button>
 										</div>
 									)}
