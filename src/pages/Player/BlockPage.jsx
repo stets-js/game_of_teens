@@ -2,31 +2,30 @@ import React, {useEffect, useState} from 'react';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {useLocation, useParams} from 'react-router-dom';
 import styles from './PlayerPage.module.scss';
-import useDrivePicker from 'react-google-drive-picker';
 import buttonStyles from '../../styles/Button.module.scss';
+import {storage} from '../../helpers/firebase';
+import {ref, uploadBytes} from 'firebase/storage';
+import {useSelector} from 'react-redux';
+
 export default function BlockPage() {
   const location = useLocation();
   const {marathon} = location.state;
   const {sprintId} = useParams() || null;
-  const [openPicker, data, authResponse] = useDrivePicker();
-  const handleOpenPicker = () => {
-    openPicker({
-      clientId: '101193259156700951253',
-      developerKey: 'dcdb1452e316e395bb61aa70ac8f823c43da1f70',
-      viewId: 'DOCS',
-      token: '',
-      showUploadView: true,
-      showUploadFolders: true,
-      supportDrives: false,
-      multiselect: true
-    });
-  };
-  useEffect(() => {
-    if (data) {
-      data.docs.map(element => console.log(element));
-    }
-  }, [data]);
+  const userName = useSelector(state => state.auth.user.name);
   const [block] = useState(marathon.blocks.filter(bl => bl._id === sprintId)[0]);
+  const [files, setFiles] = useState(null);
+  console.log(files);
+  const uploadImage = async () => {
+    if (files === null) return;
+
+    //
+    const storageRef = ref(
+      storage,
+      (marathon.course.name + '/' || 'images/') + userName + files[0].name
+    );
+    const res = await uploadBytes(storageRef, files[0]);
+    console.log(res);
+  };
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -34,10 +33,11 @@ export default function BlockPage() {
         <div className={styles.block__header}>{block.name}</div>
         <div className={styles.block__description}>{block.description}</div>
       </div>
+      <input type="file" onChange={e => setFiles(e.target.files)} />
       <button
         className={buttonStyles.button}
         onClick={() => {
-          handleOpenPicker();
+          uploadImage();
         }}>
         Google (dont click)
       </button>
