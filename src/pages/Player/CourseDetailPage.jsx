@@ -90,7 +90,7 @@ export default function CourseDetailPage() {
     }
   };
   const fetchMyInvites = async () => {
-    const res = await getMyInvites();
+    const res = await getMyInvites(marathon._id);
     setMyInvites(res.data.data);
   };
   const getinvitedUsers = async () => {
