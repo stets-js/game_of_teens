@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "classnames": "^2.5.1",
+    "firebase": "^10.12.3",
     "gapi-script": "^1.2.0",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",

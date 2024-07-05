@@ -30,15 +30,15 @@ const sendInviteToTeam = (teamId, playerId, marathonId) => {
 const getInvites = teamId => {
   return axios.get(`/api/teams/${teamId}/invite`);
 };
-const getMyInvites = teamId => {
-  return axios.get(`/api/users/myInvites`);
+const getMyInvites = marathonId => {
+  return axios.get(`/api/users/myInvites/${marathonId}`);
 };
 
 const deleteInvite = (teamId, inviteId) => {
   return axios.delete(`/api/teams/${teamId}/invite`, {data: {id: inviteId}});
 };
-const acceptInvite = (teamId, inviteId, marathon) => {
-  return axios.patch(`/api/teams/${teamId}/invite`, {invintationId: inviteId, marathon});
+const acceptInvite = (teamId, inviteId, marathon, playerId) => {
+  return axios.patch(`/api/teams/${teamId}/invite`, {invintationId: inviteId, marathon, playerId});
 };
 export {
   getTeamAsMember,
