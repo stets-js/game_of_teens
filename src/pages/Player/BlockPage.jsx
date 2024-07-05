@@ -6,12 +6,14 @@ import buttonStyles from '../../styles/Button.module.scss';
 import {storage} from '../../helpers/firebase';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useSelector} from 'react-redux';
-import {
-  getMyBlockProject,
-  patchOrCreateBlockProject
-} from '../../helpers/block-project/block-project';
 import {getTeamAsMember} from '../../helpers/team/team';
-import {createProjectToBlock, getProjectByTeamId} from '../../helpers/marathon/marathon';
+import {
+  createProjectToBlock,
+  getProjectByTeamId,
+  updateBlockProject
+} from '../../helpers/marathon/marathon';
+import fileSVG from '../../img/file.svg';
+import getDomainOrExtension from '../../helpers/link_shredder';
 
 export default function BlockPage() {
   const location = useLocation();
@@ -23,7 +25,7 @@ export default function BlockPage() {
   const [files, setFiles] = useState(null);
   const [myProject, setMyProject] = useState(null);
   const [myTeam, setMyTeam] = useState(null);
-
+  const [newLink, setNewLink] = useState(null);
   const fetchMyProject = async () => {
     try {
       const data = await getProjectByTeamId(marathon._id, block._id, myTeam._id);
@@ -51,6 +53,8 @@ export default function BlockPage() {
       })
     );
     console.log(links);
+    const res = await updateBlockProject(marathon._id, block._id, myProject._id, {files: links});
+    console.log(res);
   };
   useEffect(() => {
     fetchMyTeam();
@@ -76,6 +80,16 @@ export default function BlockPage() {
     console.log(data);
     setMyProject(data[0]);
   };
+  const addLink = async () => {
+    const data = await updateBlockProject(marathon._id, block._id, myProject._id, {
+      links: [...(myProject.links || []), newLink]
+    });
+    console.log(data);
+    if (data) {
+      setMyProject(data);
+      setNewLink(null);
+    }
+  };
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -83,16 +97,67 @@ export default function BlockPage() {
         <div className={styles.block__header}>{block.name}</div>
         <div className={styles.block__description}>{block.description}</div>
         {myProject ? (
-          <div className={styles.block__upload__wrapper}>
-            <input type="file" multiple onChange={e => setFiles(e.target.files)} />
-            <button
-              className={buttonStyles.button}
-              onClick={() => {
-                uploadImage();
-              }}>
-              Upload
-            </button>
-          </div>
+          <>
+            {myTeam.leader === userId && (
+              <div className={styles.block__upload__grid}>
+                <div className={styles.block__upload__wrapper}>
+                  <input type="file" multiple onChange={e => setFiles(e.target.files)} />
+                  <button
+                    className={buttonStyles.button}
+                    onClick={() => {
+                      uploadImage();
+                    }}>
+                    Upload
+                  </button>
+                </div>
+                <div className={styles.block__upload__link__wrapper}>
+                  <input
+                    placeholder="Посилання"
+                    className={styles.block__upload__link}
+                    value={newLink}
+                    key={Math.random() * 100 - 1}
+                    onChange={e => setNewLink(e.target.value)}></input>
+                  <button
+                    className={buttonStyles.button}
+                    onClick={() => {
+                      addLink(newLink);
+                    }}>
+                    Завантажити
+                  </button>
+                </div>
+              </div>
+            )}
+            <p className={styles.block__upload__header}> Завантажено:</p>
+            <div className={styles.block__upload__grid}>
+              <div>
+                {myProject.files.map(file => {
+                  const splited = file.split('.');
+                  const ext = file.split('.')[splited.length - 1].split('?')[0];
+                  const imageExt = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+                  return (
+                    <div className={styles.block__upload__card}>
+                      <img
+                        src={imageExt.includes(ext) ? file : fileSVG}
+                        alt="file"
+                        className={styles.block__upload__icons}
+                      />
+                      <a href={file}>{ext}</a>
+                    </div>
+                  );
+                })}
+              </div>
+              <div>
+                {myProject.links.map(link => {
+                  const shortening = getDomainOrExtension(link);
+                  return (
+                    <div className={styles.block__upload__card}>
+                      <a href={link}>{shortening}</a>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </>
         ) : (
           <button
             className={buttonStyles.button}

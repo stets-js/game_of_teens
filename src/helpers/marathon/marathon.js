@@ -37,7 +37,7 @@ const createProjectToBlock = async (marathonId, blockId, newProject) => {
 
 const updateBlockProject = async (marathonId, blockId, projectId, updatedProject) => {
   try {
-    const response = await axios.put(
+    const response = await axios.patch(
       `/api/marathon/${marathonId}/block/${blockId}/projects/${projectId}`,
       updatedProject
     );
