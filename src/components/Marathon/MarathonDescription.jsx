@@ -5,9 +5,7 @@ export default function MarathonDescription({description}) {
 
   return (
     <>
-      {lines.map((line, index) => (
-        <p key={index}>{line}</p>
-      ))}
+      {lines.map((line, index) => (line === '' ? <br key={index} /> : <p key={index}>{line}</p>))}
     </>
   );
 }
