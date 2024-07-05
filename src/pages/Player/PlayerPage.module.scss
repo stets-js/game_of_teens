@@ -72,6 +72,7 @@
 			display: flex;
 			width: 100%;
 			justify-content: space-between;
+			align-items: center;
 			margin-bottom: 20px;
 		}
 	}
@@ -112,7 +113,7 @@
 		// width: calc(100% - 40px);
 		justify-content: center;
 		flex-direction: column;
-		// border-bottom: 2px solid black;
+		border-bottom: 2px solid black;
 		// padding:20px;
 		&__members {
 			display: flex;
@@ -220,8 +221,8 @@
 		&__wrapper {
 			display: flex;
 			flex-direction: column;
-			padding: 20px 0 20px 0;
-			border-top: 2px solid black;
+			padding: 0 0 20px 0;
+			// border-top: 2px solid black;
 		}
 		&__header {
 			text-align: left;
