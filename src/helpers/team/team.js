@@ -37,8 +37,8 @@ const getMyInvites = teamId => {
 const deleteInvite = (teamId, inviteId) => {
   return axios.delete(`/api/teams/${teamId}/invite`, {data: {id: inviteId}});
 };
-const acceptInvite = (teamId, inviteId, marathon) => {
-  return axios.patch(`/api/teams/${teamId}/invite`, {invintationId: inviteId, marathon});
+const acceptInvite = (teamId, inviteId, marathon, playerId) => {
+  return axios.patch(`/api/teams/${teamId}/invite`, {invintationId: inviteId, marathon, playerId});
 };
 export {
   getTeamAsMember,

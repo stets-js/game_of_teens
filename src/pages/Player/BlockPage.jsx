@@ -11,8 +11,8 @@ export default function BlockPage() {
   const [openPicker, data, authResponse] = useDrivePicker();
   const handleOpenPicker = () => {
     openPicker({
-      clientId: '',
-      developerKey: '',
+      clientId: '101193259156700951253',
+      developerKey: 'dcdb1452e316e395bb61aa70ac8f823c43da1f70',
       viewId: 'DOCS',
       token: '',
       showUploadView: true,
