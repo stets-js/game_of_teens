@@ -97,7 +97,7 @@ export default function CourseDetailPage() {
     const invites = await getInvites(myTeam._id);
     setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
   };
-  console.log(myInvites);
+
   return (
     <>
       <PlayerHeader></PlayerHeader>

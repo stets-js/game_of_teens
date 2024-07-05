@@ -217,6 +217,7 @@
 	}
 
 	&__block {
+	
 		&__wrapper {
 			display: flex;
 			flex-direction: column;
@@ -269,6 +270,14 @@
 
 	&__description {
 		width: 80%;
+	}
+	&__upload{
+		&__wrapper{
+			margin-top: 20px;
+			width: 80%;
+			display: flex;
+			column-gap: 20px;
+		}
 	}
 }
 
