@@ -27,7 +27,6 @@ export default function BlockPage() {
   const fetchMyProject = async () => {
     try {
       const data = await getProjectByTeamId(marathon._id, block._id, myTeam._id);
-      console.log(data);
       if (data) setMyProject(data);
     } catch (error) {}
   };
@@ -59,7 +58,6 @@ export default function BlockPage() {
   useEffect(() => {
     if (myTeam) fetchMyProject();
   }, [myTeam]);
-  console.log(myTeam);
   // useEffect(() => {
   //   if (myTeam) {
   //     console.log(myTeam);
@@ -101,7 +99,7 @@ export default function BlockPage() {
             onClick={() => {
               postProject();
             }}>
-            Хочеш сдати? Натискай!
+            Хочеш здати? Натискай!
           </button>
         )}
       </div>
