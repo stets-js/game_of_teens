@@ -20,12 +20,12 @@ export default function MarathonCard({ marathon }) {
 					}}
 					className={buttonStyle.button}
 				>
-					Details
+					Деталі
 				</button>
 			</div>
 			<div className={styles.marathon__description}>
 				<span className={styles.marathon__description__name}>
-					Description:
+					Опис:
 				</span>
 				<div className={styles.marathon__description__text}>
 					<MarathonDescription description={marathon.description} />
