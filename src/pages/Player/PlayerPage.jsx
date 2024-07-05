@@ -40,7 +40,7 @@ export default function PlayerPage() {
           <PlayerHeader></PlayerHeader>
           <div className={styles.main__grid}>
             <div className={styles.player__marathons__wrapper}>
-              <span className={styles.player__marathons__name}>Мої категорії: </span>
+              <span className={styles.player__marathons__name}>Категорії: </span>
               {marathons.map(marathon => {
                 console.log(marathon);
                 const subscribed = subscribedTo.includes(marathon._id);
