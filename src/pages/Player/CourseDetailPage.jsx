@@ -123,17 +123,17 @@ export default function CourseDetailPage() {
 									subscribeTo();
 								}}
 							>
-								Subscribe
+								Взяти участь
 							</button>
 						) : (
 							<span className={styles.details__subscribed}>
-								Subscribed✅
+								Беру участь✅
 							</span>
 						)}
 					</div>
 					<div className={styles.details__description}>
 						<span className={styles.details__description__name}>
-							Description:
+							Опис:
 						</span>
 						<div className={styles.details__description__text}>
 							<MarathonDescription
@@ -145,7 +145,7 @@ export default function CourseDetailPage() {
 						<div className={styles.details__team__wrapper}>
 							<div className={styles.details__header__wrapper}>
 								<span className={styles.details__header}>
-									Team
+									Команда
 								</span>
 								{!myTeam ? (
 									<button
@@ -154,7 +154,7 @@ export default function CourseDetailPage() {
 											createTeam();
 										}}
 									>
-										Create team
+										Створити команду
 									</button>
 								) : (
 									'Team member✅'
@@ -163,21 +163,21 @@ export default function CourseDetailPage() {
 
 							{!myTeam ? (
 								<div className={styles.details__team}>
-									<div
+									{/* <div
 										className={
 											styles.details__team__invintaion__wrapper
 										}
 									>
-										<span>Invintation</span>
+										<span>Запрошення</span>
 										<button
 											className={buttonStyle.button}
 											onClick={() => {
 												fetchMyInvites();
 											}}
 										>
-											Refresh
+											Оновити
 										</button>
-									</div>
+									</div> */}
 									<div>
 										{myInvites.length > 0 &&
 											myInvites.map((invite) => (
@@ -188,12 +188,14 @@ export default function CourseDetailPage() {
 													key={invite._id}
 												>
 													<span>
+														Учасник{' '}
 														{
 															invite?.team?.leader
 																?.name
 														}
-														's team invites You!
+														{' '}запросив(ла) тебе до команди
 													</span>
+													
 													<div
 														className={
 															styles.details__team__button__wrapper
@@ -222,7 +224,7 @@ export default function CourseDetailPage() {
 																styles.details__team__button__accept
 															)}
 														>
-															Accept
+															Прийняти
 														</button>
 														<button
 															className={classNames(
@@ -241,7 +243,7 @@ export default function CourseDetailPage() {
 																	fetchMyInvites();
 															}}
 														>
-															Delete
+															Відмовити
 														</button>
 													</div>
 												</div>
@@ -334,7 +336,7 @@ export default function CourseDetailPage() {
 					)}
 					<div className={styles.details__block__wrapper}>
 						<span className={styles.details__block__header}>
-							Blocks
+							Блоки
 						</span>
 						{blocks.map((block) => (
 							<p className={styles.details__block__container}>
