@@ -24,23 +24,30 @@ export default function PlayerPage() {
           <div className={styles.player__marathons__wrapper}>
             {marathons.map(marathon => {
               console.log(marathon);
+              const subscribed = subscribedTo.includes(marathon._id);
+              const blocks = marathon.blocks;
               return (
-                <div key={marathon.id} className={styles.player__marathons__card}>
-                  <span>
-                    [{marathon.course.name.toUpperCase()}] {marathon.name}
-                  </span>
+                <>
+                  <div key={marathon.id} className={styles.player__marathons__card}>
+                    <span>
+                      [{marathon.course.name.toUpperCase()}] {marathon.name}
+                    </span>
 
-                  <div>
-                    {subscribedTo.includes(marathon._id) && (
-                      <span className={styles.details__subscribed}>підписаний✅</span>
-                    )}
-                    <button
-                      className={buttonStyle.button}
-                      onClick={() => navigate('./courses/' + marathon._id, {state: {marathon}})}>
-                      Details
-                    </button>
+                    <div>
+                      {subscribed && (
+                        <span className={styles.details__subscribed}>підписаний✅</span>
+                      )}
+                      <button
+                        className={buttonStyle.button}
+                        onClick={() => navigate('./courses/' + marathon._id, {state: {marathon}})}>
+                        Details
+                      </button>
+                    </div>
                   </div>
-                </div>
+                  <div className={styles.player__marathons__card__sprint}>
+                    {subscribed && blocks.map(block => <div>{block.name}</div>)}
+                  </div>
+                </>
               );
             })}
           </div>

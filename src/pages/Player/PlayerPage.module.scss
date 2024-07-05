@@ -253,6 +253,13 @@
 			// border:1px solid black;
 			// border-radius: 25px;
 			padding: 5px;
+			&__sprint{
+				width: 75%;
+				display: flex;
+				flex-direction: column;
+				align-items: start;
+				justify-content: start;
+			}
 		}
 
 	}
