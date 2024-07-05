@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styles from './PlayerPage.module.scss';
 import buttonStyle from '../../styles/Button.module.scss';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import MarathonDescription from '../../components/Marathon/MarathonDescription';
 import {useDispatch, useSelector} from 'react-redux';
 import {subscribeToMarathon} from '../../helpers/marathon/marathon';
@@ -25,6 +25,7 @@ import {getUsers} from '../../helpers/users/users';
 export default function CourseDetailPage() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {marathon} = location.state;
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
   const userId = useSelector(state => state.auth.user.id);
@@ -90,7 +91,8 @@ export default function CourseDetailPage() {
     const invites = await getInvites(myTeam._id);
     setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
   };
-  console.log(myInvites);
+  const [blocks] = useState(marathon.blocks);
+  console.log(blocks);
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -224,6 +226,27 @@ export default function CourseDetailPage() {
               )}
             </div>
           )}
+          <div className={styles.details__block__wrapper}>
+            {blocks.map(block => (
+              <p className={styles.details__block__container}>
+                {block.name}
+                <button
+                  onClick={() => {
+                    navigate(`./sprint/${block._id}`, {state: {marathon}});
+                  }}>
+                  <svg
+                    className={styles.details__block__arrow}
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd">
+                    <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+                  </svg>
+                </button>
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </>

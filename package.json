@@ -24,6 +24,7 @@
     "react-awesome-reveal": "^4.0.0",
     "react-calendar": "^3.7.0",
     "react-dom": "^18.2.0",
+    "react-google-drive-picker": "^1.2.2",
     "react-loader-spinner": "^5.1.5",
     "react-notifications": "^1.7.3",
     "react-redux": "^8.0.2",

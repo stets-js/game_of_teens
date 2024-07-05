@@ -118,14 +118,14 @@
       border-radius: 25px;
 
       &__accept {
-        border-color:  green !important;
-        color:green !important;
+        border-color: green !important;
+        color: green !important;
       }
-      &__delete{
+      &__delete {
         border-color: red !important;
-        color:red !important;
+        color: red !important;
       }
-      &__wrapper{
+      &__wrapper {
         display: flex;
         column-gap: 10px;
       }
@@ -134,11 +134,10 @@
       &__card {
         display: flex;
         justify-content: space-between;
-        padding:10px;
+        padding: 10px;
         align-items: center;
-
       }
-      
+
       &__wrapper {
         // border:1px solid black;
         // width: 70%;
@@ -151,5 +150,37 @@
         align-items: center;
       }
     }
+  }
+  &__block {
+    &__arrow:hover {
+      transform: scale(1.1);
+    }
+    &__container {
+      font-size: 24px;
+      text-align: center;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      height: 2em;
+      padding: 2px;
+    }
+  }
+}
+
+.block {
+  &__wrapper {
+    font-family: $poppins;
+    font-size: 24px;
+    text-align: justify;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+
+  &__description {
+    width: 80%;
   }
 }
