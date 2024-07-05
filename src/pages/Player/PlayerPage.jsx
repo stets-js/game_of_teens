@@ -50,7 +50,7 @@ export default function PlayerPage() {
                     <div key={marathon.id} className={styles.player__marathons__card}>
                       <div className={styles.player__marathons__card__body}>
                         <span>
-                          [{marathon.course.name.toUpperCase()}] {marathon.name}
+                          {marathon.course.name.toUpperCase()} 
                         </span>
                         <div>
                           {subscribed && (
