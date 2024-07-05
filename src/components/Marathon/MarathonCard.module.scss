@@ -2,15 +2,17 @@
 
 .marathon{
     &__container{
-        border:1px solid black;
+        border: 1px solid black;
         font-family: $poppins;
         font-size: 24px;
         width: 60%;
         padding: 20px;
-        border-radius: 25px;
+        border-radius: 20px;
     }
    
     &__course{
+        font-weight: 600;
+        font-size: 32px;
         &__wrapper{
             width: 100%;
             display: flex;
@@ -19,9 +21,24 @@
             margin-bottom: 10px;
         }
     }
+    
+
     &__description{
-        padding: 10px;
         text-align: left;
-        border:1px solid black;
+        border-radius: 15px;
+        font-size: 19px;
+        display: flex;
+        margin-top: 15px;
+        &__name {
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+        &__text {
+            padding-left: 10px;
+            padding-top: 3px;
+            text-align: justify;
+        }
     }
+        
 }

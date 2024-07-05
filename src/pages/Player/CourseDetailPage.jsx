@@ -27,6 +27,7 @@ export default function CourseDetailPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {marathon} = location.state;
+  const [blocks] = useState(marathon.blocks);
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
   const userId = useSelector(state => state.auth.user.id);
   const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
@@ -38,7 +39,10 @@ export default function CourseDetailPage() {
 
   const subscribeTo = async () => {
     const res = await subscribeToMarathon(userId, marathon._id);
-    dispatch({type: 'CHANGE_SUBSCRIBED_TO', payload: res.data.user.subscribedTo});
+    dispatch({
+      type: 'CHANGE_SUBSCRIBED_TO',
+      payload: res.data.user.subscribedTo
+    });
   };
 
   const fetchMyTeam = async () => {
@@ -91,8 +95,7 @@ export default function CourseDetailPage() {
     const invites = await getInvites(myTeam._id);
     setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
   };
-  const [blocks] = useState(marathon.blocks);
-  console.log(blocks);
+  console.log(myInvites);
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -113,7 +116,10 @@ export default function CourseDetailPage() {
             )}
           </div>
           <div className={styles.details__description}>
-            <MarathonDescription description={marathon.description} />
+            <span className={styles.details__description__name}>Description:</span>
+            <div className={styles.details__description__text}>
+              <MarathonDescription description={marathon.description} />
+            </div>
           </div>
           {userSubscribedTo && (
             <div className={styles.details__team__wrapper}>
