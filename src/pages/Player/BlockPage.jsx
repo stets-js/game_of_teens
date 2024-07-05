@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {useLocation, useParams} from 'react-router-dom';
@@ -22,7 +23,7 @@ export default function BlockPage() {
   const userId = useSelector(state => state.auth.user.id);
   const userName = useSelector(state => state.auth.user.name);
   const [block] = useState(marathon.blocks.filter(bl => bl._id === sprintId)[0]);
-  const [files, setFiles] = useState(null);
+  // const [files, setFiles] = useState(null);
   const [myProject, setMyProject] = useState(null);
   const [myTeam, setMyTeam] = useState(null);
   const [newLink, setNewLink] = useState(null);
@@ -38,8 +39,9 @@ export default function BlockPage() {
     setMyTeam(data.data[0]);
   };
 
-  const uploadImage = async () => {
-    if (files === null) return;
+  const uploadImage = async files => {
+    console.log('clicked', files);
+    if (files === null || files === undefined) return;
 
     //
     const links = await Promise.all(
@@ -55,6 +57,7 @@ export default function BlockPage() {
     console.log(links);
     const res = await updateBlockProject(marathon._id, block._id, myProject._id, {files: links});
     console.log(res);
+    setMyProject(res);
   };
   useEffect(() => {
     fetchMyTeam();
@@ -98,19 +101,38 @@ export default function BlockPage() {
         <div className={styles.block__description}>{block.description}</div>
         {myProject ? (
           <>
-            {myTeam.leader === userId && (
+            {myTeam && myTeam?.leader?._id === userId && (
               <div className={styles.block__upload__grid}>
                 <div className={styles.block__upload__wrapper}>
-                  <input type="file" multiple onChange={e => setFiles(e.target.files)} />
+                  <input
+                    type="file"
+                    multiple
+                    id="hidden-file-input"
+                    onChange={e => {
+                      // const selectedFiles = e.target.files;
+                      // setFiles(selectedFiles);
+
+                      uploadImage(e.target.files);
+                    }}
+                    className={classNames(
+                      styles.block__upload__link,
+                      styles.block__upload__file__input
+                    )}
+                  />
                   <button
-                    className={buttonStyles.button}
+                    className={classNames(buttonStyles.button, styles.block__flex)}
                     onClick={() => {
+                      document.getElementById('hidden-file-input').click();
                       uploadImage();
                     }}>
-                    Upload
+                    Завантажити файл
                   </button>
                 </div>
-                <div className={styles.block__upload__link__wrapper}>
+                <div
+                  className={classNames(
+                    styles.block__upload__link__wrapper,
+                    styles.block__upload__grid__border
+                  )}>
                   <input
                     placeholder="Посилання"
                     className={styles.block__upload__link}
@@ -122,14 +144,14 @@ export default function BlockPage() {
                     onClick={() => {
                       addLink(newLink);
                     }}>
-                    Завантажити
+                    Додати
                   </button>
                 </div>
               </div>
             )}
             <p className={styles.block__upload__header}> Завантажено:</p>
             <div className={styles.block__upload__grid}>
-              <div>
+              <div className={styles.block__upload__card__wrapper}>
                 {myProject.files.map(file => {
                   const splited = file.split('.');
                   const ext = file.split('.')[splited.length - 1].split('?')[0];
@@ -146,7 +168,7 @@ export default function BlockPage() {
                   );
                 })}
               </div>
-              <div>
+              <div className={styles.block__upload__grid__border}>
                 {myProject.links.map(link => {
                   const shortening = getDomainOrExtension(link);
                   return (
