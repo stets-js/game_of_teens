@@ -40,7 +40,7 @@ export default function PlayerPage() {
           <PlayerHeader></PlayerHeader>
           <div className={styles.main__grid}>
             <div className={styles.player__marathons__wrapper}>
-              <span className={styles.player__marathons__name}>Мої категорії: </span>
+              <span className={styles.player__marathons__name}>Категорії: </span>
               {marathons.map(marathon => {
                 console.log(marathon);
                 const subscribed = subscribedTo.includes(marathon._id);
@@ -50,7 +50,7 @@ export default function PlayerPage() {
                     <div key={marathon.id} className={styles.player__marathons__card}>
                       <div className={styles.player__marathons__card__body}>
                         <span>
-                          [{marathon.course.name.toUpperCase()}] {marathon.name}
+                          {marathon.course.name.toUpperCase()} 
                         </span>
                         <div>
                           {subscribed && (
