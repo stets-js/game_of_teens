@@ -258,3 +258,27 @@
 		width: 80%;
 	}
 }
+
+.player{
+	&__marathons{
+		&__wrapper{
+			font-size: 24px;
+			font-family: $poppins;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 20px;
+		}
+		&__card{
+			text-align: start;
+			width: 75%;
+			display: flex;
+			justify-content: space-between;
+			// border:1px solid black;
+			// border-radius: 25px;
+			padding: 5px;
+		}
+
+	}
+}

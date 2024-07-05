@@ -24,21 +24,20 @@ import classNames from 'classnames';
 import { getUsers } from '../../helpers/users/users';
 
 export default function CourseDetailPage() {
-	const location = useLocation();
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const { marathon } = location.state;
-	const [blocks] = useState(marathon.blocks);
-	const subscribedTo = useSelector((state) => state.auth.user.subscribedTo);
-	const userId = useSelector((state) => state.auth.user.id);
-	const [userSubscribedTo, setUserSubscribedTo] = useState(
-		subscribedTo.includes(marathon._id)
-	);
-	const [myTeam, setMyTeam] = useState(null);
-	const [usersForInvite, setUsersForInvite] = useState([]);
-	const [inviteEmail, setInviteEmail] = useState(null);
-	const [invitedPlayers, setInvitedPlayers] = useState([]);
-	const [myInvites, setMyInvites] = useState([]);
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {marathon} = location.state;
+  console.log(marathon);
+  const [blocks] = useState(marathon?.blocks || null);
+  const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
+  const userId = useSelector(state => state.auth.user.id);
+  const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
+  const [myTeam, setMyTeam] = useState(null);
+  const [usersForInvite, setUsersForInvite] = useState([]);
+  const [inviteEmail, setInviteEmail] = useState(null);
+  const [invitedPlayers, setInvitedPlayers] = useState([]);
+  const [myInvites, setMyInvites] = useState([]);
 
 	const subscribeTo = async () => {
 		const res = await subscribeToMarathon(userId, marathon._id);

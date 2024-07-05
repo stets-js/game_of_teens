@@ -3,7 +3,7 @@ import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {useLocation, useParams} from 'react-router-dom';
 import styles from './PlayerPage.module.scss';
 import useDrivePicker from 'react-google-drive-picker';
-
+import buttonStyles from '../../styles/Button.module.scss';
 export default function BlockPage() {
   const location = useLocation();
   const {marathon} = location.state;
@@ -35,10 +35,11 @@ export default function BlockPage() {
         <div className={styles.block__description}>{block.description}</div>
       </div>
       <button
+        className={buttonStyles.button}
         onClick={() => {
           handleOpenPicker();
         }}>
-        Open
+        Google (dont click)
       </button>
     </>
   );
