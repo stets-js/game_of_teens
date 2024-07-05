@@ -27,7 +27,8 @@ export default function CourseDetailPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {marathon} = location.state;
-  const [blocks] = useState(marathon.blocks);
+  console.log(marathon);
+  const [blocks] = useState(marathon?.blocks || null);
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
   const userId = useSelector(state => state.auth.user.id);
   const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
