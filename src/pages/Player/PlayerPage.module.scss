@@ -277,59 +277,106 @@
 		&__wrapper{
 			overflow-x: hidden;
             overflow-y: auto;
-			height: 60vh;
+			height: 100vh;
 			display:flex;
 			margin-right: 5%;
 			flex-direction: column;
-			row-gap: 20px;
+			row-gap: 15px;
+			align-items: start;
 		}
 		&__card{
-			border:1px solid black;
+			width: calc(100% - 50px);
+			border:2px solid black;
 			padding:10px;
-			height: 35vh;
-			border-radius: 25px;
+			height: 50vh;
+			border-radius: 20px;
 			&__iframe{
 				width: 100%;
-				height: 25vh;
+				height: 40vh;
 			}
 			&__title{
 				font-size: 24px;
 				text-align: left;
-
+				
 				font-family: $poppins;
 			}
 		}
+		&__name {
+			font-size: 30px;
+			font-weight: 600;
+			
+		}
 	}
 	&__marathons{
+		&__button {
+			font-family: $poppins;
+			font-size: 24px;
+			font-weight: 400;
+			padding: 10px 15px;
+			color: $font-black;
+			background-color: transparent;
+			border-radius: 10px;
+			border: 1px solid $font-black;
+			transition: $main-transition;
+			&:hover {
+			  background-color: white;
+			//   border: 1px solid #242321;
+			//   
+			  
+			}
+			@media screen and (max-width: $mobile) {
+			  width: 100%;
+			}
+			&__svg {
+				
+			}
+		  }
+		  &__subscribed {
+			font-size: 22px;
+			padding-right: 10px;
+		  }
+		  
+		&__name {
+			font-size: 30px;
+			font-weight: 600;
+		}
 		&__wrapper{
+			
 			font-size: 24px;
 			font-family: $poppins;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			align-items: center;
-			row-gap: 20px;
+			align-items: start;
+			padding-left: 10%;
+			row-gap: 15px;
+			width: 90%;
+			padding-bottom: 20px;
 		}
 		&__card{
+			background-color: $yellow;
 			text-align: start;
-			width: 75%;
+			width: 90%;
 			display: flex;
 			align-items: center;
 			flex-direction: column;
 			justify-content: space-between;
-
-			padding: 5px;
+			padding: 20px;
+			border-radius: 20px;
+			
 			&__body{
 				display: flex;
 				width: 100%;
 				justify-content: space-between;
+				align-items: center;
 			}
 			&__sprint{
-				width: 75%;
+				width: 90%;
 				display: flex;
 				flex-direction: column;
 				align-items: start;
 				justify-content: start;
+				margin-left: auto;
 				&__wrapper{
 					width: 100%;
 					column-gap: 20px;
@@ -341,7 +388,8 @@
 }
 .main{
 	&__grid{
+		padding: 20px;
 		display: grid;
-		grid-template-columns: 5fr 2fr;
+		grid-template-columns: 3fr 3fr;
 	}
 }
