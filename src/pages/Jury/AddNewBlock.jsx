@@ -8,32 +8,20 @@ import newBlockStyle from './NewBlock.module.scss';
 import ButtonStyle from '../../styles/Button.module.scss';
 import {useConfirm} from 'material-ui-confirm';
 import {success, error, defaults} from '@pnotify/core';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 
 export default function AddNewBlock() {
   const confirm = useConfirm();
   const location = useLocation();
-
-  const [allMarathons, setAllMarathons] = useState([]);
+  const navigate = useNavigate();
   console.log(location);
   const {marathon} = location.state;
   const [newTitle, setNewTitle] = useState('Title');
   const [newDescription, setNewDescription] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   );
-  const fetchAllMarathons = async () => {
-    const {data} = await getAllMarathons();
-    setAllMarathons(
-      data.data.map(marathon => {
-        return {label: marathon.course.name, value: marathon._id, ...marathon};
-      })
-    );
-  };
 
-  useEffect(() => {
-    fetchAllMarathons();
-  }, []);
   const confirmAndCreate = async () => {
     confirm({
       description: 'Впевнені?',
@@ -46,10 +34,11 @@ export default function AddNewBlock() {
           description: newDescription
         });
         success({delay: 1000, text: 'Cтворенно!'});
-        setNewDescription(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        );
-        setNewTitle('Title');
+        navigate('./../');
+        // setNewDescription(
+        //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        // );
+        // setNewTitle('Title');
       })
       .catch(e => console.log('no ' + e));
   };
