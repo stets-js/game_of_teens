@@ -33,6 +33,12 @@ export default function PlayerPage() {
   }, []);
   console.log(mentorHours);
 
+  const filterMarathons = () => {
+    return subscribedTo.length === 0
+      ? marathons
+      : marathons.filter(marathon => subscribedTo.includes(marathon._id));
+  };
+  console.log(subscribedTo);
   return (
     <>
       <div className={styles.header__container}>
@@ -40,9 +46,10 @@ export default function PlayerPage() {
           <PlayerHeader></PlayerHeader>
           <div className={styles.main__grid}>
             <div className={styles.player__marathons__wrapper}>
-              <span className={styles.player__marathons__name}>Категорії: </span>
-              {marathons.map(marathon => {
-                console.log(marathon);
+              <span className={styles.player__marathons__name}>
+                {subscribedTo.length > 0 ? 'Моя категорія' : 'Категорії'}:{' '}
+              </span>
+              {filterMarathons().map(marathon => {
                 const subscribed = (subscribedTo || []).includes(marathon._id);
                 const blocks = marathon.blocks;
                 return (
@@ -96,7 +103,6 @@ export default function PlayerPage() {
             <div className={styles.player__mentor__wrapper}>
               <span className={styles.player__mentor__name}>Останні оновлення: </span>
               {mentorHours.map(hour => {
-                console.log(hour);
                 const getId = url => {
                   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
                   const match = url.match(regExp);

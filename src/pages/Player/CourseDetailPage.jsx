@@ -33,7 +33,6 @@ export default function CourseDetailPage() {
   const navigate = useNavigate();
   // const {marathon_state} = location.state;
   const {courseId: marathonId} = useParams();
-  console.log(marathonId);
   // console.log(marathon_state);
   const [marathon, setMarathon] = useState(null);
   const [blocks, setBlocks] = useState(marathon?.blocks || null);
@@ -49,6 +48,8 @@ export default function CourseDetailPage() {
 
   const subscribeTo = async () => {
     const res = await subscribeToMarathon(userId, marathon._id);
+    console.log(res);
+    console.log(res.data.user.subscribedTo);
     dispatch({
       type: 'CHANGE_SUBSCRIBED_TO',
       payload: res.data.user.subscribedTo
@@ -66,7 +67,7 @@ export default function CourseDetailPage() {
     setUserSubscribedTo((subscribedTo || []).includes(data.data._id));
   };
   const fetchMyTeam = async () => {
-    const {data} = await getTeamAsMember(userId, marathon._id);
+    const {data} = await getTeamAsMember(userId, marathonId);
     if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
   };
 
@@ -77,6 +78,10 @@ export default function CourseDetailPage() {
 
     fetchDetails();
   }, [userRole]);
+
+  useEffect(() => {
+    if (marathon) setUserSubscribedTo((subscribedTo || []).includes(marathon?._id));
+  }, [subscribedTo, marathon]);
 
   useEffect(() => {
     if (userSubscribedTo && myTeam && myTeam.leader._id === userId) {
