@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
+import {ConfirmProvider} from 'material-ui-confirm';
 
 import './styles/App.scss';
 import '@pnotify/core/dist/PNotify.css';
@@ -16,6 +17,8 @@ import PlayerPage from './pages/Player/PlayerPage';
 import CoursesPage from './pages/Player/CoursesPage';
 import CourseDetailPage from './pages/Player/CourseDetailPage';
 import BlockPage from './pages/Player/BlockPage';
+import AddNewBlock from './pages/Jury/AddNewBlock';
+import MentorPage from './pages/Mentor/MentorPage';
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -26,7 +29,7 @@ const App = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (userRole === 1) {
-        navigate(path.superAdmin);
+        // navigate(path.superAdmin);
       } else if (userRole === 0) {
         navigate(`jury/${userId}/`);
       } else {
@@ -39,33 +42,53 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        {isAuthenticated && userRole === 1 && (
-          <Route path={path.superAdmin} element={<SuperAdministrator />} />
-        )}
-        {isAuthenticated && userRole === 0 && (
-          <Route path={`jury/${userId}/`} element={<JuryPage />} />
-        )}
-        {isAuthenticated && userRole === 2 && (
-          <>
-            <Route
-              path={`player/${userId}/courses/:courseId/sprint/:sprintId`}
-              element={<BlockPage />}
-            />
-            <Route path={`player/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
-            <Route path={`player/${userId}/courses`} element={<CoursesPage />} />
-            <Route path={`player/${userId}`} element={<PlayerPage />} />
-            <Route path={path.all} element={<Navigate to={`player/${userId}`} />} />
-          </>
-        )}
-        {!isAuthenticated && (
-          <>
-            <Route path={path.home} element={<HomePage />} />
-            <Route path={path.all} element={<Navigate to={path.home} />} />
-          </>
-        )}
-      </Routes>
-      <Footer />
+      <ConfirmProvider>
+        <Routes>
+          {isAuthenticated && userRole === 1 && (
+            <>
+              <Route path={path.superAdmin} element={<SuperAdministrator />} />
+            </>
+          )}
+          {isAuthenticated && userRole === 0 && (
+            <Route path={`jury/${userId}/`} element={<JuryPage />} />
+          )}
+          {isAuthenticated && userRole === 2 && (
+            <>
+              <Route
+                path={`player/${userId}/courses/:courseId/sprint/:sprintId`}
+                element={<BlockPage />}
+              />
+              <Route path={`player/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
+              <Route path={`player/${userId}/courses`} element={<CoursesPage />} />
+              <Route path={`player/${userId}`} element={<PlayerPage />} />
+              <Route path={path.all} element={<Navigate to={`player/${userId}`} />} />
+            </>
+          )}
+          {isAuthenticated && userRole === 3 && (
+            <>
+              <Route
+                path={`mentor/${userId}/courses/:courseId/sprint/:sprintId`}
+                element={<BlockPage />}
+              />
+              <Route
+                path={`mentor/${userId}/courses/:courseId/block`}
+                element={<AddNewBlock />}></Route>
+
+              <Route path={`mentor/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
+              <Route path={`mentor/${userId}/courses`} element={<CoursesPage />} />
+              <Route path={`mentor/${userId}`} element={<MentorPage />} />
+              <Route path={path.all} element={<Navigate to={`mentor/${userId}`} />} />
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Route path={path.home} element={<HomePage />} />
+              <Route path={path.all} element={<Navigate to={path.home} />} />
+            </>
+          )}
+        </Routes>
+        <Footer />
+      </ConfirmProvider>
     </>
   );
 };

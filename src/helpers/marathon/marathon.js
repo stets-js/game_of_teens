@@ -8,6 +8,14 @@ const getAllMarathons = () => {
       throw error;
     });
 };
+const getMarathonById = id => {
+  return axios
+    .get(`/api/marathon/${id}`)
+    .then(res => res.data)
+    .catch(error => {
+      throw error;
+    });
+};
 
 const subscribeToMarathon = (userId, marathonId) => {
   return axios.post(`/api/users/${userId}/subscribe/${marathonId}`);
@@ -21,7 +29,14 @@ const getProjectsFromBlock = async (marathonId, blockId) => {
     throw error;
   }
 };
-
+const addBlockToMarathon = async (marathonId, data) => {
+  try {
+    const response = await axios.post(`/api/marathon/${marathonId}/block`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 // Создание проекта в конкретном блоке
 const createProjectToBlock = async (marathonId, blockId, newProject) => {
   try {
@@ -69,9 +84,11 @@ const getProjectByTeamId = async (marathonId, blockId, teamId) => {
 export {
   getAllMarathons,
   getProjectByTeamId,
+  addBlockToMarathon,
   subscribeToMarathon,
   getProjectsFromBlock,
   createProjectToBlock,
   updateBlockProject,
+  getMarathonById,
   getProjectFromBlockById
 };

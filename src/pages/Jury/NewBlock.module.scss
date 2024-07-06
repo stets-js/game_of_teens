@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+
+.wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 100px;
+    
+}
+
+.title{
+
+}
+.input{
+    &__wrapper{
+        display: flex;
+        flex-direction: column;
+        font-family: $poppins;
+        row-gap: 20px;
+        width: 80%;
+        margin-left: 10%;
+        margin-bottom: 50px;
+    }
+}
+.description{
+
+}

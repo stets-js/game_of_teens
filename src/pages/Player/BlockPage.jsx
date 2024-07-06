@@ -15,6 +15,7 @@ import {
 } from '../../helpers/marathon/marathon';
 import fileSVG from '../../img/file.svg';
 import getDomainOrExtension from '../../helpers/link_shredder';
+import MDEditor from '@uiw/react-md-editor';
 
 export default function BlockPage() {
   const location = useLocation();
@@ -22,6 +23,7 @@ export default function BlockPage() {
   const {sprintId} = useParams() || null;
   const userId = useSelector(state => state.auth.user.id);
   const userName = useSelector(state => state.auth.user.name);
+  const userRole = useSelector(state => state.auth.user.role);
   const [block] = useState(marathon.blocks.filter(bl => bl._id === sprintId)[0]);
   // const [files, setFiles] = useState(null);
   const [myProject, setMyProject] = useState(null);
@@ -60,8 +62,8 @@ export default function BlockPage() {
     setMyProject(res);
   };
   useEffect(() => {
-    fetchMyTeam();
-  }, []);
+    if (userRole === 2) fetchMyTeam();
+  }, [userRole]);
   useEffect(() => {
     if (myTeam) fetchMyProject();
   }, [myTeam]);
@@ -98,97 +100,101 @@ export default function BlockPage() {
       <PlayerHeader></PlayerHeader>
       <div className={styles.block__wrapper}>
         <div className={styles.block__header}>{block.name}</div>
-        <div className={styles.block__description}>{block.description}</div>
-        {myProject ? (
-          <>
-            {myTeam && myTeam?.leader?._id === userId && (
-              <div className={styles.block__upload__grid}>
-                <div className={styles.block__upload__wrapper}>
-                  <input
-                    type="file"
-                    multiple
-                    id="hidden-file-input"
-                    onChange={e => {
-                      // const selectedFiles = e.target.files;
-                      // setFiles(selectedFiles);
+        <div className={styles.block__description}>
+          {' '}
+          <MDEditor.Markdown source={block.description} style={{whiteSpace: 'pre-wrap'}} />
+        </div>
+        {userRole === 2 &&
+          (myProject ? (
+            <>
+              {myTeam && myTeam?.leader?._id === userId && (
+                <div className={styles.block__upload__grid}>
+                  <div className={styles.block__upload__wrapper}>
+                    <input
+                      type="file"
+                      multiple
+                      id="hidden-file-input"
+                      onChange={e => {
+                        // const selectedFiles = e.target.files;
+                        // setFiles(selectedFiles);
 
-                      uploadImage(e.target.files);
-                    }}
+                        uploadImage(e.target.files);
+                      }}
+                      className={classNames(
+                        styles.block__upload__link,
+                        styles.block__upload__file__input
+                      )}
+                    />
+                    <button
+                      className={classNames(buttonStyles.button, styles.block__flex)}
+                      onClick={() => {
+                        document.getElementById('hidden-file-input').click();
+                        uploadImage();
+                      }}>
+                      Завантажити файл
+                    </button>
+                  </div>
+                  <div
                     className={classNames(
-                      styles.block__upload__link,
-                      styles.block__upload__file__input
-                    )}
-                  />
-                  <button
-                    className={classNames(buttonStyles.button, styles.block__flex)}
-                    onClick={() => {
-                      document.getElementById('hidden-file-input').click();
-                      uploadImage();
-                    }}>
-                    Завантажити файл
-                  </button>
+                      styles.block__upload__link__wrapper,
+                      styles.block__upload__grid__border
+                    )}>
+                    <input
+                      placeholder="Посилання"
+                      className={styles.block__upload__link}
+                      value={newLink}
+                      key={Math.random() * 100 - 1}
+                      onChange={e => setNewLink(e.target.value)}></input>
+                    <button
+                      className={buttonStyles.button}
+                      onClick={() => {
+                        addLink(newLink);
+                      }}>
+                      Додати
+                    </button>
+                  </div>
                 </div>
-                <div
-                  className={classNames(
-                    styles.block__upload__link__wrapper,
-                    styles.block__upload__grid__border
-                  )}>
-                  <input
-                    placeholder="Посилання"
-                    className={styles.block__upload__link}
-                    value={newLink}
-                    key={Math.random() * 100 - 1}
-                    onChange={e => setNewLink(e.target.value)}></input>
-                  <button
-                    className={buttonStyles.button}
-                    onClick={() => {
-                      addLink(newLink);
-                    }}>
-                    Додати
-                  </button>
+              )}
+              <p className={styles.block__upload__header}> Завантажено:</p>
+              <div className={styles.block__upload__grid}>
+                <div className={styles.block__upload__card__wrapper}>
+                  {myProject.files.map(file => {
+                    const splited = file.split('.');
+                    const ext = file.split('.')[splited.length - 1].split('?')[0];
+                    const imageExt = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+                    return (
+                      <div className={styles.block__upload__card}>
+                        <img
+                          src={imageExt.includes(ext) ? file : fileSVG}
+                          alt="file"
+                          className={styles.block__upload__icons}
+                        />
+                        <a href={file}>{ext}</a>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className={styles.block__upload__grid__border}>
+                  {myProject.links.map(link => {
+                    const shortening = getDomainOrExtension(link);
+                    return (
+                      <div className={styles.block__upload__card}>
+                        <a href={link}>{shortening}</a>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
-            <p className={styles.block__upload__header}> Завантажено:</p>
-            <div className={styles.block__upload__grid}>
-              <div className={styles.block__upload__card__wrapper}>
-                {myProject.files.map(file => {
-                  const splited = file.split('.');
-                  const ext = file.split('.')[splited.length - 1].split('?')[0];
-                  const imageExt = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
-                  return (
-                    <div className={styles.block__upload__card}>
-                      <img
-                        src={imageExt.includes(ext) ? file : fileSVG}
-                        alt="file"
-                        className={styles.block__upload__icons}
-                      />
-                      <a href={file}>{ext}</a>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={styles.block__upload__grid__border}>
-                {myProject.links.map(link => {
-                  const shortening = getDomainOrExtension(link);
-                  return (
-                    <div className={styles.block__upload__card}>
-                      <a href={link}>{shortening}</a>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        ) : (
-          <button
-            className={buttonStyles.button}
-            onClick={() => {
-              postProject();
-            }}>
-            Хочеш здати? Натискай!
-          </button>
-        )}
+            </>
+          ) : (
+            <button
+              className={buttonStyles.button}
+              onClick={() => {
+                postProject();
+              }}>
+              Хочеш здати? Натискай!
+            </button>
+          ))}
       </div>
     </>
   );

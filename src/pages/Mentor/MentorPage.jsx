@@ -2,7 +2,7 @@ import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 
-import styles from './PlayerPage.module.scss';
+import styles from '../Player/PlayerPage.module.scss';
 import buttonStyle from '../../styles/Button.module.scss';
 
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
@@ -12,7 +12,7 @@ import {getAllMarathons} from '../../helpers/marathon/marathon';
 import arrow from '../../img/arrow.svg';
 import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
 
-export default function PlayerPage() {
+export default function MentorPage() {
   const [marathons, setMarathons] = useState([]);
   const navigate = useNavigate();
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
@@ -42,7 +42,6 @@ export default function PlayerPage() {
             <div className={styles.player__marathons__wrapper}>
               <span className={styles.player__marathons__name}>Категорії: </span>
               {marathons.map(marathon => {
-                console.log(marathon);
                 const subscribed = (subscribedTo || []).includes(marathon._id);
                 const blocks = marathon.blocks;
                 return (
@@ -70,23 +69,22 @@ export default function PlayerPage() {
                         </div>
                       </div>
                       <div className={styles.player__marathons__card__sprint}>
-                        {subscribed &&
-                          blocks.map(block => (
-                            <div className={styles.player__marathons__card__sprint__wrapper}>
-                              <p className={styles.details__block__container}>
-                                {block.name}
-                                <button
-                                  className={styles.details__block__arrow}
-                                  onClick={() => {
-                                    navigate(`./courses/${marathon._id}/sprint/${block._id}`, {
-                                      state: {marathon}
-                                    });
-                                  }}>
-                                  <img src={arrow} alt="arrow" />
-                                </button>
-                              </p>
-                            </div>
-                          ))}
+                        {blocks.map(block => (
+                          <div className={styles.player__marathons__card__sprint__wrapper}>
+                            <p className={styles.details__block__container}>
+                              {block.name}
+                              <button
+                                className={styles.details__block__arrow}
+                                onClick={() => {
+                                  navigate(`./courses/${marathon._id}/sprint/${block._id}`, {
+                                    state: {marathon}
+                                  });
+                                }}>
+                                <img src={arrow} alt="arrow" />
+                              </button>
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </>

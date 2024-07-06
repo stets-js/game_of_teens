@@ -5,7 +5,11 @@ import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {useLocation, useNavigate} from 'react-router-dom';
 import MarathonDescription from '../../components/Marathon/MarathonDescription';
 import {useDispatch, useSelector} from 'react-redux';
-import {subscribeToMarathon} from '../../helpers/marathon/marathon';
+import {
+  getAllMarathons,
+  getMarathonById,
+  subscribeToMarathon
+} from '../../helpers/marathon/marathon';
 import {
   acceptInvite,
   deleteInvite,
@@ -27,12 +31,16 @@ export default function CourseDetailPage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {marathon} = location.state;
-  console.log(marathon);
+  const {marathon_state} = location.state;
+  console.log(marathon_state);
+  const [marathon, setMarathon] = useState(marathon_state);
   const [blocks] = useState(marathon?.blocks || null);
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
+  const userRole = useSelector(state => state.auth.user.role);
   const userId = useSelector(state => state.auth.user.id);
-  const [userSubscribedTo, setUserSubscribedTo] = useState(subscribedTo.includes(marathon._id));
+  const [userSubscribedTo, setUserSubscribedTo] = useState(
+    (subscribedTo || []).includes(marathon._id)
+  );
   const [myTeam, setMyTeam] = useState(null);
   const [usersForInvite, setUsersForInvite] = useState([]);
   const [inviteEmail, setInviteEmail] = useState(null);
@@ -46,17 +54,25 @@ export default function CourseDetailPage() {
       payload: res.data.user.subscribedTo
     });
   };
-
+  const fetchDetails = async () => {
+    const data = await getMarathonById(marathon._id);
+    console.log(data);
+    setMarathon(data.data.data);
+  };
   const fetchMyTeam = async () => {
     const {data} = await getTeamAsMember(userId, marathon._id);
     if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
   };
   useEffect(() => {
-    setUserSubscribedTo(subscribedTo.includes(marathon._id));
+    setUserSubscribedTo((subscribedTo || []).includes(marathon._id));
   }, [subscribedTo, marathon._id]);
   useEffect(() => {
-    fetchMyTeam();
-  }, []);
+    if (userRole === 2)
+      // player
+      fetchMyTeam();
+
+    fetchDetails();
+  }, [userRole]);
 
   useEffect(() => {
     if (userSubscribedTo && myTeam && myTeam.leader._id === userId) {
@@ -105,17 +121,18 @@ export default function CourseDetailPage() {
         <div className={styles.details}>
           <div className={styles.details__header__wrapper}>
             <span className={styles.details__header}>{marathon.course.name}</span>
-            {!userSubscribedTo ? (
-              <button
-                className={buttonStyle.button}
-                onClick={() => {
-                  subscribeTo();
-                }}>
-                Взяти участь
-              </button>
-            ) : (
-              <span className={styles.details__subscribed}>Беру участь✅</span>
-            )}
+            {userRole === 2 &&
+              (!userSubscribedTo ? (
+                <button
+                  className={buttonStyle.button}
+                  onClick={() => {
+                    subscribeTo();
+                  }}>
+                  Взяти участь
+                </button>
+              ) : (
+                <span className={styles.details__subscribed}>Беру участь✅</span>
+              ))}
           </div>
           <div className={styles.details__description}>
             <span className={styles.details__description__name}>Опис:</span>
@@ -244,7 +261,18 @@ export default function CourseDetailPage() {
             </div>
           )}
           <div className={styles.details__block__wrapper}>
-            <span className={styles.details__block__header}>Блоки</span>
+            <span className={styles.details__block__header}>
+              Блоки{' '}
+              {userRole !== 2 && (
+                <button
+                  className={buttonStyle.button}
+                  onClick={() => {
+                    navigate('./block', {state: {marathon}});
+                  }}>
+                  +
+                </button>
+              )}
+            </span>{' '}
             {blocks.map(block => (
               <p className={styles.details__block__container}>
                 {block.name}
