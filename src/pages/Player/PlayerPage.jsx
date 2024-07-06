@@ -51,12 +51,19 @@ export default function PlayerPage() {
               </span>
               {filterMarathons().map(marathon => {
                 const subscribed = (subscribedTo || []).includes(marathon._id);
+                const slicedDesc = marathon.description.slice(0, 150);
                 const blocks = marathon.blocks;
                 return (
                   <>
                     <div key={marathon.id} className={styles.player__marathons__card}>
                       <div className={styles.player__marathons__card__body}>
-                        <span>{marathon.course.name.toUpperCase()}</span>
+                        <div>
+                          <span>{marathon.course.name.toUpperCase()}</span>
+                          <p className={styles.player__marathons__card__description}>
+                            {slicedDesc}
+                            {marathon.description.length > 150 ? '...' : ''}
+                          </p>
+                        </div>
                         <div>
                           {subscribed && (
                             <span className={styles.player__marathons__subscribed}>учасник✅</span>
