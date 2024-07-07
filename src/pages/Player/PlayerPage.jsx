@@ -69,9 +69,6 @@ export default function PlayerPage() {
     fetchAllMarathons();
     fetchAllMentorHourse();
   }, []);
-  useEffect(() => {
-    if (myTeam) getinvitedUsers();
-  }, [myTeam]);
 
   const destroyOrLeaveTeam = async (isLeader, myTeam) => {
     confirm({
@@ -139,14 +136,19 @@ export default function PlayerPage() {
     const {data} = await getTeamAsMember(userId, subscribedTo[0]);
     if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
   };
+
   useEffect(() => {
     if (myTeam && myTeam.leader._id === userId) {
       getUsersForInvite();
-    } else if (subscribedTo && subscribedTo.length > 0) {
+    } else if (myTeam) getinvitedUsers();
+  }, [myTeam, userId]);
+
+  useEffect(() => {
+    if (subscribedTo && subscribedTo.length > 0) {
       fetchMyTeam();
       fetchMyInvites();
     }
-  }, [subscribedTo, myTeam]);
+  }, [subscribedTo]);
   return (
     <>
       <div className={styles.header__container}>
