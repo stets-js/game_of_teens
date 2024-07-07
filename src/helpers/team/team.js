@@ -40,8 +40,18 @@ const deleteInvite = (teamId, inviteId) => {
 const acceptInvite = (teamId, inviteId, marathon, playerId) => {
   return axios.patch(`/api/teams/${teamId}/invite`, {invintationId: inviteId, marathon, playerId});
 };
+
+const deletePlayerFromTeam = (teamId, playerId) => {
+  return axios.delete(`/api/teams/${teamId}/remove-player`, {data: {playerId}});
+};
+const destroyTeam = teamId => {
+  return axios.delete(`/api/teams/${teamId}`);
+};
+
 export {
   getTeamAsMember,
+  destroyTeam,
+  deletePlayerFromTeam,
   postTeam,
   sendInviteToTeam,
   getInvites,

@@ -13,6 +13,8 @@ import {
 import {
   acceptInvite,
   deleteInvite,
+  deletePlayerFromTeam,
+  destroyTeam,
   getInvites,
   getMyInvites,
   getTeamAsMember,
@@ -26,10 +28,13 @@ import arrow from '../../img/arrow.svg';
 import classNames from 'classnames';
 
 import {getUsers} from '../../helpers/users/users';
+import {useConfirm} from 'material-ui-confirm';
+import deleteSVG from '../../img/delete.svg';
 
 export default function CourseDetailPage() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const confirm = useConfirm();
   const navigate = useNavigate();
   // const {marathon_state} = location.state;
   const {courseId: marathonId} = useParams();
@@ -90,7 +95,19 @@ export default function CourseDetailPage() {
     if (userSubscribedTo && myTeam) getinvitedUsers();
     else if (userSubscribedTo) fetchMyInvites();
   }, [myTeam, userId, userSubscribedTo]);
-
+  const removePlayerFromTeam = (member, teamId) => {
+    confirm({
+      description: `Впевнені що хочете видалити участника ${member.name}?`,
+      confirmationText: 'Так',
+      confirmationButtonProps: {autoFocus: true}
+    })
+      .then(async () => {
+        const {data} = await deletePlayerFromTeam(teamId, member._id);
+        // success({delay: 1000, text: 'Cтворенно!'});
+        fetchMyTeam();
+      })
+      .catch(e => console.log('no ' + e));
+  };
   const createTeam = async () => {
     const data = await postTeam(userId, marathon._id);
     if (data) {
@@ -122,7 +139,25 @@ export default function CourseDetailPage() {
     const invites = await getInvites(myTeam._id);
     setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
   };
-
+  const destroyOrLeaveTeam = async (isLeader, myTeam) => {
+    confirm({
+      description: `Впевнені що хочете ${isLeader ? 'видалити' : 'покинути'} команду?`,
+      confirmationText: 'Так',
+      confirmationButtonProps: {autoFocus: true}
+    })
+      .then(async () => {
+        if (isLeader) {
+          const res = await destroyTeam(myTeam._id);
+          if (res) {
+            setMyTeam(null);
+          }
+        } else {
+          const res = await deletePlayerFromTeam(myTeam._id, userId);
+          if (res) setMyTeam(null);
+        }
+      })
+      .catch(e => console.log('no ' + e));
+  };
   return (
     <>
       <PlayerHeader></PlayerHeader>
@@ -154,6 +189,13 @@ export default function CourseDetailPage() {
               <div className={styles.details__team__wrapper}>
                 <div className={styles.details__header__wrapper}>
                   <span className={styles.details__header}>Команда</span>
+                  {myTeam && (
+                    <button
+                      className={buttonStyle.button}
+                      onClick={() => destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)}>
+                      {myTeam.leader._id === userId ? 'Видалити команду' : 'Покинути команду'}
+                    </button>
+                  )}
                   {!myTeam ? (
                     <button
                       className={buttonStyle.button}
@@ -236,6 +278,15 @@ export default function CourseDetailPage() {
                             alt="avatar"
                             className={styles.avatar__small}
                           />
+                          {myTeam.leader._id === userId && member._id !== userId && (
+                            <button
+                              className={styles.details__team__member__delete}
+                              onClick={() => {
+                                removePlayerFromTeam(member, myTeam._id);
+                              }}>
+                              <img src={deleteSVG} width="24" alt="X" />
+                            </button>
+                          )}
                           <label htmlFor="avatar">{member.name}</label>
                         </div>
                       ))}

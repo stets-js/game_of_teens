@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
+import {useConfirm} from 'material-ui-confirm';
 
 import styles from './PlayerPage.module.scss';
 import buttonStyle from '../../styles/Button.module.scss';
@@ -14,9 +15,12 @@ import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
 import {
   acceptInvite,
   deleteInvite,
+  deletePlayerFromTeam,
+  destroyTeam,
   getInvites,
   getMyInvites,
   getTeamAsMember,
+  postTeam,
   sendInviteToTeam
 } from '../../helpers/team/team';
 import classNames from 'classnames';
@@ -24,9 +28,12 @@ import classNames from 'classnames';
 import avatar from '../../img/basic_avatar.svg';
 import leaderAvatar from '../../img/ledear_avatar.svg';
 import invitedAvatar from '../../img/invited_avatar.svg';
+import deleteSVG from '../../img/delete.svg';
+
 import {getUsers} from '../../helpers/users/users';
 
 export default function PlayerPage() {
+  const confirm = useConfirm();
   const [marathons, setMarathons] = useState([]);
   const [myTeam, setMyTeam] = useState(null);
   const [myInvites, setMyInvites] = useState(null);
@@ -65,6 +72,39 @@ export default function PlayerPage() {
   useEffect(() => {
     if (myTeam) getinvitedUsers();
   }, [myTeam]);
+
+  const destroyOrLeaveTeam = async (isLeader, myTeam) => {
+    confirm({
+      description: `Впевнені що хочете ${isLeader ? 'видалити' : 'покинути'} команду?`,
+      confirmationText: 'Так',
+      confirmationButtonProps: {autoFocus: true}
+    })
+      .then(async () => {
+        if (isLeader) {
+          const res = await destroyTeam(myTeam._id);
+          if (res) {
+            setMyTeam(null);
+          }
+        } else {
+          const res = await deletePlayerFromTeam(myTeam._id, userId);
+          if (res) setMyTeam(null);
+        }
+      })
+      .catch(e => console.log('no ' + e));
+  };
+  const removePlayerFromTeam = (member, teamId) => {
+    confirm({
+      description: `Впевнені що хочете видалити участника ${member.name}?`,
+      confirmationText: 'Так',
+      confirmationButtonProps: {autoFocus: true}
+    })
+      .then(async () => {
+        const {data} = await deletePlayerFromTeam(teamId, member._id);
+        // success({delay: 1000, text: 'Cтворенно!'});
+        fetchMyTeam();
+      })
+      .catch(e => console.log('no ' + e));
+  };
   const filterMarathons = () => {
     return subscribedTo.length === 0
       ? marathons
@@ -88,6 +128,13 @@ export default function PlayerPage() {
       console.log(error);
     }
   };
+  const createTeam = async () => {
+    const data = await postTeam(userId, subscribedTo[0]);
+    if (data) {
+      setMyTeam(data.team);
+    }
+  };
+
   const fetchMyTeam = async () => {
     const {data} = await getTeamAsMember(userId, subscribedTo[0]);
     if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
@@ -174,7 +221,9 @@ export default function PlayerPage() {
                     <div className={styles.player__team__waiting__wrapper}>
                       <div className={styles.player__team__waiting__header}>
                         <span>Очікуй запрошення або</span>
-                        <button className={buttonStyle.button}>Стовирити команду</button>
+                        <button className={buttonStyle.button} onClick={() => createTeam()}>
+                          Стовирити команду
+                        </button>
                       </div>
                       <div className={styles.player__team__waiting}>
                         <span className={styles.player__marathons__name}> Запрошення</span>
@@ -231,6 +280,15 @@ export default function PlayerPage() {
                               alt="avatar"
                               className={styles.avatar__small}
                             />
+                            {myTeam.leader._id === userId && member._id !== userId && (
+                              <button
+                                className={styles.details__team__member__delete}
+                                onClick={() => {
+                                  removePlayerFromTeam(member, myTeam._id);
+                                }}>
+                                <img src={deleteSVG} width="24" alt="X" />
+                              </button>
+                            )}
                             <label htmlFor="avatar">{member.name}</label>
                           </div>
                         ))}
@@ -245,6 +303,7 @@ export default function PlayerPage() {
                           </div>
                         ))}
                       </div>
+
                       {myTeam.leader._id === userId && (
                         <div className={styles.details__team__input}>
                           Запросити:{' '}
@@ -265,6 +324,12 @@ export default function PlayerPage() {
                           </button>
                         </div>
                       )}
+
+                      <button
+                        className={buttonStyle.button}
+                        onClick={() => destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)}>
+                        {myTeam.leader._id === userId ? 'Видалити команду' : 'Покинути команду'}
+                      </button>
                     </div>
                   )}
                 </div>
@@ -311,7 +376,7 @@ export default function PlayerPage() {
                     styles.flex_and_between
                   )}>
                   <span>Ти зарєструвався🎉</span>
-                  <span> {format(userRegistered, ' HH:mm dd.MM.yyyy')}</span>
+                  <span> {userRegistered && format(userRegistered, ' HH:mm dd.MM.yyyy')}</span>
                 </div>
               </div>
             </div>
