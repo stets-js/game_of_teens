@@ -8,7 +8,7 @@ import buttonStyle from '../../styles/Button.module.scss';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 
 import {getAllMarathons} from '../../helpers/marathon/marathon';
-
+import {format} from 'date-fns';
 import arrow from '../../img/arrow.svg';
 import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
 import {
@@ -273,7 +273,6 @@ export default function PlayerPage() {
 
             <div className={styles.player__mentor__wrapper}>
               <span className={styles.player__mentor__name}>Останні оновлення: </span>
-              <div>Ти зарєструвався🎉 {userRegistered}</div>
               {mentorHours.map(hour => {
                 const getId = url => {
                   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -285,16 +284,19 @@ export default function PlayerPage() {
                 return (
                   <div className={styles.player__mentor__card}>
                     <div className={styles.player__mentor__card__title}>
-                      [{hour.course.name}]{hour.title}
+                      {hour.course && `[${hour.course.name}]`}
+                      {hour.title}
                     </div>
-                    <iframe
-                      className={styles.player__mentor__card__iframe}
-                      src={`//www.youtube.com/embed/${videoId}`}
-                      title="YouTube video player"
-                      frameborder="0"
-                      allow="accelerometer; allowfullscreen; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allowfullscreen></iframe>
+                    {videoId && (
+                      <iframe
+                        className={styles.player__mentor__card__iframe}
+                        src={`//www.youtube.com/embed/${videoId}`}
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; allowfullscreen; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                    )}
                     <div className={styles.player__mentor__card__title}>
                       {hour.description.slice(0, 50)}
                       {hour.description.length > 50 ? '...' : ''}
@@ -302,6 +304,16 @@ export default function PlayerPage() {
                   </div>
                 );
               })}
+              <div className={styles.player__mentor__card}>
+                <div
+                  className={classNames(
+                    styles.player__mentor__card__title,
+                    styles.flex_and_between
+                  )}>
+                  <span>Ти зарєструвався🎉</span>
+                  <span> {format(userRegistered, ' HH:mm dd.MM.yyyy')}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
