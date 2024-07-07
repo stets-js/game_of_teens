@@ -248,7 +248,10 @@ export default function PlayerPage() {
                                       userId
                                     );
                                     console.log(res);
-                                    setMyTeam(res.data.team);
+                                    if (res) {
+                                      setMyTeam(res.data.team);
+                                      setMyInvites(null);
+                                    }
                                   }}
                                   className={classNames(
                                     buttonStyle.button,
