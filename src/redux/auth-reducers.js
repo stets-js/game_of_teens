@@ -6,7 +6,8 @@ const initialState = {
     name: '',
     role: 0,
     id: null,
-    subscribedTo: []
+    subscribedTo: [],
+    registered: null
   },
   token: null
 };
@@ -15,6 +16,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
       const decodedToken = jwtDecode(action.payload.token);
+      console.log(decodedToken);
       return {
         ...state,
         isAuthenticated: true,
@@ -22,7 +24,8 @@ const authReducer = (state = initialState, action) => {
           name: decodedToken.name,
           role: decodedToken.role,
           id: decodedToken.id,
-          subscribedTo: decodedToken.subscribedTo
+          subscribedTo: decodedToken.subscribedTo,
+          registered: decodedToken.register
         },
         token: action.payload.token
       };

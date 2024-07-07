@@ -11,17 +11,48 @@ import {getAllMarathons} from '../../helpers/marathon/marathon';
 
 import arrow from '../../img/arrow.svg';
 import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
+import {
+  acceptInvite,
+  deleteInvite,
+  getInvites,
+  getMyInvites,
+  getTeamAsMember,
+  sendInviteToTeam
+} from '../../helpers/team/team';
+import classNames from 'classnames';
+
+import avatar from '../../img/basic_avatar.svg';
+import leaderAvatar from '../../img/ledear_avatar.svg';
+import invitedAvatar from '../../img/invited_avatar.svg';
+import {getUsers} from '../../helpers/users/users';
 
 export default function PlayerPage() {
   const [marathons, setMarathons] = useState([]);
+  const [myTeam, setMyTeam] = useState(null);
+  const [myInvites, setMyInvites] = useState(null);
+  const [invitedPlayers, setInvitedPlayers] = useState([]);
+
   const navigate = useNavigate();
+
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
+  const userRegistered = useSelector(state => state.auth.user.registered);
+  const userId = useSelector(state => state.auth.user.id);
+
+  const [inviteEmail, setInviteEmail] = useState(null);
+
   const fetchAllMarathons = async () => {
     const {data} = await getAllMarathons();
     setMarathons(data.data);
   };
-
+  const fetchMyInvites = async () => {
+    const res = await getMyInvites(subscribedTo[0]);
+    setMyInvites(res.data.data);
+  };
   const [mentorHours, setMentorHours] = useState([]);
+  const getinvitedUsers = async () => {
+    const invites = await getInvites(myTeam._id);
+    setInvitedPlayers(prev => [...prev, ...invites.data.map(el => el.player)]);
+  };
 
   const fetchAllMentorHourse = async () => {
     const {data} = await getAllMentorHours();
@@ -31,14 +62,44 @@ export default function PlayerPage() {
     fetchAllMarathons();
     fetchAllMentorHourse();
   }, []);
-  console.log(mentorHours);
-
+  useEffect(() => {
+    if (myTeam) getinvitedUsers();
+  }, [myTeam]);
   const filterMarathons = () => {
     return subscribedTo.length === 0
       ? marathons
       : marathons.filter(marathon => subscribedTo.includes(marathon._id));
   };
-  console.log(subscribedTo);
+
+  const [usersForInvite, setUsersForInvite] = useState([]);
+  const getUsersForInvite = async () => {
+    const res = await getUsers(`marathonId=${subscribedTo[0]}`);
+    setUsersForInvite(res.data.data.filter(user => user._id !== userId));
+  };
+  const sendInvite = async () => {
+    const user = usersForInvite.filter(user => user.email === inviteEmail);
+    if (!user) {
+      return; // !!!
+    }
+    try {
+      const res = await sendInviteToTeam(myTeam._id, user[0]._id, subscribedTo[0]);
+      setInvitedPlayers(prev => [...prev, res.invitation.player]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchMyTeam = async () => {
+    const {data} = await getTeamAsMember(userId, subscribedTo[0]);
+    if (data.data && data.data.length > 0) setMyTeam(data.data[0]);
+  };
+  useEffect(() => {
+    if (myTeam && myTeam.leader._id === userId) {
+      getUsersForInvite();
+    } else if (subscribedTo && subscribedTo.length > 0) {
+      fetchMyTeam();
+      fetchMyInvites();
+    }
+  }, [subscribedTo, myTeam]);
   return (
     <>
       <div className={styles.header__container}>
@@ -106,9 +167,113 @@ export default function PlayerPage() {
                   </>
                 );
               })}
+              <span className={styles.player__marathons__name}>Моя команда:</span>
+              <div key={'team'} className={styles.player__marathons__card}>
+                <div className={styles.player__marathons__card__body}>
+                  {!myTeam ? (
+                    <div className={styles.player__team__waiting__wrapper}>
+                      <div className={styles.player__team__waiting__header}>
+                        <span>Очікуй запрошення або</span>
+                        <button className={buttonStyle.button}>Стовирити команду</button>
+                      </div>
+                      <div className={styles.player__team__waiting}>
+                        <span className={styles.player__marathons__name}> Запрошення</span>
+                        {myInvites &&
+                          myInvites.map(invite => (
+                            <div
+                              className={styles.details__team__invintaion__card}
+                              key={invite._id}>
+                              <span>
+                                Учасник {invite?.team?.leader?.name} запросив(ла) тебе до команди
+                              </span>
+
+                              <div className={styles.details__team__button__wrapper}>
+                                <button
+                                  onClick={async () => {
+                                    const res = await acceptInvite(
+                                      invite.team._id,
+                                      invite._id,
+                                      subscribedTo[0],
+                                      userId
+                                    );
+                                    console.log(res);
+                                    setMyTeam(res.data.team);
+                                  }}
+                                  className={classNames(
+                                    buttonStyle.button,
+                                    styles.details__team__button__accept
+                                  )}>
+                                  Прийняти
+                                </button>
+                                <button
+                                  className={classNames(
+                                    buttonStyle.button,
+                                    styles.details__team__button__delete
+                                  )}
+                                  onClick={async () => {
+                                    const res = await deleteInvite(invite.team._id, invite._id);
+                                    if (res) fetchMyInvites();
+                                  }}>
+                                  Відмовити
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={styles.player__team__waiting__wrapper}>
+                      <div className={styles.details__team__members}>
+                        {myTeam.members.map(member => (
+                          <div key={member._id} className={styles.details__team__member}>
+                            <img
+                              src={member._id === myTeam.leader._id ? leaderAvatar : avatar}
+                              alt="avatar"
+                              className={styles.avatar__small}
+                            />
+                            <label htmlFor="avatar">{member.name}</label>
+                          </div>
+                        ))}
+                        {invitedPlayers.map(member => (
+                          <div key={member._id}>
+                            <img
+                              src={invitedAvatar}
+                              alt="avatar"
+                              className={styles.avatar__small}
+                            />
+                            <label htmlFor="avatar">{member.name}</label>
+                          </div>
+                        ))}
+                      </div>
+                      {myTeam.leader._id === userId && (
+                        <div className={styles.details__team__input}>
+                          Запросити:{' '}
+                          <input
+                            list="invites"
+                            value={inviteEmail}
+                            onChange={e => setInviteEmail(e.target.value)}></input>
+                          <datalist id="invites">
+                            {usersForInvite.length > 0 &&
+                              usersForInvite.map(user => <option value={user.email} />)}
+                          </datalist>
+                          <button
+                            className={buttonStyle.button}
+                            onClick={() => {
+                              sendInvite();
+                            }}>
+                            Відправити
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
+
             <div className={styles.player__mentor__wrapper}>
               <span className={styles.player__mentor__name}>Останні оновлення: </span>
+              <div>Ти зарєструвався🎉 {userRegistered}</div>
               {mentorHours.map(hour => {
                 const getId = url => {
                   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;

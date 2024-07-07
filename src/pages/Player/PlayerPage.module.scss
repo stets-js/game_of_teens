@@ -120,6 +120,7 @@
       display: flex;
       justify-content: center;
       column-gap: 20px;
+      width: 100%;
     }
     &__input {
       display: flex;
@@ -339,6 +340,27 @@
 }
 
 .player {
+  &__team{
+    &__waiting{
+      
+   border: 1px solid black;
+   border-radius: 25px;
+   min-height: 50px;
+   text-align: center;
+   &__header{
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    justify-content: space-between;
+   }   
+   &__wrapper{
+    width: 100%;
+        display:flex;
+        flex-direction: column;
+        row-gap: 30px;
+      }
+  }
+  }
   &__mentor {
     &__wrapper {
       overflow-x: hidden;
