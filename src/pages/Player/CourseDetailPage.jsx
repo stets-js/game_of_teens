@@ -338,7 +338,7 @@ export default function CourseDetailPage() {
                 <p className={styles.details__block__container}>
                   {block.name}
                   <button
-                    className={styles.details__block__arrow}
+                    className={classNames(styles.details__block__arrow, buttonStyle.button)}
                     onClick={() => {
                       navigate(`./sprint/${block._id}`, {
                         state: {marathon}

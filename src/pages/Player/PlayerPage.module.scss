@@ -121,7 +121,6 @@
       justify-content: center;
       column-gap: 20px;
       width: 100%;
-    
     }
     &__input {
       display: flex;
@@ -133,16 +132,16 @@
       position: relative;
       width: 128px;
       word-wrap: break-word;
-      &__delete{
+      &__delete {
         position: absolute;
         // right: 40px;
         background-color: transparent;
         font-size: 24px;
         width: 24px;
         height: 24px;
-        top:0;
+        top: 0;
         z-index: 10;
-        &:hover{
+        &:hover {
           transform: scale(1.2);
         }
       }
@@ -249,8 +248,10 @@
     &__arrow {
       background-color: transparent;
       transition: $main-transition;
+      padding: 0 !important;
+      margin-left: 5px;
       &:hover {
-        transform: scaleX(1.5);
+        transform: scaleX(1.1);
       }
     }
 
@@ -268,9 +269,9 @@
 }
 
 .block {
-	&__flex{
-		flex:1;
-	}
+  &__flex {
+    flex: 1;
+  }
   &__wrapper {
     font-family: $poppins !important;
     font-size: 24px !important;
@@ -285,10 +286,10 @@
 
   &__description {
     width: 80%;
-    div{
+    div {
       font-size: 24px !important;
       font-family: $poppins;
-      color:black;
+      color: black;
     }
   }
   &__upload {
@@ -296,14 +297,13 @@
       &__input {
         visibility: hidden;
         width: 0px;
-		flex:0 !important;
+        flex: 0 !important;
       }
     }
     &__link {
       &:last-of-type {
         flex: 1;
-		height: 3em;
-		
+        height: 3em;
       }
       &__wrapper {
         display: flex;
@@ -318,10 +318,10 @@
       grid-template-columns: 1fr 1fr;
       width: 100%;
       justify-content: center;
-	  &__border{
-		border-left: 2px solid black;
-		padding-left: 10px;
-	  }
+      &__border {
+        border-left: 2px solid black;
+        padding-left: 10px;
+      }
       &:last-of-type {
         margin-bottom: 40px;
       }
@@ -346,35 +346,34 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-	  &__wrapper{
-		display:flex;
-		justify-content: center;
-	  }
+      &__wrapper {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }
 
 .player {
-  &__team{
-    &__waiting{
-      
-   border: 1px solid black;
-   border-radius: 25px;
-   min-height: 50px;
-   text-align: center;
-   &__header{
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
-    justify-content: space-between;
-   }   
-   &__wrapper{
-    width: 100%;
-        display:flex;
+  &__team {
+    &__waiting {
+      border: 1px solid black;
+      border-radius: 25px;
+      min-height: 50px;
+      text-align: center;
+      &__header {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        justify-content: space-between;
+      }
+      &__wrapper {
+        width: 100%;
+        display: flex;
         flex-direction: column;
         row-gap: 30px;
       }
-  }
+    }
   }
   &__mentor {
     &__wrapper {
@@ -462,7 +461,7 @@
       justify-content: space-between;
       padding: 20px;
       border-radius: 20px;
-      &__description{
+      &__description {
         text-align: justify;
         margin-right: 25px;
         margin-top: 5px;
@@ -496,7 +495,7 @@
   }
 }
 
-.flex_and_between{
+.flex_and_between {
   display: flex;
   justify-content: space-between;
 }

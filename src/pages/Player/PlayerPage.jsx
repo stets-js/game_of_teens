@@ -200,7 +200,10 @@ export default function PlayerPage() {
                               <p className={styles.details__block__container}>
                                 {block.name}
                                 <button
-                                  className={styles.details__block__arrow}
+                                  className={classNames(
+                                    styles.details__block__arrow,
+                                    buttonStyle.button
+                                  )}
                                   onClick={() => {
                                     navigate(`./courses/${marathon._id}/sprint/${block._id}`, {
                                       state: {marathon}
