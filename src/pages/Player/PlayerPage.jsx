@@ -46,11 +46,11 @@ export default function PlayerPage() {
   const userId = useSelector(state => state.auth.user.id);
 
   const [inviteEmail, setInviteEmail] = useState(null);
-  const [solo] = [
+  const [solo] = useState([
     '6687e00af12dbfd2229fe8d9',
     '6687df8df12dbfd2229fe8cd',
     '6687dfabf12dbfd2229fe8d0'
-  ];
+  ]);
 
   const fetchAllMarathons = async () => {
     const {data} = await getAllMarathons();
