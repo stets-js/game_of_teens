@@ -153,7 +153,8 @@ export default function PlayerPage() {
   useEffect(() => {
     if (myTeam && myTeam.leader._id === userId) {
       getUsersForInvite();
-    } else if (myTeam) getinvitedUsers();
+    }
+    if (myTeam) getinvitedUsers();
   }, [myTeam, userId]);
 
   useEffect(() => {
@@ -162,7 +163,6 @@ export default function PlayerPage() {
       fetchMyInvites();
     }
   }, [subscribedTo]);
-  console.log(inviteEmail, usersForInvite);
   return (
     <>
       <div className={styles.header__container}>

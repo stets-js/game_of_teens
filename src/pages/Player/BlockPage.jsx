@@ -16,6 +16,7 @@ import {
 import fileSVG from '../../img/file.svg';
 import getDomainOrExtension from '../../helpers/link_shredder';
 import MDEditor from '@uiw/react-md-editor';
+import {defaults, error, success} from '@pnotify/core';
 
 export default function BlockPage() {
   const location = useLocation();
@@ -79,6 +80,9 @@ export default function BlockPage() {
   //   }
   // }, [myTeam]);
   const postProject = async () => {
+    if (myTeam.leader._id !== userId) {
+      return error({text: 'Лише лідер може це зробити', delay: 1000});
+    }
     const {data} = await createProjectToBlock(marathon._id, block._id, {
       team: myTeam._id
     });
@@ -187,13 +191,17 @@ export default function BlockPage() {
               </div>
             </>
           ) : (
-            <button
-              className={buttonStyles.button}
-              onClick={() => {
-                postProject();
-              }}>
-              Хочеш здати? Натискай!
-            </button>
+            <>
+              {myTeam && (
+                <button
+                  className={buttonStyles.button}
+                  onClick={() => {
+                    postProject();
+                  }}>
+                  Хочеш здати? Натискай!
+                </button>
+              )}
+            </>
           ))}
       </div>
     </>
