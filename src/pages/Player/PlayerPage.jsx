@@ -46,6 +46,11 @@ export default function PlayerPage() {
   const userId = useSelector(state => state.auth.user.id);
 
   const [inviteEmail, setInviteEmail] = useState(null);
+  const [solo] = [
+    '6687e00af12dbfd2229fe8d9',
+    '6687df8df12dbfd2229fe8cd',
+    '6687dfabf12dbfd2229fe8d0'
+  ];
 
   const fetchAllMarathons = async () => {
     const {data} = await getAllMarathons();
@@ -321,7 +326,7 @@ export default function PlayerPage() {
                             ))}
                           </div>
 
-                          {myTeam.leader._id === userId && (
+                          {!solo.includes(subscribedTo[0]) && myTeam.leader._id === userId && (
                             <div className={styles.details__team__input}>
                               Запросити:{' '}
                               <Select
@@ -353,13 +358,17 @@ export default function PlayerPage() {
                             </div>
                           )}
 
-                          <button
-                            className={buttonStyle.button}
-                            onClick={() =>
-                              destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)
-                            }>
-                            {myTeam.leader._id === userId ? 'Видалити команду' : 'Покинути команду'}
-                          </button>
+                          {!solo.includes(subscribedTo[0]) && (
+                            <button
+                              className={buttonStyle.button}
+                              onClick={() =>
+                                destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)
+                              }>
+                              {myTeam.leader._id === userId
+                                ? 'Видалити команду'
+                                : 'Покинути команду'}
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>

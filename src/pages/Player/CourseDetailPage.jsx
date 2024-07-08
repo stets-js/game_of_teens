@@ -53,9 +53,17 @@ export default function CourseDetailPage() {
   const [inviteEmail, setInviteEmail] = useState(null);
   const [invitedPlayers, setInvitedPlayers] = useState([]);
   const [myInvites, setMyInvites] = useState([]);
+  const [solo] = [
+    '6687e00af12dbfd2229fe8d9',
+    '6687df8df12dbfd2229fe8cd',
+    '6687dfabf12dbfd2229fe8d0'
+  ];
 
   const subscribeTo = async () => {
     const res = await subscribeToMarathon(userId, marathon._id);
+    if (solo.includes(marathon._id)) {
+      createTeam();
+    }
     console.log(res);
     console.log(res.data.user.subscribedTo);
     dispatch({
@@ -196,7 +204,7 @@ export default function CourseDetailPage() {
               <div className={styles.details__team__wrapper}>
                 <div className={styles.details__header__wrapper}>
                   <span className={styles.details__header}>Команда</span>
-                  {myTeam && (
+                  {!solo.includes(marathon._id) && myTeam && (
                     <button
                       className={buttonStyle.button}
                       onClick={() => destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)}>
@@ -304,7 +312,7 @@ export default function CourseDetailPage() {
                         </div>
                       ))}
                     </div>
-                    {myTeam.leader._id === userId && (
+                    {!solo.includes(marathon._id) && myTeam.leader._id === userId && (
                       <div className={styles.details__team__input}>
                         Запросити:{' '}
                         <Select
