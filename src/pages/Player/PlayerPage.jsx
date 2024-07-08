@@ -29,6 +29,7 @@ import avatar from '../../img/basic_avatar.svg';
 import leaderAvatar from '../../img/ledear_avatar.svg';
 import invitedAvatar from '../../img/invited_avatar.svg';
 import deleteSVG from '../../img/delete.svg';
+import {defaults, error, success} from '@pnotify/core';
 
 import {getUsers} from '../../helpers/users/users';
 
@@ -126,6 +127,7 @@ export default function PlayerPage() {
   };
   const sendInvite = async () => {
     if (!inviteEmail.value) {
+      error({text: 'Вибири пошту з випадаючого списка', delay: 1000});
       return; // !!!
     }
     try {
@@ -133,6 +135,7 @@ export default function PlayerPage() {
       setInvitedPlayers(prev => [...prev, res.invitation.player]);
     } catch (error) {
       console.log(error);
+      error({text: 'Цей учасник вже у іншій команді'});
     }
   };
   const createTeam = async () => {
