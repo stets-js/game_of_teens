@@ -2,7 +2,7 @@ import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {useConfirm} from 'material-ui-confirm';
-
+import Select from 'react-select';
 import styles from './PlayerPage.module.scss';
 import buttonStyle from '../../styles/Button.module.scss';
 
@@ -111,15 +111,20 @@ export default function PlayerPage() {
   const [usersForInvite, setUsersForInvite] = useState([]);
   const getUsersForInvite = async () => {
     const res = await getUsers(`marathonId=${subscribedTo[0]}`);
-    setUsersForInvite(res.data.data.filter(user => user._id !== userId));
+    setUsersForInvite(
+      res.data.data
+        .filter(user => user._id !== userId)
+        .map(user => {
+          return {value: user._id, label: user.email};
+        })
+    );
   };
   const sendInvite = async () => {
-    const user = usersForInvite.filter(user => user.email === inviteEmail);
-    if (!user) {
+    if (!inviteEmail.value) {
       return; // !!!
     }
     try {
-      const res = await sendInviteToTeam(myTeam._id, user[0]._id, subscribedTo[0]);
+      const res = await sendInviteToTeam(myTeam._id, inviteEmail.value, subscribedTo[0]);
       setInvitedPlayers(prev => [...prev, res.invitation.player]);
     } catch (error) {
       console.log(error);
@@ -149,6 +154,7 @@ export default function PlayerPage() {
       fetchMyInvites();
     }
   }, [subscribedTo]);
+  console.log(inviteEmail, usersForInvite);
   return (
     <>
       <div className={styles.header__container}>
@@ -315,14 +321,25 @@ export default function PlayerPage() {
                       {myTeam.leader._id === userId && (
                         <div className={styles.details__team__input}>
                           Запросити:{' '}
-                          <input
+                          <Select
+                            options={usersForInvite}
+                            key={Math.random() * 100 - 1}
+                            value={inviteEmail}
+                            className={styles.selector}
+                            placeholder="Запроси друга до команди"
+                            required
+                            onChange={e => {
+                              setInviteEmail(e);
+                            }}
+                          />
+                          {/* <input
                             list="invites"
                             value={inviteEmail}
                             onChange={e => setInviteEmail(e.target.value)}></input>
                           <datalist id="invites">
                             {usersForInvite.length > 0 &&
                               usersForInvite.map(user => <option value={user.email} />)}
-                          </datalist>
+                          </datalist> */}
                           <button
                             className={buttonStyle.button}
                             onClick={() => {

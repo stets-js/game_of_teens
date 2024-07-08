@@ -1,5 +1,10 @@
 @import '../../styles/variables.scss';
 
+
+.selector{
+  min-width: 40%;
+}
+
 .aside {
   &__wrapper {
     font-family: $poppins;
