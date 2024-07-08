@@ -86,8 +86,7 @@ export default function BlockPage() {
     const {data} = await createProjectToBlock(marathon._id, block._id, {
       team: myTeam._id
     });
-    console.log(data);
-    setMyProject(data[0]);
+    setMyProject(data);
   };
   const addLink = async () => {
     const data = await updateBlockProject(marathon._id, block._id, myProject._id, {
