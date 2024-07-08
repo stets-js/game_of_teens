@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 
 import styles from './PlayerPage.module.scss';
+import {defaults, error, success} from '@pnotify/core';
 
 import buttonStyle from '../../styles/Button.module.scss';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
@@ -137,13 +138,15 @@ export default function CourseDetailPage() {
   };
   const sendInvite = async () => {
     if (!inviteEmail.value) {
+      error({text: 'Вибири пошту з випадаючого списка', delay: 1000});
       return; // !!!
     }
     try {
       const res = await sendInviteToTeam(myTeam._id, inviteEmail.value, subscribedTo[0]);
       setInvitedPlayers(prev => [...prev, res.invitation.player]);
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
+      error({text: 'Цей учасник вже у іншій команді'});
     }
   };
   const fetchMyInvites = async () => {

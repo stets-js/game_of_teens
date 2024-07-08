@@ -133,8 +133,8 @@ export default function PlayerPage() {
     try {
       const res = await sendInviteToTeam(myTeam._id, inviteEmail.value, subscribedTo[0]);
       setInvitedPlayers(prev => [...prev, res.invitation.player]);
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       error({text: 'Цей учасник вже у іншій команді'});
     }
   };
