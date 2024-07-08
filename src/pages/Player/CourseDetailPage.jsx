@@ -339,34 +339,36 @@ export default function CourseDetailPage() {
                 )}
               </div>
             )}
-            <div className={styles.details__block__wrapper}>
-              <span className={styles.details__block__header}>
-                Блоки{' '}
-                {userRole !== 2 && (
-                  <button
-                    className={buttonStyle.button}
-                    onClick={() => {
-                      navigate('./block', {state: {marathon}});
-                    }}>
-                    +
-                  </button>
-                )}
-              </span>{' '}
-              {blocks.map(block => (
-                <p className={styles.details__block__container}>
-                  {block.name}
-                  <button
-                    className={classNames(styles.details__block__arrow, buttonStyle.button)}
-                    onClick={() => {
-                      navigate(`./sprint/${block._id}`, {
-                        state: {marathon}
-                      });
-                    }}>
-                    <img src={arrow} alt="arrow" />
-                  </button>
-                </p>
-              ))}
-            </div>
+            {userSubscribedTo && (
+              <div className={styles.details__block__wrapper}>
+                <span className={styles.details__block__header}>
+                  Блоки{' '}
+                  {userRole !== 2 && (
+                    <button
+                      className={buttonStyle.button}
+                      onClick={() => {
+                        navigate('./block', {state: {marathon}});
+                      }}>
+                      +
+                    </button>
+                  )}
+                </span>{' '}
+                {blocks.map(block => (
+                  <p className={styles.details__block__container}>
+                    {block.name}
+                    <button
+                      className={classNames(styles.details__block__arrow, buttonStyle.button)}
+                      onClick={() => {
+                        navigate(`./sprint/${block._id}`, {
+                          state: {marathon}
+                        });
+                      }}>
+                      <img src={arrow} alt="arrow" />
+                    </button>
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
