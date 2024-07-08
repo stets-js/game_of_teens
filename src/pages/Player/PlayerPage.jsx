@@ -225,114 +225,117 @@ export default function PlayerPage() {
                   </>
                 );
               })}
-              <span className={styles.player__marathons__name}>Моя команда:</span>
-              <div key={'team'} className={styles.player__marathons__card}>
-                <div className={styles.player__marathons__card__body}>
-                  {!myTeam ? (
-                    <div className={styles.player__team__waiting__wrapper}>
-                      <div className={styles.player__team__waiting__header}>
-                        <span>Очікуй запрошення або</span>
-                        <button className={buttonStyle.button} onClick={() => createTeam()}>
-                          Стовирити команду
-                        </button>
-                      </div>
-                      <div className={styles.player__team__waiting}>
-                        <span className={styles.player__marathons__name}> Запрошення</span>
-                        {myInvites &&
-                          myInvites.map(invite => (
-                            <div
-                              className={styles.details__team__invintaion__card}
-                              key={invite._id}>
-                              <span>
-                                Учасник {invite?.team?.leader?.name} запросив(ла) тебе до команди
-                              </span>
+              {subscribedTo.length > 0 && (
+                <>
+                  <span className={styles.player__marathons__name}>Моя команда:</span>
+                  <div key={'team'} className={styles.player__marathons__card}>
+                    <div className={styles.player__marathons__card__body}>
+                      {!myTeam ? (
+                        <div className={styles.player__team__waiting__wrapper}>
+                          <div className={styles.player__team__waiting__header}>
+                            <span>Очікуй запрошення або</span>
+                            <button className={buttonStyle.button} onClick={() => createTeam()}>
+                              Стовирити команду
+                            </button>
+                          </div>
+                          <div className={styles.player__team__waiting}>
+                            <span className={styles.player__marathons__name}> Запрошення</span>
+                            {myInvites &&
+                              myInvites.map(invite => (
+                                <div
+                                  className={styles.details__team__invintaion__card}
+                                  key={invite._id}>
+                                  <span>
+                                    Учасник {invite?.team?.leader?.name} запросив(ла) тебе до
+                                    команди
+                                  </span>
 
-                              <div className={styles.details__team__button__wrapper}>
-                                <button
-                                  onClick={async () => {
-                                    const res = await acceptInvite(
-                                      invite.team._id,
-                                      invite._id,
-                                      subscribedTo[0],
-                                      userId
-                                    );
-                                    console.log(res);
-                                    if (res) {
-                                      setMyTeam(res.data.team);
-                                      setMyInvites(null);
-                                    }
-                                  }}
-                                  className={classNames(
-                                    buttonStyle.button,
-                                    styles.details__team__button__accept
-                                  )}>
-                                  Прийняти
-                                </button>
-                                <button
-                                  className={classNames(
-                                    buttonStyle.button,
-                                    styles.details__team__button__delete
-                                  )}
-                                  onClick={async () => {
-                                    const res = await deleteInvite(invite.team._id, invite._id);
-                                    if (res) fetchMyInvites();
-                                  }}>
-                                  Відмовити
-                                </button>
+                                  <div className={styles.details__team__button__wrapper}>
+                                    <button
+                                      onClick={async () => {
+                                        const res = await acceptInvite(
+                                          invite.team._id,
+                                          invite._id,
+                                          subscribedTo[0],
+                                          userId
+                                        );
+                                        console.log(res);
+                                        if (res) {
+                                          setMyTeam(res.data.team);
+                                          setMyInvites(null);
+                                        }
+                                      }}
+                                      className={classNames(
+                                        buttonStyle.button,
+                                        styles.details__team__button__accept
+                                      )}>
+                                      Прийняти
+                                    </button>
+                                    <button
+                                      className={classNames(
+                                        buttonStyle.button,
+                                        styles.details__team__button__delete
+                                      )}
+                                      onClick={async () => {
+                                        const res = await deleteInvite(invite.team._id, invite._id);
+                                        if (res) fetchMyInvites();
+                                      }}>
+                                      Відмовити
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className={styles.player__team__waiting__wrapper}>
+                          <div className={styles.details__team__members}>
+                            {myTeam.members.map(member => (
+                              <div key={member._id} className={styles.details__team__member}>
+                                <img
+                                  src={member._id === myTeam.leader._id ? leaderAvatar : avatar}
+                                  alt="avatar"
+                                  className={styles.avatar__small}
+                                />
+                                {myTeam.leader._id === userId && member._id !== userId && (
+                                  <button
+                                    className={styles.details__team__member__delete}
+                                    onClick={() => {
+                                      removePlayerFromTeam(member, myTeam._id);
+                                    }}>
+                                    <img src={deleteSVG} width="24" alt="X" />
+                                  </button>
+                                )}
+                                <label htmlFor="avatar">{member.name}</label>
                               </div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={styles.player__team__waiting__wrapper}>
-                      <div className={styles.details__team__members}>
-                        {myTeam.members.map(member => (
-                          <div key={member._id} className={styles.details__team__member}>
-                            <img
-                              src={member._id === myTeam.leader._id ? leaderAvatar : avatar}
-                              alt="avatar"
-                              className={styles.avatar__small}
-                            />
-                            {myTeam.leader._id === userId && member._id !== userId && (
-                              <button
-                                className={styles.details__team__member__delete}
-                                onClick={() => {
-                                  removePlayerFromTeam(member, myTeam._id);
-                                }}>
-                                <img src={deleteSVG} width="24" alt="X" />
-                              </button>
-                            )}
-                            <label htmlFor="avatar">{member.name}</label>
+                            ))}
+                            {invitedPlayers.map(member => (
+                              <div key={member._id}>
+                                <img
+                                  src={invitedAvatar}
+                                  alt="avatar"
+                                  className={styles.avatar__small}
+                                />
+                                <label htmlFor="avatar">{member.name}</label>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                        {invitedPlayers.map(member => (
-                          <div key={member._id}>
-                            <img
-                              src={invitedAvatar}
-                              alt="avatar"
-                              className={styles.avatar__small}
-                            />
-                            <label htmlFor="avatar">{member.name}</label>
-                          </div>
-                        ))}
-                      </div>
 
-                      {myTeam.leader._id === userId && (
-                        <div className={styles.details__team__input}>
-                          Запросити:{' '}
-                          <Select
-                            options={usersForInvite}
-                            key={Math.random() * 100 - 1}
-                            value={inviteEmail}
-                            className={styles.selector}
-                            placeholder="Запроси друга до команди"
-                            required
-                            onChange={e => {
-                              setInviteEmail(e);
-                            }}
-                          />
-                          {/* <input
+                          {myTeam.leader._id === userId && (
+                            <div className={styles.details__team__input}>
+                              Запросити:{' '}
+                              <Select
+                                options={usersForInvite}
+                                key={Math.random() * 100 - 1}
+                                value={inviteEmail}
+                                className={styles.selector}
+                                placeholder="Запроси друга до команди"
+                                required
+                                onChange={e => {
+                                  setInviteEmail(e);
+                                }}
+                              />
+                              {/* <input
                             list="invites"
                             value={inviteEmail}
                             onChange={e => setInviteEmail(e.target.value)}></input>
@@ -340,25 +343,29 @@ export default function PlayerPage() {
                             {usersForInvite.length > 0 &&
                               usersForInvite.map(user => <option value={user.email} />)}
                           </datalist> */}
+                              <button
+                                className={buttonStyle.button}
+                                onClick={() => {
+                                  sendInvite();
+                                }}>
+                                Відправити
+                              </button>
+                            </div>
+                          )}
+
                           <button
                             className={buttonStyle.button}
-                            onClick={() => {
-                              sendInvite();
-                            }}>
-                            Відправити
+                            onClick={() =>
+                              destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)
+                            }>
+                            {myTeam.leader._id === userId ? 'Видалити команду' : 'Покинути команду'}
                           </button>
                         </div>
                       )}
-
-                      <button
-                        className={buttonStyle.button}
-                        onClick={() => destroyOrLeaveTeam(myTeam.leader._id === userId, myTeam)}>
-                        {myTeam.leader._id === userId ? 'Видалити команду' : 'Покинути команду'}
-                      </button>
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className={styles.player__mentor__wrapper}>
