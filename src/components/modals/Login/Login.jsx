@@ -1,21 +1,21 @@
-import styles from "./Login.module.scss";
-import Modal from "../../Modal/Modal";
-import FormInput from "../../FormInput/FormInput";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { success, error, defaults } from "@pnotify/core";
-import {loginUser} from "../../../helpers/auth/auth"
+import styles from './Login.module.scss';
+import Modal from '../../Modal/Modal';
+import FormInput from '../../FormInput/FormInput';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {success, error, defaults} from '@pnotify/core';
+import {loginUser} from '../../../helpers/auth/auth';
 
-const Login = ({ isOpen, handleClose }) => {
+const Login = ({isOpen, handleClose}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
-  const handleSubmit = async (event) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async event => {
     event.preventDefault();
     try {
       const data = {
-        email: email,
+        email: email.trim(),
         password: password
       };
       const res = await loginUser(data);
@@ -23,17 +23,16 @@ const Login = ({ isOpen, handleClose }) => {
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          token: res.token,
-        },
+          token: res.token
+        }
       });
       handleClose();
-      setEmail("");
-      setPassword("");
+      setEmail('');
+      setPassword('');
     } catch (err) {
       error(err.response.data.message);
     }
-  }
-
+  };
 
   return (
     <>
@@ -42,15 +41,15 @@ const Login = ({ isOpen, handleClose }) => {
           <h3 className={styles.title}>Log In</h3>
           <form>
             <FormInput
-                classname={styles.title}
-                title="Email:"
-                type="text"
-                name="email"
-                value={email}
-                placeholder="Email"
-                isRequired={true}
-                handler={setEmail}
-              />
+              classname={styles.title}
+              title="Email:"
+              type="text"
+              name="email"
+              value={email}
+              placeholder="Email"
+              isRequired={true}
+              handler={setEmail}
+            />
 
             <FormInput
               title="Password:"
@@ -62,25 +61,24 @@ const Login = ({ isOpen, handleClose }) => {
               isRequired={true}
               handler={setPassword}
             />
-            
+
             <button
               type="button"
-              onClick={(e) => {
-                const tokenFromLocalStorage = localStorage.getItem("got");
-              
-                  if (tokenFromLocalStorage) {
-                      dispatch({
-                        type: 'LOGIN_SUCCESS',
-                        payload: {
-                          token: tokenFromLocalStorage,
-                        },
-                      });
-                  } else {
-                    handleSubmit(e);
-                  }
+              onClick={e => {
+                const tokenFromLocalStorage = localStorage.getItem('got');
+
+                if (tokenFromLocalStorage) {
+                  dispatch({
+                    type: 'LOGIN_SUCCESS',
+                    payload: {
+                      token: tokenFromLocalStorage
+                    }
+                  });
+                } else {
+                  handleSubmit(e);
+                }
               }}
-              className={styles.login}
-            >
+              className={styles.login}>
               Log in
             </button>
           </form>

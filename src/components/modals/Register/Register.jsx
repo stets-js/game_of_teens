@@ -19,7 +19,7 @@ const Register = ({isOpen, handleClose}) => {
     event.preventDefault();
     try {
       const data = {
-        email,
+        email: email.trim(),
         role: 'player',
         name,
         password
