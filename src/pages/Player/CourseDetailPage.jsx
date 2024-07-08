@@ -54,11 +54,7 @@ export default function CourseDetailPage() {
   const [inviteEmail, setInviteEmail] = useState(null);
   const [invitedPlayers, setInvitedPlayers] = useState([]);
   const [myInvites, setMyInvites] = useState([]);
-  const [solo] = useState([
-    '6687e00af12dbfd2229fe8d9',
-    '6687df8df12dbfd2229fe8cd',
-    '6687dfabf12dbfd2229fe8d0'
-  ]);
+  const [solo] = useState(['6687e00af12dbfd2229fe8d9', '6687dfabf12dbfd2229fe8d0']);
 
   const subscribeTo = async () => {
     const res = await subscribeToMarathon(userId, marathon._id);
