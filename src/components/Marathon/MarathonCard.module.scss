@@ -1,5 +1,7 @@
 @import '../../styles/variables.scss';
-
+.fullwidth{
+    width: 100% !important;
+}
 .marathon{
     &__container{
         border: 1px solid black;
