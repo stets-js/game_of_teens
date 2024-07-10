@@ -27,6 +27,7 @@ const getDomainOrExtension = url => {
     }
   } catch (error) {
     console.log(url);
+    return url;
   }
 };
 

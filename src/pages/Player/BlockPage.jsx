@@ -85,6 +85,7 @@ export default function BlockPage() {
     setMyProject(data);
   };
   const addLink = async () => {
+    if (!newLink) return;
     const data = await updateBlockProject(marathon._id, block._id, myProject._id, {
       links: [...(myProject.links || []), newLink]
     });
@@ -112,6 +113,9 @@ export default function BlockPage() {
       <PlayerHeader></PlayerHeader>
       <div className={styles.block__wrapper}>
         <div className={styles.block__header}>{block.name}</div>
+        {myProject && myProject.confirm && (
+          <p className={classNames(styles.confirmed, styles.checkedByMentor)}>Здано ✔️</p>
+        )}
         {myProject && myProject.checkedByMentor && (
           <p className={styles.checkedByMentor}>Перевірено ментором ✔️</p>
         )}
