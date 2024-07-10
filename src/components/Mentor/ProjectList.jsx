@@ -47,7 +47,7 @@ export default function ProjectList({marathonId, blockId}) {
               <div key={project._id} className={styles.project__card}>
                 <div className={styles.project__card__header}>
                   <span>
-                    Команда {project.team.leader.name} ({project.team.leader.email})
+                    Команда {project?.team?.leader?.name} ({project.team?.leader?.email})
                   </span>
                   <div className={styles.project__card__header__status}>
                     <span>{project.confirm ? 'Confirmed ✔️' : 'In progress🔄'}</span>
