@@ -19,6 +19,7 @@ import CourseDetailPage from './pages/Player/CourseDetailPage';
 import BlockPage from './pages/Player/BlockPage';
 import AddNewBlock from './pages/Jury/AddNewBlock';
 import MentorPage from './pages/Mentor/MentorPage';
+import ProfilePage from './pages/Player/ProfilePage';
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -61,6 +62,7 @@ const App = () => {
               <Route path={`player/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
               <Route path={`player/${userId}/courses`} element={<CoursesPage />} />
               <Route path={`player/${userId}`} element={<PlayerPage />} />
+              <Route path={path.userProfile} element={<ProfilePage />} />
               <Route path={path.all} element={<Navigate to={`player/${userId}`} />} />
             </>
           )}
