@@ -410,6 +410,29 @@ export default function PlayerPage() {
                 );
               })}
               <div className={styles.player__mentor__card}>
+                <div>
+                  <div
+                    className={classNames(
+                      styles.player__mentor__card__title,
+                      styles.flex_and_between
+                    )}>
+                    <span>❗Увага❗</span>
+                    <span> 18:00 10.07.2024</span>
+                  </div>
+                  <div
+                    className={classNames(
+                      styles.player__mentor__card__title,
+                      styles.flex_and_between
+                    )}>
+                    <span className={styles.player__mentor__card__description}>
+                      Для здачі завдання необхідно створити команду. Для цього не обовʼязково когось
+                      в неї запрошувати,це можеш бути лише ти. <br></br>Але тицьнути на «
+                      <b>створити команду</b>» - необхідно.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.player__mentor__card}>
                 <div
                   className={classNames(
                     styles.player__mentor__card__title,
