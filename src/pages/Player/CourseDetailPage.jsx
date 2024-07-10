@@ -190,7 +190,7 @@ export default function CourseDetailPage() {
                     Взяти участь
                   </button>
                 ) : (
-                  <span className={styles.details__subscribed}>Беру участь✅</span>
+                  <span className={styles.details__subscribed}>Беру участь✔️</span>
                 ))}
             </div>
             <div className={styles.details__description}>
@@ -219,7 +219,7 @@ export default function CourseDetailPage() {
                       Створити команду
                     </button>
                   ) : (
-                    'В команді✅'
+                    'В команді✔️'
                   )}
                 </div>
 

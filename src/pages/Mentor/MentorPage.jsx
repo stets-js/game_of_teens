@@ -57,7 +57,7 @@ export default function MentorPage() {
                         <span>{marathon.course.name.toUpperCase()}</span>
                         <div>
                           {subscribed && (
-                            <span className={styles.player__marathons__subscribed}>учасник✅</span>
+                            <span className={styles.player__marathons__subscribed}>учасник✔️</span>
                           )}
                           <button
                             className={styles.player__marathons__button}

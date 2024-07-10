@@ -18,6 +18,12 @@
     &__header{
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      text-align: start;
+    &__status{
+        text-align: end;
+        min-width: 270px;
+    }
     }
     &__body{
         display:flex;

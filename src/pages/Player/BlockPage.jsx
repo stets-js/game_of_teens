@@ -112,6 +112,9 @@ export default function BlockPage() {
       <PlayerHeader></PlayerHeader>
       <div className={styles.block__wrapper}>
         <div className={styles.block__header}>{block.name}</div>
+        {myProject && myProject.checkedByMentor && (
+          <p className={styles.checkedByMentor}>Перевірено ментором ✔️</p>
+        )}
         <div data-color-mode="light" className={styles.block__description}>
           <MDEditor.Markdown
             mode="light"
@@ -180,6 +183,7 @@ export default function BlockPage() {
                   </button>
                 </div>
               )}
+
               <p className={styles.block__upload__header}> Завантажено:</p>
               <div className={styles.block__upload__grid}>
                 <div className={styles.block__upload__card__wrapper}>

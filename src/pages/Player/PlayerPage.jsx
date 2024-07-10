@@ -186,7 +186,7 @@ export default function PlayerPage() {
                         </div>
                         <div>
                           {subscribed && (
-                            <span className={styles.player__marathons__subscribed}>учасник✅</span>
+                            <span className={styles.player__marathons__subscribed}>учасник✔️</span>
                           )}
                           <button
                             className={styles.player__marathons__button}

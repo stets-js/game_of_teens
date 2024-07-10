@@ -3,7 +3,16 @@
 .selector {
   min-width: 40%;
 }
+.checkedByMentor{
+  background-color: rgb(135, 223, 135);
+  padding: 10px;
+  font-size: 24px;
+  font-family: $poppins;
+  border-radius: 25px;
 
+  width: 25%;
+  text-align: center;
+}
 .aside {
   &__wrapper {
     font-family: $poppins;
