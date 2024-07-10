@@ -1,3 +1,40 @@
 @import '../../styles/variables.scss';
 
-
+.project {
+  &__card {
+    font-size: 24px;
+    font-family: $poppins;
+    border: 1px solid black;
+    width: 60vw;
+    padding:10px;
+    min-height: 10vh;
+    &__members{
+        display: flex;
+        &__list{
+            text-align: justify;
+            padding: 2px;
+        }
+    }
+    &__header{
+      display: flex;
+      justify-content: space-between;
+    }
+    &__body{
+        display:flex;
+        flex-direction: column;
+        justify-content: start;
+        row-gap: 20px;
+        align-items: start;
+        font-size: 24px;
+        font-family: $poppins;
+    }
+  }
+  &__wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    margin-bottom: 20px;
+}
+}

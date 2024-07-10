@@ -8,7 +8,9 @@
   display:flex;
   flex-direction: column;
   align-items: start;
-  padding:8px;
+  padding:10px;
+  text-align: justify;
+  row-gap: 10px;
   &__end{
     align-self: flex-end;
   }
@@ -42,11 +44,12 @@
          column-gap: 20px;
          height: 3em;
          align-items: end;
+         width: 70%;
        }
      }
      &__textarea{
        height: 4em;
-       width: 55vw;
+       width: 80%;
    
      }
    }

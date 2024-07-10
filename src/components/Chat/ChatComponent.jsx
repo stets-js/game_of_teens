@@ -6,7 +6,7 @@ import {getAllMessages, sendMessage} from '../../helpers/marathon/marathon';
 import MessageCard from './MessageCard';
 import styles from './Chat.module.scss';
 
-export default function ChatComponent({chat, leader, marathonId, blockId, projectId}) {
+export default function ChatComponent({isMentor = false, leader, marathonId, blockId, projectId}) {
   const userId = useSelector(state => state.auth.user.id);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -24,13 +24,13 @@ export default function ChatComponent({chat, leader, marathonId, blockId, projec
         <div className={styles.chat__container}>
           {messages.length > 0 ? (
             messages.map(message => (
-              <MessageCard key={message._id} leader={leader} message={message} />
+              <MessageCard key={message._id} leader={leader} userId={userId} message={message} />
             ))
           ) : (
             <div>Історія повідомлень </div>
           )}
         </div>
-        {leader === userId && (
+        {(leader === userId || isMentor) && (
           <div className={styles.chat__sender__wrapper}>
             <textarea
               className={styles.chat__textarea}
