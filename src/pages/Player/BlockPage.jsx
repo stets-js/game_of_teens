@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
+import {useConfirm} from 'material-ui-confirm';
+
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {useLocation, useParams} from 'react-router-dom';
 import styles from './PlayerPage.module.scss';
@@ -9,6 +11,7 @@ import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useSelector} from 'react-redux';
 import {getTeamAsMember} from '../../helpers/team/team';
 import {
+  confirmProjectToBlock,
   createProjectToBlock,
   getProjectByTeamId,
   updateBlockProject
@@ -17,9 +20,12 @@ import fileSVG from '../../img/file.svg';
 import getDomainOrExtension from '../../helpers/link_shredder';
 import MDEditor from '@uiw/react-md-editor';
 import {defaults, error, success} from '@pnotify/core';
+import ChatComponent from '../../components/Chat/ChatComponent';
+import ProjectList from '../../components/Mentor/ProjectList';
 
 export default function BlockPage() {
   const location = useLocation();
+  const confirm = useConfirm();
   const {marathon} = location.state;
   const {sprintId} = useParams() || null;
   const userId = useSelector(state => state.auth.user.id);
@@ -68,17 +74,7 @@ export default function BlockPage() {
   useEffect(() => {
     if (myTeam) fetchMyProject();
   }, [myTeam]);
-  // useEffect(() => {
-  //   if (myTeam) {
-  //     console.log(myTeam);
-  //     patchOrCreateBlockProject({
-  //       files: ['links'],
-  //       block: block._id,
-  //       marathon: marathon._id,
-  //       team: myTeam._id
-  //     });
-  //   }
-  // }, [myTeam]);
+
   const postProject = async () => {
     if (myTeam.leader._id !== userId) {
       return error({text: 'Лише лідер може це зробити', delay: 1000});
@@ -98,19 +94,35 @@ export default function BlockPage() {
       setNewLink(null);
     }
   };
+
+  const confirmProject = async () => {
+    confirm({
+      description: `Впевнені що завершити здачу?`,
+      confirmationText: 'Так',
+      confirmationButtonProps: {autoFocus: true}
+    })
+      .then(async () => {
+        const data = await confirmProjectToBlock(marathon._id, block._id, myProject._id);
+        setMyProject(data);
+      })
+      .catch(e => console.log('no ' + e));
+  };
   return (
     <>
       <PlayerHeader></PlayerHeader>
       <div className={styles.block__wrapper}>
         <div className={styles.block__header}>{block.name}</div>
-        <div className={styles.block__description}>
-          {' '}
-          <MDEditor.Markdown source={block.description} style={{whiteSpace: 'pre-wrap'}} />
+        <div data-color-mode="light" className={styles.block__description}>
+          <MDEditor.Markdown
+            mode="light"
+            source={block.description}
+            style={{whiteSpace: 'pre-wrap'}}
+          />
         </div>
         {userRole === 2 &&
           (myProject ? (
             <>
-              {myTeam && myTeam?.leader?._id === userId && (
+              {myTeam && !myProject.confirm && myTeam?.leader?._id === userId && (
                 <div className={styles.block__upload__grid}>
                   <div className={styles.block__upload__wrapper}>
                     <input
@@ -156,6 +168,16 @@ export default function BlockPage() {
                       Додати
                     </button>
                   </div>
+                  <button
+                    onClick={() => {
+                      confirmProject();
+                    }}
+                    className={classNames(
+                      buttonStyles.button,
+                      styles.block__upload__grid__fullrow
+                    )}>
+                    Підтвердити здачу
+                  </button>
                 </div>
               )}
               <p className={styles.block__upload__header}> Завантажено:</p>
@@ -203,6 +225,16 @@ export default function BlockPage() {
             </>
           ))}
       </div>
+      {myProject && myProject.confirm && (
+        <ChatComponent
+          chat={myProject.chat}
+          leader={myTeam.leader._id}
+          marathonId={marathon._id}
+          blockId={block._id}
+          projectId={myProject._id}
+        />
+      )}
+      {userRole === 3 && <ProjectList marathonId={marathon._id} blockId={block._id}></ProjectList>}
     </>
   );
 }

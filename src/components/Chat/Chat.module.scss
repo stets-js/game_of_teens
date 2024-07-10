@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+.card{
+  border: 1px solid black;
+  width: 50%;
+  border-radius: 25px;
+  font-family: $poppins;
+  font-size: 24px;
+  display:flex;
+  flex-direction: column;
+  align-items: start;
+  padding:8px;
+  &__end{
+    align-self: flex-end;
+  }
+  &__time{
+    align-self: flex-end;
+    font-size: 16px;
+  }
+}
+
+.chat{
+  &__container{
+    display: flex;
+    flex-direction: column;
+    border:1px solid black;
+    width: 70%;
+    min-height: 14vh;
+    row-gap: 20px;
+    padding:10px;
+  }
+    &__wrapper{
+     display: flex;
+      row-gap: 20px;
+     justify-content: center;
+     flex-direction: column;
+     align-items: center;
+     margin-bottom: 40px;
+   }
+     &__sender{
+       &__wrapper{
+         display: flex;
+         column-gap: 20px;
+         height: 3em;
+         align-items: end;
+       }
+     }
+     &__textarea{
+       height: 4em;
+       width: 55vw;
+   
+     }
+   }

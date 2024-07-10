@@ -50,7 +50,7 @@ export default function AddNewBlock() {
           <div>
             <div className={styles.block__wrapper}>
               <div className={styles.block__header}>{newTitle}</div>
-              <div className={styles.block__description}>
+              <div data-color-mode="light" className={styles.block__description}>
                 <MDEditor.Markdown source={newDescription} style={{whiteSpace: 'pre-wrap'}} />
               </div>
             </div>

@@ -1,7 +1,6 @@
 @import '../../styles/variables.scss';
 
-
-.selector{
+.selector {
   min-width: 40%;
 }
 
@@ -319,8 +318,15 @@
       }
     }
     &__grid {
+      &__fullrow {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        width: 70%;
+        margin-left: 15%;
+      }
       display: grid;
       grid-template-columns: 1fr 1fr;
+      row-gap: 20px;
       width: 100%;
       justify-content: center;
       &__border {

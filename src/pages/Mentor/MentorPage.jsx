@@ -7,7 +7,7 @@ import buttonStyle from '../../styles/Button.module.scss';
 
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 
-import {getAllMarathons} from '../../helpers/marathon/marathon';
+import {getAllMarathons, getMarathonById} from '../../helpers/marathon/marathon';
 
 import arrow from '../../img/arrow.svg';
 import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
@@ -17,8 +17,14 @@ export default function MentorPage() {
   const navigate = useNavigate();
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
   const fetchAllMarathons = async () => {
-    const {data} = await getAllMarathons();
-    setMarathons(data.data);
+    if (subscribedTo && subscribedTo.length === 0) {
+      const {data} = await getAllMarathons();
+      setMarathons(data.data);
+    } else {
+      const {data} = await getMarathonById(subscribedTo[0]);
+      console.log(data);
+      setMarathons([data.data]);
+    }
   };
 
   const [mentorHours, setMentorHours] = useState([]);
@@ -32,7 +38,7 @@ export default function MentorPage() {
     fetchAllMentorHourse();
   }, []);
   console.log(mentorHours);
-
+  console.log(marathons);
   return (
     <>
       <div className={styles.header__container}>

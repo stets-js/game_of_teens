@@ -1,8 +1,8 @@
 import axios from '../axios-config';
 
-const getAllMarathons = () => {
+const getAllMarathons = (options = null) => {
   return axios
-    .get(`/api/marathon`)
+    .get(`/api/marathon${options ? `?${options}` : ''}`)
     .then(res => res.data)
     .catch(error => {
       throw error;
@@ -81,7 +81,43 @@ const getProjectByTeamId = async (marathonId, blockId, teamId) => {
     throw error;
   }
 };
+
+const confirmProjectToBlock = async (marathonId, blockId, projectId) => {
+  try {
+    const response = await axios.post(
+      `/api/marathon/${marathonId}/block/${blockId}/projects/${projectId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const sendMessage = async (marathonId, blockId, projectId, body) => {
+  try {
+    const response = await axios.post(
+      `/api/marathon/${marathonId}/block/${blockId}/projects/${projectId}/messages`,
+      body
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+const getAllMessages = async (marathonId, blockId, projectId) => {
+  try {
+    const response = await axios.get(
+      `/api/marathon/${marathonId}/block/${blockId}/projects/${projectId}/messages`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
+  sendMessage,
+  getAllMessages,
   getAllMarathons,
   getProjectByTeamId,
   addBlockToMarathon,
@@ -90,5 +126,6 @@ export {
   createProjectToBlock,
   updateBlockProject,
   getMarathonById,
-  getProjectFromBlockById
+  getProjectFromBlockById,
+  confirmProjectToBlock
 };

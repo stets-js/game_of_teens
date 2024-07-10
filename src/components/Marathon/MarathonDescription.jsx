@@ -6,7 +6,9 @@ import classNames from 'classnames';
 
 export default function MarathonDescription({description}) {
   return (
-    <div className={classNames(playerStyles.block__description, styles.fullwidth)}>
+    <div
+      data-color-mode="light"
+      className={classNames(playerStyles.block__description, styles.fullwidth)}>
       <MDEditor.Markdown
         source={description}
         className={styles.description}
