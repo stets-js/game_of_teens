@@ -10,7 +10,7 @@ import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
 import {getAllMarathons, getMarathonById} from '../../helpers/marathon/marathon';
 
 import arrow from '../../img/arrow.svg';
-import {getAllMentorHours} from '../../helpers/mentor-hours/mentor-hourse';
+import {getAllNews} from '../../helpers/news/news';
 
 export default function MentorPage() {
   const [marathons, setMarathons] = useState([]);
@@ -30,7 +30,7 @@ export default function MentorPage() {
   const [mentorHours, setMentorHours] = useState([]);
 
   const fetchAllMentorHourse = async () => {
-    const {data} = await getAllMentorHours();
+    const {data} = await getAllNews();
     setMentorHours(data.data);
   };
   useEffect(() => {

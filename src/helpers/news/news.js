@@ -1,12 +1,12 @@
 import axios from '../axios-config';
 
-const getAllMentorHours = () => {
+const getAllNews = () => {
   return axios
-    .get(`/api/mentorHours`)
+    .get(`/api/news`)
     .then(res => res.data)
     .catch(error => {
       throw error;
     });
 };
 
-export {getAllMentorHours};
+export {getAllNews};
