@@ -18,7 +18,7 @@ export default function PlayerHeader() {
           </a>
         </div>
         <div className={styles.list__item}>
-          <a href={`/player/${userId}`}>
+          <a href={`/player/${userId}/profile`}>
             <p>Профіль</p>
           </a>
         </div>
