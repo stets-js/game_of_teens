@@ -30,7 +30,7 @@ export default function NewsCard({oneNews}) {
     <div className={styles.player__mentor__card} key={oneNews._id}>
       <div className={classNames(styles.player__mentor__card__title, styles.flex_and_between)}>
         <span>{oneNews.title}</span>
-        <span> {format(oneNews.createdAt, 'HH:mm dd.MM.yyyy')}</span>
+        <span> {oneNews.createdAt && format(oneNews.createdAt, 'HH:mm dd.MM.yyyy')}</span>
       </div>
       {oneNews.link && (
         <iframe

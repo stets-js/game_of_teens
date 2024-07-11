@@ -66,7 +66,8 @@ export default function ProjectList({marathonId, blockId}) {
                   <div className={styles.project__card__members}>
                     <span>Members: </span>
                     <div className={styles.project__card__members__list}>
-                      {project.team.members &&
+                      {project.team &&
+                        project.team.members &&
                         project.team.members.length > 0 &&
                         project.team.members.map(member => (
                           <p>
