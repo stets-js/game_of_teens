@@ -30,7 +30,7 @@ const Login = ({isOpen, handleClose}) => {
       setEmail('');
       setPassword('');
     } catch (err) {
-      error(err.response.data.message);
+      error(err.response.data.message || 'Пароль або емейл не вірний :(');
     }
   };
 
