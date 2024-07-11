@@ -60,6 +60,11 @@ export default function BlockPage() {
       <PlayerHeader></PlayerHeader>
       <div className={styles.block__wrapper}>
         <div className={styles.block__header}>{block.name}</div>
+        {!myTeam && (
+          <p className={classNames(styles.confirmed, styles.checkedByMentor)}>
+            ⚠️Треба створити команду для здачі⚠️ (додавати людей не обов'язково)
+          </p>
+        )}
         {myProject && myProject.confirm && (
           <p className={classNames(styles.confirmed, styles.checkedByMentor)}>Здано ✔️</p>
         )}
