@@ -3,6 +3,19 @@
 .selector {
   min-width: 40%;
 }
+
+.mentor{
+  &__news{
+    justify-content: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__container{
+      width: 80%;
+    }
+  }
+}
+
 .checkedByMentor{
   background-color: rgb(135, 223, 135);
   padding: 10px;

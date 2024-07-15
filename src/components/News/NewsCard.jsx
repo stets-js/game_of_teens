@@ -3,6 +3,7 @@ import styles from '../../pages/Player/PlayerPage.module.scss';
 
 import {format} from 'date-fns';
 import classNames from 'classnames';
+import MarathonDescription from '../Marathon/MarathonDescription';
 
 export default function NewsCard({oneNews}) {
   const subscribedTo = useSelector(state => state.auth.user.subscribedTo);
@@ -16,9 +17,8 @@ export default function NewsCard({oneNews}) {
 
   function findFirstMatch(subscribed, marathons) {
     for (let elem of subscribed) {
-      if (marathons.includes(elem)) {
-        return elem;
-      }
+      const selectedMarathon = marathons.filter(marathon => marathon._id === elem);
+      if (selectedMarathon[0]) return selectedMarathon[0];
     }
     return null;
   }
@@ -42,7 +42,9 @@ export default function NewsCard({oneNews}) {
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen></iframe>
       )}
-      <div className={styles.player__mentor__card__description}>{oneNews.description}</div>
+      <div className={styles.player__mentor__card__description}>
+        <MarathonDescription description={oneNews.description} />
+      </div>
     </div>
   );
 }

@@ -9,4 +9,12 @@ const getAllNews = () => {
     });
 };
 
-export {getAllNews};
+const createNews = data => {
+  return axios
+    .post(`/api/news`, data)
+    .then(res => res.data)
+    .catch(error => {
+      throw error;
+    });
+};
+export {getAllNews, createNews};
