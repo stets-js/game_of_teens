@@ -37,6 +37,23 @@ const addBlockToMarathon = async (marathonId, data) => {
     throw error;
   }
 };
+const deleteBlockById = async (marathonId, blockId, data) => {
+  try {
+    const response = await axios.delete(`/api/marathon/${marathonId}/block/${blockId}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+ const updateBlockById = async (marathonId, blockId, data) => {
+  try {
+    const response = await axios.patch(`/api/marathon/${marathonId}/block/${blockId}`, data);
+    return response.data;
+  } catch (error) {
+    console.error('API error:', error);
+    throw error;
+  }
+};
 // Создание проекта в конкретном блоке
 const createProjectToBlock = async (marathonId, blockId, newProject) => {
   try {
@@ -127,5 +144,7 @@ export {
   updateBlockProject,
   getMarathonById,
   getProjectFromBlockById,
-  confirmProjectToBlock
+  confirmProjectToBlock,
+  deleteBlockById,
+  updateBlockById,
 };

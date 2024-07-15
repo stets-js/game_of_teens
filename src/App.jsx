@@ -18,6 +18,7 @@ import CoursesPage from './pages/Player/CoursesPage';
 import CourseDetailPage from './pages/Player/CourseDetailPage';
 import BlockPage from './pages/Player/BlockPage';
 import AddNewBlock from './pages/Jury/AddNewBlock';
+import EditBlock from './pages/Jury/EditBlock';
 import MentorPage from './pages/Mentor/MentorPage';
 import ProfilePage from './pages/Player/ProfilePage';
 
@@ -75,6 +76,9 @@ const App = () => {
               <Route
                 path={`mentor/${userId}/courses/:courseId/block`}
                 element={<AddNewBlock />}></Route>
+              <Route
+                path={`mentor/${userId}/courses/:courseId/edit_block`}
+                element={<EditBlock />}></Route>
 
               <Route path={`mentor/${userId}/courses/:courseId`} element={<CourseDetailPage />} />
               <Route path={`mentor/${userId}/courses`} element={<CoursesPage />} />

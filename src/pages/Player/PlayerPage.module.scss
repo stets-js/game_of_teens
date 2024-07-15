@@ -578,3 +578,28 @@
   border-radius: 10px;
 }
 /// ///////////////////////////////////
+
+.block__btnsWrapper{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+.block__btn__edit{
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #00c3ff;
+  color: #fff;
+  font-size: 18px;
+  font-family: $poppins;
+}
+.block__btn__delete{
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #ff5555;
+  color: #fff;
+  font-size: 18px;
+  font-family: $poppins;
+}
