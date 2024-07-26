@@ -10,6 +10,7 @@ import {useConfirm} from 'material-ui-confirm';
 import {success, error, defaults} from '@pnotify/core';
 import {useLocation, useNavigate} from 'react-router-dom';
 import PlayerHeader from '../../components/PlayerHeader/PlayerHeader';
+import RadioButton from '../../components/RadioButton/RadioButton';
 
 export default function AddNewBlock() {
   const confirm = useConfirm();
@@ -18,6 +19,7 @@ export default function AddNewBlock() {
   console.log(location);
   const {marathon} = location.state;
   const [newTitle, setNewTitle] = useState('Title');
+  const [isFinalWeek, setIsFinalWeek] = useState(false);
   const [newDescription, setNewDescription] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   );
@@ -31,17 +33,15 @@ export default function AddNewBlock() {
       .then(async () => {
         const {data} = await addBlockToMarathon(marathon._id, {
           name: newTitle,
-          description: newDescription
+          description: newDescription,
+          isFinalWeek
         });
         success({delay: 1000, text: 'Cтворенно!'});
         navigate('./../');
-        // setNewDescription(
-        //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        // );
-        // setNewTitle('Title');
       })
       .catch(e => console.log('no ' + e));
   };
+
   return (
     <>
       <PlayerHeader />
@@ -72,6 +72,14 @@ export default function AddNewBlock() {
                 onChange={setNewDescription}
                 preview={'edit'}
               />
+              <div className={styles.final__wrapper}>
+                <span>Фінальний проєкт?</span>
+                <input
+                  className={styles.final__input}
+                  type="checkbox"
+                  value={isFinalWeek}
+                  onChange={e => setIsFinalWeek(e.target.checked)}></input>
+              </div>
             </>
           }
           {
@@ -85,17 +93,6 @@ export default function AddNewBlock() {
           }
         </div>
       </div>
-      {/* {selectedMarathon && selectedMarathon.blocks && (
-        <>
-          <h1>Вже існуючі завдання</h1>
-          {selectedMarathon.blocks.map(block => (
-            <div className={styles.block__wrapper}>
-              <div className={styles.block__header}>{block.name}</div>
-              <div className={styles.block__description}>{block.description}</div>
-            </div>
-          ))}{' '}
-        </>
-      )} */}
     </>
   );
 }

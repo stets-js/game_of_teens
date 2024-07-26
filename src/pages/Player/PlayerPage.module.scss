@@ -603,3 +603,19 @@
   font-size: 18px;
   font-family: $poppins;
 }
+
+.final{
+  &__wrapper{
+    display:flex;
+    column-gap: 20px;
+    font-size: 24px;
+    font-family: $poppins;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  &__input{
+    height: 29px;
+    width: 29px;
+  }
+}
