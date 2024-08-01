@@ -45,7 +45,7 @@ const deleteBlockById = async (marathonId, blockId, data) => {
     throw error;
   }
 };
- const updateBlockById = async (marathonId, blockId, data) => {
+const updateBlockById = async (marathonId, blockId, data) => {
   try {
     const response = await axios.patch(`/api/marathon/${marathonId}/block/${blockId}`, data);
     return response.data;
@@ -131,8 +131,17 @@ const getAllMessages = async (marathonId, blockId, projectId) => {
     throw error;
   }
 };
+const addNewJuryOrCriteria = async ({marathonId, criteriaId, jureId}) => {
+  try {
+    const response = await axios.patch(`/api/marathon/${marathonId}/`, {criteriaId, jureId});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export {
+  addNewJuryOrCriteria,
   sendMessage,
   getAllMessages,
   getAllMarathons,
@@ -146,5 +155,5 @@ export {
   getProjectFromBlockById,
   confirmProjectToBlock,
   deleteBlockById,
-  updateBlockById,
+  updateBlockById
 };

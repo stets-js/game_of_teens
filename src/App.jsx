@@ -21,6 +21,9 @@ import AddNewBlock from './pages/Jury/AddNewBlock';
 import EditBlock from './pages/Jury/EditBlock';
 import MentorPage from './pages/Mentor/MentorPage';
 import ProfilePage from './pages/Player/ProfilePage';
+import Marathons from './pages/SuperAdmin/Marathons';
+import JuriesPage from './pages/SuperAdmin/JuriesPage';
+import CriteriasPage from './pages/SuperAdmin/CriteriasPage';
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -48,7 +51,11 @@ const App = () => {
         <Routes>
           {isAuthenticated && userRole === 1 && (
             <>
+              <Route path={path.home} element={<Navigate to={`${path.superAdmin}`} />}></Route>
               <Route path={path.superAdmin} element={<SuperAdministrator />} />
+              <Route path={path.superAdmin + path.marathons} element={<Marathons />} />
+              <Route path={path.superAdmin + path.juries} element={<JuriesPage />} />
+              <Route path={path.superAdmin + path.criterias} element={<CriteriasPage />} />
             </>
           )}
           {isAuthenticated && userRole === 0 && (

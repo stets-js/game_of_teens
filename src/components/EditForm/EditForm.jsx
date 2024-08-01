@@ -1,13 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
+
 import styles from './EditForm.module.scss';
-import {updateProject, confirmProject} from '../../helpers/project/project';
 
-const EditForm = ({item, onClose, onUpdate}) => {
-  console.log('item', item);
+import {updateProject, createScores} from '../../helpers/project/project';
 
+const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
   const userId = useSelector(state => state.auth.user.id);
-  const userJure = item.jures.find(jure => jure.jureId === userId);
+  const [userJure, setUserJure] = useState(item?.juries?.find(jure => jure.jureId === userId));
+  const addSchemaToProject = async () => {
+    const res = await createScores({projectId: item._id, marathonId});
+    setUserJure(res.newJure);
+  };
+  useEffect(() => {
+    if (!userJure) {
+      addSchemaToProject();
+    }
+  }, [userJure, item._id]);
+  console.log(userJure);
   const [formData, setFormData] = useState({
     projectId: item._id,
     jureId: userId,
@@ -15,24 +25,43 @@ const EditForm = ({item, onClose, onUpdate}) => {
     project_link: item.project_link,
     video_link: item.video_link,
     links: item.links,
+    marathonId,
     scores: userJure ? userJure.scores.map(score => ({...score, score: score.score || 0})) : [],
     comment: userJure ? userJure.comment || '' : ''
   });
-
+  useEffect(() => {
+    setFormData({
+      projectId: item._id,
+      jureId: userId,
+      course: item.course,
+      project_link: item.project_link,
+      video_link: item.video_link,
+      links: item.links,
+      marathonId,
+      scores: userJure ? userJure.scores.map(score => ({...score, score: score.score || 0})) : [],
+      comment: userJure ? userJure.comment || '' : ''
+    });
+  }, [item, marathonId, userId, userJure]);
   const handleChange = e => {
     const {name, value} = e.target;
     setFormData({...formData, [name]: value});
   };
 
-  const handleScoreChange = (e, index) => {
+  const handleScoreChange = (e, criteria) => {
     const {value} = e.target;
     if (value >= 0 && value <= 10) {
-      const newScores = [...formData.scores];
-      newScores[index].score = +value;
+      const newScores = [
+        ...formData.scores.map(scoreObj => {
+          if (criteria._id === scoreObj.criteria) return {...scoreObj, score: +value};
+          return scoreObj;
+        })
+      ];
+      console.log(newScores);
+
+      // newScores[index].score = +value;
       setFormData({...formData, scores: newScores});
     }
   };
-
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -44,29 +73,8 @@ const EditForm = ({item, onClose, onUpdate}) => {
       console.error('Помилка збереження даних:', error);
     }
   };
-
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      {/* <label>
-        Лінк на репозиторій:
-        <input
-          type="text"
-          name="project_link"
-          value={formData.project_link}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Лінк на відео:
-        <input
-          type="text"
-          name="video_link"
-          value={formData.video_link}
-          onChange={handleChange}
-          required
-        />
-      </label> */}
       <label>
         Лінки:
         <div>
@@ -83,24 +91,16 @@ const EditForm = ({item, onClose, onUpdate}) => {
             );
           })}
         </div>
-        {/* <input
-          disabled
-          type="text"
-          name="video_link"
-          value={formData.video_link}
-          onChange={handleChange}
-          required
-        /> */}
       </label>
 
-      {formData.scores.map((score, index) => (
-        <label key={score.criteria}>
-          Оцінка {item.criterias.find(c => c._id === score.criteria).name}:
+      {criterias.map((criteria, index) => (
+        <label key={criteria._id}>
+          Оцінка {criteria.name}:
           <input
             type="number"
-            name={`score-${score.criteria}`}
-            value={score.score}
-            onChange={e => handleScoreChange(e, index)}
+            name={`score-${criteria.name}`}
+            value={formData.scores.find(score => score.criteria === criteria._id)?.score}
+            onChange={e => handleScoreChange(e, criteria)}
             min={0}
             max={10}
             required

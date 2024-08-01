@@ -1,62 +1,47 @@
-import React, {useState, useEffect} from "react";
-import styles from "./SuperAdminPage.module.scss";
-import BgWrapper from "../../components/BgWrapper/BgWrapper";
-import Header from "../../components/Header/Header";
-import path from "../../helpers/routerPath";
-import { Outlet } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
-import Select from "../../components/Select/Select";
-import {getCourses} from "../../helpers/courses/courses";
-import {getProjectsByCourse} from "../../helpers/project/project";
-import Table from "../../components/Table/Table";
-import { startLoading, stopLoading } from '../../redux/loading/loading-actions';
+import React, {useState, useEffect} from 'react';
+import Select from 'react-select';
+
+import SelectStyles from '../../styles/selector.module.scss';
+import styles from './SuperAdminPage.module.scss';
+import BgWrapper from '../../components/BgWrapper/BgWrapper';
+import Table from '../../components/Table/Table';
+import SuperAdminHeader from './SuperAdminHeader';
+import {getAllMarathons} from '../../helpers/marathon/marathon';
 
 const SuperAdministrator = () => {
-  const dispatch = useDispatch();
-  const userName = useSelector((state) => state.auth.user.name);
-  const [courseId, setCourses] = useState("");
   const [projects, setProjects] = useState([]);
-  
-
-  const fetchProjects = async (courseId) => {
-    dispatch(startLoading());
-    try {
-      const res = await getProjectsByCourse(courseId);
-      console.log("res.data.data", res.data.data)
-      setProjects(res.data.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(stopLoading());
-    }
+  const [marathons, setMarathons] = useState([]);
+  const [selectedMarathon, setSelectedMarathon] = useState(null);
+  const fetchMarathons = async () => {
+    const {data} = await getAllMarathons();
+    console.log(data);
+    setMarathons(data.data);
   };
 
   useEffect(() => {
-    if (courseId) {
-      fetchProjects(courseId);
-    }
-  }, [courseId]);
-
-
+    fetchMarathons();
+  }, []);
 
   return (
     <>
-      <Header
-        endpoints={[]}
-        user={{ name: {userName}}}
-      />
+      <SuperAdminHeader />
       <section className={styles.main_wrapper}>
         <BgWrapper title="Super administrator" />
-        <Select 
-        classname={styles.select__label2}
-        value={courseId}
-        setValue={setCourses}
-        request={getCourses}
-        label="course"
-        defaultValue="Select course"
-        title="Course:"
-        />
-        <Table data={projects} admin />
+
+        <Select
+          className={SelectStyles.selector}
+          options={marathons.map(marathon => {
+            const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
+            return {
+              label: marathon.name,
+              value: marathon._id,
+              finalWeek,
+              juries: marathon.juries,
+              criterias: marathon.criterias
+            };
+          })}
+          onChange={e => setSelectedMarathon(e)}></Select>
+        <Table selectedMarathon={selectedMarathon} data={projects} admin />
       </section>
     </>
   );

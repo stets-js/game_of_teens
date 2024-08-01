@@ -1,8 +1,16 @@
 const path = {
-  all: "*",
-  home: "/",
-  superAdmin: "/superadmin/",
-  jury: "/jury/:juryId/",
-  userProfile: "/player/:userId/profile"
+  all: '*',
+  home: '/',
+  //admin
+  superAdmin: '/superadmin/',
+  marathons: 'marathons',
+  juries: 'juries',
+  criterias: 'criterias',
+
+  //jury
+  jury: '/jury/:juryId/',
+
+  //user
+  userProfile: '/player/:userId/profile'
 };
 export default path;

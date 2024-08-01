@@ -8,5 +8,12 @@ const getUsers = options => {
       throw error;
     });
 };
-
-export {getUsers};
+const createUser = cred => {
+  return axios
+    .post(`/api/users`, cred)
+    .then(res => res.data)
+    .catch(error => {
+      throw error;
+    });
+};
+export {getUsers, createUser};

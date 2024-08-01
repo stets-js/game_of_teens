@@ -5,6 +5,7 @@ const initialState = {
   user: {
     name: '',
     role: 0,
+    roleName: '',
     id: null,
     subscribedTo: [],
     registered: null
@@ -23,6 +24,7 @@ const authReducer = (state = initialState, action) => {
         user: {
           name: decodedToken.name,
           role: decodedToken.role,
+          roleName: decodedToken.roleName,
           id: decodedToken.id,
           subscribedTo: decodedToken.subscribedTo,
           registered: decodedToken.register

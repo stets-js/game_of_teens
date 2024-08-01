@@ -9,12 +9,25 @@ import Modal from '../Modal/Modal';
 import EditForm from '../EditForm/EditForm';
 import getDomainOrExtension from '../../helpers/link_shredder';
 
-export default function Table({data, onUpdate, admin}) {
+export default function Table({data, selectedMarathon, onUpdate, admin}) {
   const userId = useSelector(state => state.auth.user.id);
   const loading = useSelector(state => state.load.loading);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [sortedData, setSortedData] = useState([]);
+  const [projects, setProjects] = useState(selectedMarathon?.finalWeek?.projects);
+  const [criterias, setCriterias] = useState(selectedMarathon?.criterias);
+  const [juries, setJuries] = useState(selectedMarathon?.juries);
+  useEffect(() => {
+    if (selectedMarathon?.finalWeek?.projects)
+      setProjects(
+        selectedMarathon?.finalWeek?.projects.filter(project => project.confirm === true)
+      );
+    if (selectedMarathon) {
+      setCriterias(selectedMarathon?.criterias);
+      setJuries(selectedMarathon?.juries);
+    }
+  }, [selectedMarathon]);
 
   const handleEdit = item => {
     setCurrentItem(item);
@@ -26,27 +39,32 @@ export default function Table({data, onUpdate, admin}) {
     setCurrentItem(null);
     onUpdate(); // Викликаємо onUpdate при закритті модалки
   };
-
   useEffect(() => {
     if (admin) {
-      const sorted = [...data].sort((a, b) => b.totalSumOfAvgScores - a.totalSumOfAvgScores);
-      setSortedData(sorted);
+      const sortedProjects = selectedMarathon?.finalWeek.projects
+        .slice()
+        .sort((a, b) => b.totalScore - a.totalScore);
+      setSortedData(sortedProjects);
     } else {
-      setSortedData(data);
+      setSortedData(
+        selectedMarathon?.finalWeek.projects.filter(project => {
+          const jury = project.juries.find(jury => jury.jureId === userId);
+          return !jury || jury.confirmed !== true;
+        })
+      );
     }
-  }, [data, admin]);
-
+  }, [selectedMarathon, admin, userId]);
   const renderAdminTable = () => (
     <div className={styles.table}>
       <div className={styles.thead}>
         <div className={styles.tr}>
           <div className={styles.th}>Ім'я</div>
           <div className={styles.th}>Лінки</div>
-          {data[0].criterias.map(criteria => (
-            <div key={criteria._id} className={styles.th} colSpan={data[0].jures.length + 1}>
+          {criterias.map(criteria => (
+            <div key={criteria._id} className={styles.th} colSpan={juries.length + 1}>
               {criteria.name}
               <div className={styles.subthead}>
-                {data[0].jures.map(jure => (
+                {juries.map(jure => (
                   <div
                     key={`${criteria._id}-${jure.jureId}`}
                     className={styles.th}
@@ -54,7 +72,8 @@ export default function Table({data, onUpdate, admin}) {
                     data-tooltip-content={jure.name}>
                     {(() => {
                       const fullName = jure.name.split(' ');
-                      return `${fullName[0][0]}.${fullName[1][0]}`;
+                      if (fullName.length > 1) return `${fullName[0][0]}.${fullName[1][0]}`;
+                      return jure.name;
                     })()}
                     <Tooltip id={`${criteria._id}-${jure.jureId}`} />
                   </div>
@@ -68,41 +87,52 @@ export default function Table({data, onUpdate, admin}) {
         </div>
       </div>
       <div className={styles.tbody}>
-        {sortedData.map((item, index) => (
-          <div key={item._id} className={styles.tr}>
-            <div className={styles.td}>{item.name}</div>
-            <div className={styles.td}>
-              {(item.links || []).map(link => {
-                // !TODO: remove || after deleting all test data
-                return (
-                  <div>
-                    <a href={link} target="_blank" rel="noopener noreferrer">
-                      {getDomainOrExtension(link)}
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-            {item.criterias.map(criteria => (
-              <React.Fragment key={criteria._id}>
-                <div className={styles.tc}>
-                  {item.jures.map(jure => {
-                    const score =
-                      jure.scores.find(score => score.criteria === criteria._id)?.score || 'N/A';
+        {sortedData &&
+          sortedData.map((project, index) => {
+            const total = project.totalScore;
+            return (
+              <div key={project._id} className={styles.tr}>
+                <div className={styles.td}>
+                  {project.team.leader.name} team ({project.team.members.length})
+                </div>
+                <div className={styles.td}>
+                  {(project.links || []).map(link => {
+                    // !TODO: remove || after deleting all test data
                     return (
-                      <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>
-                        {score}
+                      <div>
+                        <a href={link} target="_blank" rel="noopener noreferrer">
+                          {getDomainOrExtension(link)}
+                        </a>
                       </div>
                     );
                   })}
-                  <div className={styles.td}>{item.avgScores[criteria._id].toFixed(2)}</div>
                 </div>
-              </React.Fragment>
-            ))}
-            <div className={styles.td}>{item.totalSumOfAvgScores.toFixed(2)}</div>
-            <div className={styles.td}>{index + 1}</div>
-          </div>
-        ))}
+                {criterias.map(criteria => {
+                  const avg = project.avgScores.find(avg => avg.criteria === criteria._id);
+                  return (
+                    <React.Fragment key={criteria._id}>
+                      <div className={styles.tc}>
+                        {project.juries.map(jure => {
+                          const score =
+                            jure.scores.find(score => score.criteria === criteria._id)?.score ||
+                            'N/A';
+
+                          return (
+                            <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>
+                              {score}
+                            </div>
+                          );
+                        })}
+                        <div className={styles.td}>{avg.avgScore.toFixed(2)}</div>
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+                <div className={styles.td}>{total.toFixed(2)}</div>
+                <div className={styles.td}>{index + 1}</div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
@@ -112,10 +142,12 @@ export default function Table({data, onUpdate, admin}) {
       <div className={styles.thead}>
         <div className={styles.tr}>
           <div className={styles.th}>Ім'я</div>
+          <div className={styles.th}>Команда</div>
           {/* { <div className={styles.th}>Лінк на репозиторій</div>
           <div className={styles.th}>Лінк на відео</div>} */}
           <div className={styles.th}>Лінки</div>
-          {data[0].criterias.map(criteria => (
+          <div className={styles.th}>Файли</div>
+          {criterias.map(criteria => (
             <div key={criteria._id} className={styles.th}>
               {criteria.name}
             </div>
@@ -124,14 +156,15 @@ export default function Table({data, onUpdate, admin}) {
         </div>
       </div>
       <div className={styles.tbody}>
-        {data.map(item => {
-          const userJure = item.jures.find(jure => jure.jureId === userId);
+        {sortedData.map(project => {
+          const userJure = project.juries.find(jure => jure.jureId === userId);
           return (
-            <div key={item._id} className={styles.tr}>
-              <div className={styles.td}>{item.name}</div>
+            <div key={project._id} className={styles.tr}>
+              <div className={styles.td}>{project.team.leader.name} team</div>
+              <div className={styles.td}>{project.team.members.length}</div>
 
               <div className={styles.td}>
-                {(item.links || []).map(link => {
+                {(project.links || []).map(link => {
                   // !TODO: remove || after deleting all test data
                   return (
                     <div>
@@ -142,7 +175,18 @@ export default function Table({data, onUpdate, admin}) {
                   );
                 })}
               </div>
-              {item.criterias.map((criteria, index) => {
+              <div className={styles.td}>
+                {(project.files || []).map(file => {
+                  return (
+                    <div>
+                      <a href={file} target="_blank" rel="noopener noreferrer">
+                        {getDomainOrExtension(file)}
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
+              {criterias.map((criteria, index) => {
                 const score = userJure
                   ? userJure.scores.find(score => score.criteria === criteria._id)?.score
                   : 'N/A';
@@ -153,7 +197,7 @@ export default function Table({data, onUpdate, admin}) {
                 );
               })}
               <div className={styles.td}>
-                <button onClick={() => handleEdit(item)} className={styles.btn__edit}>
+                <button onClick={() => handleEdit(project)} className={styles.btn__edit}>
                   Оцінити
                 </button>
               </div>
@@ -168,7 +212,13 @@ export default function Table({data, onUpdate, admin}) {
     <>
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <EditForm item={currentItem} onClose={closeModal} onUpdate={onUpdate} />
+          <EditForm
+            criterias={criterias}
+            marathonId={selectedMarathon.value}
+            item={currentItem}
+            onClose={closeModal}
+            onUpdate={onUpdate}
+          />
         </Modal>
       )}
       <div className={styles.table__wrapper}>
@@ -178,7 +228,7 @@ export default function Table({data, onUpdate, admin}) {
           </div>
         ) : (
           <>
-            {data.length === 0 ? (
+            {(projects || [])?.length === 0 ? (
               window.innerWidth <= 600 ? (
                 <p className={styles.table__emptyText}>NO DATA AVAILABLE</p>
               ) : (
