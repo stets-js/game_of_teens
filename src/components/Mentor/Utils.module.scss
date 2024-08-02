@@ -8,6 +8,14 @@
     width: 60vw;
     padding:10px;
     min-height: 10vh;
+    &__final{
+      text-align: start;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      margin-left: 10%;
+      row-gap: 20px;
+    }
     &__members{
         display: flex;
         &__list{

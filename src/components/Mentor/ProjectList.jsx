@@ -8,7 +8,8 @@ import ChatComponent from '../Chat/ChatComponent';
 import styles from './Utils.module.scss';
 import buttonStyles from '../../styles/Button.module.scss';
 import {useSelector} from 'react-redux';
-export default function ProjectList({marathonId, blockId}) {
+
+export default function ProjectList({marathonId, blockId, isFinalWeek = false}) {
   const [projects, setProjects] = useState([]);
   const userId = useSelector(state => state.auth.user.id);
   const [comment, setComment] = useState({flag: -1, text: '', author: userId});
@@ -97,6 +98,19 @@ export default function ProjectList({marathonId, blockId}) {
                       </a>
                     ))}
                   </div>
+                  {isFinalWeek && project.finalVideo && (
+                    <>
+                      <span>Video:</span>
+                      <div className={styles.project__card__final}>
+                        <div>
+                          <a href={project?.finalVideo?.link} alt="link">
+                            {project?.finalVideo?.link}
+                          </a>
+                        </div>
+                        <div>{project?.finalVideo?.description}</div>
+                      </div>
+                    </>
+                  )}
                 </div>
                 {project.confirm && (
                   <>

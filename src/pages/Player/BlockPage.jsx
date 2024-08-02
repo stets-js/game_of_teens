@@ -171,7 +171,13 @@ export default function BlockPage() {
           projectId={myProject._id}
         />
       )}
-      {userRole === 3 && <ProjectList marathonId={marathon._id} blockId={block._id} />}
+      {userRole === 3 && (
+        <ProjectList
+          isFinalWeek={block.isFinalWeek}
+          marathonId={marathon._id}
+          blockId={block._id}
+        />
+      )}
     </>
   );
 }
