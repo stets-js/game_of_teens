@@ -16,7 +16,6 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
   const confirm = useConfirm();
   const fetchAllTeams = async () => {
     const res = await getProjectsFromBlock(marathonId, blockId);
-    console.log(res);
     setProjects(res);
   };
   useEffect(() => {
@@ -40,6 +39,13 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
         // setNewTitle('Title');
       })
       .catch(e => console.log('no ' + e));
+  };
+
+  const sendComment = async projectId => {
+    const res = await updateBlockProject(marathonId, blockId, projectId, {
+      mentorComment: {text: comment.text, author: userId}
+    });
+    if (res) fetchAllTeams();
   };
   return (
     <>
@@ -125,18 +131,21 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
                 <hr></hr>
                 <h3>Залишити коментар(для журі)</h3>
                 {comment.flag === index ? (
-                  <div className={styles.chat__sender__wrapper}>
+                  <div className={styles.comment__wrapper}>
                     <textarea
-                      className={styles.chat__textarea}
+                      className={styles.comment__textarea}
                       value={comment.text}
                       onChange={e => {
                         setComment(prev => {
                           return {...prev, text: e.target.value};
                         });
                       }}
-                      placeholder="Відправити коментар"
-                    />
-                    <button className={buttonStyles.button} onClick={async () => {}}>
+                      placeholder="Відправити коментар">
+                      {comment.text}
+                    </textarea>
+                    <button
+                      className={buttonStyles.button}
+                      onClick={async () => sendComment(project._id)}>
                       Відправити
                     </button>
                   </div>
@@ -144,9 +153,7 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
                   <button
                     className={buttonStyles.button}
                     onClick={async () => {
-                      setComment(prev => {
-                        return {...prev, flag: index};
-                      });
+                      setComment({...project?.mentorComment, flag: index});
                     }}>
                     Залишити коментар
                   </button>
