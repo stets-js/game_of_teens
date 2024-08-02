@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {success, error, defaults} from '@pnotify/core';
 
 import styles from '../../pages/Player/PlayerPage.module.scss';
 import buttonStyles from '../../styles/Button.module.scss';
@@ -43,9 +44,74 @@ export default function UploadFiles({marathon, blockId, myProject, setMyProject}
       setNewLink(null);
     }
   };
+  const [block, setBlock] = useState(marathon.blocks.find(block => block._id === blockId));
 
+  const [finalVideo, setFinalVideo] = useState({description: '', link: ''});
+
+  useEffect(() => {
+    setBlock(marathon.blocks.find(block => block._id === blockId));
+  }, [marathon]);
+  useEffect(() => {
+    if (myProject && myProject.finalVideo)
+      setFinalVideo({
+        description: myProject.finalVideo.description,
+        link: myProject.finalVideo.link
+      });
+  }, [myProject]);
+  console.log(finalVideo.description);
+  const saveFinalVideo = async () => {
+    if (finalVideo.link && finalVideo.description) {
+      const res = await updateBlockProject(marathon._id, blockId, myProject._id, {finalVideo});
+      console.log(res);
+      success('Успішно додано відео проєкта');
+      setMyProject(res);
+    } else {
+      error("Посилання та/або опис є обов'язковими");
+    }
+  };
   return (
     <>
+      {block.isFinalWeek && (
+        <>
+          <h4>Додайте посилання на відео вашого проєкта та залиште опис (обов'язково)</h4>
+          <form className={styles.block__final__wrapper}>
+            <div className={styles.block__final__container}>
+              <input
+                required
+                className={styles.block__final__link}
+                type="text"
+                value={finalVideo.link}
+                placeholder="Посилання на відео проєкта"
+                onChange={e =>
+                  setFinalVideo(prev => {
+                    return {...prev, link: e.target.value};
+                  })
+                }
+              />
+              <textArea
+                required
+                className={styles.block__final__description}
+                placeholder="Опишіть ваш проєкт"
+                onChange={e =>
+                  setFinalVideo(prev => {
+                    return {...prev, description: e.target.value};
+                  })
+                }>
+                {finalVideo.description}
+              </textArea>
+            </div>
+            <button
+              className={classNames(buttonStyles.button, styles.block__flex)}
+              onClick={e => {
+                e.preventDefault();
+                saveFinalVideo();
+              }}>
+              Збереги
+            </button>
+          </form>
+        </>
+      )}
+      {block.isFinalWeek && <h4>Додаткові файли/посилання</h4>}
       <div className={styles.block__upload__grid}>
         <div className={styles.block__upload__wrapper}>
           <input
@@ -89,6 +155,9 @@ export default function UploadFiles({marathon, blockId, myProject, setMyProject}
           </button>
         </div>
         <ConfirmProject
+          confirmCondition={
+            myProject.finalVideo && myProject.finalVideo.description && myProject.finalVideo.link
+          }
           marathon={marathon}
           blockId={blockId}
           projectId={myProject._id}
