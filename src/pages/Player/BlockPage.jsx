@@ -22,17 +22,18 @@ import UploadedData from '../../components/Block/UploadedDate';
 export default function BlockPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const {marathon} = location.state;
+  let {marathon} = '';
+  if (location?.state) {
+    marathon = location.state.marathon;
+  }
   const {sprintId} = useParams() || null;
   const {courseId} = useParams() || null;
-  console.log('courseId', courseId);
 
   const userId = useSelector(state => state.auth.user.id);
   const userRole = useSelector(state => state.auth.user.role);
-  const [block] = useState(marathon.blocks.filter(bl => bl._id === sprintId)[0]);
+  const [block] = useState(marathon?.blocks.filter(bl => bl._id === sprintId)[0]);
   const [myProject, setMyProject] = useState(null);
   const [myTeam, setMyTeam] = useState(null);
-  console.log('block', block);
   const fetchMyProject = async () => {
     try {
       const data = await getProjectByTeamId(marathon._id, block._id, myTeam._id);
@@ -92,7 +93,7 @@ export default function BlockPage() {
     <>
       <PlayerHeader />
       <div className={styles.block__wrapper}>
-        <div className={styles.block__header}>{block.name}</div>
+        <div className={styles.block__header}>{block?.name}</div>
         {userRole !== 2 && (
           <div className={styles.block__btnsWrapper}>
             <button
@@ -134,7 +135,7 @@ export default function BlockPage() {
         <div data-color-mode="light" className={styles.block__description}>
           <MDEditor.Markdown
             mode="light"
-            source={block.description}
+            source={block?.description}
             style={{whiteSpace: 'pre-wrap'}}
           />
         </div>

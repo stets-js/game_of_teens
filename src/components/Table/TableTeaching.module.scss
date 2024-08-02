@@ -1,0 +1,332 @@
+@import '../../styles/App.scss';
+.black_borders {
+  border-color: black !important;
+}
+.no_scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.refferal {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__img {
+    width: 99%;
+  }
+  &__button {
+    position: absolute;
+    top: calc(25% - 20px);
+    font-size: 42px;
+    display: flex;
+    align-items: center;
+    row-gap: 20px;
+    flex-direction: column;
+    color: white;
+    font-weight: bold;
+  }
+}
+.scroller {
+  margin-top: 40px;
+  overflow-y: auto;
+  height: 600px;
+  border: 2px solid black;
+  border-radius: 25px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &__small {
+    min-height: 100px;
+    height: auto;
+    font-size: 16px !important;
+  }
+}
+.scroller::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none;
+}
+.table {
+  background-color: white;
+}
+.delete_icon {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  background-image: url('https://img.icons8.com/?size=100&id=104401&format=png&color=000000');
+  background-size: cover;
+  cursor: pointer;
+}
+//
+.calendar {
+  width: 90%;
+  table-layout: fixed;
+  margin-left: 5%;
+  background-color: white;
+  font-family: $poppins;
+  border-spacing: 0 !important;
+  &__available {
+    width: 80% !important;
+    margin-left: 10% !important;
+  }
+  &__small {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+}
+tr,
+th,
+td {
+  padding: 0;
+}
+
+.tableHeader {
+  border: 2px solid transparent;
+  width: 90%;
+}
+.header {
+  margin-bottom: 40px;
+  &__mySubgroup {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+}
+.tableBody {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.cell__header__mySubgroup:first-child {
+  border-left: 0;
+}
+.tr__header .cell__subCell__item {
+  border-top: 1px solid black;
+}
+.cell {
+  background-color: transparent;
+  font-family: $poppins;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px;
+  position: relative;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  min-height: 90px;
+  row-gap: 5px;
+  &__subCell {
+    display: flex;
+    height: 100%;
+    width: calc(100% + 10px);
+    justify-content: space-around;
+    &__item {
+      border-right: 1px solid black;
+      height: 100%;
+      width: 100%;
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+  &__avg{
+    min-width: 10px !important;
+  }
+  &__criteria{
+    padding:0 10px 0 10px;
+  }
+}
+@media (max-width: 768px) {
+  .cell {
+    font-size: 12px;
+  }
+  .cell__header {
+    font-size: 12px !important;
+  }
+}
+tr:first-child .cell__outer::before {
+  // first row, with half-borders
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70% !important;
+  border: 1px solid black;
+  // border-right: 2px solid black !important;
+  // border-bottom: 1px solid black;
+  border-top: 0;
+  z-index: 1;
+}
+tr:first-child td:first-child .cell__outer {
+  &::before {
+    border-left-color: transparent;
+    right: 0;
+  }
+}
+tr:first-child td:last-child .cell__outer {
+  &::before {
+    border-right: 0 !important;
+  }
+}
+
+tr td:first-child .cell__outer {
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    // left: 30%;
+    width: 70%;
+    height: calc(100%);
+    border-right: 1px solid black;
+    border-bottom: 2px solid black;
+    z-index: 1;
+  }
+  border-left: 0 !important;
+}
+tr td:last-child .cell__outer {
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    left: 0;
+    width: 70%;
+    height: calc(100%);
+    border-bottom: 2px solid black;
+    border-left: 1px solid black;
+    z-index: 1;
+  }
+  border-right: 0;
+}
+tr:last-child td:not(:first-child):not(:last-child) {
+  .cell__outer {
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 30%;
+      width: 100%;
+      height: 70%;
+      border: 1px solid black;
+      border-bottom: 0 !important;
+      z-index: 1;
+    }
+    border-bottom: 0;
+  }
+}
+tr:last-child td:first-child {
+  .cell__outer {
+    &::before {
+      border-bottom: 0 !important;
+      bottom: 30%;
+    }
+  }
+}
+tr:last-child td:last-child {
+  .cell__outer {
+    &::before {
+      border-bottom: 0 !important;
+      bottom: 30%;
+    }
+  }
+}
+tr:only-of-type td .cell__outer::before {
+  content: '';
+  border-top: 0;
+  border-bottom: 0;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 100% !important;
+  width: 100%;
+}
+.cell__outer__big {
+  &::before {
+    width: 90% !important;
+  }
+}
+th:first-child .cell__header {
+  border-left: 0;
+  // margin-left:2px;
+  // border-right:2px solid black;
+}
+// tr th:last-child .cell__header {
+//   border-right: 0;
+// }
+
+.tags {
+  &__wrapper {
+    font-size: 13px;
+    width: inherit;
+    margin-top: auto;
+    margin-bottom: 10px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    left: 0;
+  }
+  &__item {
+    position: absolute;
+    left: 0;
+    border-radius: 25px;
+    min-width: 50px;
+    background-color: rgb(244, 248, 214);
+    &:not(:first-of-type) {
+      margin-left: 65px;
+    }
+    &:first-of-type {
+      margin-left: 10px;
+    }
+  }
+}
+
+.button {
+  &__wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    // margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cell__mySubgroup {
+    min-width: calc(100vw / 5);
+    &__description {
+      width: auto !important;
+    }
+  }
+  .tags {
+    &__wrapper {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      row-gap: 10px;
+      margin-bottom: 0;
+      justify-content: center;
+    }
+    &__item {
+      min-width: 30px;
+      position: relative;
+      width: 30px;
+      font-size: 12px;
+      align-items: center;
+      margin-left: 0 !important;
+    }
+  }
+}
+
+
+tr:nth-child(2n){
+    background-color: rgb(217, 253, 213);
+}

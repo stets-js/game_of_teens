@@ -8,6 +8,7 @@ import {TailSpin} from 'react-loader-spinner';
 import Modal from '../Modal/Modal';
 import EditForm from '../EditForm/EditForm';
 import getDomainOrExtension from '../../helpers/link_shredder';
+import classNames from 'classnames';
 
 export default function Table({data, selectedMarathon, onUpdate, admin}) {
   const userId = useSelector(state => state.auth.user.id);
@@ -112,11 +113,17 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   return (
                     <React.Fragment key={criteria._id}>
                       <div className={styles.tc}>
-                        {project.juries.map(jure => {
+                        {juries.map(jure => {
+                          const jureScore = project.juries.find(js => js.jureId === jure._id);
+                          if (!jureScore)
+                            return (
+                              <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>
+                                N/A
+                              </div>
+                            );
                           const score =
-                            jure.scores.find(score => score.criteria === criteria._id)?.score ||
-                            'N/A';
-
+                            jureScore.scores.find(score => score.criteria === criteria._id)
+                              ?.score || 'N/A';
                           return (
                             <div key={`${criteria._id}-${jure.jureId}`} className={styles.td}>
                               {score}
@@ -129,7 +136,7 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   );
                 })}
                 <div className={styles.td}>{total.toFixed(2)}</div>
-                <div className={styles.td}>{index + 1}</div>
+                <div className={classNames(styles.td, styles.td__last)}>{index + 1}</div>
               </div>
             );
           })}

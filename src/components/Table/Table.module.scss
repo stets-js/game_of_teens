@@ -2,6 +2,7 @@
 
 .table__wrapper{
     display: flex;
+    overflow-x:scroll;
     flex-direction: column;
     align-items: center;
     padding: 20px;
@@ -11,6 +12,7 @@
     border: 3px solid #000;
     border-radius: 20px;
     margin: 0px auto 50px;
+    background-color: white;
 }
 
 
@@ -25,7 +27,7 @@
 }
 
 .table {
-    display: table;
+    // display: table;
     width: 100%;
  border-collapse: collapse;
     font-family: $poppins;
@@ -73,7 +75,12 @@
 .tc{
     display: table-cell;
 }
-
+.td{
+    border-right: 1px solid black;
+    &__last{
+        border-right: 0;
+    }
+}
 .tc .td{
     width: 1%;
     height: 50px;

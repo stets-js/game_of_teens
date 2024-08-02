@@ -4,19 +4,19 @@
   min-width: 40%;
 }
 
-.mentor{
-  &__news{
+.mentor {
+  &__news {
     justify-content: start;
     display: flex;
     flex-direction: column;
     align-items: center;
-    &__container{
+    &__container {
       width: 80%;
     }
   }
 }
 
-.checkedByMentor{
+.checkedByMentor {
   background-color: rgb(135, 223, 135);
   padding: 10px;
   font-size: 24px;
@@ -26,7 +26,7 @@
   width: 25%;
   text-align: center;
 }
-.confirmed{
+.confirmed {
   background-color: rgb(250, 213, 134);
 }
 .aside {
@@ -388,6 +388,35 @@
       }
     }
   }
+
+  &__final {
+    &__wrapper {
+      width: 80%;
+      font-size: 18px;
+      font-family: $poppins;
+      display: flex;
+      column-gap: 20px;
+    }
+    &__container {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+    }
+    &__link {
+      min-width: 300px;
+      text-align: justify;
+      border: 1px solid black;
+      height: 2em;
+      padding: 2px;
+    }
+    &__description {
+      padding: 2px;
+      border: 1px solid black;
+      resize: none;
+      width: 400px;
+      height: 4em;
+    }
+  }
 }
 
 .player {
@@ -433,16 +462,16 @@
         width: 100%;
         height: 40vh;
       }
-      &__description{
+      &__description {
         text-align: justify;
         font-size: 24px;
-        
+
         font-family: $poppins;
       }
       &__title {
         font-size: 24px;
         text-align: left;
-        
+
         font-family: $poppins;
       }
     }
@@ -544,17 +573,17 @@
 }
 
 //////////// PROFILE STYLES////////////
-.profile__wrapper{
+.profile__wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.profile__title{
+.profile__title {
   font-size: 24px;
   font-family: $poppins;
   margin-top: 100px;
 }
-.profile__tip{
+.profile__tip {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -567,7 +596,7 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
-.profile__formBtn{
+.profile__formBtn {
   margin: 50px auto 100px;
   height: 40px;
   width: 150px;
@@ -579,13 +608,13 @@
 }
 /// ///////////////////////////////////
 
-.block__btnsWrapper{
+.block__btnsWrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 20px;
 }
-.block__btn__edit{
+.block__btn__edit {
   width: 200px;
   height: 50px;
   border-radius: 10px;
@@ -594,7 +623,7 @@
   font-size: 18px;
   font-family: $poppins;
 }
-.block__btn__delete{
+.block__btn__delete {
   width: 200px;
   height: 50px;
   border-radius: 10px;
@@ -604,9 +633,9 @@
   font-family: $poppins;
 }
 
-.final{
-  &__wrapper{
-    display:flex;
+.final {
+  &__wrapper {
+    display: flex;
     column-gap: 20px;
     font-size: 24px;
     font-family: $poppins;
@@ -614,7 +643,7 @@
     align-items: center;
     text-align: center;
   }
-  &__input{
+  &__input {
     height: 29px;
     width: 29px;
   }

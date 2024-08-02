@@ -7,9 +7,11 @@ import getDomainOrExtension from '../../helpers/link_shredder';
 import ChatComponent from '../Chat/ChatComponent';
 import styles from './Utils.module.scss';
 import buttonStyles from '../../styles/Button.module.scss';
+import {useSelector} from 'react-redux';
 export default function ProjectList({marathonId, blockId}) {
   const [projects, setProjects] = useState([]);
-
+  const userId = useSelector(state => state.auth.user.id);
+  const [comment, setComment] = useState({flag: -1, text: '', author: userId});
   const confirm = useConfirm();
   const fetchAllTeams = async () => {
     const res = await getProjectsFromBlock(marathonId, blockId);
@@ -42,7 +44,7 @@ export default function ProjectList({marathonId, blockId}) {
     <>
       <div className={styles.project__wrapper}>
         {projects.length > 0 &&
-          projects.map(project => {
+          projects.map((project, index) => {
             return (
               <div key={project._id} className={styles.project__card}>
                 <div className={styles.project__card__header}>
@@ -105,6 +107,35 @@ export default function ProjectList({marathonId, blockId}) {
                       blockId={blockId}
                       projectId={project._id}></ChatComponent>
                   </>
+                )}
+                <hr></hr>
+                <h3>Залишити коментар(для журі)</h3>
+                {comment.flag === index ? (
+                  <div className={styles.chat__sender__wrapper}>
+                    <textarea
+                      className={styles.chat__textarea}
+                      value={comment.text}
+                      onChange={e => {
+                        setComment(prev => {
+                          return {...prev, text: e.target.value};
+                        });
+                      }}
+                      placeholder="Відправити коментар"
+                    />
+                    <button className={buttonStyles.button} onClick={async () => {}}>
+                      Відправити
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className={buttonStyles.button}
+                    onClick={async () => {
+                      setComment(prev => {
+                        return {...prev, flag: index};
+                      });
+                    }}>
+                    Залишити коментар
+                  </button>
                 )}
               </div>
             );

@@ -7,6 +7,7 @@ import BgWrapper from '../../components/BgWrapper/BgWrapper';
 import Table from '../../components/Table/Table';
 import SuperAdminHeader from './SuperAdminHeader';
 import {getAllMarathons} from '../../helpers/marathon/marathon';
+import TableBody from '../../components/Table/TableTeaching';
 
 const SuperAdministrator = () => {
   const [projects, setProjects] = useState([]);
@@ -41,7 +42,8 @@ const SuperAdministrator = () => {
             };
           })}
           onChange={e => setSelectedMarathon(e)}></Select>
-        <Table selectedMarathon={selectedMarathon} data={projects} admin />
+        {/* <Table selectedMarathon={selectedMarathon} data={projects} admin /> */}
+        <TableBody selectedMarathon={selectedMarathon} data={projects} admin />
       </section>
     </>
   );
