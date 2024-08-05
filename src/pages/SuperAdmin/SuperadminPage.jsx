@@ -28,20 +28,21 @@ const SuperAdministrator = () => {
       <SuperAdminHeader />
       <section className={styles.main_wrapper}>
         <BgWrapper title="Super administrator" />
-
-        <Select
-          className={SelectStyles.selector}
-          options={marathons.map(marathon => {
-            const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
-            return {
-              label: marathon.name,
-              value: marathon._id,
-              finalWeek,
-              juries: marathon.juries,
-              criterias: marathon.criterias
-            };
-          })}
-          onChange={e => setSelectedMarathon(e)}></Select>
+        <div className={SelectStyles.selector__wrapper}>
+          <Select
+            className={SelectStyles.selector}
+            options={marathons.map(marathon => {
+              const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
+              return {
+                label: marathon.name,
+                value: marathon._id,
+                finalWeek,
+                juries: marathon.juries,
+                criterias: marathon.criterias
+              };
+            })}
+            onChange={e => setSelectedMarathon(e)}></Select>
+        </div>
         {/* <Table selectedMarathon={selectedMarathon} data={projects} admin /> */}
         <TableBody selectedMarathon={selectedMarathon} data={projects} admin />
       </section>

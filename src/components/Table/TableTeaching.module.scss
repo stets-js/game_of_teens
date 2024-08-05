@@ -123,6 +123,7 @@ td {
   min-width: 120px;
   min-height: 90px;
   row-gap: 5px;
+  border: 1px solid black;
   &__subCell {
     display: flex;
     height: 100%;
@@ -151,6 +152,9 @@ td {
   .cell__header {
     font-size: 12px !important;
   }
+}
+.cell__outer{
+  border:0 ; 
 }
 tr:first-child .cell__outer::before {
   // first row, with half-borders

@@ -90,6 +90,7 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
       <div className={styles.tbody}>
         {sortedData &&
           sortedData.map((project, index) => {
+            if (!project) return <></>;
             const total = project.totalScore;
             return (
               <div key={project._id} className={styles.tr}>
@@ -109,7 +110,8 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   })}
                 </div>
                 {criterias.map(criteria => {
-                  const avg = project.avgScores.find(avg => avg.criteria === criteria._id);
+                  const avg = project?.avgScores.find(avg => avg.criteria === criteria._id);
+                  console.log(avg);
                   return (
                     <React.Fragment key={criteria._id}>
                       <div className={styles.tc}>
@@ -130,7 +132,7 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                             </div>
                           );
                         })}
-                        <div className={styles.td}>{avg.avgScore.toFixed(2)}</div>
+                        <div className={styles.td}>{avg ? avg.avgScore.toFixed(2) : 'N/A'}</div>
                       </div>
                     </React.Fragment>
                   );
@@ -154,11 +156,13 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
           <div className={styles.th}>Лінк на відео</div>} */}
           <div className={styles.th}>Лінки</div>
           <div className={styles.th}>Файли</div>
+          <div className={styles.th}>Відео/опис</div>
           {criterias.map(criteria => (
             <div key={criteria._id} className={styles.th}>
               {criteria.name}
             </div>
           ))}
+          <div className={styles.th}>Коментар ментора</div>
           <div className={styles.th}>Оцінити</div>
         </div>
       </div>
@@ -193,6 +197,20 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   );
                 })}
               </div>
+              <div className={styles.td}>
+                {project?.finalVideo ? (
+                  <>
+                    <span>
+                      <a href={project?.finalVideo.link} target="_blank" rel="noopener noreferrer">
+                        {getDomainOrExtension(project?.finalVideo.link)}
+                      </a>
+                      <div>{project?.finalVideo.description}</div>
+                    </span>
+                  </>
+                ) : (
+                  'Немає'
+                )}
+              </div>
               {criterias.map((criteria, index) => {
                 const score = userJure
                   ? userJure.scores.find(score => score.criteria === criteria._id)?.score
@@ -203,6 +221,7 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   </div>
                 );
               })}
+              <div className={styles.td}>{project?.mentorComment?.text || 'Немає'}</div>
               <div className={styles.td}>
                 <button onClick={() => handleEdit(project)} className={styles.btn__edit}>
                   Оцінити

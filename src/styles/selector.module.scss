@@ -44,3 +44,10 @@
     border: 1px solid black;
     min-width: 100%;
   }
+
+  .selector__wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;justify-content: center;
+  }

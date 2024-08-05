@@ -33,6 +33,36 @@ export default function TableHeader({juries, projects, criterias}) {
               Лінки
             </div>
           </td>
+          <td>
+            <div
+              className={classNames(
+                tableStyles.cell,
+
+                outerOrInnerCell(0)
+              )}>
+              Файли
+            </div>
+          </td>
+          <td>
+            <div
+              className={classNames(
+                tableStyles.cell,
+
+                outerOrInnerCell(0)
+              )}>
+              Відео/опис
+            </div>
+          </td>
+          <td>
+            <div
+              className={classNames(
+                tableStyles.cell,
+
+                outerOrInnerCell(0)
+              )}>
+              Коментар ментора
+            </div>
+          </td>
           {criterias.map(criteria => (
             <>
               <td colSpan={juries.length + 1}>

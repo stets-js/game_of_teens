@@ -62,19 +62,21 @@ export default function JuryPage() {
       <Header endpoints={[]} user={{name: userName}} />
       <section className={styles.main_wrapper}>
         <BgWrapper title="Jury Page" />
-        <Select
-          className={SelectStyles.selector}
-          options={marathons.map(marathon => {
-            const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
-            return {
-              label: marathon.name,
-              value: marathon._id,
-              finalWeek,
-              criterias: marathon.criterias,
-              juries: marathon.juries
-            };
-          })}
-          onChange={e => setSelectedMarathon(e)}></Select>
+        <div className={SelectStyles.selector__wrapper}>
+          <Select
+            className={SelectStyles.selector}
+            options={marathons.map(marathon => {
+              const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
+              return {
+                label: marathon.name,
+                value: marathon._id,
+                finalWeek,
+                criterias: marathon.criterias,
+                juries: marathon.juries
+              };
+            })}
+            onChange={e => setSelectedMarathon(e)}></Select>
+        </div>
         <Table
           // data={projects}
           selectedMarathon={selectedMarathon}

@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import styles from './EditForm.module.scss';
 
 import {updateProject, createScores} from '../../helpers/project/project';
+import getDomainOrExtension from '../../helpers/link_shredder';
 
 const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
   const userId = useSelector(state => state.auth.user.id);
@@ -17,7 +18,7 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
       addSchemaToProject();
     }
   }, [userJure, item._id]);
-  console.log(userJure);
+  console.log(item);
   const [formData, setFormData] = useState({
     projectId: item._id,
     jureId: userId,
@@ -25,6 +26,9 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
     project_link: item.project_link,
     video_link: item.video_link,
     links: item.links,
+    files: item.files,
+    video: item?.finalVideo?.link,
+
     marathonId,
     scores: userJure ? userJure.scores.map(score => ({...score, score: score.score || 0})) : [],
     comment: userJure ? userJure.comment || '' : ''
@@ -37,6 +41,8 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
       project_link: item.project_link,
       video_link: item.video_link,
       links: item.links,
+      files: item.files,
+      video: item?.finalVideo?.link,
       marathonId,
       scores: userJure ? userJure.scores.map(score => ({...score, score: score.score || 0})) : [],
       comment: userJure ? userJure.comment || '' : ''
@@ -92,6 +98,36 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
           })}
         </div>
       </label>
+      <label>
+        Файли:
+        <div>
+          {(formData.files || []).map(file => {
+            return (
+              <div key={file} className={styles.link__wrapper}>
+                <a href={file} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                  {getDomainOrExtension(file)}
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      </label>
+      {formData.video && (
+        <label>
+          Відео:
+          <div>
+            <div key={formData.video} className={styles.link__wrapper}>
+              <a
+                href={formData.video}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}>
+                {getDomainOrExtension(formData.video)}
+              </a>
+            </div>
+          </div>
+        </label>
+      )}
 
       {criterias.map((criteria, index) => (
         <label key={criteria._id}>

@@ -54,7 +54,8 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
       );
     }
   }, [selectedMarathon, admin, userId]);
-  const outerOrInnerCell = index => {
+  const outerOrInnerCell = (index, notFirstRow = false) => {
+    if (notFirstRow && index === 0) return tableStyles.cell__inner;
     return index === projects.length - 1 ? tableStyles.cell__outer : tableStyles.cell__inner;
   };
   return (
@@ -66,16 +67,10 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
             {sortedData &&
               sortedData.map((project, index) => {
                 const total = project.totalScore;
-
                 return (
                   <tr key={'header'}>
                     <td>
-                      <div
-                        className={classNames(
-                          tableStyles.cell,
-                          tableStyles.cell__outer,
-                          tableStyles.cell__mySubgroup
-                        )}>
+                      <div className={classNames(tableStyles.cell, outerOrInnerCell(index, true))}>
                         {project.team.leader.name} team ({project.team.members.length})
                       </div>
                     </td>
@@ -84,7 +79,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                         className={classNames(
                           tableStyles.cell,
 
-                          outerOrInnerCell(0)
+                          outerOrInnerCell(index, true)
                         )}>
                         {(project.links || []).map(link => {
                           // !TODO: remove || after deleting all test data
@@ -98,8 +93,56 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                         })}
                       </div>
                     </td>
+                    <td>
+                      <div
+                        className={classNames(
+                          tableStyles.cell,
+
+                          outerOrInnerCell(index, true)
+                        )}>
+                        {(project.files || []).map(file => {
+                          // !TODO: remove || after deleting all test data
+                          return (
+                            <div>
+                              <a href={file} target="_blank" rel="noopener noreferrer">
+                                {getDomainOrExtension(file)}
+                              </a>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        className={classNames(
+                          tableStyles.cell,
+
+                          outerOrInnerCell(index, true)
+                        )}>
+                        <a
+                          href={project?.finalVideo?.link}
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          {getDomainOrExtension(project?.finalVideo?.link)}
+                        </a>
+                        <div>{project?.finalVideo?.description}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        className={classNames(
+                          tableStyles.cell,
+
+                          outerOrInnerCell(index, true)
+                        )}>
+                        <div>{project?.mentorComment?.text}</div>
+                      </div>
+                    </td>
                     {criterias.map(criteria => {
-                      const avg = project.avgScores.find(avg => avg.criteria === criteria._id);
+                      const avg =
+                        project.avgScores.length > 0
+                          ? (project?.avgScores || []).find(avg => avg.criteria === criteria._id)
+                          : 'N/a';
 
                       return (
                         <>
@@ -108,7 +151,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                               className={classNames(
                                 tableStyles.cell,
 
-                                outerOrInnerCell(0)
+                                outerOrInnerCell(index, true)
                               )}>
                               <div className={tableStyles.cell__subCell}>
                                 {juries.map(jure => {
@@ -142,7 +185,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                               className={classNames(
                                 tableStyles.cell,
                                 tableStyles.cell__avg,
-                                outerOrInnerCell(0)
+                                outerOrInnerCell(index, true)
                               )}>
                               {avg.avgScore}
                             </div>
@@ -155,7 +198,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                         className={classNames(
                           tableStyles.cell,
 
-                          outerOrInnerCell(0)
+                          outerOrInnerCell(index, true)
                         )}>
                         {total}
                       </div>
@@ -165,7 +208,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                         className={classNames(
                           tableStyles.cell,
 
-                          outerOrInnerCell(0)
+                          outerOrInnerCell(index, true)
                         )}>
                         {index + 1}
                       </div>
