@@ -128,35 +128,39 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
                       projectId={project._id}></ChatComponent>
                   </>
                 )}
-                <hr></hr>
-                <h3>Залишити коментар(для журі)</h3>
-                {comment.flag === index ? (
-                  <div className={styles.comment__wrapper}>
-                    <textarea
-                      className={styles.comment__textarea}
-                      value={comment.text}
-                      onChange={e => {
-                        setComment(prev => {
-                          return {...prev, text: e.target.value};
-                        });
-                      }}
-                      placeholder="Відправити коментар">
-                      {comment.text}
-                    </textarea>
-                    <button
-                      className={buttonStyles.button}
-                      onClick={async () => sendComment(project._id)}>
-                      Відправити
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={buttonStyles.button}
-                    onClick={async () => {
-                      setComment({...project?.mentorComment, flag: index});
-                    }}>
-                    Залишити коментар
-                  </button>
+                {isFinalWeek && (
+                  <>
+                    <hr></hr>
+                    <h3>Залишити коментар(для журі)</h3>
+                    {comment.flag === index ? (
+                      <div className={styles.comment__wrapper}>
+                        <textarea
+                          className={styles.comment__textarea}
+                          value={comment.text}
+                          onChange={e => {
+                            setComment(prev => {
+                              return {...prev, text: e.target.value};
+                            });
+                          }}
+                          placeholder="Відправити коментар">
+                          {comment.text}
+                        </textarea>
+                        <button
+                          className={buttonStyles.button}
+                          onClick={async () => sendComment(project._id)}>
+                          Відправити
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className={buttonStyles.button}
+                        onClick={async () => {
+                          setComment({...project?.mentorComment, flag: index});
+                        }}>
+                        Залишити коментар
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             );
