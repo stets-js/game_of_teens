@@ -45,8 +45,14 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
     const res = await updateBlockProject(marathonId, blockId, projectId, {
       mentorComment: {text: comment.text, author: userId}
     });
-    if (res) fetchAllTeams();
+    if (res) {
+      fetchAllTeams();
+      setComment({flag: -1, text: '', author: userId});
+      success('Коментар залишено!');
+    }
   };
+
+  console.log(comment);
   return (
     <>
       <div className={styles.project__wrapper}>
@@ -132,7 +138,31 @@ export default function ProjectList({marathonId, blockId, isFinalWeek = false}) 
                   <>
                     <hr></hr>
                     <h3>Залишити коментар(для журі)</h3>
-                    {comment.flag === index ? (
+                    {project.mentorComment &&
+                    project.mentorComment.text &&
+                    comment.flag !== index ? (
+                      <div className={styles.comment__wrapper}>
+                        <textarea
+                          className={styles.comment__textarea}
+                          value={project.mentorComment.text}
+                          disabled
+                          onChange={e => {
+                            setComment(prev => {
+                              return {...prev, text: e.target.value};
+                            });
+                          }}
+                          placeholder="Відправити коментар">
+                          {comment.text}
+                        </textarea>
+                        <button
+                          className={buttonStyles.button}
+                          onClick={async () => {
+                            setComment({...project?.mentorComment, flag: index});
+                          }}>
+                          Оновити
+                        </button>
+                      </div>
+                    ) : comment.flag === index ? (
                       <div className={styles.comment__wrapper}>
                         <textarea
                           className={styles.comment__textarea}
