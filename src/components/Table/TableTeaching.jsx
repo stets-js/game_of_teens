@@ -67,6 +67,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
             {sortedData &&
               sortedData.map((project, index) => {
                 const total = project.totalScore;
+                console.log(project)
                 return (
                   <tr key={'header'}>
                     <td>
