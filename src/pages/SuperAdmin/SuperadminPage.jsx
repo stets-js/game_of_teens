@@ -32,7 +32,8 @@ const SuperAdministrator = () => {
           <Select
             className={SelectStyles.selector}
             options={marathons.map(marathon => {
-              const finalWeek = marathon.blocks.filter(block => block.isFinalWeek)[0];
+              const finalWeekArr = marathon.blocks.filter(block => block.isFinalWeek);
+              const finalWeek = finalWeekArr[finalWeekArr.length - 1];
               return {
                 label: marathon.name,
                 value: marathon._id,
