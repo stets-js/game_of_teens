@@ -80,6 +80,7 @@ tr,
 th,
 td {
   padding: 0;
+  position: relative;
 }
 
 .tableHeader {
@@ -105,12 +106,16 @@ td {
 .tr__header .cell__subCell__item {
   border-top: 1px solid black;
 }
+tr{
+  height: 100%;
+  position: relative;
+  
+}
 .cell {
   background-color: transparent;
   font-family: $poppins;
   width: 100%;
   align-items: center;
-  display: flex;
   justify-content: center;
   text-align: center;
   font-size: 18px;
@@ -119,11 +124,15 @@ td {
   padding-right: 5px;
   box-sizing: border-box;
   display: flex;
+  height: 100%;
   flex-direction: column;
   min-width: 120px;
   min-height: 90px;
   row-gap: 5px;
   border: 1px solid black;
+  &__big{
+    width: 500px;
+  }
   &__subCell {
     display: flex;
     height: 100%;

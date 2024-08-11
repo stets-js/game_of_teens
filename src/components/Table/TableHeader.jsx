@@ -55,11 +55,7 @@ export default function TableHeader({juries, projects, criterias}) {
           </td>
           <td>
             <div
-              className={classNames(
-                tableStyles.cell,
-
-                outerOrInnerCell(0)
-              )}>
+              className={classNames(tableStyles.cell, tableStyles.cell__big, outerOrInnerCell(0))}>
               Коментар ментора
             </div>
           </td>
