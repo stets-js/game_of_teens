@@ -47,7 +47,7 @@ export default function TableHeader({juries, projects, criterias}) {
             <div
               className={classNames(
                 tableStyles.cell,
-
+                tableStyles.cell__big,
                 outerOrInnerCell(0)
               )}>
               Відео/опис
