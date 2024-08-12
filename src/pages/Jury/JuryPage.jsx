@@ -32,6 +32,7 @@ export default function JuryPage() {
     const marathon = data.data[0];
     const finalWeekArr = marathon.blocks.filter(block => block.isFinalWeek);
     const finalWeek = finalWeekArr[finalWeekArr.length - 1];
+
     setSelectedMarathon({
       label: marathon.name,
       value: marathon._id,
@@ -40,6 +41,8 @@ export default function JuryPage() {
       juries: marathon.juries
     });
   };
+
+  console.log(selectedMarathon);
   const handleConfirm = async () => {
     try {
       const projects = selectedMarathon?.finalWeek.projects;

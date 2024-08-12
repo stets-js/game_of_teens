@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-
+import {success} from '@pnotify/core';
 import styles from './EditForm.module.scss';
 
 import {updateProject, createScores} from '../../helpers/project/project';
@@ -18,7 +18,6 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
       addSchemaToProject();
     }
   }, [userJure, item._id]);
-  console.log(item);
   const [formData, setFormData] = useState({
     projectId: item._id,
     jureId: userId,
@@ -71,9 +70,10 @@ const EditForm = ({item, criterias, marathonId, onClose, onUpdate}) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+      success('Дані збережено!');
       await updateProject(formData.projectId, formData);
       console.log('Збережені дані:', formData);
-      onUpdate();
+      await onUpdate();
       onClose();
     } catch (error) {
       console.error('Помилка збереження даних:', error);
