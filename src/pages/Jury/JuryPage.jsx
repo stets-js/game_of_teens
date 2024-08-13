@@ -48,10 +48,17 @@ export default function JuryPage() {
       const projects = selectedMarathon?.finalWeek.projects;
       const filteredProjects = projects.filter(project => {
         const jury = project.juries.find(jure => jure.jureId === userId);
-        return jury && jury.scores.every(score => score.score > 0);
+        return jury && jury.scores.every(score => score.score > 0) && jury.confirmed === false;
       });
 
-      const formData = {projects: filteredProjects, marathonId: selectedMarathon.value};
+      const formData = {
+        projects: filteredProjects.map(el => {
+          return {
+            _id: el._id
+          };
+        }),
+        marathonId: selectedMarathon.value
+      };
       await confirmAllProjects(formData);
       console.log('Проекти підтверджено');
       updateFun(selectedMarathon.value);
