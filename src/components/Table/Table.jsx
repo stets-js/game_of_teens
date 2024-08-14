@@ -221,7 +221,7 @@ export default function Table({data, selectedMarathon, onUpdate, admin}) {
                   </div>
                 );
               })}
-              <div className={styles.td}>{project?.mentorComment?.text || 'Немає'}</div>
+              <div className={styles.mentor__comment}>{project?.mentorComment?.text || 'Немає'}</div>
               <div className={styles.td}>
                 <button onClick={() => handleEdit(project)} className={styles.btn__edit}>
                   Оцінити
