@@ -110,11 +110,11 @@ td {
 }
 
 
-tr{
-  height: 100%;
-  position: relative;
+// tr{
+//   height: 100%;
+//   position: relative;
   
-}
+// }
 
 
 .cell {
@@ -242,7 +242,7 @@ tr:last-child td:not(:first-child):not(:last-child) {
       content: '';
       display: block;
       position: absolute;
-      bottom: 30%;
+      bottom: 20%;
       width: 100%;
       height: 80%;
       border: 1px solid black;

@@ -31,6 +31,7 @@ export default function JuryPage() {
     const {data} = await getAllMarathons(id ? `id=${id}` : '');
     const marathon = data.data[0];
     const finalWeekArr = marathon.blocks.filter(block => block.isFinalWeek);
+    console.log(finalWeekArr);
     const finalWeek = finalWeekArr[finalWeekArr.length - 1];
 
     setSelectedMarathon({
@@ -78,6 +79,7 @@ export default function JuryPage() {
             className={SelectStyles.selector}
             options={marathons.map(marathon => {
               const finalWeekArr = marathon.blocks.filter(block => block.isFinalWeek);
+              console.log(finalWeekArr);
               const finalWeek = finalWeekArr[finalWeekArr.length - 1];
               return {
                 label: marathon.name,

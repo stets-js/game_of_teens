@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import {Tooltip} from 'react-tooltip';
 import TableHeader from './TableHeader';
 import getDomainOrExtension from '../../helpers/link_shredder';
+import ShortDescription from '../ShortDescription/ShortDescription';
 
 export default function TableBody({selectedMarathon, onUpdate, admin}) {
   const userId = useSelector(state => state.auth.user.id);
@@ -67,7 +68,6 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
             {sortedData &&
               sortedData.map((project, index) => {
                 const total = project.totalScore;
-                console.log(project)
                 return (
                   <tr key={'header'}>
                     <td>
@@ -76,12 +76,7 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                       </div>
                     </td>
                     <td>
-                      <div
-                        className={classNames(
-                          tableStyles.cell,
-
-                          outerOrInnerCell(index, true)
-                        )}>
+                      <div className={classNames(tableStyles.cell, outerOrInnerCell(index, true))}>
                         {(project.links || []).map(link => {
                           // !TODO: remove || after deleting all test data
                           return (
@@ -126,7 +121,8 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
                           rel="noopener noreferrer">
                           {getDomainOrExtension(project?.finalVideo?.link)}
                         </a>
-                        <div>{project?.finalVideo?.description}</div>
+                        <ShortDescription
+                          text={project?.finalVideo?.description}></ShortDescription>
                       </div>
                     </td>
                     <td>
@@ -136,7 +132,9 @@ export default function TableBody({selectedMarathon, onUpdate, admin}) {
 
                           outerOrInnerCell(index, true)
                         )}>
-                        <div>{project?.mentorComment?.text}</div>
+                        <div>
+                          <ShortDescription text={project?.mentorComment?.text} />
+                        </div>
                       </div>
                     </td>
                     {criterias.map(criteria => {
